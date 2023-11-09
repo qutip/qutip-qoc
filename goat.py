@@ -52,7 +52,7 @@ class GOAT:
                            "at index {}.".format(self.grads.index(None)))
 
         self.evo_time = time_interval.evo_time
-        self.var_t = True if time_options.get("guess", False) else False
+        self.var_t = "guess" in time_options
 
         # num of params for each control function
         self.para_counts = [len(v["guess"]) for v in pulse_options.values()]
@@ -60,9 +60,9 @@ class GOAT:
             self.para_counts.append(1)
 
         # inferred attributes
+        self.tot_n_para = sum(self.para_counts)  # incl. time if var_t==True
         self.norm_fac = 1 / self.target.norm()
         self.sys_size = self.Hd.shape[0]
-        self.tot_n_para = sum(self.para_counts)  # incl. time if var_t==True
 
         # Scale the system Hamiltonian and initial state
         # for coupled system (X, dX)
@@ -71,14 +71,11 @@ class GOAT:
         self.psi0 = self.prepare_psi0()
 
         self.evo = QobjEvo(self.H + self.dH, {"p": guess_params})
-        if self.is_super:
+        if self.is_super:  # for SESolver
             self.evo = (1j) * self.evo
 
         # initialize the solver
-        self.solver = qt.SESolver(
-            H=self.evo,
-            options=integrator_kwargs
-        )
+        self.solver = qt.SESolver(H=self.evo, options=integrator_kwargs)
 
     def prepare_psi0(self):
         """
@@ -96,7 +93,12 @@ class GOAT:
 
     def prepare_H(self):
         """
-        Combines the scaled Hamiltonian with associated control pulses
+        Combines the scaled Hamiltonian diagonal elements
+        for the coupled system (X, dX) with associated pulses:
+        [[  H, 0, 0, ...], [[  X],
+         [d1H, H, 0, ...],  [d1U],
+         [d2H, 0, H, ...],  [d2U],
+         [...,         ]]   [...]]
         """
         def helper(control, lower, upper):
             # to fix parameter index in loop
@@ -116,7 +118,12 @@ class GOAT:
 
     def prepare_dH(self):
         """
-        Combines the scaled Hamiltonian with the derivative of the associated pulses
+        Combines the scaled Hamiltonian off-diagonal elements
+        for the coupled system (X, dX) with associated pulses:
+        [[  H, 0, 0, ...], [[  X],
+         [d1H, H, 0, ...],  [d1U],
+         [d2H, 0, H, ...],  [d2U],
+         [...,         ]]   [...]]
         """
         def helper(control, lower, upper, idx):
             # to fix parameter index in loop
@@ -131,6 +138,7 @@ class GOAT:
         for grad, M, Hc in zip(self.grads, self.para_counts, self.Hc_lst):
 
             for grad_idx in range(M + int(self.var_t)):
+                # grad_idx == M -> time parameter
                 i = 1 + idx + grad_idx if grad_idx < M else self.tot_n_para
                 csr = sp.sparse.csr_matrix(([1], ([i], [0])), csr_shape)
                 hc = Qobj(csr) & Hc
@@ -153,10 +161,9 @@ class GOAT:
 
     def infidelity(self, params):
         """
-        projective SU distance (infidelity) to be minimized
+        returns the infidelity to be minimized
         store intermediate results for gradient calculation
-        returns the infidelity, the normalized overlap,
-        the current unitary and its gradient for later use
+        the normalized overlap, the current unitary and its gradient
         """
         # adjust integration time-interval, if time is parameter
         evo_time = self.evo_time if self.var_t == False else params[-1]
@@ -170,7 +177,7 @@ class GOAT:
             self.g = 1/2 * diff.overlap(diff)
             self.infid = self.norm_fac * np.real(self.g)
         else:
-            self.g = self.norm_fac * self.X.overlap(self.target)
+            self.g = self.norm_fac * self.target.overlap(self.X)
             if self.fid_type == "PSU":  # f_PSU (drop global phase)
                 self.infid = 1 - np.abs(self.g)
             elif self.fid_type == "SU":  # f_SU (incl global phase)
@@ -182,26 +189,26 @@ class GOAT:
         """
         Calculates the gradient of the fidelity error function
         wrt control parameters by solving the Schrodinger operator equation
-        according to GOAT algorithm: arXiv:1507.04261
         """
         X, dX, g = self.X, self.dX, self.g  # calculated before
 
-        dU_lst = []  # collect for each parameter
+        dX_lst = []  # collect for each parameter
         for i in range(self.tot_n_para):
             idx = i * self.sys_size  # row index for parameter set i
-            slice = dX[idx: idx + self.sys_size, :]
-            dU_lst.append(Qobj(slice))
+            dx = dX[idx: idx + self.sys_size, :]
+            dX_lst.append(Qobj(dx))
 
         if self.fid_type == "TRACEDIFF":
             diff = X - self.target
             # product rule
-            trc = [du.overlap(diff) + diff.overlap(du) for du in dU_lst]
+            trc = [dx.overlap(diff) + diff.overlap(dx) for dx in dX_lst]
             grad = self.norm_fac * 1/2 * np.real(np.array(trc))
 
         else:  # -Re(... * Tr(...)) NOTE: gradient will be zero at local maximum
-            trc = [self.target.overlap(du) for du in dU_lst]
+            trc = [self.target.overlap(dx) for dx in dX_lst]
 
             if self.fid_type == "PSU":  # f_PSU (drop global phase)
+                # phase_fac = exp(-i*phi)
                 phase_fac = np.conj(g) / np.abs(g) if g != 0 else 0
 
             elif self.fid_type == "SU":  # f_SU (incl global phase)

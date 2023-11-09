@@ -2,14 +2,42 @@
 This module contains functions that implement the JOAT algorithm to
 calculate optimal parameters for analytical control pulse sequences.
 """
-import jax
-import jax.numpy as jnp
-
 import qutip as qt
 from qutip import Qobj, QobjEvo
 import qutip_jax
 
 from diffrax import Dopri5, Tsit5, PIDController
+
+import jax
+from jax import custom_vjp
+import jax.numpy as jnp
+
+
+@custom_vjp
+def abs(x):
+    return jnp.abs(x)
+
+
+def PSU_fwd(x):
+    # Returns primal output and residuals to be used in backward pass by f_bwd
+    return abs(x), (jnp.conj(x), jnp.abs(x), x)
+
+
+def PSU_bwd(res, x_dot):
+    conj_x, abs_x, x = res  # Gets residuals computed in f_fwd
+
+    if jnp.any(abs_x):
+        phase_fac = conj_x / abs_x  # exp(-i*phi)
+    else:
+        phase_fac = 0.
+
+    grad = (phase_fac * x_dot).real
+    result = jax.lax.complex(grad, 0.)
+
+    return (result,)
+
+
+abs.defvjp(PSU_fwd, PSU_bwd)
 
 
 class JOAT:
@@ -19,7 +47,7 @@ class JOAT:
     """
     # calculated during optimization
     X = None  # current evolution operator
-    infid = None  # projective SU distance (infidelity)
+    infid = None  # infidelity
 
     def __init__(self, objective, time_interval, time_options, pulse_options, alg_kwargs, guess_params, **integrator_kwargs):
 
@@ -34,7 +62,7 @@ class JOAT:
         self.target = objective.target.to("jaxdia")
 
         self.evo_time = time_interval.evo_time
-        self.var_t = True if time_options.get("guess", False) else False
+        self.var_t = "guess" in time_options
 
         # inferred attributes
         self.norm_fac = 1 / self.target.norm()
@@ -59,25 +87,22 @@ class JOAT:
             )
         )
 
+        # choose solver and fidelity type according to problem
         if self.Hd.issuper:
             self.fid_type = alg_kwargs.get("fid_type", "TRACEDIFF")
-
-            self.solver = qt.MESolver(
-                H=self.H,
-                options=self.integrator_kwargs
-            )
+            self.solver = qt.MESolver(H=self.H, options=self.integrator_kwargs)
 
         else:
             self.fid_type = alg_kwargs.get("fid_type", "PSU")
+            self.solver = qt.SESolver(H=self.H, options=self.integrator_kwargs)
 
-            self.solver = qt.SESolver(
-                H=self.H,
-                options=self.integrator_kwargs
-            )
-
-        self.gradient = jax.grad(self.infidelity)
+        self.gradient = jax.grad(self.infidelity, holomorphic=True)
 
     def prepare_H(self):
+        """
+        prepare Hamiltonian call signature
+        to only take one parameter vector
+        """
 
         def helper(control, lower, upper):
             # to fix parameter index in loop
@@ -103,10 +128,7 @@ class JOAT:
 
     def infidelity(self, params):
         """
-        projective SU distance (infidelity) to be minimized
-        store intermediate results for gradient calculation
-        returns the infidelity, the normalized overlap,
-        the current unitary and its gradient for later use
+        calculate infidelity to be minimized
         """
         # adjust integration time-interval, if time is parameter
         evo_time = self.evo_time if self.var_t == False else params[-1]
@@ -116,20 +138,24 @@ class JOAT:
             args={'p': params}
         ).final_state
 
-        self.X = Qobj(X, dims=self.target.dims)
+        X = Qobj(X, dims=self.target.dims)
 
         if self.fid_type == "TRACEDIFF":
-            diff = self.X - self.target
+            diff = X - self.target
             g = 1/2 * (diff.dag() * diff).tr()
             self.infid = jnp.real(self.norm_fac * g)
         else:
-            g = self.norm_fac * X.overlap(self.target)
+            g = self.norm_fac * self.target.overlap(X)
             if self.fid_type == "PSU":  # f_PSU (drop global phase)
-                self.infid = 1 - jnp.abs(g)
+                # NOTE: should return infid = 1 - abs(g)
+                # but JAX does not calculate grad(abs) correctly
+                # therefore, intermediate result is returned and
+                # full calculation is done manually in grad_fun
+                self.infid = g
             elif self.fid_type == "SU":  # f_SU (incl global phase)
                 self.infid = 1 - jnp.real(g)
 
-        return self.infid
+        return self.infid if jnp.iscomplexobj(self.infid) else jax.lax.complex(self.infid, 0.)
 
 
 class Multi_JOAT:
@@ -146,19 +172,41 @@ class Multi_JOAT:
 
     def goal_fun(self, params):
         infid_sum = 0
+
         for joat in self.joats:  # TODO: parallelize
-            infid = joat.infidelity(params)
+
+            if j.fid_type == "PSU":  # see note in JOAT.infidelity
+                self.g = joat.infidelity(params)
+                infid = 1 - jnp.abs(self.g)
+
+            else:
+                infid = joat.infidelity(params)
+
             if infid < 0:
                 print(
                     "WARNING: infidelity < 0 -> inaccurate integration, "
                     "try reducing integrator tolerance (atol, rtol)"
                 )
+
             infid_sum += infid
+
         self.mean_infid = jnp.mean(infid_sum)
+
         return self.mean_infid
 
     def grad_fun(self, params):
         grads = 0
-        for g in self.joats:
-            grads += g.gradient(params)
+
+        for j in self.joats:
+
+            if j.fid_type == "PSU":  # see note in JOAT.infidelity
+                dg = j.gradient(jax.lax.complex(params, 0.))
+                phase = jnp.conj(self.g) / jnp.abs(self.g)
+                grad = -(phase * dg).real
+
+            else:
+                grad = j.gradient(params)
+
+            grads += grad
+
         return grads
