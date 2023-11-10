@@ -198,16 +198,27 @@ def optimize_pulses(
     integrator_kwargs["progress_bar"] = integrator_kwargs.get(
         "progress_bar", False)
 
-    # extract initial and boundary values and
-    # number of parameters for each single control function
+    def helper(lst, input):
+        # to extract initial and boundary values
+        if input is None:
+            return lst
+        if isinstance(input, (list, np.ndarray)):
+            lst.append(input)
+        elif isinstance(input, (tuple)):
+            lst.append([input])
+        elif np.isscalar(input):
+            lst.append([input])
+        else:  # jax Array
+            lst.append(np.array(input))
+        return lst
+
     x0, bounds = [], []
     for key in pulse_options.keys():
-        x0.append(pulse_options[key].get("guess"))
-        bounds.append(pulse_options[key].get("bounds"))
+        helper(x0, pulse_options[key].get("guess"))
+        helper(bounds, pulse_options[key].get("bounds"))
 
-    if time_options.get("guess", False):
-        x0.append(time_options.get("guess"))
-        bounds.append(time_options.get("bounds"))
+    helper(x0, time_options.get("guess", None))
+    helper(bounds, time_options.get("bounds", None))
 
     optimizer_kwargs["x0"] = np.concatenate(x0)
 
