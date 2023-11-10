@@ -9,35 +9,30 @@ import qutip_jax
 from diffrax import Dopri5, Tsit5, PIDController
 
 import jax
-from jax import custom_vjp
+from jax import custom_jvp
 import jax.numpy as jnp
 
 
-@custom_vjp
+@custom_jvp
 def abs(x):
     return jnp.abs(x)
 
 
-def PSU_fwd(x):
-    # Returns primal output and residuals to be used in backward pass by f_bwd
-    return abs(x), (jnp.conj(x), jnp.abs(x), x)
+def abs_jvp(primals, tangents):
+    # forward pass autodiff
+    x, = primals
+    t, = tangents
 
-
-def PSU_bwd(res, x_dot):
-    conj_x, abs_x, x = res  # Gets residuals computed in f_fwd
-
-    if jnp.any(abs_x):
-        phase_fac = conj_x / abs_x  # exp(-i*phi)
+    abs_x = abs(x)
+    if abs_x != 0:
+        res = jnp.real(jnp.multiply(jnp.conj(x), t)) / abs_x
     else:
-        phase_fac = 0.
+        res = 0.
 
-    grad = (phase_fac * x_dot).real
-    result = jax.lax.complex(grad, 0.)
-
-    return (result,)
+    return abs_x, res
 
 
-abs.defvjp(PSU_fwd, PSU_bwd)
+abs.defjvp(abs_jvp)
 
 
 class JOAT:
@@ -96,7 +91,7 @@ class JOAT:
             self.fid_type = alg_kwargs.get("fid_type", "PSU")
             self.solver = qt.SESolver(H=self.H, options=self.integrator_kwargs)
 
-        self.gradient = jax.grad(self.infidelity, holomorphic=True)
+        self.gradient = jax.grad(self.infidelity)
 
     def prepare_H(self):
         """
@@ -147,15 +142,11 @@ class JOAT:
         else:
             g = self.norm_fac * self.target.overlap(X)
             if self.fid_type == "PSU":  # f_PSU (drop global phase)
-                # NOTE: should return infid = 1 - abs(g)
-                # but JAX does not calculate grad(abs) correctly
-                # therefore, intermediate result is returned and
-                # full calculation is done manually in grad_fun
-                self.infid = g
+                self.infid = 1 - abs(g)  # Note: custom_jvp for abs
             elif self.fid_type == "SU":  # f_SU (incl global phase)
                 self.infid = 1 - jnp.real(g)
 
-        return self.infid if jnp.iscomplexobj(self.infid) else jax.lax.complex(self.infid, 0.)
+        return self.infid
 
 
 class Multi_JOAT:
@@ -173,14 +164,9 @@ class Multi_JOAT:
     def goal_fun(self, params):
         infid_sum = 0
 
-        for joat in self.joats:  # TODO: parallelize
+        for j in self.joats:  # TODO: parallelize
 
-            if j.fid_type == "PSU":  # see note in JOAT.infidelity
-                self.g = joat.infidelity(params)
-                infid = 1 - jnp.abs(self.g)
-
-            else:
-                infid = joat.infidelity(params)
+            infid = j.infidelity(params)
 
             if infid < 0:
                 print(
@@ -199,14 +185,7 @@ class Multi_JOAT:
 
         for j in self.joats:
 
-            if j.fid_type == "PSU":  # see note in JOAT.infidelity
-                dg = j.gradient(jax.lax.complex(params, 0.))
-                phase = jnp.conj(self.g) / jnp.abs(self.g)
-                grad = -(phase * dg).real
-
-            else:
-                grad = j.gradient(params)
-
+            grad = j.gradient(params)
             grads += grad
 
         return grads
