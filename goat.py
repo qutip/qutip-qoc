@@ -210,8 +210,11 @@ class GOAT:
             dX_lst.append(Qobj(dx))
 
         if self.var_t:
-            dX_dT = self.H_evo(params[-1], args={'p': params}) * X
-            dX_lst.append(-1j * dX_dT)
+            H_T = self.H_evo(params[-1], args={'p': params})
+            dX_dT = -1j * H_T * X
+            if self.is_super:
+                dX_dT = (1j) * dX_dT
+            dX_lst.append(dX_dT)
 
         if self.fid_type == "TRACEDIFF":
             diff = X - self.target
