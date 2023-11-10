@@ -56,23 +56,24 @@ class GOAT:
 
         # num of params for each control function
         self.para_counts = [len(v["guess"]) for v in pulse_options.values()]
-        if self.var_t:  # add one parameter for time if variable
-            self.para_counts.append(1)
 
         # inferred attributes
-        self.tot_n_para = sum(self.para_counts)  # incl. time if var_t==True
+        self.tot_n_para = sum(self.para_counts)  # excl. time
         self.norm_fac = 1 / self.target.norm()
         self.sys_size = self.Hd.shape[0]
 
         # Scale the system Hamiltonian and initial state
         # for coupled system (X, dX)
-        self.H = self.prepare_H()
-        self.dH = self.prepare_dH()
+        self.H_dia, self.H = self.prepare_H_dia()
+        self.H_off_dia = self.prepare_H_off_dia()
         self.psi0 = self.prepare_psi0()
 
-        self.evo = QobjEvo(self.H + self.dH, {"p": guess_params})
+        self.evo = QobjEvo(self.H_dia + self.H_off_dia, {"p": guess_params})
         if self.is_super:  # for SESolver
             self.evo = (1j) * self.evo
+
+        if self.var_t:  # for time derivative
+            self.H_evo = QobjEvo(self.H, {"p": guess_params})
 
         # initialize the solver
         self.solver = qt.SESolver(H=self.evo, options=integrator_kwargs)
@@ -91,55 +92,63 @@ class GOAT:
         psi0 = Qobj(scale) & self.initial
         return psi0
 
-    def prepare_H(self):
+    def prepare_H_dia(self):
         """
-        Combines the scaled Hamiltonian diagonal elements
+        Combines the scaled and parameterized Hamiltonian diagonal elements
         for the coupled system (X, dX) with associated pulses:
         [[  H, 0, 0, ...], [[  X],
          [d1H, H, 0, ...],  [d1U],
          [d2H, 0, H, ...],  [d2U],
          [...,         ]]   [...]]
+        Additionlly, if the time is a parameter, the time-dependent
+        parameterized Hamiltonian without scaling
         """
         def helper(control, lower, upper):
             # to fix parameter index in loop
             return lambda t, p: control(t, p[lower:upper])
 
-        diag = qt.qeye(1 + self.tot_n_para)
-        H = [diag & self.Hd]
-        idx = 0
-
         # H = [Hd, [H0, c0(t)], ...]
+        H = [self.Hd] if self.var_t else []
 
+        dia = qt.qeye(1 + self.tot_n_para)
+        H_dia = [dia & self.Hd]
+
+        idx = 0
         for control, M, Hc in zip(self.controls, self.para_counts, self.Hc_lst):
-            hc = diag & Hc
-            H.append([hc, helper(control, idx, idx + M)])
-            idx += M
-        return H  # list to construct QobjEvo
 
-    def prepare_dH(self):
+            if self.var_t:
+                H.append([Hc, helper(control, idx, idx + M)])
+
+            hc_dia = dia & Hc
+            H_dia.append([hc_dia, helper(control, idx, idx + M)])
+            idx += M
+
+        return H_dia, H  # lists to construct QobjEvo
+
+    def prepare_H_off_dia(self):
         """
-        Combines the scaled Hamiltonian off-diagonal elements
+        Combines the scaled and parameterized Hamiltonian off-diagonal elements
         for the coupled system (X, dX) with associated pulses:
         [[  H, 0, 0, ...], [[  X],
          [d1H, H, 0, ...],  [d1U],
          [d2H, 0, H, ...],  [d2U],
          [...,         ]]   [...]]
+        The off-diagonal elements correspond to the derivative elements
         """
         def helper(control, lower, upper, idx):
             # to fix parameter index in loop
             return lambda t, p: grad(t, p[lower:upper], idx)
 
         csr_shape = (1 + self.tot_n_para,  1 + self.tot_n_para)
-        dH = []
-        idx = 0
 
         # dH = [[H1', dc1'(t)], [H1", dc1"(t)], ... , [H2', dc2'(t)], ...]
+        dH = []
 
+        idx = 0
         for grad, M, Hc in zip(self.grads, self.para_counts, self.Hc_lst):
 
-            for grad_idx in range(M + int(self.var_t)):
-                # grad_idx == M -> time parameter
-                i = 1 + idx + grad_idx if grad_idx < M else self.tot_n_para
+            for grad_idx in range(M):
+                i = 1 + idx + grad_idx
                 csr = sp.sparse.csr_matrix(([1], ([i], [0])), csr_shape)
                 hc = Qobj(csr) & Hc
                 dH.append([hc, helper(grad, idx, idx + M, grad_idx)])
@@ -152,11 +161,13 @@ class GOAT:
         """
         Calculates X, and dX i.e. the derivative of the evolution operator X
         wrt the control parameters by solving the Schrodinger operator equation
+        returns X as Qobj and dX as list of dense matrices
         """
         res = self.solver.run(self.psi0, [0., evo_time], args={'p': params})
 
         X = res.final_state[:self.sys_size, :self.sys_size]
         dX = res.final_state[self.sys_size:, :self.sys_size]
+
         return X, dX
 
     def infidelity(self, params):
@@ -185,7 +196,7 @@ class GOAT:
 
         return self.infid
 
-    def gradient(self):
+    def gradient(self, params):
         """
         Calculates the gradient of the fidelity error function
         wrt control parameters by solving the Schrodinger operator equation
@@ -197,6 +208,10 @@ class GOAT:
             idx = i * self.sys_size  # row index for parameter set i
             dx = dX[idx: idx + self.sys_size, :]
             dX_lst.append(Qobj(dx))
+
+        if self.var_t:
+            dX_dT = self.H_evo(params[-1], args={'p': params}) * X
+            dX_lst.append(-1j * dX_dT)
 
         if self.fid_type == "TRACEDIFF":
             diff = X - self.target
@@ -246,5 +261,5 @@ class Multi_GOAT:
     def grad_fun(self, params):
         grads = 0
         for g in self.goats:
-            grads += g.gradient()
+            grads += g.gradient(params)
         return grads
