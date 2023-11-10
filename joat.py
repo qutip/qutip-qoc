@@ -142,7 +142,7 @@ class JOAT:
         else:
             g = self.norm_fac * self.target.overlap(X)
             if self.fid_type == "PSU":  # f_PSU (drop global phase)
-                self.infid = 1 - abs(g)  # Note: custom_jvp for abs
+                self.infid = 1 - abs(g)  # custom_jvp for abs
             elif self.fid_type == "SU":  # f_SU (incl global phase)
                 self.infid = 1 - jnp.real(g)
 
