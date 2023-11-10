@@ -106,10 +106,17 @@ class Result():
             # reshape (optimized) new_parameters array to match
             # shape and type of the guess_parameters list
             opt_params = []
-            for i, guess in enumerate(self.guess_params):
-                opt_params.append(type(guess)(
-                    self.new_params[i: i + len(guess)])
-                )
+
+            idx = 0
+            for guess in self.guess_params:
+                opt = self.new_params[idx: idx + len(guess)]
+
+                if isinstance(guess, list):
+                    opt = opt.tolist()
+
+                opt_params.append(opt)
+                idx += len(guess)
+
             self._optimized_params = opt_params
         return self._optimized_params
 
@@ -134,8 +141,8 @@ class Result():
                 else:
                     cf = xf
                 opt_ctrl.append(cf)
-            self._optimized_controls = opt_ctrl
 
+            self._optimized_controls = opt_ctrl
         return self._optimized_controls
 
     @property
@@ -155,8 +162,8 @@ class Result():
                 else:
                     c0 = x0
                 gss_ctrl.append(c0)
-            self._guess_controls = gss_ctrl
 
+            self._guess_controls = gss_ctrl
         return self._guess_controls
 
     @property
@@ -181,8 +188,8 @@ class Result():
                 opt_obj.append(
                     Objective(obj.initial, optimized_H, obj.target)
                 )
-            self._optimized_objectives = opt_obj
 
+            self._optimized_objectives = opt_obj
         return self._optimized_objectives
 
     @property
