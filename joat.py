@@ -40,9 +40,6 @@ class JOAT:
     Class for storing a control problem and calculating
     the fidelity error function and its gradient wrt the control parameters.
     """
-    # calculated during optimization
-    X = None  # current evolution operator
-    infid = None  # infidelity
 
     def __init__(self, objective, time_interval, time_options, pulse_options, alg_kwargs, guess_params, **integrator_kwargs):
 
@@ -91,7 +88,8 @@ class JOAT:
             self.fid_type = alg_kwargs.get("fid_type", "PSU")
             self.solver = qt.SESolver(H=self.H, options=self.integrator_kwargs)
 
-        self.gradient = jax.grad(self.infidelity)
+        self.infidelity = jax.jit(self.infid)
+        self.gradient = jax.jit(jax.grad(self.infidelity))
 
     def prepare_H(self):
         """
@@ -121,7 +119,7 @@ class JOAT:
 
         return H.to("jaxdia")
 
-    def infidelity(self, params):
+    def infid(self, params):
         """
         calculate infidelity to be minimized
         """
@@ -133,20 +131,18 @@ class JOAT:
             args={'p': params}
         ).final_state
 
-        X = Qobj(X, dims=self.target.dims)
-
         if self.fid_type == "TRACEDIFF":
             diff = X - self.target
             g = 1/2 * (diff.dag() * diff).tr()
-            self.infid = jnp.real(self.norm_fac * g)
+            infid = jnp.real(self.norm_fac * g)
         else:
             g = self.norm_fac * self.target.overlap(X)
             if self.fid_type == "PSU":  # f_PSU (drop global phase)
-                self.infid = 1 - abs(g)  # custom_jvp for abs
+                infid = 1 - abs(g)  # custom_jvp for abs
             elif self.fid_type == "SU":  # f_SU (incl global phase)
-                self.infid = 1 - jnp.real(g)
+                infid = 1 - jnp.real(g)
 
-        return self.infid
+        return infid
 
 
 class Multi_JOAT:
