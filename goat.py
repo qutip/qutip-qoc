@@ -18,17 +18,16 @@ class GOAT:
     g = None  # normalized overlap of X and target
     X = None  # current evolution operator
     dX = None  # derivative of X wrt control parameters
-    infid = None  # infidelity
 
     def __init__(self, objective, time_interval, time_options, pulse_options, alg_kwargs, guess_params, **integrator_kwargs):
 
         # make superoperators conform with SESolver
-        if objective.H_evo[0].issuper:
+        if objective.H[0].issuper:
             self.is_super = True
 
             # extract drift and control Hamiltonians from the objective
-            self.Hd = Qobj(objective.H_evo[0].data)  # super -> oper
-            self.Hc_lst = [Qobj(Hc[0].data) for Hc in objective.H_evo[1:]]
+            self.Hd = Qobj(objective.H[0].data)  # super -> oper
+            self.Hc_lst = [Qobj(Hc[0].data) for Hc in objective.H[1:]]
 
             # extract initial and target state or operator from the objective
             self.initial = Qobj(objective.initial.data)
@@ -38,15 +37,15 @@ class GOAT:
 
         else:
             self.is_super = False
-            self.Hd = objective.H_evo[0]
-            self.Hc_lst = [Hc[0] for Hc in objective.H_evo[1:]]
+            self.Hd = objective.H[0]
+            self.Hc_lst = [Hc[0] for Hc in objective.H[1:]]
             self.initial = objective.initial
             self.target = objective.target
             self.fid_type = alg_kwargs.get("fid_type", "PSU")
 
         # extract control functions and gradients from the objective
-        self.controls = [H[1] for H in objective.H_evo[1:]]
-        self.grads = [H[2].get("grad", None) for H in objective.H_evo[1:]]
+        self.controls = [H[1] for H in objective.H[1:]]
+        self.grads = [H[2].get("grad", None) for H in objective.H[1:]]
         if None in self.grads:
             raise KeyError("No gradient function found for control function "
                            "at index {}.".format(self.grads.index(None)))
@@ -186,15 +185,15 @@ class GOAT:
         if self.fid_type == "TRACEDIFF":
             diff = self.X - self.target
             self.g = 1/2 * diff.overlap(diff)
-            self.infid = self.norm_fac * np.real(self.g)
+            infid = self.norm_fac * np.real(self.g)
         else:
             self.g = self.norm_fac * self.target.overlap(self.X)
             if self.fid_type == "PSU":  # f_PSU (drop global phase)
-                self.infid = 1 - np.abs(self.g)
+                infid = 1 - np.abs(self.g)
             elif self.fid_type == "SU":  # f_SU (incl global phase)
-                self.infid = 1 - np.real(self.g)
+                infid = 1 - np.real(self.g)
 
-        return self.infid
+        return infid
 
     def gradient(self, params):
         """
@@ -210,7 +209,8 @@ class GOAT:
             dX_lst.append(Qobj(dx))
 
         if self.var_t:
-            H_T = self.H_evo(params[-1], args={'p': params})
+            # args={'p': params} TODO: report bug
+            H_T = self.H_evo(params[-1], p=params)
             dX_dT = -1j * H_T * X
             if self.is_super:
                 dX_dT = (1j) * dX_dT
