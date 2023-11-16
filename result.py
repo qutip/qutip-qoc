@@ -131,7 +131,7 @@ class Result():
         if self._optimized_controls is None:
             opt_ctrl = []
 
-            for Hc, xf in zip(self.objectives[0].H_evo[1:], self.optimized_params):
+            for Hc, xf in zip(self.objectives[0].H[1:], self.optimized_params):
 
                 control = Hc[1]
                 if callable(control):
@@ -152,7 +152,7 @@ class Result():
         if self._guess_controls is None:
             gss_ctrl = []
 
-            for Hc, x0 in zip(self.objectives[0].H_evo[1:], self.guess_params):
+            for Hc, x0 in zip(self.objectives[0].H[1:], self.guess_params):
 
                 control = Hc[1]
                 if callable(control):
@@ -174,13 +174,13 @@ class Result():
             opt_obj = []
 
             for obj in self.objectives:
-                optimized_H = [obj.H_evo[0]]
+                optimized_H = [obj.H[0]]
 
-                for Hc, cf in zip(obj.H_evo[1:], self.optimized_controls):
+                for Hc, cf in zip(obj.H[1:], self.optimized_controls):
                     control = Hc[1]
 
                     if callable(control):
-                        optimized_H = obj.H_evo
+                        optimized_H = obj.H
                         break
                     else:
                         optimized_H.append([Hc[0], cf])
@@ -203,7 +203,7 @@ class Result():
                 evo_time = self.time_interval.evo_time
 
             # extract parameter names from control functions f(t, para_key)
-            c_sigs = [signature(Hc[1]) for Hc in self.objectives[0].H_evo[1:]]
+            c_sigs = [signature(Hc[1]) for Hc in self.objectives[0].H[1:]]
             c_keys = [sig.parameters.keys() for sig in c_sigs]
             para_keys = [list(keys)[1] for keys in c_keys]
 
@@ -214,7 +214,7 @@ class Result():
             for obj in self.optimized_objectives:
                 states.append(
                     qt.mesolve(
-                        obj.H_evo,
+                        obj.H,
                         obj.initial,
                         tlist=[0., evo_time],
                         args=args_dict,

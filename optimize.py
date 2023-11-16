@@ -9,7 +9,7 @@ from result import Result
 
 def optimize_pulses(objectives, pulse_options, time_interval, time_options={}, algorithm_kwargs={}, **kwargs):
     """
-    Wrapper to choose between GOAT and GRAPE/CRAB optimization.
+    Wrapper to choose between GOAT/JOAT and GRAPE/CRAB optimization.
     """
     alg = algorithm_kwargs.get("alg", "GRAPE")
     if alg == "GOAT" or alg == "JOAT":
@@ -24,12 +24,12 @@ def optimize_pulses(objectives, pulse_options, time_interval, time_options={}, a
     else:  # GRAPE or CRAB
         if len(objectives) != 1:
             raise TypeError("GRAPE and CRAB optimization only supports one objective at a time. "
-                            "Please use GOAT for multiple objectives.")
+                            "Please use GOAT or JOAT for multiple objectives.")
         objective = objectives[0]
 
         # extract drift and control Hamiltonians from the objective
-        Hd = objective.H_evo[0]
-        Hc_lst = [H[0] for H in objective.H_evo[1:]]
+        Hd = objective.H[0]
+        Hc_lst = [H[0] for H in objective.H[1:]]
 
         # extract initial and target states/operators from the objective
         init = objective.initial

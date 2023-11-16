@@ -43,8 +43,8 @@ class JOAT:
 
     def __init__(self, objective, time_interval, time_options, pulse_options, alg_kwargs, guess_params, **integrator_kwargs):
 
-        self.Hd = objective.H_evo[0]
-        self.Hc_lst = objective.H_evo[1:]
+        self.Hd = objective.H[0]
+        self.Hc_lst = objective.H[1:]
 
         self.pulse_options = pulse_options
         self.guess_params = guess_params
@@ -152,7 +152,7 @@ class Multi_JOAT:
     """
 
     def __init__(self, objectives, time_interval, time_options, pulse_options, alg_kwargs, guess_params, **integrator_kwargs):
-        self.joats = [JOAT(obj, time_interval, time_options, pulse_options, alg_kwargs, guess_params, ** integrator_kwargs)
+        self.joats = [JOAT(obj, time_interval, time_options, pulse_options, alg_kwargs, guess_params, **integrator_kwargs)
                       for obj in objectives]
 
         self.mean_infid = None
