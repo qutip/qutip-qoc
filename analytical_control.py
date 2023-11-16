@@ -234,9 +234,32 @@ def optimize_pulses(
                                      guess_params=optimizer_kwargs["x0"],
                                      **integrator_kwargs)
 
-    max_wall_time = algorithm_kwargs.get("max_wall_time", 180)
+    max_wall_time = algorithm_kwargs.get("max_wall_time", 1e10)
     fid_err_targ = algorithm_kwargs.get("fid_err_targ", 1e-10)
     disp = algorithm_kwargs.get("disp", False)
+
+    # optimizer specific settings
+    opt_method = algorithm_kwargs.get("method", "basinhopping")
+
+    if opt_method == "basinhopping":
+        optimizer = sp.optimize.basinhopping
+
+        # if not specified through optimizer_kwargs
+        optimizer_kwargs.setdefault(  # use algorithm_kwargs
+            "niter", algorithm_kwargs.get("max_n_iter", 100))
+
+        # realizes boundaries through minimizer
+        minimizer_kwargs["bounds"] = np.concatenate(bounds)
+
+    elif opt_method == "dual_annealing":
+        optimizer = sp.optimize.dual_annealing
+
+        # if not specified through optimizer_kwargs
+        optimizer_kwargs.setdefault(  # use algorithm_kwargs
+            "maxiter", algorithm_kwargs.get("max_n_iter", 100))
+
+        # realizes boundaries through optimizer
+        optimizer_kwargs["bounds"] = np.concatenate(bounds)
 
     # define the result Krotov style
     result = Result(objectives,
@@ -244,6 +267,7 @@ def optimize_pulses(
                     guess_params=x0,
                     var_time=time_options.get("guess", False))
 
+    # helper functions for callbacks
     def inside_bounds(x):
         idx = 0
         for bound in bounds:
@@ -299,21 +323,6 @@ def optimize_pulses(
                     result.update(f, x)
 
         return terminate
-
-    # select the global optimization method and
-    # set method specific options
-    opt_method = algorithm_kwargs.get("method", "basinhopping")
-    if opt_method == "basinhopping":
-        optimizer = sp.optimize.basinhopping
-        optimizer_kwargs.setdefault(
-            "niter", algorithm_kwargs.get("max_iter", 100))
-        minimizer_kwargs["bounds"] = np.concatenate(bounds)
-
-    elif opt_method == "dual_annealing":
-        optimizer = sp.optimize.dual_annealing
-        optimizer_kwargs.setdefault(
-            "maxiter", algorithm_kwargs.get("max_iter", 100))
-        optimizer_kwargs["bounds"] = np.concatenate(bounds)
 
     result.start_time()
 
