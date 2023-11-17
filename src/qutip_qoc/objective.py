@@ -1,3 +1,6 @@
+import qutip as qt
+
+
 class Objective:
     """
     A class for storing all
@@ -19,9 +22,11 @@ class Objective:
     ----------
     initial : :class:`qutip.Qobj`
         The initial state or operator to be transformed.
-    H : callable, list or Qobj
+
+    H : callable, list
         A specification of the time-depedent quantum object.
         See :class:`qutip.QobjEvo` for details and examples.
+
     target : :class:`qutip.Qobj`
         The target state or operator.
     """

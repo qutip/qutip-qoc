@@ -34,7 +34,7 @@ def optimize_pulses(
         bounds : list of pairs of floats
             [(lower, upper), ...]
             Bounds for the pulse parameters.
-    tlist : array_like
+    tslots : array_like
         List of times for the calculataion of final pulse sequence.
         During integration only the first and last time are used.
     kwargs : dict of dict
@@ -177,7 +177,7 @@ def optimize_pulses(
                 - atol, rtol : float
                 Absolute and relative tolerance of the ODE integrator.
                 - nsteps : int
-                Maximum number of (internally defined) steps allowed in one ``tlist``
+                Maximum number of (internally defined) steps allowed in one ``tslots``
                 step.
                 - max_step : float, 0
                 Maximum lenght of one internal step. When using pulses, it should be

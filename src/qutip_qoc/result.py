@@ -136,7 +136,7 @@ class Result():
                 control = Hc[1]
                 if callable(control):
                     cf = []
-                    for t in self.time_interval.tlist:
+                    for t in self.time_interval.tslots:
                         cf.append(control(t, xf))
                 else:
                     cf = xf
@@ -157,7 +157,7 @@ class Result():
                 control = Hc[1]
                 if callable(control):
                     c0 = []
-                    for t in self.time_interval.tlist:
+                    for t in self.time_interval.tslots:
                         c0.append(control(t, x0))
                 else:
                     c0 = x0
@@ -217,7 +217,7 @@ class Result():
                     qt.mesolve(
                         obj.H,
                         obj.initial,
-                        tlist=[0., evo_time],
+                        tslots=[0., evo_time],
                         args=args_dict,
                         options={'normalize_output': False}
                     ).final_state
