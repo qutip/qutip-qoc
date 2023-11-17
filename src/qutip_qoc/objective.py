@@ -1,19 +1,17 @@
-import qutip as qt
-
-
 class Objective:
     """
-    A class for storing all
-    information about an optimization objective.
+    A class for storing information about an optimization objective.
 
     *Examples*
     >>> initial = qt.basis(2, 0)
     >>> target = qt.basis(2, 1)
 
-    >>> sin = lambda t, p: p[0] * np.sin(t)
+    >>> sin = lambda t, p: np.sin(p * t)
+
     >>> def d_sin(t, p, idx):
-    >>>     if idx==0: return np.sin(t)
-    >>>     if idx==1: return p[0] * np.cos(t)
+    >>>     if idx==0: return t * np.cos(t) # wrt p
+    >>>     if idx==1: return p * np.cos(t) # wrt t
+
     >>> H = [qt.sigmax(), [qt.sigmay(), sin, {'grad': d_sin}]]
 
     >>> obj = Objective(initial, H, target)
