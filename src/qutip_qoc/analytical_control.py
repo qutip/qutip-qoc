@@ -239,14 +239,16 @@ def optimize_pulses(
     disp = algorithm_kwargs.get("disp", False)
 
     # optimizer specific settings
-    opt_method = algorithm_kwargs.get("method", "basinhopping")
+    opt_method = optimizer_kwargs.get(
+        "method", algorithm_kwargs.get("method", "basinhopping"))
 
     if opt_method == "basinhopping":
         optimizer = sp.optimize.basinhopping
 
-        # if not specified through optimizer_kwargs
-        optimizer_kwargs.setdefault(  # use algorithm_kwargs
-            "niter", algorithm_kwargs.get("max_n_iter", 100))
+        # if not specified through optimizer_kwargs "niter"
+        optimizer_kwargs.setdefault(  # or "max_iter"
+            "niter", optimizer_kwargs.get(  # use algorithm_kwargs
+                "max_iter", algorithm_kwargs.get("max_iter", 1000)))
 
         # realizes boundaries through minimizer
         minimizer_kwargs["bounds"] = np.concatenate(bounds)
@@ -254,12 +256,17 @@ def optimize_pulses(
     elif opt_method == "dual_annealing":
         optimizer = sp.optimize.dual_annealing
 
-        # if not specified through optimizer_kwargs
-        optimizer_kwargs.setdefault(  # use algorithm_kwargs
-            "maxiter", algorithm_kwargs.get("max_n_iter", 100))
+        # if not specified through optimizer_kwargs "maxiter"
+        optimizer_kwargs.setdefault(  # or "max_iter"
+            "maxiter", optimizer_kwargs.get(  # use algorithm_kwargs
+                "max_iter", algorithm_kwargs.get("max_iter", 1000)))
 
         # realizes boundaries through optimizer
         optimizer_kwargs["bounds"] = np.concatenate(bounds)
+
+    # remove overload from optimizer_kwargs
+    optimizer_kwargs.pop("max_iter", None)
+    optimizer_kwargs.pop("method", None)
 
     # define the result Krotov style
     result = Result(objectives,

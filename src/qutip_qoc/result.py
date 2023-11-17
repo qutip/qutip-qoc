@@ -211,6 +211,7 @@ class Result():
             for key, val in zip(para_keys, self.optimized_params):
                 args_dict[key] = val
 
+            # TODO: fix for same input key of differnt funcitons
             for obj in self.optimized_objectives:
                 states.append(
                     qt.mesolve(

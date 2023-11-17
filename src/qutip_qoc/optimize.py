@@ -71,6 +71,13 @@ def optimize_pulses(objectives, pulse_options, time_interval, time_options={}, a
         else:
             log_level = logging.WARN
 
+        # low level minimizer overrides high level algorithm kwargs
+        max_iter = minimizer_kwargs.get("options", {}).get(
+            "maxiter", algorithm_kwargs.get("max_iter", 1000))
+
+        optim_method = minimizer_kwargs.get(
+            "method", algorithm_kwargs.get("optim_method", "DEF"))
+
         result = Result(objectives, time_interval)
         result.start_time()
 
@@ -86,10 +93,10 @@ def optimize_pulses(objectives, pulse_options, time_interval, time_options={}, a
             amp_ubound=ubound,
             fid_err_targ=algorithm_kwargs.get("fid_err_targ", 1e-10),
             min_grad=min_g,
-            max_iter=algorithm_kwargs.get("max_iter", 500),
+            max_iter=max_iter,
             max_wall_time=algorithm_kwargs.get("max_wall_time", 180),
             alg=alg,
-            optim_method=minimizer_kwargs.get("method", "DEF"),
+            optim_method=optim_method,
             method_params=minimizer_kwargs,
 
             optim_alg=None,  # deprecated

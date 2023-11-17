@@ -67,16 +67,12 @@ class JOAT:
         self.atol = self.integrator_kwargs.get("atol", 1e-5)
 
         self.integrator_kwargs.setdefault(
-            "stepsize_controller", self.integrator_kwargs.get(
-                "stepsize_controller", PIDController(
-                    rtol=self.rtol, atol=self.atol
-                )
+            "stepsize_controller", PIDController(
+                rtol=self.rtol, atol=self.atol
             )
         )
         self.integrator_kwargs.setdefault(
-            "solver", self.integrator_kwargs.get(
-                "solver", Tsit5()
-            )
+            "solver",  Dopri5()
         )
 
         # choose solver and fidelity type according to problem
