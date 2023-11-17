@@ -37,11 +37,6 @@ plugins:
     enabled: true
   pep8:
     enabled: true
-    checks:
-      E203:
-        enabled: false
-      E501: # Disable "Line too long", covered in Black
-        enabled: false
   duplication:
     enabled: true
     config:
