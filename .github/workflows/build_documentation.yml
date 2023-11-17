@@ -25,13 +25,13 @@ jobs:
         run: |
           python -mpip install -r doc/requirements.txt
 
-      - name: Install qutip-qip from GitHub
+      - name: Install qutip-qoc from GitHub
         run: |
           python -mpip install -e .[full]
           # Install in editable mode so it doesn't matter if we import from
           # inside the installation directory, otherwise we can get some errors
           # because we're importing from the wrong location.
-          python -c 'import qutip_qip; print("QuTiP QIP Version:      %s" % qutip_qip.__version__)'
+          python -c 'import qutip_qoc; print("QuTiP qoc Version:      %s" % qutip_qoc.__version__)'
           python -c 'import qutip; qutip.about()'
 
       - name: Build documentation
@@ -46,6 +46,6 @@ jobs:
       - name: Upload built files
         uses: actions/upload-artifact@v3
         with:
-          name: qutip_qip_html_docs
+          name: qutip_qoc_html_docs
           path: doc/_build/html/*
           if-no-files-found: error

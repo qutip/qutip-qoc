@@ -135,7 +135,7 @@ jobs:
         shell: bash
         run: |
           python -m pip install wheels/*.whl
-          python -c 'import qutip_qip; print(qutip_qip.__version__); assert "dev" not in qutip_qip.__version__; assert "+" not in qutip_qip.__version__'
+          python -c 'import qutip_qoc; print(qutip_qoc.__version__); assert "dev" not in qutip_qoc.__version__; assert "+" not in qutip_qoc.__version__'
 
       - name: Upload sdist and wheels to PyPI
         env:
