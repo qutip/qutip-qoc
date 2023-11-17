@@ -32,6 +32,7 @@ def abs_jvp(primals, tangents):
     return abs_x, res
 
 
+# register custom jvp for absolut value of complex functions
 abs.defjvp(abs_jvp)
 
 
@@ -41,7 +42,15 @@ class JOAT:
     the fidelity error function and its gradient wrt the control parameters.
     """
 
-    def __init__(self, objective, time_interval, time_options, pulse_options, alg_kwargs, guess_params, **integrator_kwargs):
+    def __init__(
+            self,
+            objective,
+            time_interval,
+            time_options,
+            pulse_options,
+            alg_kwargs,
+            guess_params,
+            **integrator_kwargs):
 
         self.Hd = objective.H[0]
         self.Hc_lst = objective.H[1:]
@@ -72,7 +81,7 @@ class JOAT:
             )
         )
         self.integrator_kwargs.setdefault(
-            "solver",  Dopri5()
+            "solver", Dopri5()
         )
 
         # choose solver and fidelity type according to problem
@@ -90,7 +99,8 @@ class JOAT:
     def prepare_H(self):
         """
         prepare Hamiltonian call signature
-        to only take one parameter vector
+        to only take one parameter vector 'p' for mesolve like:
+        qt.mesolve(H, psi0, tlist, args={'p': p})
         """
 
         def helper(control, lower, upper):
@@ -129,7 +139,7 @@ class JOAT:
 
         if self.fid_type == "TRACEDIFF":
             diff = X - self.target
-            g = 1/2 * (diff.dag() * diff).tr()
+            g = 1 / 2 * (diff.dag() * diff).tr()
             infid = jnp.real(self.norm_fac * g)
         else:
             g = self.norm_fac * self.target.overlap(X)
@@ -147,9 +157,14 @@ class Multi_JOAT:
     to optimize multiple objectives simultaneously
     """
 
-    def __init__(self, objectives, time_interval, time_options, pulse_options, alg_kwargs, guess_params, **integrator_kwargs):
-        self.joats = [JOAT(obj, time_interval, time_options, pulse_options, alg_kwargs, guess_params, **integrator_kwargs)
-                      for obj in objectives]
+    def __init__(self, objectives, time_interval, time_options, pulse_options,
+                 alg_kwargs, guess_params, **integrator_kwargs):
+
+        self.joats = [
+            JOAT(obj, time_interval, time_options, pulse_options,
+                 alg_kwargs, guess_params, **integrator_kwargs)
+            for obj in objectives
+        ]
 
         self.mean_infid = None
 
@@ -157,7 +172,6 @@ class Multi_JOAT:
         infid_sum = 0
 
         for j in self.joats:  # TODO: parallelize
-
             infid = j.infidelity(params)
 
             if infid < 0:

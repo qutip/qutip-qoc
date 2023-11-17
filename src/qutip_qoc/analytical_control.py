@@ -1,14 +1,13 @@
 """
-This module contains functions that implement the JOAT algorithm to
-calculate optimal parameters for analytical control pulse sequences.
+This module contains the optimization routine
+for optimizing analytical control functions
+with GOAT resp. JOAT.
 """
 import numpy as np
 import scipy as sp
-
 import qutip as qt
 
 from result import Result
-
 from joat import Multi_JOAT
 from goat import Multi_GOAT
 
@@ -19,187 +18,109 @@ def optimize_pulses(
         time_interval,
         time_options,
         algorithm_kwargs,
-        **kwargs):
+        optimizer_kwargs,
+        minimizer_kwargs,
+        integrator_kwargs):
     """
-    Optimize a pulse sequence to implement a given target unitary.
+    Optimize a pulse sequence to implement a given target unitary by optimizing
+    the parameters of the pulse functions. The algorithm is a two-layered
+    approach. The outer layer does a global optimization using basin-hopping or
+    dual annealing. The inner layer does a local optimization using a gradient-
+    based method. Gradients and error values are calculated in the GOAT/JOAT
+    module.
 
     Parameters
     ----------
-    objectives : list of :class:`qutip.Qobj`
-        List of objectives to be implemented.
-    pulse_options : dict of dict
-        Dictionary of options for each pulse.
-        guess : list of floats
-            Initial guess for the pulse parameters.
-        bounds : list of pairs of floats
-            [(lower, upper), ...]
-            Bounds for the pulse parameters.
-    tslots : array_like
-        List of times for the calculataion of final pulse sequence.
-        During integration only the first and last time are used.
-    kwargs : dict of dict
-        Dictionary keys are "optimizer", "minimizer" and "integrator".
+    objectives : list of :class:`qutip_qoc.Objective`
+        List of objectives to be optimized.
 
-        The "optimizer" dictionary contains keyword arguments for the optimizer:
-            niter : integer, optional
-                The number of basin-hopping iterations. There will be a total of
-                ``niter + 1`` runs of the local minimizer.
-            T : float, optional
-                The "temperature" parameter for the acceptance or rejection criterion.
-                Higher "temperatures" mean that larger jumps in function value will be
-                accepted.  For best results `T` should be comparable to the
-                separation (in function value) between local minima.
-            stepsize : float, optional
-                Maximum step size for use in the random displacement.
-            take_step : callable ``take_step(x)``, optional
-                Replace the default step-taking routine with this routine. The default
-                step-taking routine is a random displacement of the coordinates, but
-                other step-taking algorithms may be better for some systems.
-                `take_step` can optionally have the attribute ``take_step.stepsize``.
-                If this attribute exists, then `basinhopping` will adjust
-                ``take_step.stepsize`` in order to try to optimize the global minimum
-                search.
-            accept_test : callable, ``accept_test(f_new=f_new, x_new=x_new, f_old=fold, x_old=x_old)``, optional
-                Define a test which will be used to judge whether to accept the
-                step. This will be used in addition to the Metropolis test based on
-                "temperature" `T`. The acceptable return values are True,
-                False, or ``"force accept"``. If any of the tests return False
-                then the step is rejected. If the latter, then this will override any
-                other tests in order to accept the step. This can be used, for example,
-                to forcefully escape from a local minimum that `basinhopping` is
-                trapped in.
-            callback : callable, ``callback(x, f, accept)``, optional
-                A callback function which will be called for all minima found. ``x``
-                and ``f`` are the coordinates and function value of the trial minimum,
-                and ``accept`` is whether that minimum was accepted. This can
-                be used, for example, to save the lowest N minima found. Also,
-                `callback` can be used to specify a user defined stop criterion by
-                optionally returning True to stop the `basinhopping` routine.
-            interval : integer, optional
-                interval for how often to update the `stepsize`
-            disp : bool, optional
-                Set to True to print status messages
-            niter_success : integer, optional
-                Stop the run if the global minimum candidate remains the same for this
-                number of iterations.
-            seed : {None, int, `numpy.random.Generator`, `numpy.random.RandomState`}, optional
+    pulse_options : dict
+        Dictionary of options for the control pulse optimization.
+        For each control function it must specify:
 
-                If `seed` is None (or `np.random`), the `numpy.random.RandomState`
-                singleton is used.
-                If `seed` is an int, a new ``RandomState`` instance is used,
-                seeded with `seed`.
-                If `seed` is already a ``Generator`` or ``RandomState`` instance then
-                that instance is used.
-                Specify `seed` for repeatable minimizations. The random numbers
-                generated with this seed only affect the default Metropolis
-                `accept_test` and the default `take_step`. If you supply your own
-                `take_step` and `accept_test`, and these functions use random
-                number generation, then those functions are responsible for the state
-                of their random number generator.
-            target_accept_rate : float, optional
-                The target acceptance rate that is used to adjust the `stepsize`.
-                If the current acceptance rate is greater than the target,
-                then the `stepsize` is increased. Otherwise, it is decreased.
-                Range is (0, 1). Default is 0.5.
-            See scipy.optimize.basinhopping for more details.
+            control_id : dict
+                - guess: ndarray, shape (n,)
+                    Initial guess. Array of real elements of size (n,),
+                    where ``n`` is the number of independent variables.
 
-        The "minimizer" dictionary contains keyword arguments for the minimizer:
-            method : str or callable, optional
-                Type of solver.  Should be one of
-                    - 'CG'          :ref:`(see here) <optimize.minimize-cg>`
-                    - 'BFGS'        :ref:`(see here) <optimize.minimize-bfgs>`
-                    - 'Newton-CG'   :ref:`(see here) <optimize.minimize-newtoncg>`
-                    - 'L-BFGS-B'    :ref:`(see here) <optimize.minimize-lbfgsb>`
-                    - 'TNC'         :ref:`(see here) <optimize.minimize-tnc>`
-                    - 'SLSQP'       :ref:`(see here) <optimize.minimize-slsqp>`
-                    - 'trust-constr':ref:`(see here) <optimize.minimize-trustconstr>`
-                    - 'dogleg'      :ref:`(see here) <optimize.minimize-dogleg>`
-                    - 'trust-ncg'   :ref:`(see here) <optimize.minimize-trustncg>`
-                    - 'trust-exact' :ref:`(see here) <optimize.minimize-trustexact>`
-                    - 'trust-krylov' :ref:`(see here) <optimize.minimize-trustkrylov>`
-                    - custom - a callable object, see below for description.
-                If not given, chosen to be one of ``BFGS``, ``L-BFGS-B``, ``SLSQP``,
-                depending on whether or not the problem has constraints or bounds.
-            bounds : sequence or `Bounds`, optional
-                Bounds on variables for Nelder-Mead, L-BFGS-B, TNC, SLSQP, Powell,
-                trust-constr, and COBYLA methods. There are two ways to specify the
-                bounds:
-                    1. Instance of `Bounds` class.
-                    2. Sequence of ``(min, max)`` pairs for each element in `x`. None
-                    is used to specify no bound.
-            constraints : {Constraint, dict} or List of {Constraint, dict}, optional
-                Constraints definition. Only for COBYLA, SLSQP and trust-constr.
+                - bounds : sequence, optional
+                    Sequence of ``(min, max)`` pairs for each element in
+                    `guess`. None is used to specify no bound.
 
-                Constraints for 'trust-constr' are defined as a single object or a
-                list of objects specifying constraints to the optimization problem.
-                Available constraints are:
-                    - `LinearConstraint`
-                    - `NonlinearConstraint`
-                Constraints for COBYLA, SLSQP are defined as a list of dictionaries.
-                Each dictionary with fields:
-                    type : str
-                        Constraint type: 'eq' for equality, 'ineq' for inequality.
-                    fun : callable
-                        The function defining the constraint.
-                    jac : callable, optional
-                        The Jacobian of `fun` (only for SLSQP).
-                    args : sequence, optional
-                        Extra arguments to be passed to the function and Jacobian.
-                Equality constraint means that the constraint function result is to
-                be zero whereas inequality means that it is to be non-negative.
-                Note that COBYLA only supports inequality constraints.
-            tol : float, optional
-                Tolerance for termination. When `tol` is specified, the selected
-                minimization algorithm sets some relevant solver-specific tolerance(s)
-                equal to `tol`. For detailed control, use solver-specific
-                options.
-            options : dict, optional
-                A dictionary of solver options. All methods except `TNC` accept the
-                following generic options:
-                    maxiter : int
-                        Maximum number of iterations to perform. Depending on the
-                        method each iteration may use several function evaluations.
-                        For `TNC` use `maxfun` instead of `maxiter`.
-                    disp : bool
-                        Set to True to print convergence messages.
-                For method-specific options, see :func:`show_options()`.
-            See scipy.optimize.minimize for more details.
+    time_interval : :class:`qutip_qoc.TimeInterval`
+        Time interval for the optimization.
 
-        The "integrator" dictionary contains keyword arguments for the integrator options:
-                - progress_bar : str {'text', 'enhanced', 'tqdm', ''}
-                How to present the integrator progress.
-                'tqdm' uses the python module of the same name and raise an error
-                if not installed. Empty string or False will disable the bar.
-                - progress_kwargs : dict
-                kwargs to pass to the progress_bar. Qutip's bars use `chunk_size`.
-                - method : str ["adams", "bdf", "lsoda", "dop853", "vern9", etc.]
-                Which differential equation integration method to use.
-                - atol, rtol : float
-                Absolute and relative tolerance of the ODE integrator.
-                - nsteps : int
-                Maximum number of (internally defined) steps allowed in one ``tslots``
-                step.
-                - max_step : float, 0
-                Maximum lenght of one internal step. When using pulses, it should be
-                less than half the width of the thinnest pulse.
+    time_options : dict, optional
+        Only supported by GOAT and JOAT.
+        Dictionary of options for the time interval optimization.
+        It must specify both:
 
-                Other options could be supported depending on the integration method,
-                see `Integrator <./classes.html#classes-ode>`_.
+            - guess: ndarray, shape (n,)
+                Initial guess. Array of real elements of size (n,),
+                where ``n`` is the number of independent variables.
+
+            - bounds : sequence, optional
+                Sequence of ``(min, max)`` pairs for each element in `guess`.
+                None is used to specify no bound.
+
+    algorithm_kwargs : dict, optional
+        Dictionary of options for the optimization algorithm.
+
+            - alg : str
+                Algorithm to use for the optimization.
+                Supported are: "GOAT", "JOAT".
+
+            - fid_err_targ : float, optional
+                Fidelity error target for the optimization.
+
+            - max_iter : int, optional
+                Maximum number of global iterations to perform.
+                Can be overridden by specifying in
+                optimizer_kwargs/minimizer_kwargs.
+
+    optimizer_kwargs : dict, optional
+        Dictionary of options for the global optimizer.
+        Only supported by GOAT and JOAT.
+
+            - method : str, optional
+                Algorithm to use for the global optimization.
+                Supported are: "basinhopping", "dual_annealing"
+
+            - max_iter : int, optional
+                Maximum number of iterations to perform.
+
+        Full list of options can be found in
+        :func:`scipy.optimize.basinhopping`
+        and :func:`scipy.optimize.dual_annealing`.
+
+    minimizer_kwargs : dict, optional
+        Dictionary of options for the local minimizer.
+
+            - method : str, optional
+                Algorithm to use for the local optimization.
+                Gradient driven methods are supported.
+
+        Full list of options and methods can be found in
+        :func:`scipy.optimize.minimize`.
+
+    integrator_kwargs : dict, optional
+        Dictionary of options for the integrator.
+        Only supported by GOAT and JOAT.
+        Options for the solver, see :obj:`MESolver.options` and
+        `Integrator <./classes.html#classes-ode>`_ for a list of all options.
 
     Returns
     -------
+    result : :class:`qutip_qoc.Result`
+        Optimization result.
     """
-    optimizer_kwargs = kwargs.get("optimizer_kwargs", {})
-    minimizer_kwargs = kwargs.get("minimizer_kwargs", {})
-    integrator_kwargs = kwargs.get("integrator_kwargs", {})
-
     # integrator must not normalize output
     integrator_kwargs["normalize_output"] = False
-    integrator_kwargs["progress_bar"] = integrator_kwargs.get(
-        "progress_bar", False)
+    integrator_kwargs.setdefault("progress_bar", False)
 
     def helper(lst, input):
         # to extract initial and boundary values
+        # of any kind and shape
         if input is None:
             return lst
         if isinstance(input, (list, np.ndarray)):
@@ -220,12 +141,13 @@ def optimize_pulses(
     helper(x0, time_options.get("guess", None))
     helper(bounds, time_options.get("bounds", None))
 
-    optimizer_kwargs["x0"] = np.concatenate(x0)
+    optimizer_kwargs.setdefault("x0", np.concatenate(x0))
 
     if algorithm_kwargs.get("alg") == "JOAT":
         with qt.CoreOptions(default_dtype="jaxdia"):
-            multi_objective = Multi_JOAT(objectives, time_interval, time_options,
-                                         pulse_options, algorithm_kwargs,
+            multi_objective = Multi_JOAT(objectives, time_interval,
+                                         time_options, pulse_options,
+                                         algorithm_kwargs,
                                          guess_params=optimizer_kwargs["x0"],
                                          **integrator_kwargs)
     elif algorithm_kwargs.get("alg") == "GOAT":
@@ -251,7 +173,7 @@ def optimize_pulses(
                 "max_iter", algorithm_kwargs.get("max_iter", 1000)))
 
         # realizes boundaries through minimizer
-        minimizer_kwargs["bounds"] = np.concatenate(bounds)
+        minimizer_kwargs.setdefault("bounds", np.concatenate(bounds))
 
     elif opt_method == "dual_annealing":
         optimizer = sp.optimize.dual_annealing
@@ -262,7 +184,7 @@ def optimize_pulses(
                 "max_iter", algorithm_kwargs.get("max_iter", 1000)))
 
         # realizes boundaries through optimizer
-        optimizer_kwargs["bounds"] = np.concatenate(bounds)
+        optimizer_kwargs.setdefault("bounds", np.concatenate(bounds))
 
     # remove overload from optimizer_kwargs
     optimizer_kwargs.pop("max_iter", None)

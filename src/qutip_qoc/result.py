@@ -8,6 +8,53 @@ from objective import Objective
 
 
 class Result():
+    """
+    Class for storing the results of a pulse control optimization run.
+
+    Attributes:
+    ----------
+    objectives : list of :class:`qutip_qoc.Objective`
+        List of objectives to be optimized.
+
+    time_interval : :class:`qutip_qoc.TimeInterval`
+        Time interval for the optimization.
+
+    start_local_time : struct_time
+        Time when the optimization started.
+
+    end_local_time : struct_time
+        Time when the optimization ended.
+
+    iters : int
+        Number of iterations until convergence.
+
+    iter_seconds : list of float
+        Seconds between each iteration.
+
+    message : str
+        Reason for termination.
+
+    guess_controls : list of ndarray
+        List of guess control pulses used to initialize the optimization.
+
+    optimized_controls : list of ndarray
+        List of optimized control pulses.
+
+    optimized_objectives : list of :class:`qutip_qoc.Objective`
+        List of objectives with optimized control pulses.
+
+    final_states : list of :class:`qutip.Qobj`
+        List of final states after the optimization.
+        One for each objective.
+
+    infidelity : float
+        Final infidelity error after the optimization.
+
+    var_time : bool
+        Whether the optimization was performed with variable time.
+        If True, the last parameter in optimized_params is the evolution time.
+    """
+
     def __init__(
             self,
             objectives=None,
@@ -126,8 +173,6 @@ class Result():
 
     @property
     def optimized_controls(self):
-        """
-        """
         if self._optimized_controls is None:
             opt_ctrl = []
 
@@ -147,8 +192,6 @@ class Result():
 
     @property
     def guess_controls(self):
-        """
-        """
         if self._guess_controls is None:
             gss_ctrl = []
 
@@ -235,38 +278,12 @@ class Result():
         self.new_params = parameters
 
     def dump(self, filename):
-        """Dump the :class:`Result` to a binary :mod:`pickle` file.
-
-        The original :class:`Result` object can be restored from the resulting
-        file using :meth:`load`. However, time-dependent control fields that
-        are callables/functions will not be preserved, as they are not
-        "pickleable".
-
-        Args:
-            filename (str): Name of file to which to dump the :class:`Result`.
-        """
         with open(filename, 'wb') as dump_fh:
             pickler = pickle.Pickler(dump_fh)
-            # slf = copy.deepcopy(self)
-            # slf.objectives = None
-            # slf.optimized_objectives = None
             pickler.dump(self)
 
     @classmethod
     def load(cls, filename, objectives=None):
-        """Construct :class:`Result` object from a :meth:`dump` file
-
-        Args:
-            filename (str): The file from which to load the :class:`Result`.
-                Must be in the format created by :meth:`dump`.
-            objectives (None or list[Objective]): If given, after loading
-                :class:`Result` from the given `filename`, overwrite
-                :attr:`objectives` with the given `objectives`. This is
-                necessary because :meth:`dump` does not preserve time-dependent
-                controls that are Python functions.
-        Returns:
-            Result: The :class:`Result` instance loaded from `filename`
-        """
         with open(filename, 'rb') as dump_fh:
             result = pickle.load(dump_fh)
         result.objectives = objectives

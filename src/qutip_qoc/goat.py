@@ -19,7 +19,15 @@ class GOAT:
     X = None  # current evolution operator
     dX = None  # derivative of X wrt control parameters
 
-    def __init__(self, objective, time_interval, time_options, pulse_options, alg_kwargs, guess_params, **integrator_kwargs):
+    def __init__(
+            self,
+            objective,
+            time_interval,
+            time_options,
+            pulse_options,
+            alg_kwargs,
+            guess_params,
+            **integrator_kwargs):
 
         # make superoperators conform with SESolver
         if objective.H[0].issuper:
@@ -113,7 +121,8 @@ class GOAT:
         H_dia = [dia & self.Hd]
 
         idx = 0
-        for control, M, Hc in zip(self.controls, self.para_counts, self.Hc_lst):
+        for control, M, Hc in zip(
+                self.controls, self.para_counts, self.Hc_lst):
 
             if self.var_t:
                 H.append([Hc, helper(control, idx, idx + M)])
@@ -138,7 +147,7 @@ class GOAT:
             # to fix parameter index in loop
             return lambda t, p: grad(t, p[lower:upper], idx)
 
-        csr_shape = (1 + self.tot_n_para,  1 + self.tot_n_para)
+        csr_shape = (1 + self.tot_n_para, 1 + self.tot_n_para)
 
         # dH = [[H1', dc1'(t)], [H1", dc1"(t)], ... , [H2', dc2'(t)], ...]
         dH = []
@@ -184,7 +193,7 @@ class GOAT:
 
         if self.fid_type == "TRACEDIFF":
             diff = self.X - self.target
-            self.g = 1/2 * diff.overlap(diff)
+            self.g = 1 / 2 * diff.overlap(diff)
             infid = self.norm_fac * np.real(self.g)
         else:
             self.g = self.norm_fac * self.target.overlap(self.X)
@@ -220,7 +229,7 @@ class GOAT:
             diff = X - self.target
             # product rule
             trc = [dx.overlap(diff) + diff.overlap(dx) for dx in dX_lst]
-            grad = self.norm_fac * 1/2 * np.real(np.array(trc))
+            grad = self.norm_fac * 1 / 2 * np.real(np.array(trc))
 
         else:  # -Re(... * Tr(...)) NOTE: gradient will be zero at local maximum
             trc = [self.target.overlap(dx) for dx in dX_lst]
@@ -243,9 +252,15 @@ class Multi_GOAT:
     to optimize multiple objectives simultaneously
     """
 
-    def __init__(self, objectives, time_interval, time_options, pulse_options, alg_kwargs, guess_params, **integrator_kwargs):
-        self.goats = [GOAT(obj, time_interval, time_options, pulse_options, alg_kwargs, guess_params, ** integrator_kwargs)
-                      for obj in objectives]
+    def __init__(self, objectives, time_interval, time_options, pulse_options,
+                 alg_kwargs, guess_params, **integrator_kwargs):
+
+        self.goats = [
+            GOAT(obj, time_interval, time_options, pulse_options,
+                 alg_kwargs, guess_params, **integrator_kwargs)
+            for obj in objectives
+        ]
+
         self.mean_infid = None
 
     def goal_fun(self, params):

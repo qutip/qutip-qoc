@@ -7,11 +7,110 @@ from analytical_control import optimize_pulses as opt_pulses
 from result import Result
 
 
-def optimize_pulses(objectives, pulse_options, time_interval, time_options={}, algorithm_kwargs={}, **kwargs):
+def optimize_pulses(objectives, pulse_options, time_interval, time_options={},
+                    algorithm_kwargs={}, optimizer_kwargs={},
+                    minimizer_kwargs={}, integrator_kwargs={}):
+    print(minimizer_kwargs)
     """
     Wrapper to choose between GOAT/JOAT and GRAPE/CRAB optimization.
+
+    Parameters
+    ----------
+    objectives : list of :class:`qutip_qoc.Objective`
+        List of objectives to be optimized.
+
+    pulse_options : dict
+        Dictionary of options for the control pulse optimization.
+        For each control function it must specify:
+
+            control_id : dict
+                - guess: ndarray, shape (n,)
+                    Initial guess. Array of real elements of size (n,),
+                    where ``n`` is the number of independent variables.
+
+                - bounds : sequence, optional
+                    Sequence of ``(min, max)`` pairs for each element in
+                    `guess`. None is used to specify no bound.
+
+        GRAPE and CRAB have only one control function with n_tslots parameters.
+        The bounds are only one pair of ``(min, max)`` limiting all tslots
+        equally.
+
+    time_interval : :class:`qutip_qoc.TimeInterval`
+        Time interval for the optimization.
+        GRAPE and CRAB require n_tslots attribute.
+
+    time_options : dict, optional
+        Only supported by GOAT and JOAT.
+        Dictionary of options for the time interval optimization.
+        It must specify both:
+
+            - guess: ndarray, shape (n,)
+                Initial guess. Array of real elements of size (n,),
+                where ``n`` is the number of independent variables.
+
+            - bounds : sequence, optional
+                Sequence of ``(min, max)`` pairs for each element in `guess`.
+                None is used to specify no bound.
+
+    algorithm_kwargs : dict, optional
+        Dictionary of options for the optimization algorithm.
+
+            - alg : str
+                Algorithm to use for the optimization.
+                Supported are: "GRAPE", "CRAB", "GOAT", "JOAT".
+
+            - fid_err_targ : float, optional
+                Fidelity error target for the optimization.
+
+            - max_iter : int, optional
+                Maximum number of iterations to perform.
+                Referes to global steps for GOAT/JOAT and
+                local minimizer steps for GRAPE/CRAB.
+                Can be overridden by specifying in
+                optimizer_kwargs/minimizer_kwargs.
+
+        Algorithm specific keywords for GRAPE/CRAB can be found in
+        :func:`qutip_qtrl.pulseoptim.optimize_pulse`.
+
+    optimizer_kwargs : dict, optional
+        Dictionary of options for the global optimizer.
+        Only supported by GOAT and JOAT.
+
+            - method : str, optional
+                Algorithm to use for the global optimization.
+                Supported are: "basinhopping", "dual_annealing"
+
+            - max_iter : int, optional
+                Maximum number of iterations to perform.
+
+        Full list of options can be found in
+        :func:`scipy.optimize.basinhopping`
+        and :func:`scipy.optimize.dual_annealing`.
+
+    minimizer_kwargs : dict, optional
+        Dictionary of options for the local minimizer.
+
+            - method : str, optional
+                Algorithm to use for the local optimization.
+                Gradient driven methods are supported.
+
+        Full list of options and methods can be found in
+        :func:`scipy.optimize.minimize`.
+
+    integrator_kwargs : dict, optional
+        Dictionary of options for the integrator.
+        Only supported by GOAT and JOAT.
+        Options for the solver, see :obj:`MESolver.options` and
+        `Integrator <./classes.html#classes-ode>`_ for a list of all options.
+
+    Returns
+    -------
+    result : :class:`qutip_qoc.Result`
+        Optimization result.
     """
     alg = algorithm_kwargs.get("alg", "GRAPE")
+
     if alg == "GOAT" or alg == "JOAT":
         return opt_pulses(
             objectives,
@@ -19,12 +118,17 @@ def optimize_pulses(objectives, pulse_options, time_interval, time_options={}, a
             time_interval,
             time_options,
             algorithm_kwargs,
-            **kwargs
+            optimizer_kwargs,
+            minimizer_kwargs,
+            integrator_kwargs,
         )
-    else:  # GRAPE or CRAB
+
+    elif alg == "GRAPE" or alg == "CRAB":
         if len(objectives) != 1:
-            raise TypeError("GRAPE and CRAB optimization only supports one objective at a time. "
-                            "Please use GOAT or JOAT for multiple objectives.")
+            raise TypeError(
+                "GRAPE and CRAB optimization only supports one objective at a "
+                "time. Please use GOAT or JOAT for multiple objectives."
+            )
         objective = objectives[0]
 
         # extract drift and control Hamiltonians from the objective
@@ -48,19 +152,19 @@ def optimize_pulses(objectives, pulse_options, time_interval, time_options={}, a
             lbound = [b[0] for b in bounds]
             ubound = [b[1] for b in bounds]
 
-        if alg == "GRAPE":  # only alowes for scalar bound
-            lbound = lbound[0]
-            ubound = ubound[0]
-
-        minimizer_kwargs = kwargs.get("minimizer_kwargs", {})
-
         if alg == "CRAB":
             min_g = 0.
             algorithm_kwargs["alg_params"] = {
                 "guess_pulse": x0,
             }
+
         elif alg == "GRAPE":
+            # only alowes for scalar bound
+            lbound = lbound[0]
+            ubound = ubound[0]
+
             min_g = minimizer_kwargs.get("gtol", 1e-10)
+
             algorithm_kwargs["alg_params"] = {
                 "init_amps": np.array(x0).T,
             }
@@ -86,7 +190,7 @@ def optimize_pulses(objectives, pulse_options, time_interval, time_options={}, a
             ctrls=Hc_lst,
             initial=init,
             target=targ,
-            n_tslots=time_interval.n_tslots,
+            num_tslots=time_interval.n_tslots,
             evo_time=time_interval.evo_time,
             tau=None,  # implicitly derived from tslots
             amp_lbound=lbound,
@@ -135,10 +239,6 @@ def optimize_pulses(objectives, pulse_options, time_interval, time_options={}, a
         result.message = res.termination_reason
         result.final_states = [res.evo_full_final]
         result.infidelity = res.fid_err
-
-        # TODO: GRAPE looks good, can we make params of CRAB accessible?
-        n_cntrls = res.initial_amps.shape[1]
-
         result.guess_params = res.initial_amps.T
         result.optimized_params = res.final_amps.T
 
@@ -146,3 +246,7 @@ def optimize_pulses(objectives, pulse_options, time_interval, time_options={}, a
         result.stats = res.stats
 
         return result
+    else:
+        raise ValueError(
+            "Unknown algorithm: %s; choose either GOAT, JOAT, GRAPE or CRAB." %
+            alg)
