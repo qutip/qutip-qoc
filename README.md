@@ -1,18 +1,17 @@
-# qutip-qoc
+# QuTiP - Quantum Optimal Control
 
-[![build](https://github.com/qutip/qutip-qoc/workflows/Tests/badge.svg)](https://github.com/qutip/qutip-qoc/actions)
-[![Documentation Status](https://readthedocs.org/projects/qutip-qoc/badge/?version=stable)](https://qutip-qoc.readthedocs.io/en/stable/)
-[![PyPI version](https://badge.fury.io/py/qutip-qoc.svg)](https://badge.fury.io/py/qutip-qoc)
-[![arXiv paper](https://img.shields.io/badge/arXiv-2105.09902-<COLOR>.svg)](https://arxiv.org/abs/2105.09902)
-[![Maintainability](https://api.codeclimate.com/v1/badges/30293d7b8eb249f8d679/maintainability)](https://codeclimate.com/github/qutip/qutip-qoc/maintainability)
-[![Coverage Status](https://coveralls.io/repos/github/qutip/qutip-qoc/badge.svg)](https://coveralls.io/github/qutip/qutip-qoc)
+The qutip-qoc package builds up on the ``qutip-qtrl`` [package](https://github.com/qutip/qutip-qtrl).
 
-The qutip-qoc package used to be a module ``qutip.control`` followed by ``qutip-qtrl`` under [QuTiP (Quantum Toolbox in Python)](http://qutip.org/index.html).
-From QuTiP 5.0, the community has decided to decrease the size of the core QuTiP package by reducing the external dependencies, in order to simplify maintenance.
-Hence a few modules are separated from the core QuTiP and will become QuTiP family packages.
-They are still maintained by the QuTiP team but hosted under different repositories in the [QuTiP organization](https://github.com/qutip).
+It enhances it by providing two additional algorithms to optimize analytically defined control functions.
+The first one is an extension of Gradient Optimization of Analytic conTrols [(GOAT)](https://link.aps.org/doi/10.1103/PhysRevLett.120.150401).
+The second leverages QuTiPs version 5 new diffrax abilities to directly calculate gradients of JAX defined contol functinos using automatic differentiation. 
 
-The qutip-qoc package, QuTiP quantum optimal control, aims at providing advanced tools for the optimal control of quantum devices.
+The procedure consists of a two-layer approach to find global optimal values for parameterized analytical control functions.
+The global optimization layer provides ``scipy.optimize.dual_annealing`` and ``scipy.optimize.basinhopping``, while the local minimization layer supports all 
+gradient driven ``scipy.optimize.minimize`` methods.
+
+The package also aims for a more general way of defining control problems with QuTiP and makes switching between the four control algorithms very easy.
+The qutip-qoc package aims at providing advanced tools for the optimal control of quantum devices.
 Compared to other libraries for quantum optimal control, qutip-qoc puts additional emphasis on the physics layer and the interaction with the QuTiP package.
 The package offers support for both the CRAB and GRAPE methods.
 
@@ -24,11 +23,6 @@ To install the package, use
 ```
 pip install qutip-qoc
 ```
-
-Migrating from ``qutip.control``
---------------------------------
-As the introduction suggested, this package is based on a module in the [QuTiP](http://qutip.org/docs/latest/) package `qutip.control`.
-If you were using the `qutip` package and now want to try out the new features included in this package, you can simply install this package and replace all the `qutip.control` in your import statement with `qutip_qoc`. Everything should work smoothly as usual.
 
 Documentation and tutorials
 ---------------------------
