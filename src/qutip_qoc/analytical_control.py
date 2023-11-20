@@ -7,9 +7,9 @@ import numpy as np
 import scipy as sp
 import qutip as qt
 
-from result import Result
-from joat import Multi_JOAT
-from goat import Multi_GOAT
+from qutip_qoc.result import Result
+from qutip_qoc.joat import Multi_JOAT
+from qutip_qoc.goat import Multi_GOAT
 
 
 def optimize_pulses(
@@ -202,6 +202,7 @@ def optimize_pulses(
         for bound in bounds:
             for b in bound:
                 if not (b[0] <= x[idx] <= b[1]):
+                    print("parameter out of bounds, continuing optimization")
                     return False
                 idx += 1
         return True
@@ -224,9 +225,10 @@ def optimize_pulses(
 
         if terminate:  # manually save the result and exit
             if intermediate_result.fun < result.infidelity:
-                if inside_bounds(intermediate_result.x):
-                    result.update(intermediate_result.fun,
-                                  intermediate_result.x)
+                if intermediate_result.fun > 0:
+                    if inside_bounds(intermediate_result.x):
+                        result.update(intermediate_result.fun,
+                                      intermediate_result.x)
             raise StopIteration
 
     def opt_callback(x, f, accept):
@@ -248,7 +250,13 @@ def optimize_pulses(
 
         if terminate:  # manually save the result and exit
             if f < result.infidelity:
-                if inside_bounds(x):
+                if f < 0:
+                    print(
+                        "WARNING: infidelity < 0 -> inaccurate integration, "
+                        "try reducing integrator tolerance (atol, rtol), "
+                        "continuing with global optimization")
+                    terminate = False
+                elif inside_bounds(x):
                     result.update(f, x)
 
         return terminate

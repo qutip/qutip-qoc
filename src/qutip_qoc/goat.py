@@ -265,19 +265,18 @@ class Multi_GOAT:
 
     def goal_fun(self, params):
         infid_sum = 0
+
         for goat in self.goats:  # TODO: parallelize
             infid = goat.infidelity(params)
-            if infid < 0:
-                print(
-                    "WARNING: infidelity < 0 -> inaccurate integration, "
-                    "try reducing integrator tolerance (atol, rtol)"
-                )
             infid_sum += infid
+
         self.mean_infid = np.mean(infid_sum)
         return self.mean_infid
 
     def grad_fun(self, params):
         grads = 0
+
         for g in self.goats:
             grads += g.gradient(params)
+
         return grads
