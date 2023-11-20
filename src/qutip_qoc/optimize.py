@@ -3,8 +3,8 @@ import numpy as np
 import qutip_qtrl.logging_utils as logging
 from qutip_qtrl.pulseoptim import optimize_pulse
 
-from analytical_control import optimize_pulses as opt_pulses
-from result import Result
+from qutip_qoc.analytical_control import optimize_pulses as opt_pulses
+from qutip_qoc.result import Result
 
 
 def optimize_pulses(objectives, pulse_options, time_interval, time_options={},
