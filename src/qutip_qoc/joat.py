@@ -24,10 +24,8 @@ def abs_jvp(primals, tangents):
     t, = tangents
 
     abs_x = abs(x)
-    if abs_x != 0:
-        res = jnp.real(jnp.multiply(jnp.conj(x), t)) / abs_x
-    else:
-        res = 0.
+    res = jnp.where(abs_x == 0, 0.,
+                    jnp.real(jnp.multiply(jnp.conj(x), t)) / abs_x)
 
     return abs_x, res
 
@@ -173,24 +171,15 @@ class Multi_JOAT:
 
         for j in self.joats:  # TODO: parallelize
             infid = j.infidelity(params)
-
-            if infid < 0:
-                print(
-                    "WARNING: infidelity < 0 -> inaccurate integration, "
-                    "try reducing integrator tolerance (atol, rtol)"
-                )
-
             infid_sum += infid
 
         self.mean_infid = jnp.mean(infid_sum)
-
         return self.mean_infid
 
     def grad_fun(self, params):
         grads = 0
 
         for j in self.joats:
-
             grad = j.gradient(params)
             grads += grad
 
