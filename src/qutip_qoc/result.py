@@ -1,10 +1,10 @@
-import time
 import pickle
 import textwrap
 import numpy as np
 from inspect import signature
+
 import qutip as qt
-from objective import Objective
+from qutip_qoc.objective import Objective
 
 
 class Result():
@@ -61,6 +61,7 @@ class Result():
             time_interval=None,
             start_local_time=None,
             end_local_time=None,
+            total_seconds=None,
             iters=None,
             iter_seconds=None,
             message=None,
@@ -72,12 +73,13 @@ class Result():
             new_params=None,
             optimized_params=None,
             infidelity=np.inf,
-            var_time=False
+            var_time=False,
     ):
         self.time_interval = time_interval
         self.objectives = objectives
         self.start_local_time = start_local_time
         self.end_local_time = end_local_time
+        self._totoal_seconds = total_seconds
         self.iters = iters
         self.iter_seconds = iter_seconds
         self.message = message
@@ -105,14 +107,12 @@ class Result():
         - Reason for termination: {message}
         - Ended at {end_local_time} ({time_delta}s)
         '''.format(
-                start_local_time=time.strftime(
-                    '%Y-%m-%d %H:%M:%S', self.start_local_time),
+                start_local_time=self.start_local_time,
                 n_objectives=len(self.objectives),
                 final_infid=self.infidelity,
                 final_params=self.optimized_params,
                 n_iters=self.iters,
-                end_local_time=time.strftime(
-                    '%Y-%m-%d %H:%M:%S', self.end_local_time),
+                end_local_time=self.end_local_time,
                 time_delta=self.time_delta,
                 message=self.message)
         ).strip()
@@ -120,32 +120,11 @@ class Result():
     def __repr__(self):
         return self.__str__()
 
-    def start_time(self):
-        self.start_local_time = self.iter_time = time.time()
-        self.elapsed_time = 0
-        self.iter_seconds = []
-
-    def end_time(self):
-        end_local_time = time.time()
-        # prepare information for printing
-        self.time_delta = round(end_local_time - self.start_local_time, 4)
-        self.start_local_time = time.localtime(self.start_local_time)
-        self.end_local_time = time.localtime(end_local_time)
-
-    def time_iter(self):
-        """
-        Calculates and stores the time
-        after each iteration. (optimizer callback)
-        """
-        iter_time = time.time()
-        diff = round(iter_time - self.iter_time, 4)
-        self.iter_time = iter_time
-        self.iter_seconds.append(diff)
-        return diff
-
-    def time_elapsed(self):
-        self.elapsed_time = round(time.time() - self.start_local_time, 4)
-        return self.elapsed_time
+    @property
+    def total_seconds(self):
+        if self._total_seconds is None:
+            self._total_seconds = sum(self.iter_seconds)
+        return self._total_seconds
 
     @property
     def optimized_params(self):

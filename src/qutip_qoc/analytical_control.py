@@ -3,6 +3,7 @@ This module contains the optimization routine
 for optimizing analytical control functions
 with GOAT resp. JOAT.
 """
+import time
 import numpy as np
 import scipy as sp
 import qutip as qt
@@ -10,6 +11,143 @@ import qutip as qt
 from qutip_qoc.result import Result
 from qutip_qoc.joat import Multi_JOAT
 from qutip_qoc.goat import Multi_GOAT
+
+
+def extraction_helper(lst, input):
+    """
+    to extract initial and boundary values of any kind and shape
+    from the pulse_options and time_options dictionary
+    """
+    if input is None:
+        return lst
+    if isinstance(input, (list, np.ndarray)):
+        lst.append(input)
+    elif isinstance(input, (tuple)):
+        lst.append([input])
+    elif np.isscalar(input):
+        lst.append([input])
+    else:  # jax Array
+        lst.append(np.array(input))
+    return lst
+
+
+class Callback:
+    """
+    Callback functions for the local and global optimization algorithm.
+    Keeps track of time and saves intermediate results.
+    Terminates the optimization if the infidelity error target is reached.
+    """
+
+    def __init__(self, result, fid_err_targ, max_wall_time, bounds, disp):
+        self.result = result
+        self.fid_err_targ = fid_err_targ
+        self.max_wall_time = max_wall_time
+        self.bounds = bounds
+        self.disp = disp
+
+        self.elapsed_time = 0
+        self.iter_seconds = []
+        self.start_time = self.iter_time = time.time()
+
+    def end(self):
+        self.end_time = time.time()
+
+        # save information in result
+        self.result.start_local_time = time.strftime(
+            '%Y-%m-%d %H:%M:%S', time.localtime(self.start_time)),
+        self.result.self.end_local_time = time.strftime(
+            '%Y-%m-%d %H:%M:%S', time.localtime(self.end_time)),
+        self.result.iter_seconds = self.iter_seconds
+
+    def time_iter(self):
+        """
+        Calculates and stores the time for each iteration
+        """
+        iter_time = time.time()
+        diff = round(iter_time - self.iter_time, 4)
+        self.iter_time = iter_time
+        self.iter_seconds.append(diff)
+        return diff
+
+    def time_elapsed(self):
+        self.elapsed_time = round(time.time() - self.start_time, 4)
+        return self.elapsed_time
+
+    def inside_bounds(self, x):
+        """
+        check if the current parameters are inside the boundaries
+        used for the global and local optimization callback
+        """
+        idx = 0
+        for bound in self.bounds:
+            for b in bound:
+                if not (b[0] <= x[idx] <= b[1]):
+                    print("parameter out of bounds, continuing optimization")
+                    return False
+                idx += 1
+        return True
+
+    def min_callback(self, intermediate_result):
+        """
+        callback function for the local minimizer
+        terminates if the infidelity error target is reached or
+        the maximum wall time is exceeded
+        """
+        terminate = False
+
+        if intermediate_result.fun <= self.fid_err_targ:
+            terminate = True
+            reason = "fid_err_targ reached"
+        elif self.time_elapsed() >= self.max_wall_time:
+            terminate = True
+            reason = "max_wall_time reached"
+
+        if self.disp:
+            message = "minimizer step, infidelity: %.5f" % intermediate_result.fun
+            if terminate:
+                message += "\n" + reason + ", terminating minimization"
+            print(message)
+
+        if terminate:  # manually save the result and exit
+            if intermediate_result.fun < self.result.infidelity:
+                if intermediate_result.fun > 0:
+                    if self.inside_bounds(intermediate_result.x):
+                        self.result.update(intermediate_result.fun,
+                                           intermediate_result.x)
+            raise StopIteration
+
+    def opt_callback(self, x, f, accept):
+        """
+        callback function for the global optimizer
+        """
+        terminate = False
+
+        if f <= self.fid_err_targ:
+            terminate = True
+            self.result.message = "fid_err_targ reached"
+        elif self.time_elapsed() >= self.max_wall_time:
+            terminate = True
+            self.result.message = "max_wall_time reached"
+
+        if self.disp:
+            message = "optimizer step, infidelity: %.5f" % f +\
+                ", took %.2f seconds" % self.time_iter()
+            if terminate:
+                message += "\n" + self.result.message + ", terminating optimization"
+            print(message)
+
+        if terminate:  # manually save the result and exit
+            if f < self.result.infidelity:
+                if f < 0:
+                    print(
+                        "WARNING: infidelity < 0 -> inaccurate integration, "
+                        "try reducing integrator tolerance (atol, rtol), "
+                        "continuing with global optimization")
+                    terminate = False
+                elif self.inside_bounds(x):
+                    self.result.update(f, x)
+
+        return terminate
 
 
 def optimize_pulses(
@@ -118,31 +256,18 @@ def optimize_pulses(
     integrator_kwargs["normalize_output"] = False
     integrator_kwargs.setdefault("progress_bar", False)
 
-    def helper(lst, input):
-        # to extract initial and boundary values
-        # of any kind and shape
-        if input is None:
-            return lst
-        if isinstance(input, (list, np.ndarray)):
-            lst.append(input)
-        elif isinstance(input, (tuple)):
-            lst.append([input])
-        elif np.isscalar(input):
-            lst.append([input])
-        else:  # jax Array
-            lst.append(np.array(input))
-        return lst
-
+    # extract initial and boundary values
     x0, bounds = [], []
     for key in pulse_options.keys():
-        helper(x0, pulse_options[key].get("guess"))
-        helper(bounds, pulse_options[key].get("bounds"))
+        extraction_helper(x0, pulse_options[key].get("guess"))
+        extraction_helper(bounds, pulse_options[key].get("bounds"))
 
-    helper(x0, time_options.get("guess", None))
-    helper(bounds, time_options.get("bounds", None))
+    extraction_helper(x0, time_options.get("guess", None))
+    extraction_helper(bounds, time_options.get("bounds", None))
 
     optimizer_kwargs.setdefault("x0", np.concatenate(x0))
 
+    # algorithm specific settings
     if algorithm_kwargs.get("alg") == "JOAT":
         with qt.CoreOptions(default_dtype="jaxdia"):
             multi_objective = Multi_JOAT(objectives, time_interval,
@@ -155,10 +280,6 @@ def optimize_pulses(
                                      pulse_options, algorithm_kwargs,
                                      guess_params=optimizer_kwargs["x0"],
                                      **integrator_kwargs)
-
-    max_wall_time = algorithm_kwargs.get("max_wall_time", 1e10)
-    fid_err_targ = algorithm_kwargs.get("fid_err_targ", 1e-10)
-    disp = algorithm_kwargs.get("disp", False)
 
     # optimizer specific settings
     opt_method = optimizer_kwargs.get(
@@ -196,93 +317,31 @@ def optimize_pulses(
                     guess_params=x0,
                     var_time=time_options.get("guess", False))
 
-    # helper functions for callbacks
-    def inside_bounds(x):
-        idx = 0
-        for bound in bounds:
-            for b in bound:
-                if not (b[0] <= x[idx] <= b[1]):
-                    print("parameter out of bounds, continuing optimization")
-                    return False
-                idx += 1
-        return True
-
-    def min_callback(intermediate_result):
-        terminate = False
-
-        if intermediate_result.fun <= fid_err_targ:
-            terminate = True
-            reason = "fid_err_targ reached"
-        elif result.time_elapsed() >= max_wall_time:
-            terminate = True
-            reason = "max_wall_time reached"
-
-        if disp:
-            message = "minimizer step, infidelity: %.5f" % intermediate_result.fun
-            if terminate:
-                message += "\n" + reason + ", terminating minimization"
-            print(message)
-
-        if terminate:  # manually save the result and exit
-            if intermediate_result.fun < result.infidelity:
-                if intermediate_result.fun > 0:
-                    if inside_bounds(intermediate_result.x):
-                        result.update(intermediate_result.fun,
-                                      intermediate_result.x)
-            raise StopIteration
-
-    def opt_callback(x, f, accept):
-        terminate = False
-
-        if f <= fid_err_targ:
-            terminate = True
-            result.message = "fid_err_targ reached"
-        elif result.time_elapsed() >= max_wall_time:
-            terminate = True
-            result.message = "max_wall_time reached"
-
-        if disp:
-            message = "optimizer step, infidelity: %.5f" % f +\
-                ", took %.2f seconds" % result.time_iter()
-            if terminate:
-                message += "\n" + result.message + ", terminating optimization"
-            print(message)
-
-        if terminate:  # manually save the result and exit
-            if f < result.infidelity:
-                if f < 0:
-                    print(
-                        "WARNING: infidelity < 0 -> inaccurate integration, "
-                        "try reducing integrator tolerance (atol, rtol), "
-                        "continuing with global optimization")
-                    terminate = False
-                elif inside_bounds(x):
-                    result.update(f, x)
-
-        return terminate
-
-    result.start_time()
+    # Callback instance for termination and logging
+    max_wall_time = algorithm_kwargs.get("max_wall_time", 1e10)
+    fid_err_targ = algorithm_kwargs.get("fid_err_targ", 1e-10)
+    disp = algorithm_kwargs.get("disp", False)
+    cllbck = Callback(result, fid_err_targ, max_wall_time, bounds, disp)
 
     # run the optimization
     min_res = optimizer(
         func=multi_objective.goal_fun,
         minimizer_kwargs={
             'jac': multi_objective.grad_fun,
-            'callback': min_callback,
+            'callback': cllbck.min_callback,
             **minimizer_kwargs
         },
-        callback=opt_callback,
+        callback=cllbck.opt_callback,
         **optimizer_kwargs
     )
-
-    result.end_time()
 
     # some global optimization methods do not return the minimum result
     # when terminated through StopIteration (see min_callback)
     if min_res.fun < result.infidelity:
-        if inside_bounds(min_res.x):
+        if cllbck.inside_bounds(min_res.x):
             result.update(min_res.fun, min_res.x)
 
+    # save runtime information in result
     result.iters = min_res.nit
     if result.message is None:
         result.message = min_res.message
