@@ -137,7 +137,9 @@ class JOAT:
 
         if self.fid_type == "TRACEDIFF":
             diff = X - self.target
-            g = 1 / 2 * (diff.dag() * diff).tr()
+            # TODO: see https://github.com/qutip/qutip-jax/issues/30
+            diff_dag = Qobj(diff.data.adjoint(), dims=diff.dims)
+            g = 1 / 2 * (diff_dag * diff).data.trace()
             infid = jnp.real(self.norm_fac * g)
         else:
             g = self.norm_fac * self.target.overlap(X)
