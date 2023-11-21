@@ -43,7 +43,7 @@ def grad_sin(t, p, idx):
 
 
 p_guess = q_guess = [1, 1, 0]
-p_bounds = q_bounds = [(-1, 1), (-1, 1), (-np.pi, np.pi)]
+p_bounds = q_bounds = [(-10, 10), (-10, 10), (-np.pi, np.pi)]
 
 H_d = [qt.sigmaz()]
 H_c = [[qt.sigmax(), lambda t, p: sin(t, p), {"grad": grad_sin}],
@@ -63,7 +63,7 @@ state2state = Case(
         "p": {"guess": p_guess, "bounds": p_bounds},
         "q": {"guess": q_guess, "bounds": q_bounds}
     },
-    time_interval=TimeInterval(evo_time=5.),
+    time_interval=TimeInterval(evo_time=1.),
     time_options={},
     algorithm_kwargs={
         "alg": "GOAT",
@@ -82,14 +82,13 @@ initial_U = qt.qeye(2)
 target_U = qt.sigmaz()
 
 unitary = state2state._replace(
-    objectives=[Objective(initial_U, H, target_U)]
+    objectives=[Objective(initial_U, H, target_U)],
 )
 
 
 # unitary gate synthesis - time optimization
 time = unitary._replace(
-    time_options={"guess": 7.5, "bounds": (0, 10)},
-    algorithm_kwargs={"alg": "GOAT", "fid_err_targ": 0.001},
+    time_options={"guess": 5, "bounds": (0, 10)},
 )
 
 
@@ -103,12 +102,9 @@ L_c = [[qt.liouvillian(qt.sigmax()), lambda t, p: sin(t, p), {"grad": grad_sin}]
 
 L = L_d + L_c
 
-# relax boundaries
-p_bounds = q_bounds = [(-10, 10), (-10, 10), (-np.pi, np.pi)]
-
-map = unitary._replace(
+mapping = unitary._replace(
     objectives=[Objective(initial_map, L, target_map)],
-    algorithm_kwargs={"alg": "GOAT", "fid_err_targ": 0.1},  # relax target
+    algorithm_kwargs={"alg": "JOAT", "fid_err_targ": 0.1},  # relaxed objective
 )
 
 # ----------------------- System and JAX Control ---------------------
@@ -128,19 +124,19 @@ H_jax = H_d + Hc_jax
 # state to state transfer
 state2state_jax = state2state._replace(
     objectives=[Objective(initial, H_jax, target)],
-    algorithm_kwargs={"alg": "JOAT", "fid_err_targ": 0.01}
+    algorithm_kwargs={"alg": "JOAT", "fid_err_targ": 0.01},
 )
 
 # unitary gate synthesis
 unitary_jax = unitary._replace(
     objectives=[Objective(initial_U, H_jax, target_U)],
-    algorithm_kwargs={"alg": "JOAT", "fid_err_targ": 0.01}
+    algorithm_kwargs={"alg": "JOAT", "fid_err_targ": 0.01},
 )
 
 # unitary gate synthesis - time optimization
 time_jax = time._replace(
     objectives=[Objective(initial_U, H_jax, target_U)],
-    algorithm_kwargs={"alg": "JOAT", "fid_err_targ": 0.01}
+    algorithm_kwargs={"alg": "JOAT", "fid_err_targ": 0.01},
 )
 
 # map synthesis
@@ -148,24 +144,24 @@ Lc_jax = [[qt.liouvillian(qt.sigmax()), lambda t, p: sin_jax(t, p)],
           [qt.liouvillian(qt.sigmay()), lambda t, q: sin_jax(t, q)]]
 L_jax = L_d + Lc_jax
 
-map_jax = map._replace(
+mapping_jax = mapping._replace(
     objectives=[Objective(initial_map, L_jax, target_map)],
-    algorithm_kwargs={"alg": "JOAT", "fid_err_targ": 0.1}
+    algorithm_kwargs={"alg": "JOAT", "fid_err_targ": 0.1},  # relaxed objective
 )
 
 
 @pytest.fixture(
     params=[
         # GOAT
-        pytest.param(state2state, id="State to state"),
-        pytest.param(unitary, id="Unitary gate"),
-        pytest.param(time, id="Time optimization"),
-        pytest.param(map, id="Map synthesis"),
+        pytest.param(state2state, id="State to state (GOAT)"),
+        pytest.param(unitary, id="Unitary gate (GOAT)"),
+        pytest.param(time, id="Time optimization (GOAT)"),
+        pytest.param(mapping, id="Map synthesis (GOAT)"),
         # JOAT
         pytest.param(state2state_jax, id="State to state (JAX)"),
         pytest.param(unitary_jax, id="Unitary gate (JAX)"),
         pytest.param(time_jax, id="Time optimization (JAX)"),
-        pytest.param(map_jax, id="Map synthesis (JAX)"),
+        pytest.param(mapping_jax, id="Map synthesis (JAX)"),
     ]
 )
 def tst(request): return request.param
