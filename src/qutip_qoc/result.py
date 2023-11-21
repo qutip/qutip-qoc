@@ -1,3 +1,4 @@
+import jaxlib
 import pickle
 import textwrap
 import numpy as np
@@ -25,8 +26,14 @@ class Result():
     end_local_time : struct_time
         Time when the optimization ended.
 
+    total_seconds : float
+        Total time in seconds the optimization took.
+        Equal to the sum of iter_seconds.
+        Equal to difference between end_local_time and start_local_time.
+
     iters : int
         Number of iterations until convergence.
+        Equal to the length of iter_seconds.
 
     iter_seconds : list of float
         Seconds between each iteration.
@@ -62,7 +69,7 @@ class Result():
             start_local_time=None,
             end_local_time=None,
             total_seconds=None,
-            iters=None,
+            n_iters=None,
             iter_seconds=None,
             message=None,
             guess_controls=None,
@@ -79,8 +86,8 @@ class Result():
         self.objectives = objectives
         self.start_local_time = start_local_time
         self.end_local_time = end_local_time
-        self._totoal_seconds = total_seconds
-        self.iters = iters
+        self._total_seconds = total_seconds
+        self.n_iters = n_iters
         self.iter_seconds = iter_seconds
         self.message = message
         self._guess_controls = guess_controls
@@ -111,9 +118,9 @@ class Result():
                 n_objectives=len(self.objectives),
                 final_infid=self.infidelity,
                 final_params=self.optimized_params,
-                n_iters=self.iters,
+                n_iters=self.n_iters,
                 end_local_time=self.end_local_time,
-                time_delta=self.time_delta,
+                time_delta=self.total_seconds,
                 message=self.message)
         ).strip()
 
@@ -160,7 +167,17 @@ class Result():
                 control = Hc[1]
                 if callable(control):
                     cf = []
-                    for t in self.time_interval.tslots:
+                    try:
+                        tslots = self.time_interval.tslots
+                    except Exception:
+                        print(
+                            "time_interval.tslots not specified "
+                            "(probably missing n_tslots), defaulting to 100 "
+                            "collocation points for result.optimized_controls")
+                        tslots = np.linspace(
+                            0., self.time_interval.evo_time, 100)
+
+                    for t in tslots:
                         cf.append(control(t, xf))
                 else:
                     cf = xf
@@ -179,7 +196,17 @@ class Result():
                 control = Hc[1]
                 if callable(control):
                     c0 = []
-                    for t in self.time_interval.tslots:
+                    try:
+                        tslots = self.time_interval.tslots
+                    except Exception:
+                        print(
+                            "time_interval.tslots not specified "
+                            "(probably missing n_tslots), defaulting to 100 "
+                            "collocation points for result.optimized_controls")
+                        tslots = np.linspace(
+                            0., self.time_interval.evo_time, 100)
+
+                    for t in tslots:
                         c0.append(control(t, x0))
                 else:
                     c0 = x0
@@ -233,15 +260,25 @@ class Result():
             for key, val in zip(para_keys, self.optimized_params):
                 args_dict[key] = val
 
-            # TODO: fix for same input key of differnt funcitons
+            # choose integrator method based on type of control function
+            if isinstance(
+                    self.optimized_objectives[0].H[1][1],
+                    jaxlib.xla_extension.PjitFunction):
+                method = "diffrax"  # for JAX
+            else:
+                method = "adams"
+
             for obj in self.optimized_objectives:
                 states.append(
                     qt.mesolve(
                         obj.H,
                         obj.initial,
-                        tslots=[0., evo_time],
+                        tlist=[0., evo_time],
                         args=args_dict,
-                        options={'normalize_output': False}
+                        options={
+                            'normalize_output': False,
+                            'method': method,
+                        }
                     ).final_state
                 )
 

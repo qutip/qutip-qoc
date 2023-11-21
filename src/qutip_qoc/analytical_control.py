@@ -54,9 +54,9 @@ class Callback:
 
         # save information in result
         self.result.start_local_time = time.strftime(
-            '%Y-%m-%d %H:%M:%S', time.localtime(self.start_time)),
-        self.result.self.end_local_time = time.strftime(
-            '%Y-%m-%d %H:%M:%S', time.localtime(self.end_time)),
+            '%Y-%m-%d %H:%M:%S', time.localtime(self.start_time))
+        self.result.end_local_time = time.strftime(
+            '%Y-%m-%d %H:%M:%S', time.localtime(self.end_time))
         self.result.iter_seconds = self.iter_seconds
 
     def time_iter(self):
@@ -121,6 +121,7 @@ class Callback:
         callback function for the global optimizer
         """
         terminate = False
+        global_step_seconds = self.time_iter()
 
         if f <= self.fid_err_targ:
             terminate = True
@@ -131,7 +132,7 @@ class Callback:
 
         if self.disp:
             message = "optimizer step, infidelity: %.5f" % f +\
-                ", took %.2f seconds" % self.time_iter()
+                ", took %.2f seconds" % global_step_seconds
             if terminate:
                 message += "\n" + self.result.message + ", terminating optimization"
             print(message)
@@ -321,6 +322,7 @@ def optimize_pulses(
     max_wall_time = algorithm_kwargs.get("max_wall_time", 1e10)
     fid_err_targ = algorithm_kwargs.get("fid_err_targ", 1e-10)
     disp = algorithm_kwargs.get("disp", False)
+    # start the clock
     cllbck = Callback(result, fid_err_targ, max_wall_time, bounds, disp)
 
     # run the optimization
@@ -335,6 +337,8 @@ def optimize_pulses(
         **optimizer_kwargs
     )
 
+    cllbck.end()  # stop the clock
+
     # some global optimization methods do not return the minimum result
     # when terminated through StopIteration (see min_callback)
     if min_res.fun < result.infidelity:
@@ -342,7 +346,7 @@ def optimize_pulses(
             result.update(min_res.fun, min_res.x)
 
     # save runtime information in result
-    result.iters = min_res.nit
+    result.n_iters = min_res.nit
     if result.message is None:
         result.message = min_res.message
 

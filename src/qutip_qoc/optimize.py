@@ -1,3 +1,4 @@
+import time
 import numpy as np
 
 import qutip_qtrl.logging_utils as logging
@@ -183,7 +184,8 @@ def optimize_pulses(objectives, pulse_options, time_interval, time_options={},
             "method", algorithm_kwargs.get("optim_method", "DEF"))
 
         result = Result(objectives, time_interval)
-        result.start_time()
+
+        start_time = time.time()
 
         res = optimize_pulse(
             drift=Hd,
@@ -232,17 +234,23 @@ def optimize_pulses(objectives, pulse_options, time_interval, time_options={},
             gen_stats=algorithm_kwargs.get("gen_stats", False),
         )
 
-        result.end_time()
+        end_time = time.time()
 
-        result.iters = res.num_iter
-        result.iter_seconds = [res.num_iter / result.time_delta]
+        # extract runtime information
+        result.start_local_time = time.strftime(
+            '%Y-%m-%d %H:%M:%S', time.localtime(start_time))
+        result.end_local_time = time.strftime(
+            '%Y-%m-%d %H:%M:%S', time.localtime(end_time))
+        total_seconds = end_time - start_time
+        result.iter_seconds = [res.num_iter / total_seconds] * res.num_iter
+        result.n_iters = res.num_iter
         result.message = res.termination_reason
         result.final_states = [res.evo_full_final]
         result.infidelity = res.fid_err
         result.guess_params = res.initial_amps.T
         result.optimized_params = res.final_amps.T
 
-        # not present in GOAT result
+        # not present in analytical results
         result.stats = res.stats
 
         return result
