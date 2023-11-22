@@ -57,8 +57,8 @@ class JOAT:
         self.guess_params = guess_params
         self.H = self.prepare_H()
 
-        self.initial = objective.initial.to("jaxdia")
-        self.target = objective.target.to("jaxdia")
+        self.initial = objective.initial.to("jax")
+        self.target = objective.target.to("jax")
 
         self.evo_time = time_interval.evo_time
         self.var_t = "guess" in time_options
@@ -121,7 +121,7 @@ class JOAT:
             H += evo
             idx += M
 
-        return H.to("jaxdia")
+        return H.to("jax")
 
     def infid(self, params):
         """

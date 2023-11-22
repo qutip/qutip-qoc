@@ -273,7 +273,7 @@ def optimize_pulses(
 
     # algorithm specific settings
     if algorithm_kwargs.get("alg") == "JOAT":
-        with qt.CoreOptions(default_dtype="jaxdia"):
+        with qt.CoreOptions(default_dtype="jax"):
             multi_objective = Multi_JOAT(objectives, time_interval,
                                          time_options, pulse_options,
                                          algorithm_kwargs,
