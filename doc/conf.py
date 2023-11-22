@@ -23,15 +23,15 @@ author = 'QuTiP developers'
 copyright = '2023 and later, ' + author
 
 
-def qutip_qtrl_version():
-    """Retrieve the qutip-qtrl version from ``../../VERSION``."""
+def qutip_qoc_version():
+    """Retrieve the qutip-qoc version from ``../../VERSION``."""
     src_folder_root = pathlib.Path(__file__).absolute().parent.parent
     version = src_folder_root.joinpath("VERSION").read_text().strip()
     return version
 
 
 # The full version, including alpha/beta/rc tags.
-release = qutip_qtrl_version()
+release = qutip_qoc_version()
 # The short X.Y version.
 version = ".".join(release.split(".")[:2])
 
@@ -75,7 +75,7 @@ napoleon_use_admonition_for_notes = True
 # apidoc folder. This is particularly useful for modules with lots of
 # functions/classes. However, pay attention that some api docs files are
 # adjusted manually for better illustration and should not be overwritten.
-autosummary_generate = False
+autosummary_generate = True
 autosummary_imported_members = True
 
 # -- Options for biblatex ---------------------------------------

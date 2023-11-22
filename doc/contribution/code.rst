@@ -11,7 +11,7 @@ Please follow the instruction on the `QuTiP contribution guide <https://qutip.or
 build a conda environment.
 
 You don't need to build ``qutip`` in the editable mode unless you also want to contribute to `qutip`.
-Instead, you need to install ``qutip-qtrl`` by downloading the source code and running
+Instead, you need to install ``qutip-qoc`` by downloading the source code and running
 
 .. code-block:: bash
 
@@ -75,18 +75,18 @@ or navigate to the file before running the tests.
   ~/path_to_test_something$ pytest test_something.py
 
 A code coverage report in ``html`` format  can be generated locally for
-``qutip-qtrl`` using the code line given below. By default the coverage report
+``qutip-qoc`` using the code line given below. By default the coverage report
 is generated in a temporary directory ``htmlcov``. The report can be output
 in `other formats <https://pytest-cov.readthedocs.io/en/latest/reporting.html>`_
 besides ``html``.
 
 .. code-block::
 
-  pytest --cov-report html --cov=qutip_qtrl tests/
+  pytest --cov-report html --cov=qutip_qoc tests/
 
 If you would prefer to check the code coverage of one specific file, specify
 the location of this file. Same as above the report can be accessed in ``htmlcov``.
 
 .. code-block::
 
-  pytest --cov-report html --cov=qutip_qtrl tests/test_something.py
+  pytest --cov-report html --cov=qutip_qoc tests/test_something.py

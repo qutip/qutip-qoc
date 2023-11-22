@@ -23,7 +23,7 @@ qutip-qoc |version|: QuTiP - Quantum Optimal Control
 
 .. toctree::
     :maxdepth: 2
-    :caption: Contribute to qutip-qtrl
+    :caption: Contribute to qutip-qoc
 
     contribution/code.rst
     contribution/docs.rst

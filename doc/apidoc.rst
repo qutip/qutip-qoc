@@ -1,4 +1,4 @@
-qutip\_qtrl package
+qutip\_qoc package
 ===================
 
 
@@ -14,11 +14,8 @@ High-level interfaces to the optimal control features.
    :toctree: apidoc/
    :template: autosummary/module.rst
 
-   qutip_qtrl.pulseoptim
+   qutip_qoc.optimize
 
-.. todo::
-
-   Add qutip_qtrl.grape to above.
 
 Utilities
 ---------
@@ -28,11 +25,9 @@ Optimal control utility functions.
    :toctree: apidoc/
    :template: autosummary/module.rst
 
-   qutip_qtrl.dump
-   qutip_qtrl.errors
-   qutip_qtrl.loadparams
-   qutip_qtrl.io
-   qutip_qtrl.stats
+   qutip_qoc.result
+   qutip_qoc.time_interval
+   qutip_qoc.objective
 
 Low-level interfaces
 --------------------
@@ -42,13 +37,8 @@ Internal interfaces to the optimal control features.
    :toctree: apidoc/
    :template: autosummary/module.rst
 
-   qutip_qtrl.dynamics
-   qutip_qtrl.fidcomp
-   qutip_qtrl.optimizer
-   qutip_qtrl.optimconfig
-   qutip_qtrl.optimresult
-   qutip_qtrl.propcomp
-   qutip_qtrl.pulsegen
-   qutip_qtrl.symplectic
-   qutip_qtrl.termcond
-   qutip_qtrl.tslotcomp
+   qutip_qtrl.pulseoptim
+
+   qutip_qoc.analytical_control
+   qutip_qoc.goat
+   qutip_qoc.joat
