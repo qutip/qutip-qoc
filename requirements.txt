@@ -2,5 +2,5 @@ cython>=1.0
 numpy>=1.20
 scipy>=1.10
 qutip>=5.0.0.dev0
-qutip-jax
-qutip-qtrl
+qutip-jax>=0.0.0.dev0
+qutip-qtrl>=0.2.0.dev
