@@ -245,6 +245,7 @@ After having defined the control problem, the ``qutip_qoc.optimize`` function ca
 It requires some extra arguments to prepare the optimization.
 
 .. code-block:: bash
+  
   # initial parameters to be optimized
   p_guess = q_guess = [0., 0.]
 

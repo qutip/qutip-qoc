@@ -58,6 +58,7 @@ If you want to edit the code, use instead
 
 To test the installation from a download of the source code, run from the `qutip-qoc` directory
 
-```
-pytest tests
-```
+.. code-block:: bash
+
+    pytest tests
+
