@@ -3,7 +3,7 @@
 The qutip-qoc package builds up on the ``qutip-qtrl`` [package](https://github.com/qutip/qutip-qtrl).
 
 It enhances it by providing two additional algorithms to optimize analytically defined control functions.
-The first one is an extension of Gradient Optimization of Analytic conTrols [(GOAT)](https://link.aps.org/doi/10.1103/PhysRevLett.120.150401).
+The first one is an extension of Gradient Optimization of Analytic conTrols [(GOAT)](https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.120.150401).
 The second leverages QuTiPs version 5 new diffrax abilities to directly calculate gradients of JAX defined contol functinos using automatic differentiation. 
 
 The procedure consists of a two-layer approach to find global optimal values for parameterized analytical control functions.
