@@ -14,7 +14,7 @@ The package also aims for a more general way of defining control problems with Q
 
 As with qutip-qtrl, the qutip-qoc package aims at providing advanced tools for the optimal control of quantum devices.
 Compared to other libraries for quantum optimal control, qutip-qoc puts additional emphasis on the physics layer and the interaction with the QuTiP package.
-The package offers support for both the CRAB and GRAPE methods.
+Along with the modified GOAT and JOAT algorithms the package offers support for both the CRAB and GRAPE methods defined in ``qutip-qtrl``.
 
 If you would like to know the future development plan and ideas, have a look at the [qutip documentation for ideas](https://qutip.org/docs/latest/development/ideas.html).
 
