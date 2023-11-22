@@ -11,7 +11,8 @@ The global optimization layer provides ``scipy.optimize.dual_annealing`` and ``s
 gradient driven ``scipy.optimize.minimize`` methods.
 
 The package also aims for a more general way of defining control problems with QuTiP and makes switching between the four control algorithms very easy.
-The qutip-qoc package aims at providing advanced tools for the optimal control of quantum devices.
+
+As with qutip-qtrl, the qutip-qoc package aims at providing advanced tools for the optimal control of quantum devices.
 Compared to other libraries for quantum optimal control, qutip-qoc puts additional emphasis on the physics layer and the interaction with the QuTiP package.
 The package offers support for both the CRAB and GRAPE methods.
 

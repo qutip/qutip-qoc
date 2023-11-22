@@ -164,11 +164,11 @@ TRCDIFF_map_jax = TRCDIFF_map._replace(
 @pytest.fixture(
     params=[
         # GOAT
-        pytest.param(PSU_state2state, id="PSU state to state"),
-        pytest.param(SU_state2state, id="SU state to state"),
-        pytest.param(PSU_unitary, id="PSU unitary gate"),
-        pytest.param(SU_unitary, id="SU unitary gate"),
-        pytest.param(TRCDIFF_map, id="TRACEDIFF map synthesis"),
+        pytest.param(PSU_state2state, id="PSU state to state (GOAT)"),
+        pytest.param(SU_state2state, id="SU state to state (GOAT)"),
+        pytest.param(PSU_unitary, id="PSU unitary gate (GOAT)"),
+        pytest.param(SU_unitary, id="SU unitary gate (GOAT)"),
+        pytest.param(TRCDIFF_map, id="TRACEDIFF map synthesis (GOAT)"),
         # JOAT
         pytest.param(PSU_state2state_jax, id="PSU state to state (JAX)"),
         pytest.param(SU_state2state_jax, id="SU state to state (JAX)"),

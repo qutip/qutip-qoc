@@ -49,7 +49,7 @@ class Callback:
         self.iter_seconds = []
         self.start_time = self.iter_time = time.time()
 
-    def end(self):
+    def stop_clock(self):
         self.end_time = time.time()
 
         # save information in result
@@ -70,6 +70,9 @@ class Callback:
         return diff
 
     def time_elapsed(self):
+        """
+        Calculates and stores the elapsed time since the start of the optimization.
+        """
         self.elapsed_time = round(time.time() - self.start_time, 4)
         return self.elapsed_time
 
@@ -337,7 +340,7 @@ def optimize_pulses(
         **optimizer_kwargs
     )
 
-    cllbck.end()  # stop the clock
+    cllbck.stop_clock()  # stop the clock
 
     # some global optimization methods do not return the minimum result
     # when terminated through StopIteration (see min_callback)
