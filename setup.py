@@ -97,5 +97,5 @@ if __name__ == "__main__":
     # keep here are ones that we have done some compile-time processing on.
     setup(
         version=options['version'],
-        # ext_modules=cythonize("src\qutip_qoc\cython\pulse.pyx"),
+        ext_modules=cythonize("src\\qutip_qoc\\cython\\pulse.pyx"),
     )
