@@ -4,12 +4,12 @@
 {
     "distutils": {
         "depends": [],
-        "name": "pulse",
+        "name": "qutip_qoc.pulse",
         "sources": [
-            "src\\qutip_qoc\\cython\\pulse.pyx"
+            "src\\qutip_qoc\\pulse.pyx"
         ]
     },
-    "module_name": "pulse"
+    "module_name": "qutip_qoc.pulse"
 }
 END: Cython Metadata */
 
@@ -1194,8 +1194,8 @@ static CYTHON_INLINE float __PYX_NAN() {
   #endif
 #endif
 
-#define __PYX_HAVE__pulse
-#define __PYX_HAVE_API__pulse
+#define __PYX_HAVE__qutip_qoc__pulse
+#define __PYX_HAVE_API__qutip_qoc__pulse
 /* Early includes */
 #include <math.h>
 #include "pythread.h"
@@ -1466,7 +1466,7 @@ static const char *__pyx_filename;
 /* #### Code section: filename_table ### */
 
 static const char *__pyx_f[] = {
-  "src\\\\qutip_qoc\\\\cython\\\\pulse.pyx",
+  "src\\\\qutip_qoc\\\\pulse.pyx",
   "<stringsource>",
 };
 /* #### Code section: utility_code_proto_before_types ### */
@@ -1616,132 +1616,132 @@ typedef struct {
 /* #### Code section: type_declarations ### */
 
 /*--- Type declarations ---*/
-struct __pyx_obj_5pulse_Pulse;
-struct __pyx_obj_5pulse_GaussianPulse;
-struct __pyx_obj_5pulse_SinPulse;
-struct __pyx_obj_5pulse_CosPulse;
-struct __pyx_obj_5pulse_CosCosPulse;
-struct __pyx_obj_5pulse_PolynomialPulse;
-struct __pyx_obj_5pulse_FourierPulse;
-struct __pyx_obj_5pulse_PWCPulse;
-struct __pyx_obj_5pulse_PWLPulse;
+struct __pyx_obj_9qutip_qoc_5pulse_Pulse;
+struct __pyx_obj_9qutip_qoc_5pulse_GaussianPulse;
+struct __pyx_obj_9qutip_qoc_5pulse_SinPulse;
+struct __pyx_obj_9qutip_qoc_5pulse_CosPulse;
+struct __pyx_obj_9qutip_qoc_5pulse_CosCosPulse;
+struct __pyx_obj_9qutip_qoc_5pulse_PolynomialPulse;
+struct __pyx_obj_9qutip_qoc_5pulse_FourierPulse;
+struct __pyx_obj_9qutip_qoc_5pulse_PWCPulse;
+struct __pyx_obj_9qutip_qoc_5pulse_PWLPulse;
 struct __pyx_array_obj;
 struct __pyx_MemviewEnum_obj;
 struct __pyx_memoryview_obj;
 struct __pyx_memoryviewslice_obj;
 
-/* "pulse.pyx":7
+/* "qutip_qoc/pulse.pyx":7
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef class Pulse:             # <<<<<<<<<<<<<<
  *     cdef public int n_sup
  *     cdef public int n_var
  */
-struct __pyx_obj_5pulse_Pulse {
+struct __pyx_obj_9qutip_qoc_5pulse_Pulse {
   PyObject_HEAD
-  struct __pyx_vtabstruct_5pulse_Pulse *__pyx_vtab;
+  struct __pyx_vtabstruct_9qutip_qoc_5pulse_Pulse *__pyx_vtab;
   int n_sup;
   int n_var;
   int n_par;
 };
 
 
-/* "pulse.pyx":57
+/* "qutip_qoc/pulse.pyx":57
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef class GaussianPulse(Pulse):             # <<<<<<<<<<<<<<
  *     def __init__(self, n_sup=1, n_var=3):
  *         super().__init__(n_sup, n_var=3)
  */
-struct __pyx_obj_5pulse_GaussianPulse {
-  struct __pyx_obj_5pulse_Pulse __pyx_base;
+struct __pyx_obj_9qutip_qoc_5pulse_GaussianPulse {
+  struct __pyx_obj_9qutip_qoc_5pulse_Pulse __pyx_base;
 };
 
 
-/* "pulse.pyx":96
+/* "qutip_qoc/pulse.pyx":96
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef class SinPulse(Pulse):             # <<<<<<<<<<<<<<
  *     def __init__(self, n_sup=1, n_var=3):
  *         super().__init__(n_sup, n_var=3)
  */
-struct __pyx_obj_5pulse_SinPulse {
-  struct __pyx_obj_5pulse_Pulse __pyx_base;
+struct __pyx_obj_9qutip_qoc_5pulse_SinPulse {
+  struct __pyx_obj_9qutip_qoc_5pulse_Pulse __pyx_base;
 };
 
 
-/* "pulse.pyx":135
+/* "qutip_qoc/pulse.pyx":135
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef class CosPulse(Pulse):             # <<<<<<<<<<<<<<
  *     def __init__(self, n_sup=1, n_var=3):
  *         super().__init__(n_sup, n_var=3)
  */
-struct __pyx_obj_5pulse_CosPulse {
-  struct __pyx_obj_5pulse_Pulse __pyx_base;
+struct __pyx_obj_9qutip_qoc_5pulse_CosPulse {
+  struct __pyx_obj_9qutip_qoc_5pulse_Pulse __pyx_base;
 };
 
 
-/* "pulse.pyx":174
+/* "qutip_qoc/pulse.pyx":174
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef class CosCosPulse(Pulse):             # <<<<<<<<<<<<<<
  *     def __init__(self, n_sup=1, n_var=5):
  *         super().__init__(n_sup, n_var=5)
  */
-struct __pyx_obj_5pulse_CosCosPulse {
-  struct __pyx_obj_5pulse_Pulse __pyx_base;
+struct __pyx_obj_9qutip_qoc_5pulse_CosCosPulse {
+  struct __pyx_obj_9qutip_qoc_5pulse_Pulse __pyx_base;
 };
 
 
-/* "pulse.pyx":222
+/* "qutip_qoc/pulse.pyx":222
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef class PolynomialPulse(Pulse):             # <<<<<<<<<<<<<<
  *     def __init__(self, n_sup=1, n_var=3):
  *         super().__init__(n_sup, n_var)
  */
-struct __pyx_obj_5pulse_PolynomialPulse {
-  struct __pyx_obj_5pulse_Pulse __pyx_base;
+struct __pyx_obj_9qutip_qoc_5pulse_PolynomialPulse {
+  struct __pyx_obj_9qutip_qoc_5pulse_Pulse __pyx_base;
 };
 
 
-/* "pulse.pyx":253
+/* "qutip_qoc/pulse.pyx":253
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef class FourierPulse(Pulse):             # <<<<<<<<<<<<<<
  *     def __init__(self, n_sup=1, n_var=4):
  *         if n_var % 2 != 0 or n_var < 4:
  */
-struct __pyx_obj_5pulse_FourierPulse {
-  struct __pyx_obj_5pulse_Pulse __pyx_base;
+struct __pyx_obj_9qutip_qoc_5pulse_FourierPulse {
+  struct __pyx_obj_9qutip_qoc_5pulse_Pulse __pyx_base;
 };
 
 
-/* "pulse.pyx":314
+/* "qutip_qoc/pulse.pyx":314
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef class PWCPulse(Pulse):             # <<<<<<<<<<<<<<
  *     cdef double[:] interval
  *     cdef double step
  */
-struct __pyx_obj_5pulse_PWCPulse {
-  struct __pyx_obj_5pulse_Pulse __pyx_base;
+struct __pyx_obj_9qutip_qoc_5pulse_PWCPulse {
+  struct __pyx_obj_9qutip_qoc_5pulse_Pulse __pyx_base;
   __Pyx_memviewslice interval;
   double step;
   int max_idx;
 };
 
 
-/* "pulse.pyx":348
+/* "qutip_qoc/pulse.pyx":348
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef class PWLPulse(Pulse):             # <<<<<<<<<<<<<<
  *     cdef double[:] interval
  *     cdef double step
  */
-struct __pyx_obj_5pulse_PWLPulse {
-  struct __pyx_obj_5pulse_Pulse __pyx_base;
+struct __pyx_obj_9qutip_qoc_5pulse_PWLPulse {
+  struct __pyx_obj_9qutip_qoc_5pulse_Pulse __pyx_base;
   __Pyx_memviewslice interval;
   double step;
   int max_idx;
@@ -1825,7 +1825,7 @@ struct __pyx_memoryviewslice_obj {
 
 
 
-/* "pulse.pyx":7
+/* "qutip_qoc/pulse.pyx":7
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef class Pulse:             # <<<<<<<<<<<<<<
@@ -1833,16 +1833,16 @@ struct __pyx_memoryviewslice_obj {
  *     cdef public int n_var
  */
 
-struct __pyx_vtabstruct_5pulse_Pulse {
-  double (*gen_pulse)(struct __pyx_obj_5pulse_Pulse *, double, __Pyx_memviewslice, int __pyx_skip_dispatch);
-  double (*gen_grad)(struct __pyx_obj_5pulse_Pulse *, double, __Pyx_memviewslice, int, int __pyx_skip_dispatch);
-  double (*pulse)(struct __pyx_obj_5pulse_Pulse *, double, __Pyx_memviewslice);
-  double (*pulse_grad)(struct __pyx_obj_5pulse_Pulse *, double, __Pyx_memviewslice, int);
+struct __pyx_vtabstruct_9qutip_qoc_5pulse_Pulse {
+  double (*gen_pulse)(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *, double, __Pyx_memviewslice, int __pyx_skip_dispatch);
+  double (*gen_grad)(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *, double, __Pyx_memviewslice, int, int __pyx_skip_dispatch);
+  double (*pulse)(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *, double, __Pyx_memviewslice);
+  double (*pulse_grad)(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *, double, __Pyx_memviewslice, int);
 };
-static struct __pyx_vtabstruct_5pulse_Pulse *__pyx_vtabptr_5pulse_Pulse;
+static struct __pyx_vtabstruct_9qutip_qoc_5pulse_Pulse *__pyx_vtabptr_9qutip_qoc_5pulse_Pulse;
 
 
-/* "pulse.pyx":57
+/* "qutip_qoc/pulse.pyx":57
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef class GaussianPulse(Pulse):             # <<<<<<<<<<<<<<
@@ -1850,13 +1850,13 @@ static struct __pyx_vtabstruct_5pulse_Pulse *__pyx_vtabptr_5pulse_Pulse;
  *         super().__init__(n_sup, n_var=3)
  */
 
-struct __pyx_vtabstruct_5pulse_GaussianPulse {
-  struct __pyx_vtabstruct_5pulse_Pulse __pyx_base;
+struct __pyx_vtabstruct_9qutip_qoc_5pulse_GaussianPulse {
+  struct __pyx_vtabstruct_9qutip_qoc_5pulse_Pulse __pyx_base;
 };
-static struct __pyx_vtabstruct_5pulse_GaussianPulse *__pyx_vtabptr_5pulse_GaussianPulse;
+static struct __pyx_vtabstruct_9qutip_qoc_5pulse_GaussianPulse *__pyx_vtabptr_9qutip_qoc_5pulse_GaussianPulse;
 
 
-/* "pulse.pyx":96
+/* "qutip_qoc/pulse.pyx":96
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef class SinPulse(Pulse):             # <<<<<<<<<<<<<<
@@ -1864,13 +1864,13 @@ static struct __pyx_vtabstruct_5pulse_GaussianPulse *__pyx_vtabptr_5pulse_Gaussi
  *         super().__init__(n_sup, n_var=3)
  */
 
-struct __pyx_vtabstruct_5pulse_SinPulse {
-  struct __pyx_vtabstruct_5pulse_Pulse __pyx_base;
+struct __pyx_vtabstruct_9qutip_qoc_5pulse_SinPulse {
+  struct __pyx_vtabstruct_9qutip_qoc_5pulse_Pulse __pyx_base;
 };
-static struct __pyx_vtabstruct_5pulse_SinPulse *__pyx_vtabptr_5pulse_SinPulse;
+static struct __pyx_vtabstruct_9qutip_qoc_5pulse_SinPulse *__pyx_vtabptr_9qutip_qoc_5pulse_SinPulse;
 
 
-/* "pulse.pyx":135
+/* "qutip_qoc/pulse.pyx":135
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef class CosPulse(Pulse):             # <<<<<<<<<<<<<<
@@ -1878,13 +1878,13 @@ static struct __pyx_vtabstruct_5pulse_SinPulse *__pyx_vtabptr_5pulse_SinPulse;
  *         super().__init__(n_sup, n_var=3)
  */
 
-struct __pyx_vtabstruct_5pulse_CosPulse {
-  struct __pyx_vtabstruct_5pulse_Pulse __pyx_base;
+struct __pyx_vtabstruct_9qutip_qoc_5pulse_CosPulse {
+  struct __pyx_vtabstruct_9qutip_qoc_5pulse_Pulse __pyx_base;
 };
-static struct __pyx_vtabstruct_5pulse_CosPulse *__pyx_vtabptr_5pulse_CosPulse;
+static struct __pyx_vtabstruct_9qutip_qoc_5pulse_CosPulse *__pyx_vtabptr_9qutip_qoc_5pulse_CosPulse;
 
 
-/* "pulse.pyx":174
+/* "qutip_qoc/pulse.pyx":174
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef class CosCosPulse(Pulse):             # <<<<<<<<<<<<<<
@@ -1892,13 +1892,13 @@ static struct __pyx_vtabstruct_5pulse_CosPulse *__pyx_vtabptr_5pulse_CosPulse;
  *         super().__init__(n_sup, n_var=5)
  */
 
-struct __pyx_vtabstruct_5pulse_CosCosPulse {
-  struct __pyx_vtabstruct_5pulse_Pulse __pyx_base;
+struct __pyx_vtabstruct_9qutip_qoc_5pulse_CosCosPulse {
+  struct __pyx_vtabstruct_9qutip_qoc_5pulse_Pulse __pyx_base;
 };
-static struct __pyx_vtabstruct_5pulse_CosCosPulse *__pyx_vtabptr_5pulse_CosCosPulse;
+static struct __pyx_vtabstruct_9qutip_qoc_5pulse_CosCosPulse *__pyx_vtabptr_9qutip_qoc_5pulse_CosCosPulse;
 
 
-/* "pulse.pyx":222
+/* "qutip_qoc/pulse.pyx":222
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef class PolynomialPulse(Pulse):             # <<<<<<<<<<<<<<
@@ -1906,13 +1906,13 @@ static struct __pyx_vtabstruct_5pulse_CosCosPulse *__pyx_vtabptr_5pulse_CosCosPu
  *         super().__init__(n_sup, n_var)
  */
 
-struct __pyx_vtabstruct_5pulse_PolynomialPulse {
-  struct __pyx_vtabstruct_5pulse_Pulse __pyx_base;
+struct __pyx_vtabstruct_9qutip_qoc_5pulse_PolynomialPulse {
+  struct __pyx_vtabstruct_9qutip_qoc_5pulse_Pulse __pyx_base;
 };
-static struct __pyx_vtabstruct_5pulse_PolynomialPulse *__pyx_vtabptr_5pulse_PolynomialPulse;
+static struct __pyx_vtabstruct_9qutip_qoc_5pulse_PolynomialPulse *__pyx_vtabptr_9qutip_qoc_5pulse_PolynomialPulse;
 
 
-/* "pulse.pyx":253
+/* "qutip_qoc/pulse.pyx":253
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef class FourierPulse(Pulse):             # <<<<<<<<<<<<<<
@@ -1920,13 +1920,13 @@ static struct __pyx_vtabstruct_5pulse_PolynomialPulse *__pyx_vtabptr_5pulse_Poly
  *         if n_var % 2 != 0 or n_var < 4:
  */
 
-struct __pyx_vtabstruct_5pulse_FourierPulse {
-  struct __pyx_vtabstruct_5pulse_Pulse __pyx_base;
+struct __pyx_vtabstruct_9qutip_qoc_5pulse_FourierPulse {
+  struct __pyx_vtabstruct_9qutip_qoc_5pulse_Pulse __pyx_base;
 };
-static struct __pyx_vtabstruct_5pulse_FourierPulse *__pyx_vtabptr_5pulse_FourierPulse;
+static struct __pyx_vtabstruct_9qutip_qoc_5pulse_FourierPulse *__pyx_vtabptr_9qutip_qoc_5pulse_FourierPulse;
 
 
-/* "pulse.pyx":314
+/* "qutip_qoc/pulse.pyx":314
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef class PWCPulse(Pulse):             # <<<<<<<<<<<<<<
@@ -1934,13 +1934,13 @@ static struct __pyx_vtabstruct_5pulse_FourierPulse *__pyx_vtabptr_5pulse_Fourier
  *     cdef double step
  */
 
-struct __pyx_vtabstruct_5pulse_PWCPulse {
-  struct __pyx_vtabstruct_5pulse_Pulse __pyx_base;
+struct __pyx_vtabstruct_9qutip_qoc_5pulse_PWCPulse {
+  struct __pyx_vtabstruct_9qutip_qoc_5pulse_Pulse __pyx_base;
 };
-static struct __pyx_vtabstruct_5pulse_PWCPulse *__pyx_vtabptr_5pulse_PWCPulse;
+static struct __pyx_vtabstruct_9qutip_qoc_5pulse_PWCPulse *__pyx_vtabptr_9qutip_qoc_5pulse_PWCPulse;
 
 
-/* "pulse.pyx":348
+/* "qutip_qoc/pulse.pyx":348
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef class PWLPulse(Pulse):             # <<<<<<<<<<<<<<
@@ -1948,10 +1948,10 @@ static struct __pyx_vtabstruct_5pulse_PWCPulse *__pyx_vtabptr_5pulse_PWCPulse;
  *     cdef double step
  */
 
-struct __pyx_vtabstruct_5pulse_PWLPulse {
-  struct __pyx_vtabstruct_5pulse_Pulse __pyx_base;
+struct __pyx_vtabstruct_9qutip_qoc_5pulse_PWLPulse {
+  struct __pyx_vtabstruct_9qutip_qoc_5pulse_Pulse __pyx_base;
 };
-static struct __pyx_vtabstruct_5pulse_PWLPulse *__pyx_vtabptr_5pulse_PWLPulse;
+static struct __pyx_vtabstruct_9qutip_qoc_5pulse_PWLPulse *__pyx_vtabptr_9qutip_qoc_5pulse_PWLPulse;
 
 
 /* "View.MemoryView":114
@@ -2987,26 +2987,26 @@ static PyObject *__pyx_memoryview__get_base(struct __pyx_memoryview_obj *__pyx_v
 static PyObject *__pyx_memoryviewslice_convert_item_to_object(struct __pyx_memoryviewslice_obj *__pyx_v_self, char *__pyx_v_itemp); /* proto*/
 static PyObject *__pyx_memoryviewslice_assign_item_from_object(struct __pyx_memoryviewslice_obj *__pyx_v_self, char *__pyx_v_itemp, PyObject *__pyx_v_value); /* proto*/
 static PyObject *__pyx_memoryviewslice__get_base(struct __pyx_memoryviewslice_obj *__pyx_v_self); /* proto*/
-static double __pyx_f_5pulse_5Pulse_gen_pulse(struct __pyx_obj_5pulse_Pulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_skip_dispatch); /* proto*/
-static double __pyx_f_5pulse_5Pulse_gen_grad(struct __pyx_obj_5pulse_Pulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx, int __pyx_skip_dispatch); /* proto*/
-static double __pyx_f_5pulse_5Pulse_pulse(CYTHON_UNUSED struct __pyx_obj_5pulse_Pulse *__pyx_v_self, CYTHON_UNUSED double __pyx_v_time, CYTHON_UNUSED __Pyx_memviewslice __pyx_v_paras); /* proto*/
-static double __pyx_f_5pulse_5Pulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj_5pulse_Pulse *__pyx_v_self, CYTHON_UNUSED double __pyx_v_time, CYTHON_UNUSED __Pyx_memviewslice __pyx_v_paras, CYTHON_UNUSED int __pyx_v_idx); /* proto*/
-static double __pyx_f_5pulse_13GaussianPulse_pulse(CYTHON_UNUSED struct __pyx_obj_5pulse_GaussianPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras); /* proto*/
-static double __pyx_f_5pulse_13GaussianPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj_5pulse_GaussianPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx); /* proto*/
-static double __pyx_f_5pulse_8SinPulse_pulse(CYTHON_UNUSED struct __pyx_obj_5pulse_SinPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras); /* proto*/
-static double __pyx_f_5pulse_8SinPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj_5pulse_SinPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx); /* proto*/
-static double __pyx_f_5pulse_8CosPulse_pulse(CYTHON_UNUSED struct __pyx_obj_5pulse_CosPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras); /* proto*/
-static double __pyx_f_5pulse_8CosPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj_5pulse_CosPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx); /* proto*/
-static double __pyx_f_5pulse_11CosCosPulse_pulse(CYTHON_UNUSED struct __pyx_obj_5pulse_CosCosPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras); /* proto*/
-static double __pyx_f_5pulse_11CosCosPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj_5pulse_CosCosPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx); /* proto*/
-static double __pyx_f_5pulse_15PolynomialPulse_pulse(struct __pyx_obj_5pulse_PolynomialPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras); /* proto*/
-static double __pyx_f_5pulse_15PolynomialPulse_pulse_grad(struct __pyx_obj_5pulse_PolynomialPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx); /* proto*/
-static double __pyx_f_5pulse_12FourierPulse_pulse(struct __pyx_obj_5pulse_FourierPulse *__pyx_v_self, double __pyx_v_t, __Pyx_memviewslice __pyx_v_paras); /* proto*/
-static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_FourierPulse *__pyx_v_self, double __pyx_v_t, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx); /* proto*/
-static double __pyx_f_5pulse_8PWCPulse_pulse(struct __pyx_obj_5pulse_PWCPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras); /* proto*/
-static double __pyx_f_5pulse_8PWCPulse_pulse_grad(struct __pyx_obj_5pulse_PWCPulse *__pyx_v_self, double __pyx_v_time, CYTHON_UNUSED __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx); /* proto*/
-static double __pyx_f_5pulse_8PWLPulse_pulse(struct __pyx_obj_5pulse_PWLPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras); /* proto*/
-static double __pyx_f_5pulse_8PWLPulse_pulse_grad(struct __pyx_obj_5pulse_PWLPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx); /* proto*/
+static double __pyx_f_9qutip_qoc_5pulse_5Pulse_gen_pulse(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_skip_dispatch); /* proto*/
+static double __pyx_f_9qutip_qoc_5pulse_5Pulse_gen_grad(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx, int __pyx_skip_dispatch); /* proto*/
+static double __pyx_f_9qutip_qoc_5pulse_5Pulse_pulse(CYTHON_UNUSED struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v_self, CYTHON_UNUSED double __pyx_v_time, CYTHON_UNUSED __Pyx_memviewslice __pyx_v_paras); /* proto*/
+static double __pyx_f_9qutip_qoc_5pulse_5Pulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v_self, CYTHON_UNUSED double __pyx_v_time, CYTHON_UNUSED __Pyx_memviewslice __pyx_v_paras, CYTHON_UNUSED int __pyx_v_idx); /* proto*/
+static double __pyx_f_9qutip_qoc_5pulse_13GaussianPulse_pulse(CYTHON_UNUSED struct __pyx_obj_9qutip_qoc_5pulse_GaussianPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras); /* proto*/
+static double __pyx_f_9qutip_qoc_5pulse_13GaussianPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj_9qutip_qoc_5pulse_GaussianPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx); /* proto*/
+static double __pyx_f_9qutip_qoc_5pulse_8SinPulse_pulse(CYTHON_UNUSED struct __pyx_obj_9qutip_qoc_5pulse_SinPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras); /* proto*/
+static double __pyx_f_9qutip_qoc_5pulse_8SinPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj_9qutip_qoc_5pulse_SinPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx); /* proto*/
+static double __pyx_f_9qutip_qoc_5pulse_8CosPulse_pulse(CYTHON_UNUSED struct __pyx_obj_9qutip_qoc_5pulse_CosPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras); /* proto*/
+static double __pyx_f_9qutip_qoc_5pulse_8CosPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj_9qutip_qoc_5pulse_CosPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx); /* proto*/
+static double __pyx_f_9qutip_qoc_5pulse_11CosCosPulse_pulse(CYTHON_UNUSED struct __pyx_obj_9qutip_qoc_5pulse_CosCosPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras); /* proto*/
+static double __pyx_f_9qutip_qoc_5pulse_11CosCosPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj_9qutip_qoc_5pulse_CosCosPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx); /* proto*/
+static double __pyx_f_9qutip_qoc_5pulse_15PolynomialPulse_pulse(struct __pyx_obj_9qutip_qoc_5pulse_PolynomialPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras); /* proto*/
+static double __pyx_f_9qutip_qoc_5pulse_15PolynomialPulse_pulse_grad(struct __pyx_obj_9qutip_qoc_5pulse_PolynomialPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx); /* proto*/
+static double __pyx_f_9qutip_qoc_5pulse_12FourierPulse_pulse(struct __pyx_obj_9qutip_qoc_5pulse_FourierPulse *__pyx_v_self, double __pyx_v_t, __Pyx_memviewslice __pyx_v_paras); /* proto*/
+static double __pyx_f_9qutip_qoc_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_9qutip_qoc_5pulse_FourierPulse *__pyx_v_self, double __pyx_v_t, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx); /* proto*/
+static double __pyx_f_9qutip_qoc_5pulse_8PWCPulse_pulse(struct __pyx_obj_9qutip_qoc_5pulse_PWCPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras); /* proto*/
+static double __pyx_f_9qutip_qoc_5pulse_8PWCPulse_pulse_grad(struct __pyx_obj_9qutip_qoc_5pulse_PWCPulse *__pyx_v_self, double __pyx_v_time, CYTHON_UNUSED __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx); /* proto*/
+static double __pyx_f_9qutip_qoc_5pulse_8PWLPulse_pulse(struct __pyx_obj_9qutip_qoc_5pulse_PWLPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras); /* proto*/
+static double __pyx_f_9qutip_qoc_5pulse_8PWLPulse_pulse_grad(struct __pyx_obj_9qutip_qoc_5pulse_PWLPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx); /* proto*/
 
 /* Module declarations from "libc.math" */
 
@@ -3016,7 +3016,7 @@ static double __pyx_f_5pulse_8PWLPulse_pulse_grad(struct __pyx_obj_5pulse_PWLPul
 
 /* Module declarations from "cython" */
 
-/* Module declarations from "pulse" */
+/* Module declarations from "qutip_qoc.pulse" */
 static PyObject *__pyx_collections_abc_Sequence = 0;
 static PyObject *generic = 0;
 static PyObject *strided = 0;
@@ -3025,15 +3025,15 @@ static PyObject *contiguous = 0;
 static PyObject *indirect_contiguous = 0;
 static int __pyx_memoryview_thread_locks_used;
 static PyThread_type_lock __pyx_memoryview_thread_locks[8];
-static PyObject *__pyx_f_5pulse___pyx_unpickle_Pulse__set_state(struct __pyx_obj_5pulse_Pulse *, PyObject *); /*proto*/
-static PyObject *__pyx_f_5pulse___pyx_unpickle_GaussianPulse__set_state(struct __pyx_obj_5pulse_GaussianPulse *, PyObject *); /*proto*/
-static PyObject *__pyx_f_5pulse___pyx_unpickle_SinPulse__set_state(struct __pyx_obj_5pulse_SinPulse *, PyObject *); /*proto*/
-static PyObject *__pyx_f_5pulse___pyx_unpickle_CosPulse__set_state(struct __pyx_obj_5pulse_CosPulse *, PyObject *); /*proto*/
-static PyObject *__pyx_f_5pulse___pyx_unpickle_CosCosPulse__set_state(struct __pyx_obj_5pulse_CosCosPulse *, PyObject *); /*proto*/
-static PyObject *__pyx_f_5pulse___pyx_unpickle_PolynomialPulse__set_state(struct __pyx_obj_5pulse_PolynomialPulse *, PyObject *); /*proto*/
-static PyObject *__pyx_f_5pulse___pyx_unpickle_FourierPulse__set_state(struct __pyx_obj_5pulse_FourierPulse *, PyObject *); /*proto*/
-static PyObject *__pyx_f_5pulse___pyx_unpickle_PWCPulse__set_state(struct __pyx_obj_5pulse_PWCPulse *, PyObject *); /*proto*/
-static PyObject *__pyx_f_5pulse___pyx_unpickle_PWLPulse__set_state(struct __pyx_obj_5pulse_PWLPulse *, PyObject *); /*proto*/
+static PyObject *__pyx_f_9qutip_qoc_5pulse___pyx_unpickle_Pulse__set_state(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *, PyObject *); /*proto*/
+static PyObject *__pyx_f_9qutip_qoc_5pulse___pyx_unpickle_GaussianPulse__set_state(struct __pyx_obj_9qutip_qoc_5pulse_GaussianPulse *, PyObject *); /*proto*/
+static PyObject *__pyx_f_9qutip_qoc_5pulse___pyx_unpickle_SinPulse__set_state(struct __pyx_obj_9qutip_qoc_5pulse_SinPulse *, PyObject *); /*proto*/
+static PyObject *__pyx_f_9qutip_qoc_5pulse___pyx_unpickle_CosPulse__set_state(struct __pyx_obj_9qutip_qoc_5pulse_CosPulse *, PyObject *); /*proto*/
+static PyObject *__pyx_f_9qutip_qoc_5pulse___pyx_unpickle_CosCosPulse__set_state(struct __pyx_obj_9qutip_qoc_5pulse_CosCosPulse *, PyObject *); /*proto*/
+static PyObject *__pyx_f_9qutip_qoc_5pulse___pyx_unpickle_PolynomialPulse__set_state(struct __pyx_obj_9qutip_qoc_5pulse_PolynomialPulse *, PyObject *); /*proto*/
+static PyObject *__pyx_f_9qutip_qoc_5pulse___pyx_unpickle_FourierPulse__set_state(struct __pyx_obj_9qutip_qoc_5pulse_FourierPulse *, PyObject *); /*proto*/
+static PyObject *__pyx_f_9qutip_qoc_5pulse___pyx_unpickle_PWCPulse__set_state(struct __pyx_obj_9qutip_qoc_5pulse_PWCPulse *, PyObject *); /*proto*/
+static PyObject *__pyx_f_9qutip_qoc_5pulse___pyx_unpickle_PWLPulse__set_state(struct __pyx_obj_9qutip_qoc_5pulse_PWLPulse *, PyObject *); /*proto*/
 static int __pyx_array_allocate_buffer(struct __pyx_array_obj *); /*proto*/
 static struct __pyx_array_obj *__pyx_array_new(PyObject *, Py_ssize_t, char *, char *, char *); /*proto*/
 static PyObject *__pyx_memoryview_new(PyObject *, int, int, __Pyx_TypeInfo *); /*proto*/
@@ -3071,11 +3071,11 @@ static PyObject *__pyx_unpickle_Enum__set_state(struct __pyx_MemviewEnum_obj *, 
 /* #### Code section: typeinfo ### */
 static __Pyx_TypeInfo __Pyx_TypeInfo_double = { "double", NULL, sizeof(double), { 0 }, 0, 'R', 0, 0 };
 /* #### Code section: before_global_var ### */
-#define __Pyx_MODULE_NAME "pulse"
-extern int __pyx_module_is_main_pulse;
-int __pyx_module_is_main_pulse = 0;
+#define __Pyx_MODULE_NAME "qutip_qoc.pulse"
+extern int __pyx_module_is_main_qutip_qoc__pulse;
+int __pyx_module_is_main_qutip_qoc__pulse = 0;
 
-/* Implementation of "pulse" */
+/* Implementation of "qutip_qoc.pulse" */
 /* #### Code section: global_var ### */
 static PyObject *__pyx_builtin_range;
 static PyObject *__pyx_builtin_super;
@@ -3131,7 +3131,6 @@ static const char __pyx_k_index[] = "index";
 static const char __pyx_k_n_sup[] = "n_sup";
 static const char __pyx_k_n_var[] = "n_var";
 static const char __pyx_k_paras[] = "paras";
-static const char __pyx_k_pulse[] = "pulse";
 static const char __pyx_k_range[] = "range";
 static const char __pyx_k_shape[] = "shape";
 static const char __pyx_k_start[] = "start";
@@ -3197,6 +3196,7 @@ static const char __pyx_k_allocate_buffer[] = "allocate_buffer";
 static const char __pyx_k_collections_abc[] = "collections.abc";
 static const char __pyx_k_dtype_is_object[] = "dtype_is_object";
 static const char __pyx_k_pyx_PickleError[] = "__pyx_PickleError";
+static const char __pyx_k_qutip_qoc_pulse[] = "qutip_qoc.pulse";
 static const char __pyx_k_setstate_cython[] = "__setstate_cython__";
 static const char __pyx_k_pyx_unpickle_Enum[] = "__pyx_unpickle_Enum";
 static const char __pyx_k_asyncio_coroutines[] = "asyncio.coroutines";
@@ -3216,6 +3216,7 @@ static const char __pyx_k_MemoryView_of_r_object[] = "<MemoryView of %r object>"
 static const char __pyx_k_MemoryView_of_r_at_0x_x[] = "<MemoryView of %r at 0x%x>";
 static const char __pyx_k_Pulse___setstate_cython[] = "Pulse.__setstate_cython__";
 static const char __pyx_k_contiguous_and_indirect[] = "<contiguous and indirect>";
+static const char __pyx_k_src_qutip_qoc_pulse_pyx[] = "src\\qutip_qoc\\pulse.pyx";
 static const char __pyx_k_CosPulse___reduce_cython[] = "CosPulse.__reduce_cython__";
 static const char __pyx_k_PWCPulse___reduce_cython[] = "PWCPulse.__reduce_cython__";
 static const char __pyx_k_PWLPulse___reduce_cython[] = "PWLPulse.__reduce_cython__";
@@ -3239,7 +3240,6 @@ static const char __pyx_k_GaussianPulse___reduce_cython[] = "GaussianPulse.__red
 static const char __pyx_k_unable_to_allocate_array_data[] = "unable to allocate array data.";
 static const char __pyx_k_FourierPulse___setstate_cython[] = "FourierPulse.__setstate_cython__";
 static const char __pyx_k_n_var_must_be_an_even_number_4[] = "n_var must be an even number >= 4";
-static const char __pyx_k_src_qutip_qoc_cython_pulse_pyx[] = "src\\qutip_qoc\\cython\\pulse.pyx";
 static const char __pyx_k_strided_and_direct_or_indirect[] = "<strided and direct or indirect>";
 static const char __pyx_k_GaussianPulse___setstate_cython[] = "GaussianPulse.__setstate_cython__";
 static const char __pyx_k_PolynomialPulse___reduce_cython[] = "PolynomialPulse.__reduce_cython__";
@@ -3303,59 +3303,59 @@ static void __pyx_memoryviewslice___pyx_pf_15View_dot_MemoryView_16_memoryviewsl
 static PyObject *__pyx_pf___pyx_memoryviewslice___reduce_cython__(CYTHON_UNUSED struct __pyx_memoryviewslice_obj *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf___pyx_memoryviewslice_2__setstate_cython__(CYTHON_UNUSED struct __pyx_memoryviewslice_obj *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
 static PyObject *__pyx_pf_15View_dot_MemoryView___pyx_unpickle_Enum(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
-static int __pyx_pf_5pulse_5Pulse___init__(struct __pyx_obj_5pulse_Pulse *__pyx_v_self, PyObject *__pyx_v_n_sup, PyObject *__pyx_v_n_var); /* proto */
-static PyObject *__pyx_pf_5pulse_5Pulse_2gen_pulse(struct __pyx_obj_5pulse_Pulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras); /* proto */
-static PyObject *__pyx_pf_5pulse_5Pulse_4gen_grad(struct __pyx_obj_5pulse_Pulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx); /* proto */
-static PyObject *__pyx_pf_5pulse_5Pulse_5n_sup___get__(struct __pyx_obj_5pulse_Pulse *__pyx_v_self); /* proto */
-static int __pyx_pf_5pulse_5Pulse_5n_sup_2__set__(struct __pyx_obj_5pulse_Pulse *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
-static PyObject *__pyx_pf_5pulse_5Pulse_5n_var___get__(struct __pyx_obj_5pulse_Pulse *__pyx_v_self); /* proto */
-static int __pyx_pf_5pulse_5Pulse_5n_var_2__set__(struct __pyx_obj_5pulse_Pulse *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
-static PyObject *__pyx_pf_5pulse_5Pulse_5n_par___get__(struct __pyx_obj_5pulse_Pulse *__pyx_v_self); /* proto */
-static int __pyx_pf_5pulse_5Pulse_5n_par_2__set__(struct __pyx_obj_5pulse_Pulse *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
-static PyObject *__pyx_pf_5pulse_5Pulse_6__reduce_cython__(struct __pyx_obj_5pulse_Pulse *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5pulse_5Pulse_8__setstate_cython__(struct __pyx_obj_5pulse_Pulse *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
-static int __pyx_pf_5pulse_13GaussianPulse___init__(struct __pyx_obj_5pulse_GaussianPulse *__pyx_v_self, PyObject *__pyx_v_n_sup, CYTHON_UNUSED PyObject *__pyx_v_n_var); /* proto */
-static PyObject *__pyx_pf_5pulse_13GaussianPulse_2__reduce_cython__(struct __pyx_obj_5pulse_GaussianPulse *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5pulse_13GaussianPulse_4__setstate_cython__(struct __pyx_obj_5pulse_GaussianPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
-static int __pyx_pf_5pulse_8SinPulse___init__(struct __pyx_obj_5pulse_SinPulse *__pyx_v_self, PyObject *__pyx_v_n_sup, CYTHON_UNUSED PyObject *__pyx_v_n_var); /* proto */
-static PyObject *__pyx_pf_5pulse_8SinPulse_2__reduce_cython__(struct __pyx_obj_5pulse_SinPulse *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5pulse_8SinPulse_4__setstate_cython__(struct __pyx_obj_5pulse_SinPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
-static int __pyx_pf_5pulse_8CosPulse___init__(struct __pyx_obj_5pulse_CosPulse *__pyx_v_self, PyObject *__pyx_v_n_sup, CYTHON_UNUSED PyObject *__pyx_v_n_var); /* proto */
-static PyObject *__pyx_pf_5pulse_8CosPulse_2__reduce_cython__(struct __pyx_obj_5pulse_CosPulse *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5pulse_8CosPulse_4__setstate_cython__(struct __pyx_obj_5pulse_CosPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
-static int __pyx_pf_5pulse_11CosCosPulse___init__(struct __pyx_obj_5pulse_CosCosPulse *__pyx_v_self, PyObject *__pyx_v_n_sup, CYTHON_UNUSED PyObject *__pyx_v_n_var); /* proto */
-static PyObject *__pyx_pf_5pulse_11CosCosPulse_2__reduce_cython__(struct __pyx_obj_5pulse_CosCosPulse *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5pulse_11CosCosPulse_4__setstate_cython__(struct __pyx_obj_5pulse_CosCosPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
-static int __pyx_pf_5pulse_15PolynomialPulse___init__(struct __pyx_obj_5pulse_PolynomialPulse *__pyx_v_self, PyObject *__pyx_v_n_sup, PyObject *__pyx_v_n_var); /* proto */
-static PyObject *__pyx_pf_5pulse_15PolynomialPulse_2__reduce_cython__(struct __pyx_obj_5pulse_PolynomialPulse *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5pulse_15PolynomialPulse_4__setstate_cython__(struct __pyx_obj_5pulse_PolynomialPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
-static int __pyx_pf_5pulse_12FourierPulse___init__(struct __pyx_obj_5pulse_FourierPulse *__pyx_v_self, PyObject *__pyx_v_n_sup, PyObject *__pyx_v_n_var); /* proto */
-static PyObject *__pyx_pf_5pulse_12FourierPulse_2__reduce_cython__(struct __pyx_obj_5pulse_FourierPulse *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5pulse_12FourierPulse_4__setstate_cython__(struct __pyx_obj_5pulse_FourierPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
-static int __pyx_pf_5pulse_8PWCPulse___init__(struct __pyx_obj_5pulse_PWCPulse *__pyx_v_self, PyObject *__pyx_v_interval, PyObject *__pyx_v_n_sup, PyObject *__pyx_v_n_var); /* proto */
-static PyObject *__pyx_pf_5pulse_8PWCPulse_2__reduce_cython__(struct __pyx_obj_5pulse_PWCPulse *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5pulse_8PWCPulse_4__setstate_cython__(struct __pyx_obj_5pulse_PWCPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
-static int __pyx_pf_5pulse_8PWLPulse___init__(struct __pyx_obj_5pulse_PWLPulse *__pyx_v_self, PyObject *__pyx_v_interval, CYTHON_UNUSED PyObject *__pyx_v_n_sup, PyObject *__pyx_v_n_var); /* proto */
-static PyObject *__pyx_pf_5pulse_8PWLPulse_2__reduce_cython__(struct __pyx_obj_5pulse_PWLPulse *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_5pulse_8PWLPulse_4__setstate_cython__(struct __pyx_obj_5pulse_PWLPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_pf_5pulse___pyx_unpickle_Pulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_pf_5pulse_2__pyx_unpickle_GaussianPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_pf_5pulse_4__pyx_unpickle_SinPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_pf_5pulse_6__pyx_unpickle_CosPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_pf_5pulse_8__pyx_unpickle_CosCosPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_pf_5pulse_10__pyx_unpickle_PolynomialPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_pf_5pulse_12__pyx_unpickle_FourierPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_pf_5pulse_14__pyx_unpickle_PWCPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_pf_5pulse_16__pyx_unpickle_PWLPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_tp_new_5pulse_Pulse(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
-static PyObject *__pyx_tp_new_5pulse_GaussianPulse(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
-static PyObject *__pyx_tp_new_5pulse_SinPulse(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
-static PyObject *__pyx_tp_new_5pulse_CosPulse(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
-static PyObject *__pyx_tp_new_5pulse_CosCosPulse(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
-static PyObject *__pyx_tp_new_5pulse_PolynomialPulse(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
-static PyObject *__pyx_tp_new_5pulse_FourierPulse(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
-static PyObject *__pyx_tp_new_5pulse_PWCPulse(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
-static PyObject *__pyx_tp_new_5pulse_PWLPulse(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static int __pyx_pf_9qutip_qoc_5pulse_5Pulse___init__(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v_self, PyObject *__pyx_v_n_sup, PyObject *__pyx_v_n_var); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_5Pulse_2gen_pulse(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_5Pulse_4gen_grad(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_5Pulse_5n_sup___get__(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v_self); /* proto */
+static int __pyx_pf_9qutip_qoc_5pulse_5Pulse_5n_sup_2__set__(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_5Pulse_5n_var___get__(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v_self); /* proto */
+static int __pyx_pf_9qutip_qoc_5pulse_5Pulse_5n_var_2__set__(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_5Pulse_5n_par___get__(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v_self); /* proto */
+static int __pyx_pf_9qutip_qoc_5pulse_5Pulse_5n_par_2__set__(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v_self, PyObject *__pyx_v_value); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_5Pulse_6__reduce_cython__(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_5Pulse_8__setstate_cython__(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
+static int __pyx_pf_9qutip_qoc_5pulse_13GaussianPulse___init__(struct __pyx_obj_9qutip_qoc_5pulse_GaussianPulse *__pyx_v_self, PyObject *__pyx_v_n_sup, CYTHON_UNUSED PyObject *__pyx_v_n_var); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_13GaussianPulse_2__reduce_cython__(struct __pyx_obj_9qutip_qoc_5pulse_GaussianPulse *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_13GaussianPulse_4__setstate_cython__(struct __pyx_obj_9qutip_qoc_5pulse_GaussianPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
+static int __pyx_pf_9qutip_qoc_5pulse_8SinPulse___init__(struct __pyx_obj_9qutip_qoc_5pulse_SinPulse *__pyx_v_self, PyObject *__pyx_v_n_sup, CYTHON_UNUSED PyObject *__pyx_v_n_var); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_8SinPulse_2__reduce_cython__(struct __pyx_obj_9qutip_qoc_5pulse_SinPulse *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_8SinPulse_4__setstate_cython__(struct __pyx_obj_9qutip_qoc_5pulse_SinPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
+static int __pyx_pf_9qutip_qoc_5pulse_8CosPulse___init__(struct __pyx_obj_9qutip_qoc_5pulse_CosPulse *__pyx_v_self, PyObject *__pyx_v_n_sup, CYTHON_UNUSED PyObject *__pyx_v_n_var); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_8CosPulse_2__reduce_cython__(struct __pyx_obj_9qutip_qoc_5pulse_CosPulse *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_8CosPulse_4__setstate_cython__(struct __pyx_obj_9qutip_qoc_5pulse_CosPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
+static int __pyx_pf_9qutip_qoc_5pulse_11CosCosPulse___init__(struct __pyx_obj_9qutip_qoc_5pulse_CosCosPulse *__pyx_v_self, PyObject *__pyx_v_n_sup, CYTHON_UNUSED PyObject *__pyx_v_n_var); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_11CosCosPulse_2__reduce_cython__(struct __pyx_obj_9qutip_qoc_5pulse_CosCosPulse *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_11CosCosPulse_4__setstate_cython__(struct __pyx_obj_9qutip_qoc_5pulse_CosCosPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
+static int __pyx_pf_9qutip_qoc_5pulse_15PolynomialPulse___init__(struct __pyx_obj_9qutip_qoc_5pulse_PolynomialPulse *__pyx_v_self, PyObject *__pyx_v_n_sup, PyObject *__pyx_v_n_var); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_15PolynomialPulse_2__reduce_cython__(struct __pyx_obj_9qutip_qoc_5pulse_PolynomialPulse *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_15PolynomialPulse_4__setstate_cython__(struct __pyx_obj_9qutip_qoc_5pulse_PolynomialPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
+static int __pyx_pf_9qutip_qoc_5pulse_12FourierPulse___init__(struct __pyx_obj_9qutip_qoc_5pulse_FourierPulse *__pyx_v_self, PyObject *__pyx_v_n_sup, PyObject *__pyx_v_n_var); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_12FourierPulse_2__reduce_cython__(struct __pyx_obj_9qutip_qoc_5pulse_FourierPulse *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_12FourierPulse_4__setstate_cython__(struct __pyx_obj_9qutip_qoc_5pulse_FourierPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
+static int __pyx_pf_9qutip_qoc_5pulse_8PWCPulse___init__(struct __pyx_obj_9qutip_qoc_5pulse_PWCPulse *__pyx_v_self, PyObject *__pyx_v_interval, PyObject *__pyx_v_n_sup, PyObject *__pyx_v_n_var); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_8PWCPulse_2__reduce_cython__(struct __pyx_obj_9qutip_qoc_5pulse_PWCPulse *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_8PWCPulse_4__setstate_cython__(struct __pyx_obj_9qutip_qoc_5pulse_PWCPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
+static int __pyx_pf_9qutip_qoc_5pulse_8PWLPulse___init__(struct __pyx_obj_9qutip_qoc_5pulse_PWLPulse *__pyx_v_self, PyObject *__pyx_v_interval, CYTHON_UNUSED PyObject *__pyx_v_n_sup, PyObject *__pyx_v_n_var); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_8PWLPulse_2__reduce_cython__(struct __pyx_obj_9qutip_qoc_5pulse_PWLPulse *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_8PWLPulse_4__setstate_cython__(struct __pyx_obj_9qutip_qoc_5pulse_PWLPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse___pyx_unpickle_Pulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_2__pyx_unpickle_GaussianPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_4__pyx_unpickle_SinPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_6__pyx_unpickle_CosPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_8__pyx_unpickle_CosCosPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_10__pyx_unpickle_PolynomialPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_12__pyx_unpickle_FourierPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_14__pyx_unpickle_PWCPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_16__pyx_unpickle_PWLPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
+static PyObject *__pyx_tp_new_9qutip_qoc_5pulse_Pulse(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_9qutip_qoc_5pulse_GaussianPulse(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_9qutip_qoc_5pulse_SinPulse(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_9qutip_qoc_5pulse_CosPulse(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_9qutip_qoc_5pulse_CosCosPulse(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_9qutip_qoc_5pulse_PolynomialPulse(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_9qutip_qoc_5pulse_FourierPulse(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_9qutip_qoc_5pulse_PWCPulse(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
+static PyObject *__pyx_tp_new_9qutip_qoc_5pulse_PWLPulse(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_array(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_Enum(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_memoryview(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
@@ -3396,29 +3396,29 @@ typedef struct {
   #if CYTHON_USE_MODULE_STATE
   #endif
   #if CYTHON_USE_MODULE_STATE
-  PyObject *__pyx_type_5pulse_Pulse;
-  PyObject *__pyx_type_5pulse_GaussianPulse;
-  PyObject *__pyx_type_5pulse_SinPulse;
-  PyObject *__pyx_type_5pulse_CosPulse;
-  PyObject *__pyx_type_5pulse_CosCosPulse;
-  PyObject *__pyx_type_5pulse_PolynomialPulse;
-  PyObject *__pyx_type_5pulse_FourierPulse;
-  PyObject *__pyx_type_5pulse_PWCPulse;
-  PyObject *__pyx_type_5pulse_PWLPulse;
+  PyObject *__pyx_type_9qutip_qoc_5pulse_Pulse;
+  PyObject *__pyx_type_9qutip_qoc_5pulse_GaussianPulse;
+  PyObject *__pyx_type_9qutip_qoc_5pulse_SinPulse;
+  PyObject *__pyx_type_9qutip_qoc_5pulse_CosPulse;
+  PyObject *__pyx_type_9qutip_qoc_5pulse_CosCosPulse;
+  PyObject *__pyx_type_9qutip_qoc_5pulse_PolynomialPulse;
+  PyObject *__pyx_type_9qutip_qoc_5pulse_FourierPulse;
+  PyObject *__pyx_type_9qutip_qoc_5pulse_PWCPulse;
+  PyObject *__pyx_type_9qutip_qoc_5pulse_PWLPulse;
   PyObject *__pyx_type___pyx_array;
   PyObject *__pyx_type___pyx_MemviewEnum;
   PyObject *__pyx_type___pyx_memoryview;
   PyObject *__pyx_type___pyx_memoryviewslice;
   #endif
-  PyTypeObject *__pyx_ptype_5pulse_Pulse;
-  PyTypeObject *__pyx_ptype_5pulse_GaussianPulse;
-  PyTypeObject *__pyx_ptype_5pulse_SinPulse;
-  PyTypeObject *__pyx_ptype_5pulse_CosPulse;
-  PyTypeObject *__pyx_ptype_5pulse_CosCosPulse;
-  PyTypeObject *__pyx_ptype_5pulse_PolynomialPulse;
-  PyTypeObject *__pyx_ptype_5pulse_FourierPulse;
-  PyTypeObject *__pyx_ptype_5pulse_PWCPulse;
-  PyTypeObject *__pyx_ptype_5pulse_PWLPulse;
+  PyTypeObject *__pyx_ptype_9qutip_qoc_5pulse_Pulse;
+  PyTypeObject *__pyx_ptype_9qutip_qoc_5pulse_GaussianPulse;
+  PyTypeObject *__pyx_ptype_9qutip_qoc_5pulse_SinPulse;
+  PyTypeObject *__pyx_ptype_9qutip_qoc_5pulse_CosPulse;
+  PyTypeObject *__pyx_ptype_9qutip_qoc_5pulse_CosCosPulse;
+  PyTypeObject *__pyx_ptype_9qutip_qoc_5pulse_PolynomialPulse;
+  PyTypeObject *__pyx_ptype_9qutip_qoc_5pulse_FourierPulse;
+  PyTypeObject *__pyx_ptype_9qutip_qoc_5pulse_PWCPulse;
+  PyTypeObject *__pyx_ptype_9qutip_qoc_5pulse_PWLPulse;
   PyTypeObject *__pyx_array_type;
   PyTypeObject *__pyx_MemviewEnum_type;
   PyTypeObject *__pyx_memoryview_type;
@@ -3549,7 +3549,6 @@ typedef struct {
   PyObject *__pyx_n_s_pack;
   PyObject *__pyx_n_s_paras;
   PyObject *__pyx_n_s_pickle;
-  PyObject *__pyx_n_s_pulse;
   PyObject *__pyx_n_s_pyx_PickleError;
   PyObject *__pyx_n_s_pyx_checksum;
   PyObject *__pyx_n_s_pyx_result;
@@ -3566,6 +3565,7 @@ typedef struct {
   PyObject *__pyx_n_s_pyx_unpickle_Pulse;
   PyObject *__pyx_n_s_pyx_unpickle_SinPulse;
   PyObject *__pyx_n_s_pyx_vtable;
+  PyObject *__pyx_n_s_qutip_qoc_pulse;
   PyObject *__pyx_n_s_range;
   PyObject *__pyx_n_s_reduce;
   PyObject *__pyx_n_s_reduce_cython;
@@ -3577,7 +3577,7 @@ typedef struct {
   PyObject *__pyx_n_s_shape;
   PyObject *__pyx_n_s_size;
   PyObject *__pyx_n_s_spec;
-  PyObject *__pyx_kp_s_src_qutip_qoc_cython_pulse_pyx;
+  PyObject *__pyx_kp_s_src_qutip_qoc_pulse_pyx;
   PyObject *__pyx_n_s_start;
   PyObject *__pyx_n_s_state;
   PyObject *__pyx_n_s_step;
@@ -3705,24 +3705,24 @@ static int __pyx_m_clear(PyObject *m) {
   #ifdef __Pyx_FusedFunction_USED
   Py_CLEAR(clear_module_state->__pyx_FusedFunctionType);
   #endif
-  Py_CLEAR(clear_module_state->__pyx_ptype_5pulse_Pulse);
-  Py_CLEAR(clear_module_state->__pyx_type_5pulse_Pulse);
-  Py_CLEAR(clear_module_state->__pyx_ptype_5pulse_GaussianPulse);
-  Py_CLEAR(clear_module_state->__pyx_type_5pulse_GaussianPulse);
-  Py_CLEAR(clear_module_state->__pyx_ptype_5pulse_SinPulse);
-  Py_CLEAR(clear_module_state->__pyx_type_5pulse_SinPulse);
-  Py_CLEAR(clear_module_state->__pyx_ptype_5pulse_CosPulse);
-  Py_CLEAR(clear_module_state->__pyx_type_5pulse_CosPulse);
-  Py_CLEAR(clear_module_state->__pyx_ptype_5pulse_CosCosPulse);
-  Py_CLEAR(clear_module_state->__pyx_type_5pulse_CosCosPulse);
-  Py_CLEAR(clear_module_state->__pyx_ptype_5pulse_PolynomialPulse);
-  Py_CLEAR(clear_module_state->__pyx_type_5pulse_PolynomialPulse);
-  Py_CLEAR(clear_module_state->__pyx_ptype_5pulse_FourierPulse);
-  Py_CLEAR(clear_module_state->__pyx_type_5pulse_FourierPulse);
-  Py_CLEAR(clear_module_state->__pyx_ptype_5pulse_PWCPulse);
-  Py_CLEAR(clear_module_state->__pyx_type_5pulse_PWCPulse);
-  Py_CLEAR(clear_module_state->__pyx_ptype_5pulse_PWLPulse);
-  Py_CLEAR(clear_module_state->__pyx_type_5pulse_PWLPulse);
+  Py_CLEAR(clear_module_state->__pyx_ptype_9qutip_qoc_5pulse_Pulse);
+  Py_CLEAR(clear_module_state->__pyx_type_9qutip_qoc_5pulse_Pulse);
+  Py_CLEAR(clear_module_state->__pyx_ptype_9qutip_qoc_5pulse_GaussianPulse);
+  Py_CLEAR(clear_module_state->__pyx_type_9qutip_qoc_5pulse_GaussianPulse);
+  Py_CLEAR(clear_module_state->__pyx_ptype_9qutip_qoc_5pulse_SinPulse);
+  Py_CLEAR(clear_module_state->__pyx_type_9qutip_qoc_5pulse_SinPulse);
+  Py_CLEAR(clear_module_state->__pyx_ptype_9qutip_qoc_5pulse_CosPulse);
+  Py_CLEAR(clear_module_state->__pyx_type_9qutip_qoc_5pulse_CosPulse);
+  Py_CLEAR(clear_module_state->__pyx_ptype_9qutip_qoc_5pulse_CosCosPulse);
+  Py_CLEAR(clear_module_state->__pyx_type_9qutip_qoc_5pulse_CosCosPulse);
+  Py_CLEAR(clear_module_state->__pyx_ptype_9qutip_qoc_5pulse_PolynomialPulse);
+  Py_CLEAR(clear_module_state->__pyx_type_9qutip_qoc_5pulse_PolynomialPulse);
+  Py_CLEAR(clear_module_state->__pyx_ptype_9qutip_qoc_5pulse_FourierPulse);
+  Py_CLEAR(clear_module_state->__pyx_type_9qutip_qoc_5pulse_FourierPulse);
+  Py_CLEAR(clear_module_state->__pyx_ptype_9qutip_qoc_5pulse_PWCPulse);
+  Py_CLEAR(clear_module_state->__pyx_type_9qutip_qoc_5pulse_PWCPulse);
+  Py_CLEAR(clear_module_state->__pyx_ptype_9qutip_qoc_5pulse_PWLPulse);
+  Py_CLEAR(clear_module_state->__pyx_type_9qutip_qoc_5pulse_PWLPulse);
   Py_CLEAR(clear_module_state->__pyx_array_type);
   Py_CLEAR(clear_module_state->__pyx_type___pyx_array);
   Py_CLEAR(clear_module_state->__pyx_MemviewEnum_type);
@@ -3857,7 +3857,6 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_pack);
   Py_CLEAR(clear_module_state->__pyx_n_s_paras);
   Py_CLEAR(clear_module_state->__pyx_n_s_pickle);
-  Py_CLEAR(clear_module_state->__pyx_n_s_pulse);
   Py_CLEAR(clear_module_state->__pyx_n_s_pyx_PickleError);
   Py_CLEAR(clear_module_state->__pyx_n_s_pyx_checksum);
   Py_CLEAR(clear_module_state->__pyx_n_s_pyx_result);
@@ -3874,6 +3873,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_pyx_unpickle_Pulse);
   Py_CLEAR(clear_module_state->__pyx_n_s_pyx_unpickle_SinPulse);
   Py_CLEAR(clear_module_state->__pyx_n_s_pyx_vtable);
+  Py_CLEAR(clear_module_state->__pyx_n_s_qutip_qoc_pulse);
   Py_CLEAR(clear_module_state->__pyx_n_s_range);
   Py_CLEAR(clear_module_state->__pyx_n_s_reduce);
   Py_CLEAR(clear_module_state->__pyx_n_s_reduce_cython);
@@ -3885,7 +3885,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_shape);
   Py_CLEAR(clear_module_state->__pyx_n_s_size);
   Py_CLEAR(clear_module_state->__pyx_n_s_spec);
-  Py_CLEAR(clear_module_state->__pyx_kp_s_src_qutip_qoc_cython_pulse_pyx);
+  Py_CLEAR(clear_module_state->__pyx_kp_s_src_qutip_qoc_pulse_pyx);
   Py_CLEAR(clear_module_state->__pyx_n_s_start);
   Py_CLEAR(clear_module_state->__pyx_n_s_state);
   Py_CLEAR(clear_module_state->__pyx_n_s_step);
@@ -3991,24 +3991,24 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   #ifdef __Pyx_FusedFunction_USED
   Py_VISIT(traverse_module_state->__pyx_FusedFunctionType);
   #endif
-  Py_VISIT(traverse_module_state->__pyx_ptype_5pulse_Pulse);
-  Py_VISIT(traverse_module_state->__pyx_type_5pulse_Pulse);
-  Py_VISIT(traverse_module_state->__pyx_ptype_5pulse_GaussianPulse);
-  Py_VISIT(traverse_module_state->__pyx_type_5pulse_GaussianPulse);
-  Py_VISIT(traverse_module_state->__pyx_ptype_5pulse_SinPulse);
-  Py_VISIT(traverse_module_state->__pyx_type_5pulse_SinPulse);
-  Py_VISIT(traverse_module_state->__pyx_ptype_5pulse_CosPulse);
-  Py_VISIT(traverse_module_state->__pyx_type_5pulse_CosPulse);
-  Py_VISIT(traverse_module_state->__pyx_ptype_5pulse_CosCosPulse);
-  Py_VISIT(traverse_module_state->__pyx_type_5pulse_CosCosPulse);
-  Py_VISIT(traverse_module_state->__pyx_ptype_5pulse_PolynomialPulse);
-  Py_VISIT(traverse_module_state->__pyx_type_5pulse_PolynomialPulse);
-  Py_VISIT(traverse_module_state->__pyx_ptype_5pulse_FourierPulse);
-  Py_VISIT(traverse_module_state->__pyx_type_5pulse_FourierPulse);
-  Py_VISIT(traverse_module_state->__pyx_ptype_5pulse_PWCPulse);
-  Py_VISIT(traverse_module_state->__pyx_type_5pulse_PWCPulse);
-  Py_VISIT(traverse_module_state->__pyx_ptype_5pulse_PWLPulse);
-  Py_VISIT(traverse_module_state->__pyx_type_5pulse_PWLPulse);
+  Py_VISIT(traverse_module_state->__pyx_ptype_9qutip_qoc_5pulse_Pulse);
+  Py_VISIT(traverse_module_state->__pyx_type_9qutip_qoc_5pulse_Pulse);
+  Py_VISIT(traverse_module_state->__pyx_ptype_9qutip_qoc_5pulse_GaussianPulse);
+  Py_VISIT(traverse_module_state->__pyx_type_9qutip_qoc_5pulse_GaussianPulse);
+  Py_VISIT(traverse_module_state->__pyx_ptype_9qutip_qoc_5pulse_SinPulse);
+  Py_VISIT(traverse_module_state->__pyx_type_9qutip_qoc_5pulse_SinPulse);
+  Py_VISIT(traverse_module_state->__pyx_ptype_9qutip_qoc_5pulse_CosPulse);
+  Py_VISIT(traverse_module_state->__pyx_type_9qutip_qoc_5pulse_CosPulse);
+  Py_VISIT(traverse_module_state->__pyx_ptype_9qutip_qoc_5pulse_CosCosPulse);
+  Py_VISIT(traverse_module_state->__pyx_type_9qutip_qoc_5pulse_CosCosPulse);
+  Py_VISIT(traverse_module_state->__pyx_ptype_9qutip_qoc_5pulse_PolynomialPulse);
+  Py_VISIT(traverse_module_state->__pyx_type_9qutip_qoc_5pulse_PolynomialPulse);
+  Py_VISIT(traverse_module_state->__pyx_ptype_9qutip_qoc_5pulse_FourierPulse);
+  Py_VISIT(traverse_module_state->__pyx_type_9qutip_qoc_5pulse_FourierPulse);
+  Py_VISIT(traverse_module_state->__pyx_ptype_9qutip_qoc_5pulse_PWCPulse);
+  Py_VISIT(traverse_module_state->__pyx_type_9qutip_qoc_5pulse_PWCPulse);
+  Py_VISIT(traverse_module_state->__pyx_ptype_9qutip_qoc_5pulse_PWLPulse);
+  Py_VISIT(traverse_module_state->__pyx_type_9qutip_qoc_5pulse_PWLPulse);
   Py_VISIT(traverse_module_state->__pyx_array_type);
   Py_VISIT(traverse_module_state->__pyx_type___pyx_array);
   Py_VISIT(traverse_module_state->__pyx_MemviewEnum_type);
@@ -4143,7 +4143,6 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_pack);
   Py_VISIT(traverse_module_state->__pyx_n_s_paras);
   Py_VISIT(traverse_module_state->__pyx_n_s_pickle);
-  Py_VISIT(traverse_module_state->__pyx_n_s_pulse);
   Py_VISIT(traverse_module_state->__pyx_n_s_pyx_PickleError);
   Py_VISIT(traverse_module_state->__pyx_n_s_pyx_checksum);
   Py_VISIT(traverse_module_state->__pyx_n_s_pyx_result);
@@ -4160,6 +4159,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_pyx_unpickle_Pulse);
   Py_VISIT(traverse_module_state->__pyx_n_s_pyx_unpickle_SinPulse);
   Py_VISIT(traverse_module_state->__pyx_n_s_pyx_vtable);
+  Py_VISIT(traverse_module_state->__pyx_n_s_qutip_qoc_pulse);
   Py_VISIT(traverse_module_state->__pyx_n_s_range);
   Py_VISIT(traverse_module_state->__pyx_n_s_reduce);
   Py_VISIT(traverse_module_state->__pyx_n_s_reduce_cython);
@@ -4171,7 +4171,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_shape);
   Py_VISIT(traverse_module_state->__pyx_n_s_size);
   Py_VISIT(traverse_module_state->__pyx_n_s_spec);
-  Py_VISIT(traverse_module_state->__pyx_kp_s_src_qutip_qoc_cython_pulse_pyx);
+  Py_VISIT(traverse_module_state->__pyx_kp_s_src_qutip_qoc_pulse_pyx);
   Py_VISIT(traverse_module_state->__pyx_n_s_start);
   Py_VISIT(traverse_module_state->__pyx_n_s_state);
   Py_VISIT(traverse_module_state->__pyx_n_s_step);
@@ -4294,29 +4294,29 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #if CYTHON_USE_MODULE_STATE
 #endif
 #if CYTHON_USE_MODULE_STATE
-#define __pyx_type_5pulse_Pulse __pyx_mstate_global->__pyx_type_5pulse_Pulse
-#define __pyx_type_5pulse_GaussianPulse __pyx_mstate_global->__pyx_type_5pulse_GaussianPulse
-#define __pyx_type_5pulse_SinPulse __pyx_mstate_global->__pyx_type_5pulse_SinPulse
-#define __pyx_type_5pulse_CosPulse __pyx_mstate_global->__pyx_type_5pulse_CosPulse
-#define __pyx_type_5pulse_CosCosPulse __pyx_mstate_global->__pyx_type_5pulse_CosCosPulse
-#define __pyx_type_5pulse_PolynomialPulse __pyx_mstate_global->__pyx_type_5pulse_PolynomialPulse
-#define __pyx_type_5pulse_FourierPulse __pyx_mstate_global->__pyx_type_5pulse_FourierPulse
-#define __pyx_type_5pulse_PWCPulse __pyx_mstate_global->__pyx_type_5pulse_PWCPulse
-#define __pyx_type_5pulse_PWLPulse __pyx_mstate_global->__pyx_type_5pulse_PWLPulse
+#define __pyx_type_9qutip_qoc_5pulse_Pulse __pyx_mstate_global->__pyx_type_9qutip_qoc_5pulse_Pulse
+#define __pyx_type_9qutip_qoc_5pulse_GaussianPulse __pyx_mstate_global->__pyx_type_9qutip_qoc_5pulse_GaussianPulse
+#define __pyx_type_9qutip_qoc_5pulse_SinPulse __pyx_mstate_global->__pyx_type_9qutip_qoc_5pulse_SinPulse
+#define __pyx_type_9qutip_qoc_5pulse_CosPulse __pyx_mstate_global->__pyx_type_9qutip_qoc_5pulse_CosPulse
+#define __pyx_type_9qutip_qoc_5pulse_CosCosPulse __pyx_mstate_global->__pyx_type_9qutip_qoc_5pulse_CosCosPulse
+#define __pyx_type_9qutip_qoc_5pulse_PolynomialPulse __pyx_mstate_global->__pyx_type_9qutip_qoc_5pulse_PolynomialPulse
+#define __pyx_type_9qutip_qoc_5pulse_FourierPulse __pyx_mstate_global->__pyx_type_9qutip_qoc_5pulse_FourierPulse
+#define __pyx_type_9qutip_qoc_5pulse_PWCPulse __pyx_mstate_global->__pyx_type_9qutip_qoc_5pulse_PWCPulse
+#define __pyx_type_9qutip_qoc_5pulse_PWLPulse __pyx_mstate_global->__pyx_type_9qutip_qoc_5pulse_PWLPulse
 #define __pyx_type___pyx_array __pyx_mstate_global->__pyx_type___pyx_array
 #define __pyx_type___pyx_MemviewEnum __pyx_mstate_global->__pyx_type___pyx_MemviewEnum
 #define __pyx_type___pyx_memoryview __pyx_mstate_global->__pyx_type___pyx_memoryview
 #define __pyx_type___pyx_memoryviewslice __pyx_mstate_global->__pyx_type___pyx_memoryviewslice
 #endif
-#define __pyx_ptype_5pulse_Pulse __pyx_mstate_global->__pyx_ptype_5pulse_Pulse
-#define __pyx_ptype_5pulse_GaussianPulse __pyx_mstate_global->__pyx_ptype_5pulse_GaussianPulse
-#define __pyx_ptype_5pulse_SinPulse __pyx_mstate_global->__pyx_ptype_5pulse_SinPulse
-#define __pyx_ptype_5pulse_CosPulse __pyx_mstate_global->__pyx_ptype_5pulse_CosPulse
-#define __pyx_ptype_5pulse_CosCosPulse __pyx_mstate_global->__pyx_ptype_5pulse_CosCosPulse
-#define __pyx_ptype_5pulse_PolynomialPulse __pyx_mstate_global->__pyx_ptype_5pulse_PolynomialPulse
-#define __pyx_ptype_5pulse_FourierPulse __pyx_mstate_global->__pyx_ptype_5pulse_FourierPulse
-#define __pyx_ptype_5pulse_PWCPulse __pyx_mstate_global->__pyx_ptype_5pulse_PWCPulse
-#define __pyx_ptype_5pulse_PWLPulse __pyx_mstate_global->__pyx_ptype_5pulse_PWLPulse
+#define __pyx_ptype_9qutip_qoc_5pulse_Pulse __pyx_mstate_global->__pyx_ptype_9qutip_qoc_5pulse_Pulse
+#define __pyx_ptype_9qutip_qoc_5pulse_GaussianPulse __pyx_mstate_global->__pyx_ptype_9qutip_qoc_5pulse_GaussianPulse
+#define __pyx_ptype_9qutip_qoc_5pulse_SinPulse __pyx_mstate_global->__pyx_ptype_9qutip_qoc_5pulse_SinPulse
+#define __pyx_ptype_9qutip_qoc_5pulse_CosPulse __pyx_mstate_global->__pyx_ptype_9qutip_qoc_5pulse_CosPulse
+#define __pyx_ptype_9qutip_qoc_5pulse_CosCosPulse __pyx_mstate_global->__pyx_ptype_9qutip_qoc_5pulse_CosCosPulse
+#define __pyx_ptype_9qutip_qoc_5pulse_PolynomialPulse __pyx_mstate_global->__pyx_ptype_9qutip_qoc_5pulse_PolynomialPulse
+#define __pyx_ptype_9qutip_qoc_5pulse_FourierPulse __pyx_mstate_global->__pyx_ptype_9qutip_qoc_5pulse_FourierPulse
+#define __pyx_ptype_9qutip_qoc_5pulse_PWCPulse __pyx_mstate_global->__pyx_ptype_9qutip_qoc_5pulse_PWCPulse
+#define __pyx_ptype_9qutip_qoc_5pulse_PWLPulse __pyx_mstate_global->__pyx_ptype_9qutip_qoc_5pulse_PWLPulse
 #define __pyx_array_type __pyx_mstate_global->__pyx_array_type
 #define __pyx_MemviewEnum_type __pyx_mstate_global->__pyx_MemviewEnum_type
 #define __pyx_memoryview_type __pyx_mstate_global->__pyx_memoryview_type
@@ -4447,7 +4447,6 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_pack __pyx_mstate_global->__pyx_n_s_pack
 #define __pyx_n_s_paras __pyx_mstate_global->__pyx_n_s_paras
 #define __pyx_n_s_pickle __pyx_mstate_global->__pyx_n_s_pickle
-#define __pyx_n_s_pulse __pyx_mstate_global->__pyx_n_s_pulse
 #define __pyx_n_s_pyx_PickleError __pyx_mstate_global->__pyx_n_s_pyx_PickleError
 #define __pyx_n_s_pyx_checksum __pyx_mstate_global->__pyx_n_s_pyx_checksum
 #define __pyx_n_s_pyx_result __pyx_mstate_global->__pyx_n_s_pyx_result
@@ -4464,6 +4463,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_pyx_unpickle_Pulse __pyx_mstate_global->__pyx_n_s_pyx_unpickle_Pulse
 #define __pyx_n_s_pyx_unpickle_SinPulse __pyx_mstate_global->__pyx_n_s_pyx_unpickle_SinPulse
 #define __pyx_n_s_pyx_vtable __pyx_mstate_global->__pyx_n_s_pyx_vtable
+#define __pyx_n_s_qutip_qoc_pulse __pyx_mstate_global->__pyx_n_s_qutip_qoc_pulse
 #define __pyx_n_s_range __pyx_mstate_global->__pyx_n_s_range
 #define __pyx_n_s_reduce __pyx_mstate_global->__pyx_n_s_reduce
 #define __pyx_n_s_reduce_cython __pyx_mstate_global->__pyx_n_s_reduce_cython
@@ -4475,7 +4475,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_shape __pyx_mstate_global->__pyx_n_s_shape
 #define __pyx_n_s_size __pyx_mstate_global->__pyx_n_s_size
 #define __pyx_n_s_spec __pyx_mstate_global->__pyx_n_s_spec
-#define __pyx_kp_s_src_qutip_qoc_cython_pulse_pyx __pyx_mstate_global->__pyx_kp_s_src_qutip_qoc_cython_pulse_pyx
+#define __pyx_kp_s_src_qutip_qoc_pulse_pyx __pyx_mstate_global->__pyx_kp_s_src_qutip_qoc_pulse_pyx
 #define __pyx_n_s_start __pyx_mstate_global->__pyx_n_s_start
 #define __pyx_n_s_state __pyx_mstate_global->__pyx_n_s_state
 #define __pyx_n_s_step __pyx_mstate_global->__pyx_n_s_step
@@ -18189,7 +18189,7 @@ static PyObject *__pyx_unpickle_Enum__set_state(struct __pyx_MemviewEnum_obj *__
   return __pyx_r;
 }
 
-/* "pulse.pyx":12
+/* "qutip_qoc/pulse.pyx":12
  *     cdef public int n_par
  * 
  *     def __init__(self, n_sup, n_var):             # <<<<<<<<<<<<<<
@@ -18198,8 +18198,8 @@ static PyObject *__pyx_unpickle_Enum__set_state(struct __pyx_MemviewEnum_obj *__
  */
 
 /* Python wrapper */
-static int __pyx_pw_5pulse_5Pulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_pw_5pulse_5Pulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static int __pyx_pw_9qutip_qoc_5pulse_5Pulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_9qutip_qoc_5pulse_5Pulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_n_sup = 0;
   PyObject *__pyx_v_n_var = 0;
   CYTHON_UNUSED Py_ssize_t __pyx_nargs;
@@ -18274,11 +18274,11 @@ static int __pyx_pw_5pulse_5Pulse_1__init__(PyObject *__pyx_v_self, PyObject *__
       __Pyx_Arg_XDECREF_VARARGS(values[__pyx_temp]);
     }
   }
-  __Pyx_AddTraceback("pulse.Pulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.Pulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pulse_5Pulse___init__(((struct __pyx_obj_5pulse_Pulse *)__pyx_v_self), __pyx_v_n_sup, __pyx_v_n_var);
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_5Pulse___init__(((struct __pyx_obj_9qutip_qoc_5pulse_Pulse *)__pyx_v_self), __pyx_v_n_sup, __pyx_v_n_var);
 
   /* function exit code */
   {
@@ -18291,7 +18291,7 @@ static int __pyx_pw_5pulse_5Pulse_1__init__(PyObject *__pyx_v_self, PyObject *__
   return __pyx_r;
 }
 
-static int __pyx_pf_5pulse_5Pulse___init__(struct __pyx_obj_5pulse_Pulse *__pyx_v_self, PyObject *__pyx_v_n_sup, PyObject *__pyx_v_n_var) {
+static int __pyx_pf_9qutip_qoc_5pulse_5Pulse___init__(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v_self, PyObject *__pyx_v_n_sup, PyObject *__pyx_v_n_var) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -18301,7 +18301,7 @@ static int __pyx_pf_5pulse_5Pulse___init__(struct __pyx_obj_5pulse_Pulse *__pyx_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 1);
 
-  /* "pulse.pyx":13
+  /* "qutip_qoc/pulse.pyx":13
  * 
  *     def __init__(self, n_sup, n_var):
  *         self.n_sup = n_sup  # num of superpositions, 'm' in paper             # <<<<<<<<<<<<<<
@@ -18311,7 +18311,7 @@ static int __pyx_pf_5pulse_5Pulse___init__(struct __pyx_obj_5pulse_Pulse *__pyx_
   __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_n_sup); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 13, __pyx_L1_error)
   __pyx_v_self->n_sup = __pyx_t_1;
 
-  /* "pulse.pyx":14
+  /* "qutip_qoc/pulse.pyx":14
  *     def __init__(self, n_sup, n_var):
  *         self.n_sup = n_sup  # num of superpositions, 'm' in paper
  *         self.n_var = n_var  # num of paras for each control function             # <<<<<<<<<<<<<<
@@ -18321,7 +18321,7 @@ static int __pyx_pf_5pulse_5Pulse___init__(struct __pyx_obj_5pulse_Pulse *__pyx_
   __pyx_t_1 = __Pyx_PyInt_As_int(__pyx_v_n_var); if (unlikely((__pyx_t_1 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 14, __pyx_L1_error)
   __pyx_v_self->n_var = __pyx_t_1;
 
-  /* "pulse.pyx":15
+  /* "qutip_qoc/pulse.pyx":15
  *         self.n_sup = n_sup  # num of superpositions, 'm' in paper
  *         self.n_var = n_var  # num of paras for each control function
  *         self.n_par = n_sup * n_var  # total num of paras             # <<<<<<<<<<<<<<
@@ -18334,7 +18334,7 @@ static int __pyx_pf_5pulse_5Pulse___init__(struct __pyx_obj_5pulse_Pulse *__pyx_
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_self->n_par = __pyx_t_1;
 
-  /* "pulse.pyx":12
+  /* "qutip_qoc/pulse.pyx":12
  *     cdef public int n_par
  * 
  *     def __init__(self, n_sup, n_var):             # <<<<<<<<<<<<<<
@@ -18347,14 +18347,14 @@ static int __pyx_pf_5pulse_5Pulse___init__(struct __pyx_obj_5pulse_Pulse *__pyx_
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_AddTraceback("pulse.Pulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.Pulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "pulse.pyx":17
+/* "qutip_qoc/pulse.pyx":17
  *         self.n_par = n_sup * n_var  # total num of paras
  * 
  *     cpdef double gen_pulse(self, double time, double[:] paras):             # <<<<<<<<<<<<<<
@@ -18362,14 +18362,14 @@ static int __pyx_pf_5pulse_5Pulse___init__(struct __pyx_obj_5pulse_Pulse *__pyx_
  *         Generate a supposition of pulses.
  */
 
-static PyObject *__pyx_pw_5pulse_5Pulse_3gen_pulse(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_5Pulse_3gen_pulse(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static double __pyx_f_5pulse_5Pulse_gen_pulse(struct __pyx_obj_5pulse_Pulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_skip_dispatch) {
+static double __pyx_f_9qutip_qoc_5pulse_5Pulse_gen_pulse(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_skip_dispatch) {
   double __pyx_v_pulse_val;
   int __pyx_v_i;
   double __pyx_r;
@@ -18400,7 +18400,7 @@ static double __pyx_f_5pulse_5Pulse_gen_pulse(struct __pyx_obj_5pulse_Pulse *__p
       #endif
       __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_gen_pulse); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 17, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      if (!__Pyx_IsSameCFunction(__pyx_t_1, (void*) __pyx_pw_5pulse_5Pulse_3gen_pulse)) {
+      if (!__Pyx_IsSameCFunction(__pyx_t_1, (void*) __pyx_pw_9qutip_qoc_5pulse_5Pulse_3gen_pulse)) {
         __pyx_t_3 = PyFloat_FromDouble(__pyx_v_time); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 17, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         if (unlikely(!__pyx_v_paras.memview)) { __Pyx_RaiseUnboundLocalError("paras"); __PYX_ERR(0, 17, __pyx_L1_error) }
@@ -18450,7 +18450,7 @@ static double __pyx_f_5pulse_5Pulse_gen_pulse(struct __pyx_obj_5pulse_Pulse *__p
     #endif
   }
 
-  /* "pulse.pyx":23
+  /* "qutip_qoc/pulse.pyx":23
  *         Summing over self.n_sup pulses gives the total pulse.
  *         """
  *         cdef double pulse_val = 0.0             # <<<<<<<<<<<<<<
@@ -18459,7 +18459,7 @@ static double __pyx_f_5pulse_5Pulse_gen_pulse(struct __pyx_obj_5pulse_Pulse *__p
  */
   __pyx_v_pulse_val = 0.0;
 
-  /* "pulse.pyx":26
+  /* "qutip_qoc/pulse.pyx":26
  *         cdef int i
  * 
  *         for i in range(0, self.n_par, self.n_var):             # <<<<<<<<<<<<<<
@@ -18541,7 +18541,7 @@ static double __pyx_f_5pulse_5Pulse_gen_pulse(struct __pyx_obj_5pulse_Pulse *__p
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_v_i = __pyx_t_7;
 
-    /* "pulse.pyx":27
+    /* "qutip_qoc/pulse.pyx":27
  * 
  *         for i in range(0, self.n_par, self.n_var):
  *             pulse_val += self.pulse(time, paras[i: i + self.n_var])             # <<<<<<<<<<<<<<
@@ -18569,12 +18569,12 @@ static double __pyx_f_5pulse_5Pulse_gen_pulse(struct __pyx_obj_5pulse_Pulse *__p
     __PYX_ERR(0, 27, __pyx_L1_error)
 }
 
-__pyx_t_8 = ((struct __pyx_vtabstruct_5pulse_Pulse *)__pyx_v_self->__pyx_vtab)->pulse(__pyx_v_self, __pyx_v_time, __pyx_t_11); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 27, __pyx_L1_error)
+__pyx_t_8 = ((struct __pyx_vtabstruct_9qutip_qoc_5pulse_Pulse *)__pyx_v_self->__pyx_vtab)->pulse(__pyx_v_self, __pyx_v_time, __pyx_t_11); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 27, __pyx_L1_error)
     __PYX_XCLEAR_MEMVIEW(&__pyx_t_11, 1);
     __pyx_t_11.memview = NULL; __pyx_t_11.data = NULL;
     __pyx_v_pulse_val = (__pyx_v_pulse_val + __pyx_t_8);
 
-    /* "pulse.pyx":26
+    /* "qutip_qoc/pulse.pyx":26
  *         cdef int i
  * 
  *         for i in range(0, self.n_par, self.n_var):             # <<<<<<<<<<<<<<
@@ -18584,7 +18584,7 @@ __pyx_t_8 = ((struct __pyx_vtabstruct_5pulse_Pulse *)__pyx_v_self->__pyx_vtab)->
   }
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-  /* "pulse.pyx":28
+  /* "qutip_qoc/pulse.pyx":28
  *         for i in range(0, self.n_par, self.n_var):
  *             pulse_val += self.pulse(time, paras[i: i + self.n_var])
  *         return pulse_val             # <<<<<<<<<<<<<<
@@ -18594,7 +18594,7 @@ __pyx_t_8 = ((struct __pyx_vtabstruct_5pulse_Pulse *)__pyx_v_self->__pyx_vtab)->
   __pyx_r = __pyx_v_pulse_val;
   goto __pyx_L0;
 
-  /* "pulse.pyx":17
+  /* "qutip_qoc/pulse.pyx":17
  *         self.n_par = n_sup * n_var  # total num of paras
  * 
  *     cpdef double gen_pulse(self, double time, double[:] paras):             # <<<<<<<<<<<<<<
@@ -18611,7 +18611,7 @@ __pyx_t_8 = ((struct __pyx_vtabstruct_5pulse_Pulse *)__pyx_v_self->__pyx_vtab)->
   __Pyx_XDECREF(__pyx_t_5);
   __Pyx_XDECREF(__pyx_t_6);
   __PYX_XCLEAR_MEMVIEW(&__pyx_t_11, 1);
-  __Pyx_AddTraceback("pulse.Pulse.gen_pulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.Pulse.gen_pulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
@@ -18619,16 +18619,16 @@ __pyx_t_8 = ((struct __pyx_vtabstruct_5pulse_Pulse *)__pyx_v_self->__pyx_vtab)->
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_5Pulse_3gen_pulse(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_5Pulse_3gen_pulse(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-PyDoc_STRVAR(__pyx_doc_5pulse_5Pulse_2gen_pulse, "\n        Generate a supposition of pulses.\n        A set of self.n_var parameters defines a single pulse.\n        Summing over self.n_sup pulses gives the total pulse.\n        ");
-static PyMethodDef __pyx_mdef_5pulse_5Pulse_3gen_pulse = {"gen_pulse", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_5Pulse_3gen_pulse, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_5pulse_5Pulse_2gen_pulse};
-static PyObject *__pyx_pw_5pulse_5Pulse_3gen_pulse(PyObject *__pyx_v_self, 
+PyDoc_STRVAR(__pyx_doc_9qutip_qoc_5pulse_5Pulse_2gen_pulse, "\n        Generate a supposition of pulses.\n        A set of self.n_var parameters defines a single pulse.\n        Summing over self.n_sup pulses gives the total pulse.\n        ");
+static PyMethodDef __pyx_mdef_9qutip_qoc_5pulse_5Pulse_3gen_pulse = {"gen_pulse", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_5Pulse_3gen_pulse, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_9qutip_qoc_5pulse_5Pulse_2gen_pulse};
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_5Pulse_3gen_pulse(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -18714,11 +18714,11 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
     }
   }
   __PYX_XCLEAR_MEMVIEW(&__pyx_v_paras, 1);
-  __Pyx_AddTraceback("pulse.Pulse.gen_pulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.Pulse.gen_pulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pulse_5Pulse_2gen_pulse(((struct __pyx_obj_5pulse_Pulse *)__pyx_v_self), __pyx_v_time, __pyx_v_paras);
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_5Pulse_2gen_pulse(((struct __pyx_obj_9qutip_qoc_5pulse_Pulse *)__pyx_v_self), __pyx_v_time, __pyx_v_paras);
 
   /* function exit code */
   __PYX_XCLEAR_MEMVIEW(&__pyx_v_paras, 1);
@@ -18732,7 +18732,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_5Pulse_2gen_pulse(struct __pyx_obj_5pulse_Pulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_5Pulse_2gen_pulse(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   double __pyx_t_1;
@@ -18743,7 +18743,7 @@ static PyObject *__pyx_pf_5pulse_5Pulse_2gen_pulse(struct __pyx_obj_5pulse_Pulse
   __Pyx_RefNannySetupContext("gen_pulse", 1);
   __Pyx_XDECREF(__pyx_r);
   if (unlikely(!__pyx_v_paras.memview)) { __Pyx_RaiseUnboundLocalError("paras"); __PYX_ERR(0, 17, __pyx_L1_error) }
-  __pyx_t_1 = __pyx_f_5pulse_5Pulse_gen_pulse(__pyx_v_self, __pyx_v_time, __pyx_v_paras, 1); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 17, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_9qutip_qoc_5pulse_5Pulse_gen_pulse(__pyx_v_self, __pyx_v_time, __pyx_v_paras, 1); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 17, __pyx_L1_error)
   __pyx_t_2 = PyFloat_FromDouble(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
@@ -18753,7 +18753,7 @@ static PyObject *__pyx_pf_5pulse_5Pulse_2gen_pulse(struct __pyx_obj_5pulse_Pulse
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_AddTraceback("pulse.Pulse.gen_pulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.Pulse.gen_pulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -18761,7 +18761,7 @@ static PyObject *__pyx_pf_5pulse_5Pulse_2gen_pulse(struct __pyx_obj_5pulse_Pulse
   return __pyx_r;
 }
 
-/* "pulse.pyx":30
+/* "qutip_qoc/pulse.pyx":30
  *         return pulse_val
  * 
  *     cpdef double gen_grad(self, double time, double[:] paras, int idx):             # <<<<<<<<<<<<<<
@@ -18769,14 +18769,14 @@ static PyObject *__pyx_pf_5pulse_5Pulse_2gen_pulse(struct __pyx_obj_5pulse_Pulse
  *         Generate the gradient of a superposition of pulses.
  */
 
-static PyObject *__pyx_pw_5pulse_5Pulse_5gen_grad(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_5Pulse_5gen_grad(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static double __pyx_f_5pulse_5Pulse_gen_grad(struct __pyx_obj_5pulse_Pulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx, int __pyx_skip_dispatch) {
+static double __pyx_f_9qutip_qoc_5pulse_5Pulse_gen_grad(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx, int __pyx_skip_dispatch) {
   int __pyx_v_i;
   double __pyx_v_grad;
   __Pyx_memviewslice __pyx_v_par = { 0, 0, { 0 }, { 0 }, { 0 } };
@@ -18810,7 +18810,7 @@ static double __pyx_f_5pulse_5Pulse_gen_grad(struct __pyx_obj_5pulse_Pulse *__py
       #endif
       __pyx_t_1 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_v_self), __pyx_n_s_gen_grad); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 30, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
-      if (!__Pyx_IsSameCFunction(__pyx_t_1, (void*) __pyx_pw_5pulse_5Pulse_5gen_grad)) {
+      if (!__Pyx_IsSameCFunction(__pyx_t_1, (void*) __pyx_pw_9qutip_qoc_5pulse_5Pulse_5gen_grad)) {
         __pyx_t_3 = PyFloat_FromDouble(__pyx_v_time); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 30, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         if (unlikely(!__pyx_v_paras.memview)) { __Pyx_RaiseUnboundLocalError("paras"); __PYX_ERR(0, 30, __pyx_L1_error) }
@@ -18863,7 +18863,7 @@ static double __pyx_f_5pulse_5Pulse_gen_grad(struct __pyx_obj_5pulse_Pulse *__py
     #endif
   }
 
-  /* "pulse.pyx":35
+  /* "qutip_qoc/pulse.pyx":35
  *         """
  *         cdef int i
  *         cdef double grad = 0.0             # <<<<<<<<<<<<<<
@@ -18872,7 +18872,7 @@ static double __pyx_f_5pulse_5Pulse_gen_grad(struct __pyx_obj_5pulse_Pulse *__py
  */
   __pyx_v_grad = 0.0;
 
-  /* "pulse.pyx":38
+  /* "qutip_qoc/pulse.pyx":38
  *         cdef double[:] par
  * 
  *         if idx == self.n_par:             # <<<<<<<<<<<<<<
@@ -18882,7 +18882,7 @@ static double __pyx_f_5pulse_5Pulse_gen_grad(struct __pyx_obj_5pulse_Pulse *__py
   __pyx_t_10 = (__pyx_v_idx == __pyx_v_self->n_par);
   if (__pyx_t_10) {
 
-    /* "pulse.pyx":39
+    /* "qutip_qoc/pulse.pyx":39
  * 
  *         if idx == self.n_par:
  *             for i in range(0, self.n_par, self.n_var):             # <<<<<<<<<<<<<<
@@ -18964,7 +18964,7 @@ static double __pyx_f_5pulse_5Pulse_gen_grad(struct __pyx_obj_5pulse_Pulse *__py
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       __pyx_v_i = __pyx_t_8;
 
-      /* "pulse.pyx":40
+      /* "qutip_qoc/pulse.pyx":40
  *         if idx == self.n_par:
  *             for i in range(0, self.n_par, self.n_var):
  *                 grad += self.pulse_grad(time, paras[i: i + self.n_var], idx)             # <<<<<<<<<<<<<<
@@ -18992,12 +18992,12 @@ static double __pyx_f_5pulse_5Pulse_gen_grad(struct __pyx_obj_5pulse_Pulse *__py
     __PYX_ERR(0, 40, __pyx_L1_error)
 }
 
-__pyx_t_9 = ((struct __pyx_vtabstruct_5pulse_Pulse *)__pyx_v_self->__pyx_vtab)->pulse_grad(__pyx_v_self, __pyx_v_time, __pyx_t_13, __pyx_v_idx); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 40, __pyx_L1_error)
+__pyx_t_9 = ((struct __pyx_vtabstruct_9qutip_qoc_5pulse_Pulse *)__pyx_v_self->__pyx_vtab)->pulse_grad(__pyx_v_self, __pyx_v_time, __pyx_t_13, __pyx_v_idx); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 40, __pyx_L1_error)
       __PYX_XCLEAR_MEMVIEW(&__pyx_t_13, 1);
       __pyx_t_13.memview = NULL; __pyx_t_13.data = NULL;
       __pyx_v_grad = (__pyx_v_grad + __pyx_t_9);
 
-      /* "pulse.pyx":39
+      /* "qutip_qoc/pulse.pyx":39
  * 
  *         if idx == self.n_par:
  *             for i in range(0, self.n_par, self.n_var):             # <<<<<<<<<<<<<<
@@ -19007,7 +19007,7 @@ __pyx_t_9 = ((struct __pyx_vtabstruct_5pulse_Pulse *)__pyx_v_self->__pyx_vtab)->
     }
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
 
-    /* "pulse.pyx":38
+    /* "qutip_qoc/pulse.pyx":38
  *         cdef double[:] par
  * 
  *         if idx == self.n_par:             # <<<<<<<<<<<<<<
@@ -19017,7 +19017,7 @@ __pyx_t_9 = ((struct __pyx_vtabstruct_5pulse_Pulse *)__pyx_v_self->__pyx_vtab)->
     goto __pyx_L3;
   }
 
-  /* "pulse.pyx":42
+  /* "qutip_qoc/pulse.pyx":42
  *                 grad += self.pulse_grad(time, paras[i: i + self.n_var], idx)
  *         else:
  *             i = idx % self.n_var # single summand parameters             # <<<<<<<<<<<<<<
@@ -19031,7 +19031,7 @@ __pyx_t_9 = ((struct __pyx_vtabstruct_5pulse_Pulse *)__pyx_v_self->__pyx_vtab)->
     }
     __pyx_v_i = __Pyx_mod_int(__pyx_v_idx, __pyx_v_self->n_var);
 
-    /* "pulse.pyx":43
+    /* "qutip_qoc/pulse.pyx":43
  *         else:
  *             i = idx % self.n_var # single summand parameters
  *             par = paras[(idx - i): (idx - i) + self.n_var]             # <<<<<<<<<<<<<<
@@ -19063,19 +19063,19 @@ __pyx_v_par = __pyx_t_13;
     __pyx_t_13.memview = NULL;
     __pyx_t_13.data = NULL;
 
-    /* "pulse.pyx":44
+    /* "qutip_qoc/pulse.pyx":44
  *             i = idx % self.n_var # single summand parameters
  *             par = paras[(idx - i): (idx - i) + self.n_var]
  *             grad = self.pulse_grad(time, par, i)             # <<<<<<<<<<<<<<
  * 
  *         return grad
  */
-    __pyx_t_9 = ((struct __pyx_vtabstruct_5pulse_Pulse *)__pyx_v_self->__pyx_vtab)->pulse_grad(__pyx_v_self, __pyx_v_time, __pyx_v_par, __pyx_v_i); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 44, __pyx_L1_error)
+    __pyx_t_9 = ((struct __pyx_vtabstruct_9qutip_qoc_5pulse_Pulse *)__pyx_v_self->__pyx_vtab)->pulse_grad(__pyx_v_self, __pyx_v_time, __pyx_v_par, __pyx_v_i); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 44, __pyx_L1_error)
     __pyx_v_grad = __pyx_t_9;
   }
   __pyx_L3:;
 
-  /* "pulse.pyx":46
+  /* "qutip_qoc/pulse.pyx":46
  *             grad = self.pulse_grad(time, par, i)
  * 
  *         return grad             # <<<<<<<<<<<<<<
@@ -19085,7 +19085,7 @@ __pyx_v_par = __pyx_t_13;
   __pyx_r = __pyx_v_grad;
   goto __pyx_L0;
 
-  /* "pulse.pyx":30
+  /* "qutip_qoc/pulse.pyx":30
  *         return pulse_val
  * 
  *     cpdef double gen_grad(self, double time, double[:] paras, int idx):             # <<<<<<<<<<<<<<
@@ -19103,7 +19103,7 @@ __pyx_v_par = __pyx_t_13;
   __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_7);
   __PYX_XCLEAR_MEMVIEW(&__pyx_t_13, 1);
-  __Pyx_AddTraceback("pulse.Pulse.gen_grad", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.Pulse.gen_grad", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __PYX_XCLEAR_MEMVIEW(&__pyx_v_par, 1);
@@ -19112,16 +19112,16 @@ __pyx_v_par = __pyx_t_13;
 }
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_5Pulse_5gen_grad(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_5Pulse_5gen_grad(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-PyDoc_STRVAR(__pyx_doc_5pulse_5Pulse_4gen_grad, "\n        Generate the gradient of a superposition of pulses.\n        ");
-static PyMethodDef __pyx_mdef_5pulse_5Pulse_5gen_grad = {"gen_grad", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_5Pulse_5gen_grad, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_5pulse_5Pulse_4gen_grad};
-static PyObject *__pyx_pw_5pulse_5Pulse_5gen_grad(PyObject *__pyx_v_self, 
+PyDoc_STRVAR(__pyx_doc_9qutip_qoc_5pulse_5Pulse_4gen_grad, "\n        Generate the gradient of a superposition of pulses.\n        ");
+static PyMethodDef __pyx_mdef_9qutip_qoc_5pulse_5Pulse_5gen_grad = {"gen_grad", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_5Pulse_5gen_grad, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_9qutip_qoc_5pulse_5Pulse_4gen_grad};
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_5Pulse_5gen_grad(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -19222,11 +19222,11 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
     }
   }
   __PYX_XCLEAR_MEMVIEW(&__pyx_v_paras, 1);
-  __Pyx_AddTraceback("pulse.Pulse.gen_grad", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.Pulse.gen_grad", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pulse_5Pulse_4gen_grad(((struct __pyx_obj_5pulse_Pulse *)__pyx_v_self), __pyx_v_time, __pyx_v_paras, __pyx_v_idx);
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_5Pulse_4gen_grad(((struct __pyx_obj_9qutip_qoc_5pulse_Pulse *)__pyx_v_self), __pyx_v_time, __pyx_v_paras, __pyx_v_idx);
 
   /* function exit code */
   __PYX_XCLEAR_MEMVIEW(&__pyx_v_paras, 1);
@@ -19240,7 +19240,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_5Pulse_4gen_grad(struct __pyx_obj_5pulse_Pulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_5Pulse_4gen_grad(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   double __pyx_t_1;
@@ -19251,7 +19251,7 @@ static PyObject *__pyx_pf_5pulse_5Pulse_4gen_grad(struct __pyx_obj_5pulse_Pulse 
   __Pyx_RefNannySetupContext("gen_grad", 1);
   __Pyx_XDECREF(__pyx_r);
   if (unlikely(!__pyx_v_paras.memview)) { __Pyx_RaiseUnboundLocalError("paras"); __PYX_ERR(0, 30, __pyx_L1_error) }
-  __pyx_t_1 = __pyx_f_5pulse_5Pulse_gen_grad(__pyx_v_self, __pyx_v_time, __pyx_v_paras, __pyx_v_idx, 1); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 30, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_9qutip_qoc_5pulse_5Pulse_gen_grad(__pyx_v_self, __pyx_v_time, __pyx_v_paras, __pyx_v_idx, 1); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 30, __pyx_L1_error)
   __pyx_t_2 = PyFloat_FromDouble(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
@@ -19261,7 +19261,7 @@ static PyObject *__pyx_pf_5pulse_5Pulse_4gen_grad(struct __pyx_obj_5pulse_Pulse 
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_AddTraceback("pulse.Pulse.gen_grad", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.Pulse.gen_grad", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -19269,7 +19269,7 @@ static PyObject *__pyx_pf_5pulse_5Pulse_4gen_grad(struct __pyx_obj_5pulse_Pulse 
   return __pyx_r;
 }
 
-/* "pulse.pyx":48
+/* "qutip_qoc/pulse.pyx":48
  *         return grad
  * 
  *     cdef double pulse(self, double time, double[:] paras):             # <<<<<<<<<<<<<<
@@ -19277,10 +19277,10 @@ static PyObject *__pyx_pf_5pulse_5Pulse_4gen_grad(struct __pyx_obj_5pulse_Pulse 
  * 
  */
 
-static double __pyx_f_5pulse_5Pulse_pulse(CYTHON_UNUSED struct __pyx_obj_5pulse_Pulse *__pyx_v_self, CYTHON_UNUSED double __pyx_v_time, CYTHON_UNUSED __Pyx_memviewslice __pyx_v_paras) {
+static double __pyx_f_9qutip_qoc_5pulse_5Pulse_pulse(CYTHON_UNUSED struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v_self, CYTHON_UNUSED double __pyx_v_time, CYTHON_UNUSED __Pyx_memviewslice __pyx_v_paras) {
   double __pyx_r;
 
-  /* "pulse.pyx":49
+  /* "qutip_qoc/pulse.pyx":49
  * 
  *     cdef double pulse(self, double time, double[:] paras):
  *         return 0.             # <<<<<<<<<<<<<<
@@ -19290,7 +19290,7 @@ static double __pyx_f_5pulse_5Pulse_pulse(CYTHON_UNUSED struct __pyx_obj_5pulse_
   __pyx_r = 0.;
   goto __pyx_L0;
 
-  /* "pulse.pyx":48
+  /* "qutip_qoc/pulse.pyx":48
  *         return grad
  * 
  *     cdef double pulse(self, double time, double[:] paras):             # <<<<<<<<<<<<<<
@@ -19303,7 +19303,7 @@ static double __pyx_f_5pulse_5Pulse_pulse(CYTHON_UNUSED struct __pyx_obj_5pulse_
   return __pyx_r;
 }
 
-/* "pulse.pyx":51
+/* "qutip_qoc/pulse.pyx":51
  *         return 0.
  * 
  *     cdef double pulse_grad(self, double time, double[:] paras, int idx):             # <<<<<<<<<<<<<<
@@ -19311,10 +19311,10 @@ static double __pyx_f_5pulse_5Pulse_pulse(CYTHON_UNUSED struct __pyx_obj_5pulse_
  * 
  */
 
-static double __pyx_f_5pulse_5Pulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj_5pulse_Pulse *__pyx_v_self, CYTHON_UNUSED double __pyx_v_time, CYTHON_UNUSED __Pyx_memviewslice __pyx_v_paras, CYTHON_UNUSED int __pyx_v_idx) {
+static double __pyx_f_9qutip_qoc_5pulse_5Pulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v_self, CYTHON_UNUSED double __pyx_v_time, CYTHON_UNUSED __Pyx_memviewslice __pyx_v_paras, CYTHON_UNUSED int __pyx_v_idx) {
   double __pyx_r;
 
-  /* "pulse.pyx":52
+  /* "qutip_qoc/pulse.pyx":52
  * 
  *     cdef double pulse_grad(self, double time, double[:] paras, int idx):
  *         return 0.             # <<<<<<<<<<<<<<
@@ -19324,7 +19324,7 @@ static double __pyx_f_5pulse_5Pulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj_5p
   __pyx_r = 0.;
   goto __pyx_L0;
 
-  /* "pulse.pyx":51
+  /* "qutip_qoc/pulse.pyx":51
  *         return 0.
  * 
  *     cdef double pulse_grad(self, double time, double[:] paras, int idx):             # <<<<<<<<<<<<<<
@@ -19337,7 +19337,7 @@ static double __pyx_f_5pulse_5Pulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj_5p
   return __pyx_r;
 }
 
-/* "pulse.pyx":8
+/* "qutip_qoc/pulse.pyx":8
  * @cython.wraparound(False)
  * cdef class Pulse:
  *     cdef public int n_sup             # <<<<<<<<<<<<<<
@@ -19346,21 +19346,21 @@ static double __pyx_f_5pulse_5Pulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj_5p
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_5Pulse_5n_sup_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_5pulse_5Pulse_5n_sup_1__get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_5Pulse_5n_sup_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_5Pulse_5n_sup_1__get__(PyObject *__pyx_v_self) {
   CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
   __pyx_kwvalues = __Pyx_KwValues_VARARGS(__pyx_args, __pyx_nargs);
-  __pyx_r = __pyx_pf_5pulse_5Pulse_5n_sup___get__(((struct __pyx_obj_5pulse_Pulse *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_5Pulse_5n_sup___get__(((struct __pyx_obj_9qutip_qoc_5pulse_Pulse *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_5Pulse_5n_sup___get__(struct __pyx_obj_5pulse_Pulse *__pyx_v_self) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_5Pulse_5n_sup___get__(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -19378,7 +19378,7 @@ static PyObject *__pyx_pf_5pulse_5Pulse_5n_sup___get__(struct __pyx_obj_5pulse_P
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("pulse.Pulse.n_sup.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.Pulse.n_sup.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -19387,21 +19387,21 @@ static PyObject *__pyx_pf_5pulse_5Pulse_5n_sup___get__(struct __pyx_obj_5pulse_P
 }
 
 /* Python wrapper */
-static int __pyx_pw_5pulse_5Pulse_5n_sup_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
-static int __pyx_pw_5pulse_5Pulse_5n_sup_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+static int __pyx_pw_9qutip_qoc_5pulse_5Pulse_5n_sup_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pw_9qutip_qoc_5pulse_5Pulse_5n_sup_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
   CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
   __pyx_kwvalues = __Pyx_KwValues_VARARGS(__pyx_args, __pyx_nargs);
-  __pyx_r = __pyx_pf_5pulse_5Pulse_5n_sup_2__set__(((struct __pyx_obj_5pulse_Pulse *)__pyx_v_self), ((PyObject *)__pyx_v_value));
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_5Pulse_5n_sup_2__set__(((struct __pyx_obj_9qutip_qoc_5pulse_Pulse *)__pyx_v_self), ((PyObject *)__pyx_v_value));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_5pulse_5Pulse_5n_sup_2__set__(struct __pyx_obj_5pulse_Pulse *__pyx_v_self, PyObject *__pyx_v_value) {
+static int __pyx_pf_9qutip_qoc_5pulse_5Pulse_5n_sup_2__set__(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v_self, PyObject *__pyx_v_value) {
   int __pyx_r;
   int __pyx_t_1;
   int __pyx_lineno = 0;
@@ -19414,13 +19414,13 @@ static int __pyx_pf_5pulse_5Pulse_5n_sup_2__set__(struct __pyx_obj_5pulse_Pulse 
   __pyx_r = 0;
   goto __pyx_L0;
   __pyx_L1_error:;
-  __Pyx_AddTraceback("pulse.Pulse.n_sup.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.Pulse.n_sup.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   return __pyx_r;
 }
 
-/* "pulse.pyx":9
+/* "qutip_qoc/pulse.pyx":9
  * cdef class Pulse:
  *     cdef public int n_sup
  *     cdef public int n_var             # <<<<<<<<<<<<<<
@@ -19429,21 +19429,21 @@ static int __pyx_pf_5pulse_5Pulse_5n_sup_2__set__(struct __pyx_obj_5pulse_Pulse 
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_5Pulse_5n_var_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_5pulse_5Pulse_5n_var_1__get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_5Pulse_5n_var_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_5Pulse_5n_var_1__get__(PyObject *__pyx_v_self) {
   CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
   __pyx_kwvalues = __Pyx_KwValues_VARARGS(__pyx_args, __pyx_nargs);
-  __pyx_r = __pyx_pf_5pulse_5Pulse_5n_var___get__(((struct __pyx_obj_5pulse_Pulse *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_5Pulse_5n_var___get__(((struct __pyx_obj_9qutip_qoc_5pulse_Pulse *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_5Pulse_5n_var___get__(struct __pyx_obj_5pulse_Pulse *__pyx_v_self) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_5Pulse_5n_var___get__(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -19461,7 +19461,7 @@ static PyObject *__pyx_pf_5pulse_5Pulse_5n_var___get__(struct __pyx_obj_5pulse_P
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("pulse.Pulse.n_var.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.Pulse.n_var.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -19470,21 +19470,21 @@ static PyObject *__pyx_pf_5pulse_5Pulse_5n_var___get__(struct __pyx_obj_5pulse_P
 }
 
 /* Python wrapper */
-static int __pyx_pw_5pulse_5Pulse_5n_var_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
-static int __pyx_pw_5pulse_5Pulse_5n_var_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+static int __pyx_pw_9qutip_qoc_5pulse_5Pulse_5n_var_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pw_9qutip_qoc_5pulse_5Pulse_5n_var_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
   CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
   __pyx_kwvalues = __Pyx_KwValues_VARARGS(__pyx_args, __pyx_nargs);
-  __pyx_r = __pyx_pf_5pulse_5Pulse_5n_var_2__set__(((struct __pyx_obj_5pulse_Pulse *)__pyx_v_self), ((PyObject *)__pyx_v_value));
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_5Pulse_5n_var_2__set__(((struct __pyx_obj_9qutip_qoc_5pulse_Pulse *)__pyx_v_self), ((PyObject *)__pyx_v_value));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_5pulse_5Pulse_5n_var_2__set__(struct __pyx_obj_5pulse_Pulse *__pyx_v_self, PyObject *__pyx_v_value) {
+static int __pyx_pf_9qutip_qoc_5pulse_5Pulse_5n_var_2__set__(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v_self, PyObject *__pyx_v_value) {
   int __pyx_r;
   int __pyx_t_1;
   int __pyx_lineno = 0;
@@ -19497,13 +19497,13 @@ static int __pyx_pf_5pulse_5Pulse_5n_var_2__set__(struct __pyx_obj_5pulse_Pulse 
   __pyx_r = 0;
   goto __pyx_L0;
   __pyx_L1_error:;
-  __Pyx_AddTraceback("pulse.Pulse.n_var.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.Pulse.n_var.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   return __pyx_r;
 }
 
-/* "pulse.pyx":10
+/* "qutip_qoc/pulse.pyx":10
  *     cdef public int n_sup
  *     cdef public int n_var
  *     cdef public int n_par             # <<<<<<<<<<<<<<
@@ -19512,21 +19512,21 @@ static int __pyx_pf_5pulse_5Pulse_5n_var_2__set__(struct __pyx_obj_5pulse_Pulse 
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_5Pulse_5n_par_1__get__(PyObject *__pyx_v_self); /*proto*/
-static PyObject *__pyx_pw_5pulse_5Pulse_5n_par_1__get__(PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_5Pulse_5n_par_1__get__(PyObject *__pyx_v_self); /*proto*/
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_5Pulse_5n_par_1__get__(PyObject *__pyx_v_self) {
   CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__get__ (wrapper)", 0);
   __pyx_kwvalues = __Pyx_KwValues_VARARGS(__pyx_args, __pyx_nargs);
-  __pyx_r = __pyx_pf_5pulse_5Pulse_5n_par___get__(((struct __pyx_obj_5pulse_Pulse *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_5Pulse_5n_par___get__(((struct __pyx_obj_9qutip_qoc_5pulse_Pulse *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_5Pulse_5n_par___get__(struct __pyx_obj_5pulse_Pulse *__pyx_v_self) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_5Pulse_5n_par___get__(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -19544,7 +19544,7 @@ static PyObject *__pyx_pf_5pulse_5Pulse_5n_par___get__(struct __pyx_obj_5pulse_P
   /* function exit code */
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("pulse.Pulse.n_par.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.Pulse.n_par.__get__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -19553,21 +19553,21 @@ static PyObject *__pyx_pf_5pulse_5Pulse_5n_par___get__(struct __pyx_obj_5pulse_P
 }
 
 /* Python wrapper */
-static int __pyx_pw_5pulse_5Pulse_5n_par_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
-static int __pyx_pw_5pulse_5Pulse_5n_par_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
+static int __pyx_pw_9qutip_qoc_5pulse_5Pulse_5n_par_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value); /*proto*/
+static int __pyx_pw_9qutip_qoc_5pulse_5Pulse_5n_par_3__set__(PyObject *__pyx_v_self, PyObject *__pyx_v_value) {
   CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__set__ (wrapper)", 0);
   __pyx_kwvalues = __Pyx_KwValues_VARARGS(__pyx_args, __pyx_nargs);
-  __pyx_r = __pyx_pf_5pulse_5Pulse_5n_par_2__set__(((struct __pyx_obj_5pulse_Pulse *)__pyx_v_self), ((PyObject *)__pyx_v_value));
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_5Pulse_5n_par_2__set__(((struct __pyx_obj_9qutip_qoc_5pulse_Pulse *)__pyx_v_self), ((PyObject *)__pyx_v_value));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static int __pyx_pf_5pulse_5Pulse_5n_par_2__set__(struct __pyx_obj_5pulse_Pulse *__pyx_v_self, PyObject *__pyx_v_value) {
+static int __pyx_pf_9qutip_qoc_5pulse_5Pulse_5n_par_2__set__(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v_self, PyObject *__pyx_v_value) {
   int __pyx_r;
   int __pyx_t_1;
   int __pyx_lineno = 0;
@@ -19580,7 +19580,7 @@ static int __pyx_pf_5pulse_5Pulse_5n_par_2__set__(struct __pyx_obj_5pulse_Pulse 
   __pyx_r = 0;
   goto __pyx_L0;
   __pyx_L1_error:;
-  __Pyx_AddTraceback("pulse.Pulse.n_par.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.Pulse.n_par.__set__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   return __pyx_r;
@@ -19593,15 +19593,15 @@ static int __pyx_pf_5pulse_5Pulse_5n_par_2__set__(struct __pyx_obj_5pulse_Pulse 
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_5Pulse_7__reduce_cython__(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_5Pulse_7__reduce_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5pulse_5Pulse_7__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_5Pulse_7__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5pulse_5Pulse_7__reduce_cython__(PyObject *__pyx_v_self, 
+static PyMethodDef __pyx_mdef_9qutip_qoc_5pulse_5Pulse_7__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_5Pulse_7__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_5Pulse_7__reduce_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -19626,14 +19626,14 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   if (unlikely(__pyx_nargs > 0)) {
     __Pyx_RaiseArgtupleInvalid("__reduce_cython__", 1, 0, 0, __pyx_nargs); return NULL;}
   if (unlikely(__pyx_kwds) && __Pyx_NumKwargs_FASTCALL(__pyx_kwds) && unlikely(!__Pyx_CheckKeywordStrings(__pyx_kwds, "__reduce_cython__", 0))) return NULL;
-  __pyx_r = __pyx_pf_5pulse_5Pulse_6__reduce_cython__(((struct __pyx_obj_5pulse_Pulse *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_5Pulse_6__reduce_cython__(((struct __pyx_obj_9qutip_qoc_5pulse_Pulse *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_5Pulse_6__reduce_cython__(struct __pyx_obj_5pulse_Pulse *__pyx_v_self) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_5Pulse_6__reduce_cython__(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v_self) {
   PyObject *__pyx_v_state = 0;
   PyObject *__pyx_v__dict = 0;
   int __pyx_v_use_setstate;
@@ -19848,7 +19848,7 @@ static PyObject *__pyx_pf_5pulse_5Pulse_6__reduce_cython__(struct __pyx_obj_5pul
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("pulse.Pulse.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.Pulse.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_state);
@@ -19866,15 +19866,15 @@ static PyObject *__pyx_pf_5pulse_5Pulse_6__reduce_cython__(struct __pyx_obj_5pul
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_5Pulse_9__setstate_cython__(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_5Pulse_9__setstate_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5pulse_5Pulse_9__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_5Pulse_9__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5pulse_5Pulse_9__setstate_cython__(PyObject *__pyx_v_self, 
+static PyMethodDef __pyx_mdef_9qutip_qoc_5pulse_5Pulse_9__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_5Pulse_9__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_5Pulse_9__setstate_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -19944,11 +19944,11 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
     }
   }
-  __Pyx_AddTraceback("pulse.Pulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.Pulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pulse_5Pulse_8__setstate_cython__(((struct __pyx_obj_5pulse_Pulse *)__pyx_v_self), __pyx_v___pyx_state);
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_5Pulse_8__setstate_cython__(((struct __pyx_obj_9qutip_qoc_5pulse_Pulse *)__pyx_v_self), __pyx_v___pyx_state);
 
   /* function exit code */
   {
@@ -19961,7 +19961,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_5Pulse_8__setstate_cython__(struct __pyx_obj_5pulse_Pulse *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_5Pulse_8__setstate_cython__(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -19976,7 +19976,7 @@ static PyObject *__pyx_pf_5pulse_5Pulse_8__setstate_cython__(struct __pyx_obj_5p
  *     __pyx_unpickle_Pulse__set_state(self, __pyx_state)             # <<<<<<<<<<<<<<
  */
   if (!(likely(PyTuple_CheckExact(__pyx_v___pyx_state))||((__pyx_v___pyx_state) == Py_None) || __Pyx_RaiseUnexpectedTypeError("tuple", __pyx_v___pyx_state))) __PYX_ERR(1, 17, __pyx_L1_error)
-  __pyx_t_1 = __pyx_f_5pulse___pyx_unpickle_Pulse__set_state(__pyx_v_self, ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 17, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_9qutip_qoc_5pulse___pyx_unpickle_Pulse__set_state(__pyx_v_self, ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -19992,7 +19992,7 @@ static PyObject *__pyx_pf_5pulse_5Pulse_8__setstate_cython__(struct __pyx_obj_5p
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("pulse.Pulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.Pulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -20000,7 +20000,7 @@ static PyObject *__pyx_pf_5pulse_5Pulse_8__setstate_cython__(struct __pyx_obj_5p
   return __pyx_r;
 }
 
-/* "pulse.pyx":58
+/* "qutip_qoc/pulse.pyx":58
  * @cython.wraparound(False)
  * cdef class GaussianPulse(Pulse):
  *     def __init__(self, n_sup=1, n_var=3):             # <<<<<<<<<<<<<<
@@ -20009,8 +20009,8 @@ static PyObject *__pyx_pf_5pulse_5Pulse_8__setstate_cython__(struct __pyx_obj_5p
  */
 
 /* Python wrapper */
-static int __pyx_pw_5pulse_13GaussianPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_pw_5pulse_13GaussianPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static int __pyx_pw_9qutip_qoc_5pulse_13GaussianPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_9qutip_qoc_5pulse_13GaussianPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_n_sup = 0;
   CYTHON_UNUSED PyObject *__pyx_v_n_var = 0;
   CYTHON_UNUSED Py_ssize_t __pyx_nargs;
@@ -20087,11 +20087,11 @@ static int __pyx_pw_5pulse_13GaussianPulse_1__init__(PyObject *__pyx_v_self, PyO
       __Pyx_Arg_XDECREF_VARARGS(values[__pyx_temp]);
     }
   }
-  __Pyx_AddTraceback("pulse.GaussianPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.GaussianPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pulse_13GaussianPulse___init__(((struct __pyx_obj_5pulse_GaussianPulse *)__pyx_v_self), __pyx_v_n_sup, __pyx_v_n_var);
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_13GaussianPulse___init__(((struct __pyx_obj_9qutip_qoc_5pulse_GaussianPulse *)__pyx_v_self), __pyx_v_n_sup, __pyx_v_n_var);
 
   /* function exit code */
   {
@@ -20104,7 +20104,7 @@ static int __pyx_pw_5pulse_13GaussianPulse_1__init__(PyObject *__pyx_v_self, PyO
   return __pyx_r;
 }
 
-static int __pyx_pf_5pulse_13GaussianPulse___init__(struct __pyx_obj_5pulse_GaussianPulse *__pyx_v_self, PyObject *__pyx_v_n_sup, CYTHON_UNUSED PyObject *__pyx_v_n_var) {
+static int __pyx_pf_9qutip_qoc_5pulse_13GaussianPulse___init__(struct __pyx_obj_9qutip_qoc_5pulse_GaussianPulse *__pyx_v_self, PyObject *__pyx_v_n_sup, CYTHON_UNUSED PyObject *__pyx_v_n_var) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -20116,7 +20116,7 @@ static int __pyx_pf_5pulse_13GaussianPulse___init__(struct __pyx_obj_5pulse_Gaus
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 1);
 
-  /* "pulse.pyx":59
+  /* "qutip_qoc/pulse.pyx":59
  * cdef class GaussianPulse(Pulse):
  *     def __init__(self, n_sup=1, n_var=3):
  *         super().__init__(n_sup, n_var=3)             # <<<<<<<<<<<<<<
@@ -20125,9 +20125,9 @@ static int __pyx_pf_5pulse_13GaussianPulse___init__(struct __pyx_obj_5pulse_Gaus
  */
   __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 59, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_INCREF((PyObject *)__pyx_ptype_5pulse_GaussianPulse);
-  __Pyx_GIVEREF((PyObject *)__pyx_ptype_5pulse_GaussianPulse);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_1, 0, ((PyObject *)__pyx_ptype_5pulse_GaussianPulse))) __PYX_ERR(0, 59, __pyx_L1_error);
+  __Pyx_INCREF((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_GaussianPulse);
+  __Pyx_GIVEREF((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_GaussianPulse);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_1, 0, ((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_GaussianPulse))) __PYX_ERR(0, 59, __pyx_L1_error);
   __Pyx_INCREF((PyObject *)__pyx_v_self);
   __Pyx_GIVEREF((PyObject *)__pyx_v_self);
   if (__Pyx_PyTuple_SET_ITEM(__pyx_t_1, 1, ((PyObject *)__pyx_v_self))) __PYX_ERR(0, 59, __pyx_L1_error);
@@ -20152,7 +20152,7 @@ static int __pyx_pf_5pulse_13GaussianPulse___init__(struct __pyx_obj_5pulse_Gaus
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "pulse.pyx":58
+  /* "qutip_qoc/pulse.pyx":58
  * @cython.wraparound(False)
  * cdef class GaussianPulse(Pulse):
  *     def __init__(self, n_sup=1, n_var=3):             # <<<<<<<<<<<<<<
@@ -20168,14 +20168,14 @@ static int __pyx_pf_5pulse_13GaussianPulse___init__(struct __pyx_obj_5pulse_Gaus
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("pulse.GaussianPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.GaussianPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "pulse.pyx":61
+/* "qutip_qoc/pulse.pyx":61
  *         super().__init__(n_sup, n_var=3)
  * 
  *     cdef double pulse(self, double time, double[:] paras):             # <<<<<<<<<<<<<<
@@ -20183,7 +20183,7 @@ static int __pyx_pf_5pulse_13GaussianPulse___init__(struct __pyx_obj_5pulse_Gaus
  *         Generate a pulse with Gaussian shape. The peak is centred around the
  */
 
-static double __pyx_f_5pulse_13GaussianPulse_pulse(CYTHON_UNUSED struct __pyx_obj_5pulse_GaussianPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras) {
+static double __pyx_f_9qutip_qoc_5pulse_13GaussianPulse_pulse(CYTHON_UNUSED struct __pyx_obj_9qutip_qoc_5pulse_GaussianPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras) {
   double __pyx_v_s;
   double __pyx_v_m;
   double __pyx_v_v;
@@ -20197,7 +20197,7 @@ static double __pyx_f_5pulse_13GaussianPulse_pulse(CYTHON_UNUSED struct __pyx_ob
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
 
-  /* "pulse.pyx":67
+  /* "qutip_qoc/pulse.pyx":67
  *         """
  *         cdef double s, m, v, pulse_val
  *         s, m, v = paras[0], paras[1], paras[2]             # <<<<<<<<<<<<<<
@@ -20214,7 +20214,7 @@ static double __pyx_f_5pulse_13GaussianPulse_pulse(CYTHON_UNUSED struct __pyx_ob
   __pyx_v_m = __pyx_t_3;
   __pyx_v_v = __pyx_t_4;
 
-  /* "pulse.pyx":69
+  /* "qutip_qoc/pulse.pyx":69
  *         s, m, v = paras[0], paras[1], paras[2]
  * 
  *         pulse_val = s * exp(-1 * ((time - m) ** 2) / (v ** 2))             # <<<<<<<<<<<<<<
@@ -20229,7 +20229,7 @@ static double __pyx_f_5pulse_13GaussianPulse_pulse(CYTHON_UNUSED struct __pyx_ob
   }
   __pyx_v_pulse_val = (__pyx_v_s * exp((__pyx_t_4 / __pyx_t_3)));
 
-  /* "pulse.pyx":70
+  /* "qutip_qoc/pulse.pyx":70
  * 
  *         pulse_val = s * exp(-1 * ((time - m) ** 2) / (v ** 2))
  *         return pulse_val             # <<<<<<<<<<<<<<
@@ -20239,7 +20239,7 @@ static double __pyx_f_5pulse_13GaussianPulse_pulse(CYTHON_UNUSED struct __pyx_ob
   __pyx_r = __pyx_v_pulse_val;
   goto __pyx_L0;
 
-  /* "pulse.pyx":61
+  /* "qutip_qoc/pulse.pyx":61
  *         super().__init__(n_sup, n_var=3)
  * 
  *     cdef double pulse(self, double time, double[:] paras):             # <<<<<<<<<<<<<<
@@ -20249,13 +20249,13 @@ static double __pyx_f_5pulse_13GaussianPulse_pulse(CYTHON_UNUSED struct __pyx_ob
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_AddTraceback("pulse.GaussianPulse.pulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.GaussianPulse.pulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   return __pyx_r;
 }
 
-/* "pulse.pyx":72
+/* "qutip_qoc/pulse.pyx":72
  *         return pulse_val
  * 
  *     cdef double pulse_grad(self, double time, double[:] paras, int idx):             # <<<<<<<<<<<<<<
@@ -20263,7 +20263,7 @@ static double __pyx_f_5pulse_13GaussianPulse_pulse(CYTHON_UNUSED struct __pyx_ob
  *         Generate the gradient of a pulse with Gaussian shape
  */
 
-static double __pyx_f_5pulse_13GaussianPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj_5pulse_GaussianPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx) {
+static double __pyx_f_9qutip_qoc_5pulse_13GaussianPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj_9qutip_qoc_5pulse_GaussianPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx) {
   double __pyx_v_s;
   double __pyx_v_m;
   double __pyx_v_v;
@@ -20277,7 +20277,7 @@ static double __pyx_f_5pulse_13GaussianPulse_pulse_grad(CYTHON_UNUSED struct __p
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
 
-  /* "pulse.pyx":78
+  /* "qutip_qoc/pulse.pyx":78
  *         """
  *         cdef double s, m, v, grad
  *         s, m, v = paras[0], paras[1], paras[2]             # <<<<<<<<<<<<<<
@@ -20294,7 +20294,7 @@ static double __pyx_f_5pulse_13GaussianPulse_pulse_grad(CYTHON_UNUSED struct __p
   __pyx_v_m = __pyx_t_3;
   __pyx_v_v = __pyx_t_4;
 
-  /* "pulse.pyx":80
+  /* "qutip_qoc/pulse.pyx":80
  *         s, m, v = paras[0], paras[1], paras[2]
  * 
  *         grad = exp(-1 * ((time - m)**2) / (v**2))             # <<<<<<<<<<<<<<
@@ -20309,7 +20309,7 @@ static double __pyx_f_5pulse_13GaussianPulse_pulse_grad(CYTHON_UNUSED struct __p
   }
   __pyx_v_grad = exp((__pyx_t_4 / __pyx_t_3));
 
-  /* "pulse.pyx":81
+  /* "qutip_qoc/pulse.pyx":81
  * 
  *         grad = exp(-1 * ((time - m)**2) / (v**2))
  *         if idx == 0:             # <<<<<<<<<<<<<<
@@ -20319,7 +20319,7 @@ static double __pyx_f_5pulse_13GaussianPulse_pulse_grad(CYTHON_UNUSED struct __p
   switch (__pyx_v_idx) {
     case 0:
 
-    /* "pulse.pyx":82
+    /* "qutip_qoc/pulse.pyx":82
  *         grad = exp(-1 * ((time - m)**2) / (v**2))
  *         if idx == 0:
  *             return grad             # <<<<<<<<<<<<<<
@@ -20329,7 +20329,7 @@ static double __pyx_f_5pulse_13GaussianPulse_pulse_grad(CYTHON_UNUSED struct __p
     __pyx_r = __pyx_v_grad;
     goto __pyx_L0;
 
-    /* "pulse.pyx":81
+    /* "qutip_qoc/pulse.pyx":81
  * 
  *         grad = exp(-1 * ((time - m)**2) / (v**2))
  *         if idx == 0:             # <<<<<<<<<<<<<<
@@ -20339,7 +20339,7 @@ static double __pyx_f_5pulse_13GaussianPulse_pulse_grad(CYTHON_UNUSED struct __p
     break;
     case 1:
 
-    /* "pulse.pyx":84
+    /* "qutip_qoc/pulse.pyx":84
  *             return grad
  *         elif idx == 1:
  *             grad = s * grad * 2 * (time - m) / (v**2)             # <<<<<<<<<<<<<<
@@ -20354,7 +20354,7 @@ static double __pyx_f_5pulse_13GaussianPulse_pulse_grad(CYTHON_UNUSED struct __p
     }
     __pyx_v_grad = (__pyx_t_3 / __pyx_t_4);
 
-    /* "pulse.pyx":85
+    /* "qutip_qoc/pulse.pyx":85
  *         elif idx == 1:
  *             grad = s * grad * 2 * (time - m) / (v**2)
  *             return grad             # <<<<<<<<<<<<<<
@@ -20364,7 +20364,7 @@ static double __pyx_f_5pulse_13GaussianPulse_pulse_grad(CYTHON_UNUSED struct __p
     __pyx_r = __pyx_v_grad;
     goto __pyx_L0;
 
-    /* "pulse.pyx":83
+    /* "qutip_qoc/pulse.pyx":83
  *         if idx == 0:
  *             return grad
  *         elif idx == 1:             # <<<<<<<<<<<<<<
@@ -20374,7 +20374,7 @@ static double __pyx_f_5pulse_13GaussianPulse_pulse_grad(CYTHON_UNUSED struct __p
     break;
     case 2:
 
-    /* "pulse.pyx":87
+    /* "qutip_qoc/pulse.pyx":87
  *             return grad
  *         elif idx == 2:
  *             grad = s * grad * 2 * (time - m)**2 / (v**3)             # <<<<<<<<<<<<<<
@@ -20389,7 +20389,7 @@ static double __pyx_f_5pulse_13GaussianPulse_pulse_grad(CYTHON_UNUSED struct __p
     }
     __pyx_v_grad = (__pyx_t_4 / __pyx_t_3);
 
-    /* "pulse.pyx":88
+    /* "qutip_qoc/pulse.pyx":88
  *         elif idx == 2:
  *             grad = s * grad * 2 * (time - m)**2 / (v**3)
  *             return grad             # <<<<<<<<<<<<<<
@@ -20399,7 +20399,7 @@ static double __pyx_f_5pulse_13GaussianPulse_pulse_grad(CYTHON_UNUSED struct __p
     __pyx_r = __pyx_v_grad;
     goto __pyx_L0;
 
-    /* "pulse.pyx":86
+    /* "qutip_qoc/pulse.pyx":86
  *             grad = s * grad * 2 * (time - m) / (v**2)
  *             return grad
  *         elif idx == 2:             # <<<<<<<<<<<<<<
@@ -20409,7 +20409,7 @@ static double __pyx_f_5pulse_13GaussianPulse_pulse_grad(CYTHON_UNUSED struct __p
     break;
     case 3:
 
-    /* "pulse.pyx":90
+    /* "qutip_qoc/pulse.pyx":90
  *             return grad
  *         elif idx == 3:
  *             grad = s * grad * (-2) * (time - m) / (v**2)             # <<<<<<<<<<<<<<
@@ -20424,7 +20424,7 @@ static double __pyx_f_5pulse_13GaussianPulse_pulse_grad(CYTHON_UNUSED struct __p
     }
     __pyx_v_grad = (__pyx_t_3 / __pyx_t_4);
 
-    /* "pulse.pyx":91
+    /* "qutip_qoc/pulse.pyx":91
  *         elif idx == 3:
  *             grad = s * grad * (-2) * (time - m) / (v**2)
  *             return grad             # <<<<<<<<<<<<<<
@@ -20434,7 +20434,7 @@ static double __pyx_f_5pulse_13GaussianPulse_pulse_grad(CYTHON_UNUSED struct __p
     __pyx_r = __pyx_v_grad;
     goto __pyx_L0;
 
-    /* "pulse.pyx":89
+    /* "qutip_qoc/pulse.pyx":89
  *             grad = s * grad * 2 * (time - m)**2 / (v**3)
  *             return grad
  *         elif idx == 3:             # <<<<<<<<<<<<<<
@@ -20445,7 +20445,7 @@ static double __pyx_f_5pulse_13GaussianPulse_pulse_grad(CYTHON_UNUSED struct __p
     default: break;
   }
 
-  /* "pulse.pyx":72
+  /* "qutip_qoc/pulse.pyx":72
  *         return pulse_val
  * 
  *     cdef double pulse_grad(self, double time, double[:] paras, int idx):             # <<<<<<<<<<<<<<
@@ -20457,7 +20457,7 @@ static double __pyx_f_5pulse_13GaussianPulse_pulse_grad(CYTHON_UNUSED struct __p
   __pyx_r = 0;
   goto __pyx_L0;
   __pyx_L1_error:;
-  __Pyx_AddTraceback("pulse.GaussianPulse.pulse_grad", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.GaussianPulse.pulse_grad", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   return __pyx_r;
@@ -20470,15 +20470,15 @@ static double __pyx_f_5pulse_13GaussianPulse_pulse_grad(CYTHON_UNUSED struct __p
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_13GaussianPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_13GaussianPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5pulse_13GaussianPulse_3__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_13GaussianPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5pulse_13GaussianPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
+static PyMethodDef __pyx_mdef_9qutip_qoc_5pulse_13GaussianPulse_3__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_13GaussianPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_13GaussianPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -20503,14 +20503,14 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   if (unlikely(__pyx_nargs > 0)) {
     __Pyx_RaiseArgtupleInvalid("__reduce_cython__", 1, 0, 0, __pyx_nargs); return NULL;}
   if (unlikely(__pyx_kwds) && __Pyx_NumKwargs_FASTCALL(__pyx_kwds) && unlikely(!__Pyx_CheckKeywordStrings(__pyx_kwds, "__reduce_cython__", 0))) return NULL;
-  __pyx_r = __pyx_pf_5pulse_13GaussianPulse_2__reduce_cython__(((struct __pyx_obj_5pulse_GaussianPulse *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_13GaussianPulse_2__reduce_cython__(((struct __pyx_obj_9qutip_qoc_5pulse_GaussianPulse *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_13GaussianPulse_2__reduce_cython__(struct __pyx_obj_5pulse_GaussianPulse *__pyx_v_self) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_13GaussianPulse_2__reduce_cython__(struct __pyx_obj_9qutip_qoc_5pulse_GaussianPulse *__pyx_v_self) {
   PyObject *__pyx_v_state = 0;
   PyObject *__pyx_v__dict = 0;
   int __pyx_v_use_setstate;
@@ -20725,7 +20725,7 @@ static PyObject *__pyx_pf_5pulse_13GaussianPulse_2__reduce_cython__(struct __pyx
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("pulse.GaussianPulse.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.GaussianPulse.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_state);
@@ -20743,15 +20743,15 @@ static PyObject *__pyx_pf_5pulse_13GaussianPulse_2__reduce_cython__(struct __pyx
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_13GaussianPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_13GaussianPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5pulse_13GaussianPulse_5__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_13GaussianPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5pulse_13GaussianPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
+static PyMethodDef __pyx_mdef_9qutip_qoc_5pulse_13GaussianPulse_5__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_13GaussianPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_13GaussianPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -20821,11 +20821,11 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
     }
   }
-  __Pyx_AddTraceback("pulse.GaussianPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.GaussianPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pulse_13GaussianPulse_4__setstate_cython__(((struct __pyx_obj_5pulse_GaussianPulse *)__pyx_v_self), __pyx_v___pyx_state);
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_13GaussianPulse_4__setstate_cython__(((struct __pyx_obj_9qutip_qoc_5pulse_GaussianPulse *)__pyx_v_self), __pyx_v___pyx_state);
 
   /* function exit code */
   {
@@ -20838,7 +20838,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_13GaussianPulse_4__setstate_cython__(struct __pyx_obj_5pulse_GaussianPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_13GaussianPulse_4__setstate_cython__(struct __pyx_obj_9qutip_qoc_5pulse_GaussianPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -20853,7 +20853,7 @@ static PyObject *__pyx_pf_5pulse_13GaussianPulse_4__setstate_cython__(struct __p
  *     __pyx_unpickle_GaussianPulse__set_state(self, __pyx_state)             # <<<<<<<<<<<<<<
  */
   if (!(likely(PyTuple_CheckExact(__pyx_v___pyx_state))||((__pyx_v___pyx_state) == Py_None) || __Pyx_RaiseUnexpectedTypeError("tuple", __pyx_v___pyx_state))) __PYX_ERR(1, 17, __pyx_L1_error)
-  __pyx_t_1 = __pyx_f_5pulse___pyx_unpickle_GaussianPulse__set_state(__pyx_v_self, ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 17, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_9qutip_qoc_5pulse___pyx_unpickle_GaussianPulse__set_state(__pyx_v_self, ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -20869,7 +20869,7 @@ static PyObject *__pyx_pf_5pulse_13GaussianPulse_4__setstate_cython__(struct __p
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("pulse.GaussianPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.GaussianPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -20877,7 +20877,7 @@ static PyObject *__pyx_pf_5pulse_13GaussianPulse_4__setstate_cython__(struct __p
   return __pyx_r;
 }
 
-/* "pulse.pyx":97
+/* "qutip_qoc/pulse.pyx":97
  * @cython.wraparound(False)
  * cdef class SinPulse(Pulse):
  *     def __init__(self, n_sup=1, n_var=3):             # <<<<<<<<<<<<<<
@@ -20886,8 +20886,8 @@ static PyObject *__pyx_pf_5pulse_13GaussianPulse_4__setstate_cython__(struct __p
  */
 
 /* Python wrapper */
-static int __pyx_pw_5pulse_8SinPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_pw_5pulse_8SinPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static int __pyx_pw_9qutip_qoc_5pulse_8SinPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_9qutip_qoc_5pulse_8SinPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_n_sup = 0;
   CYTHON_UNUSED PyObject *__pyx_v_n_var = 0;
   CYTHON_UNUSED Py_ssize_t __pyx_nargs;
@@ -20964,11 +20964,11 @@ static int __pyx_pw_5pulse_8SinPulse_1__init__(PyObject *__pyx_v_self, PyObject 
       __Pyx_Arg_XDECREF_VARARGS(values[__pyx_temp]);
     }
   }
-  __Pyx_AddTraceback("pulse.SinPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.SinPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pulse_8SinPulse___init__(((struct __pyx_obj_5pulse_SinPulse *)__pyx_v_self), __pyx_v_n_sup, __pyx_v_n_var);
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_8SinPulse___init__(((struct __pyx_obj_9qutip_qoc_5pulse_SinPulse *)__pyx_v_self), __pyx_v_n_sup, __pyx_v_n_var);
 
   /* function exit code */
   {
@@ -20981,7 +20981,7 @@ static int __pyx_pw_5pulse_8SinPulse_1__init__(PyObject *__pyx_v_self, PyObject 
   return __pyx_r;
 }
 
-static int __pyx_pf_5pulse_8SinPulse___init__(struct __pyx_obj_5pulse_SinPulse *__pyx_v_self, PyObject *__pyx_v_n_sup, CYTHON_UNUSED PyObject *__pyx_v_n_var) {
+static int __pyx_pf_9qutip_qoc_5pulse_8SinPulse___init__(struct __pyx_obj_9qutip_qoc_5pulse_SinPulse *__pyx_v_self, PyObject *__pyx_v_n_sup, CYTHON_UNUSED PyObject *__pyx_v_n_var) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -20993,7 +20993,7 @@ static int __pyx_pf_5pulse_8SinPulse___init__(struct __pyx_obj_5pulse_SinPulse *
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 1);
 
-  /* "pulse.pyx":98
+  /* "qutip_qoc/pulse.pyx":98
  * cdef class SinPulse(Pulse):
  *     def __init__(self, n_sup=1, n_var=3):
  *         super().__init__(n_sup, n_var=3)             # <<<<<<<<<<<<<<
@@ -21002,9 +21002,9 @@ static int __pyx_pf_5pulse_8SinPulse___init__(struct __pyx_obj_5pulse_SinPulse *
  */
   __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 98, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_INCREF((PyObject *)__pyx_ptype_5pulse_SinPulse);
-  __Pyx_GIVEREF((PyObject *)__pyx_ptype_5pulse_SinPulse);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_1, 0, ((PyObject *)__pyx_ptype_5pulse_SinPulse))) __PYX_ERR(0, 98, __pyx_L1_error);
+  __Pyx_INCREF((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_SinPulse);
+  __Pyx_GIVEREF((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_SinPulse);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_1, 0, ((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_SinPulse))) __PYX_ERR(0, 98, __pyx_L1_error);
   __Pyx_INCREF((PyObject *)__pyx_v_self);
   __Pyx_GIVEREF((PyObject *)__pyx_v_self);
   if (__Pyx_PyTuple_SET_ITEM(__pyx_t_1, 1, ((PyObject *)__pyx_v_self))) __PYX_ERR(0, 98, __pyx_L1_error);
@@ -21029,7 +21029,7 @@ static int __pyx_pf_5pulse_8SinPulse___init__(struct __pyx_obj_5pulse_SinPulse *
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "pulse.pyx":97
+  /* "qutip_qoc/pulse.pyx":97
  * @cython.wraparound(False)
  * cdef class SinPulse(Pulse):
  *     def __init__(self, n_sup=1, n_var=3):             # <<<<<<<<<<<<<<
@@ -21045,14 +21045,14 @@ static int __pyx_pf_5pulse_8SinPulse___init__(struct __pyx_obj_5pulse_SinPulse *
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("pulse.SinPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.SinPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "pulse.pyx":100
+/* "qutip_qoc/pulse.pyx":100
  *         super().__init__(n_sup, n_var=3)
  * 
  *     cdef double pulse(self, double time, double[:] paras):             # <<<<<<<<<<<<<<
@@ -21060,7 +21060,7 @@ static int __pyx_pf_5pulse_8SinPulse___init__(struct __pyx_obj_5pulse_SinPulse *
  *         Generate a pulse with sinusoidal shape.
  */
 
-static double __pyx_f_5pulse_8SinPulse_pulse(CYTHON_UNUSED struct __pyx_obj_5pulse_SinPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras) {
+static double __pyx_f_9qutip_qoc_5pulse_8SinPulse_pulse(CYTHON_UNUSED struct __pyx_obj_9qutip_qoc_5pulse_SinPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras) {
   double __pyx_v_s;
   double __pyx_v_m;
   double __pyx_v_v;
@@ -21071,7 +21071,7 @@ static double __pyx_f_5pulse_8SinPulse_pulse(CYTHON_UNUSED struct __pyx_obj_5pul
   double __pyx_t_3;
   double __pyx_t_4;
 
-  /* "pulse.pyx":105
+  /* "qutip_qoc/pulse.pyx":105
  *         """
  *         cdef double s, m, v, pulse_val
  *         s, m, v = paras[0], paras[1], paras[2]             # <<<<<<<<<<<<<<
@@ -21088,7 +21088,7 @@ static double __pyx_f_5pulse_8SinPulse_pulse(CYTHON_UNUSED struct __pyx_obj_5pul
   __pyx_v_m = __pyx_t_3;
   __pyx_v_v = __pyx_t_4;
 
-  /* "pulse.pyx":107
+  /* "qutip_qoc/pulse.pyx":107
  *         s, m, v = paras[0], paras[1], paras[2]
  * 
  *         pulse_val = s * sin(m * time + v)             # <<<<<<<<<<<<<<
@@ -21097,7 +21097,7 @@ static double __pyx_f_5pulse_8SinPulse_pulse(CYTHON_UNUSED struct __pyx_obj_5pul
  */
   __pyx_v_pulse_val = (__pyx_v_s * sin(((__pyx_v_m * __pyx_v_time) + __pyx_v_v)));
 
-  /* "pulse.pyx":109
+  /* "qutip_qoc/pulse.pyx":109
  *         pulse_val = s * sin(m * time + v)
  * 
  *         return pulse_val             # <<<<<<<<<<<<<<
@@ -21107,7 +21107,7 @@ static double __pyx_f_5pulse_8SinPulse_pulse(CYTHON_UNUSED struct __pyx_obj_5pul
   __pyx_r = __pyx_v_pulse_val;
   goto __pyx_L0;
 
-  /* "pulse.pyx":100
+  /* "qutip_qoc/pulse.pyx":100
  *         super().__init__(n_sup, n_var=3)
  * 
  *     cdef double pulse(self, double time, double[:] paras):             # <<<<<<<<<<<<<<
@@ -21120,7 +21120,7 @@ static double __pyx_f_5pulse_8SinPulse_pulse(CYTHON_UNUSED struct __pyx_obj_5pul
   return __pyx_r;
 }
 
-/* "pulse.pyx":111
+/* "qutip_qoc/pulse.pyx":111
  *         return pulse_val
  * 
  *     cdef double pulse_grad(self, double time, double[:] paras, int idx):             # <<<<<<<<<<<<<<
@@ -21128,7 +21128,7 @@ static double __pyx_f_5pulse_8SinPulse_pulse(CYTHON_UNUSED struct __pyx_obj_5pul
  *         Generate the derivative of pulse with sinusoidal shape
  */
 
-static double __pyx_f_5pulse_8SinPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj_5pulse_SinPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx) {
+static double __pyx_f_9qutip_qoc_5pulse_8SinPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj_9qutip_qoc_5pulse_SinPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx) {
   double __pyx_v_s;
   double __pyx_v_m;
   double __pyx_v_v;
@@ -21139,7 +21139,7 @@ static double __pyx_f_5pulse_8SinPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
   double __pyx_t_3;
   double __pyx_t_4;
 
-  /* "pulse.pyx":117
+  /* "qutip_qoc/pulse.pyx":117
  *         """
  *         cdef double s, m, v, grad
  *         s, m, v = paras[0], paras[1], paras[2]             # <<<<<<<<<<<<<<
@@ -21156,7 +21156,7 @@ static double __pyx_f_5pulse_8SinPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
   __pyx_v_m = __pyx_t_3;
   __pyx_v_v = __pyx_t_4;
 
-  /* "pulse.pyx":119
+  /* "qutip_qoc/pulse.pyx":119
  *         s, m, v = paras[0], paras[1], paras[2]
  * 
  *         if idx == 0:             # <<<<<<<<<<<<<<
@@ -21166,7 +21166,7 @@ static double __pyx_f_5pulse_8SinPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
   switch (__pyx_v_idx) {
     case 0:
 
-    /* "pulse.pyx":120
+    /* "qutip_qoc/pulse.pyx":120
  * 
  *         if idx == 0:
  *             grad = sin(m * time + v)             # <<<<<<<<<<<<<<
@@ -21175,7 +21175,7 @@ static double __pyx_f_5pulse_8SinPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
  */
     __pyx_v_grad = sin(((__pyx_v_m * __pyx_v_time) + __pyx_v_v));
 
-    /* "pulse.pyx":121
+    /* "qutip_qoc/pulse.pyx":121
  *         if idx == 0:
  *             grad = sin(m * time + v)
  *             return grad             # <<<<<<<<<<<<<<
@@ -21185,7 +21185,7 @@ static double __pyx_f_5pulse_8SinPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
     __pyx_r = __pyx_v_grad;
     goto __pyx_L0;
 
-    /* "pulse.pyx":119
+    /* "qutip_qoc/pulse.pyx":119
  *         s, m, v = paras[0], paras[1], paras[2]
  * 
  *         if idx == 0:             # <<<<<<<<<<<<<<
@@ -21195,7 +21195,7 @@ static double __pyx_f_5pulse_8SinPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
     break;
     case 1:
 
-    /* "pulse.pyx":123
+    /* "qutip_qoc/pulse.pyx":123
  *             return grad
  *         elif idx == 1:
  *             grad = s * cos(m * time + v) * time             # <<<<<<<<<<<<<<
@@ -21204,7 +21204,7 @@ static double __pyx_f_5pulse_8SinPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
  */
     __pyx_v_grad = ((__pyx_v_s * cos(((__pyx_v_m * __pyx_v_time) + __pyx_v_v))) * __pyx_v_time);
 
-    /* "pulse.pyx":124
+    /* "qutip_qoc/pulse.pyx":124
  *         elif idx == 1:
  *             grad = s * cos(m * time + v) * time
  *             return grad             # <<<<<<<<<<<<<<
@@ -21214,7 +21214,7 @@ static double __pyx_f_5pulse_8SinPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
     __pyx_r = __pyx_v_grad;
     goto __pyx_L0;
 
-    /* "pulse.pyx":122
+    /* "qutip_qoc/pulse.pyx":122
  *             grad = sin(m * time + v)
  *             return grad
  *         elif idx == 1:             # <<<<<<<<<<<<<<
@@ -21224,7 +21224,7 @@ static double __pyx_f_5pulse_8SinPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
     break;
     case 2:
 
-    /* "pulse.pyx":126
+    /* "qutip_qoc/pulse.pyx":126
  *             return grad
  *         elif idx == 2:
  *             grad = s * cos(m * time + v)             # <<<<<<<<<<<<<<
@@ -21233,7 +21233,7 @@ static double __pyx_f_5pulse_8SinPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
  */
     __pyx_v_grad = (__pyx_v_s * cos(((__pyx_v_m * __pyx_v_time) + __pyx_v_v)));
 
-    /* "pulse.pyx":127
+    /* "qutip_qoc/pulse.pyx":127
  *         elif idx == 2:
  *             grad = s * cos(m * time + v)
  *             return grad             # <<<<<<<<<<<<<<
@@ -21243,7 +21243,7 @@ static double __pyx_f_5pulse_8SinPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
     __pyx_r = __pyx_v_grad;
     goto __pyx_L0;
 
-    /* "pulse.pyx":125
+    /* "qutip_qoc/pulse.pyx":125
  *             grad = s * cos(m * time + v) * time
  *             return grad
  *         elif idx == 2:             # <<<<<<<<<<<<<<
@@ -21253,7 +21253,7 @@ static double __pyx_f_5pulse_8SinPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
     break;
     case 3:
 
-    /* "pulse.pyx":129
+    /* "qutip_qoc/pulse.pyx":129
  *             return grad
  *         elif idx == 3:
  *             grad = s * cos(m * time + v) * m             # <<<<<<<<<<<<<<
@@ -21262,7 +21262,7 @@ static double __pyx_f_5pulse_8SinPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
  */
     __pyx_v_grad = ((__pyx_v_s * cos(((__pyx_v_m * __pyx_v_time) + __pyx_v_v))) * __pyx_v_m);
 
-    /* "pulse.pyx":130
+    /* "qutip_qoc/pulse.pyx":130
  *         elif idx == 3:
  *             grad = s * cos(m * time + v) * m
  *             return grad             # <<<<<<<<<<<<<<
@@ -21272,7 +21272,7 @@ static double __pyx_f_5pulse_8SinPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
     __pyx_r = __pyx_v_grad;
     goto __pyx_L0;
 
-    /* "pulse.pyx":128
+    /* "qutip_qoc/pulse.pyx":128
  *             grad = s * cos(m * time + v)
  *             return grad
  *         elif idx == 3:             # <<<<<<<<<<<<<<
@@ -21283,7 +21283,7 @@ static double __pyx_f_5pulse_8SinPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
     default: break;
   }
 
-  /* "pulse.pyx":111
+  /* "qutip_qoc/pulse.pyx":111
  *         return pulse_val
  * 
  *     cdef double pulse_grad(self, double time, double[:] paras, int idx):             # <<<<<<<<<<<<<<
@@ -21304,15 +21304,15 @@ static double __pyx_f_5pulse_8SinPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_8SinPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_8SinPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5pulse_8SinPulse_3__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_8SinPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5pulse_8SinPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
+static PyMethodDef __pyx_mdef_9qutip_qoc_5pulse_8SinPulse_3__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_8SinPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_8SinPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -21337,14 +21337,14 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   if (unlikely(__pyx_nargs > 0)) {
     __Pyx_RaiseArgtupleInvalid("__reduce_cython__", 1, 0, 0, __pyx_nargs); return NULL;}
   if (unlikely(__pyx_kwds) && __Pyx_NumKwargs_FASTCALL(__pyx_kwds) && unlikely(!__Pyx_CheckKeywordStrings(__pyx_kwds, "__reduce_cython__", 0))) return NULL;
-  __pyx_r = __pyx_pf_5pulse_8SinPulse_2__reduce_cython__(((struct __pyx_obj_5pulse_SinPulse *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_8SinPulse_2__reduce_cython__(((struct __pyx_obj_9qutip_qoc_5pulse_SinPulse *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_8SinPulse_2__reduce_cython__(struct __pyx_obj_5pulse_SinPulse *__pyx_v_self) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_8SinPulse_2__reduce_cython__(struct __pyx_obj_9qutip_qoc_5pulse_SinPulse *__pyx_v_self) {
   PyObject *__pyx_v_state = 0;
   PyObject *__pyx_v__dict = 0;
   int __pyx_v_use_setstate;
@@ -21559,7 +21559,7 @@ static PyObject *__pyx_pf_5pulse_8SinPulse_2__reduce_cython__(struct __pyx_obj_5
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("pulse.SinPulse.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.SinPulse.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_state);
@@ -21577,15 +21577,15 @@ static PyObject *__pyx_pf_5pulse_8SinPulse_2__reduce_cython__(struct __pyx_obj_5
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_8SinPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_8SinPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5pulse_8SinPulse_5__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_8SinPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5pulse_8SinPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
+static PyMethodDef __pyx_mdef_9qutip_qoc_5pulse_8SinPulse_5__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_8SinPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_8SinPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -21655,11 +21655,11 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
     }
   }
-  __Pyx_AddTraceback("pulse.SinPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.SinPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pulse_8SinPulse_4__setstate_cython__(((struct __pyx_obj_5pulse_SinPulse *)__pyx_v_self), __pyx_v___pyx_state);
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_8SinPulse_4__setstate_cython__(((struct __pyx_obj_9qutip_qoc_5pulse_SinPulse *)__pyx_v_self), __pyx_v___pyx_state);
 
   /* function exit code */
   {
@@ -21672,7 +21672,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_8SinPulse_4__setstate_cython__(struct __pyx_obj_5pulse_SinPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_8SinPulse_4__setstate_cython__(struct __pyx_obj_9qutip_qoc_5pulse_SinPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -21687,7 +21687,7 @@ static PyObject *__pyx_pf_5pulse_8SinPulse_4__setstate_cython__(struct __pyx_obj
  *     __pyx_unpickle_SinPulse__set_state(self, __pyx_state)             # <<<<<<<<<<<<<<
  */
   if (!(likely(PyTuple_CheckExact(__pyx_v___pyx_state))||((__pyx_v___pyx_state) == Py_None) || __Pyx_RaiseUnexpectedTypeError("tuple", __pyx_v___pyx_state))) __PYX_ERR(1, 17, __pyx_L1_error)
-  __pyx_t_1 = __pyx_f_5pulse___pyx_unpickle_SinPulse__set_state(__pyx_v_self, ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 17, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_9qutip_qoc_5pulse___pyx_unpickle_SinPulse__set_state(__pyx_v_self, ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -21703,7 +21703,7 @@ static PyObject *__pyx_pf_5pulse_8SinPulse_4__setstate_cython__(struct __pyx_obj
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("pulse.SinPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.SinPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -21711,7 +21711,7 @@ static PyObject *__pyx_pf_5pulse_8SinPulse_4__setstate_cython__(struct __pyx_obj
   return __pyx_r;
 }
 
-/* "pulse.pyx":136
+/* "qutip_qoc/pulse.pyx":136
  * @cython.wraparound(False)
  * cdef class CosPulse(Pulse):
  *     def __init__(self, n_sup=1, n_var=3):             # <<<<<<<<<<<<<<
@@ -21720,8 +21720,8 @@ static PyObject *__pyx_pf_5pulse_8SinPulse_4__setstate_cython__(struct __pyx_obj
  */
 
 /* Python wrapper */
-static int __pyx_pw_5pulse_8CosPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_pw_5pulse_8CosPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static int __pyx_pw_9qutip_qoc_5pulse_8CosPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_9qutip_qoc_5pulse_8CosPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_n_sup = 0;
   CYTHON_UNUSED PyObject *__pyx_v_n_var = 0;
   CYTHON_UNUSED Py_ssize_t __pyx_nargs;
@@ -21798,11 +21798,11 @@ static int __pyx_pw_5pulse_8CosPulse_1__init__(PyObject *__pyx_v_self, PyObject 
       __Pyx_Arg_XDECREF_VARARGS(values[__pyx_temp]);
     }
   }
-  __Pyx_AddTraceback("pulse.CosPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.CosPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pulse_8CosPulse___init__(((struct __pyx_obj_5pulse_CosPulse *)__pyx_v_self), __pyx_v_n_sup, __pyx_v_n_var);
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_8CosPulse___init__(((struct __pyx_obj_9qutip_qoc_5pulse_CosPulse *)__pyx_v_self), __pyx_v_n_sup, __pyx_v_n_var);
 
   /* function exit code */
   {
@@ -21815,7 +21815,7 @@ static int __pyx_pw_5pulse_8CosPulse_1__init__(PyObject *__pyx_v_self, PyObject 
   return __pyx_r;
 }
 
-static int __pyx_pf_5pulse_8CosPulse___init__(struct __pyx_obj_5pulse_CosPulse *__pyx_v_self, PyObject *__pyx_v_n_sup, CYTHON_UNUSED PyObject *__pyx_v_n_var) {
+static int __pyx_pf_9qutip_qoc_5pulse_8CosPulse___init__(struct __pyx_obj_9qutip_qoc_5pulse_CosPulse *__pyx_v_self, PyObject *__pyx_v_n_sup, CYTHON_UNUSED PyObject *__pyx_v_n_var) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -21827,7 +21827,7 @@ static int __pyx_pf_5pulse_8CosPulse___init__(struct __pyx_obj_5pulse_CosPulse *
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 1);
 
-  /* "pulse.pyx":137
+  /* "qutip_qoc/pulse.pyx":137
  * cdef class CosPulse(Pulse):
  *     def __init__(self, n_sup=1, n_var=3):
  *         super().__init__(n_sup, n_var=3)             # <<<<<<<<<<<<<<
@@ -21836,9 +21836,9 @@ static int __pyx_pf_5pulse_8CosPulse___init__(struct __pyx_obj_5pulse_CosPulse *
  */
   __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 137, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_INCREF((PyObject *)__pyx_ptype_5pulse_CosPulse);
-  __Pyx_GIVEREF((PyObject *)__pyx_ptype_5pulse_CosPulse);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_1, 0, ((PyObject *)__pyx_ptype_5pulse_CosPulse))) __PYX_ERR(0, 137, __pyx_L1_error);
+  __Pyx_INCREF((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_CosPulse);
+  __Pyx_GIVEREF((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_CosPulse);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_1, 0, ((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_CosPulse))) __PYX_ERR(0, 137, __pyx_L1_error);
   __Pyx_INCREF((PyObject *)__pyx_v_self);
   __Pyx_GIVEREF((PyObject *)__pyx_v_self);
   if (__Pyx_PyTuple_SET_ITEM(__pyx_t_1, 1, ((PyObject *)__pyx_v_self))) __PYX_ERR(0, 137, __pyx_L1_error);
@@ -21863,7 +21863,7 @@ static int __pyx_pf_5pulse_8CosPulse___init__(struct __pyx_obj_5pulse_CosPulse *
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "pulse.pyx":136
+  /* "qutip_qoc/pulse.pyx":136
  * @cython.wraparound(False)
  * cdef class CosPulse(Pulse):
  *     def __init__(self, n_sup=1, n_var=3):             # <<<<<<<<<<<<<<
@@ -21879,14 +21879,14 @@ static int __pyx_pf_5pulse_8CosPulse___init__(struct __pyx_obj_5pulse_CosPulse *
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("pulse.CosPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.CosPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "pulse.pyx":139
+/* "qutip_qoc/pulse.pyx":139
  *         super().__init__(n_sup, n_var=3)
  * 
  *     cdef double pulse(self, double time, double[:] paras):             # <<<<<<<<<<<<<<
@@ -21894,7 +21894,7 @@ static int __pyx_pf_5pulse_8CosPulse___init__(struct __pyx_obj_5pulse_CosPulse *
  *         Generate a pulse with sinusoidal shape.
  */
 
-static double __pyx_f_5pulse_8CosPulse_pulse(CYTHON_UNUSED struct __pyx_obj_5pulse_CosPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras) {
+static double __pyx_f_9qutip_qoc_5pulse_8CosPulse_pulse(CYTHON_UNUSED struct __pyx_obj_9qutip_qoc_5pulse_CosPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras) {
   double __pyx_v_s;
   double __pyx_v_m;
   double __pyx_v_v;
@@ -21905,7 +21905,7 @@ static double __pyx_f_5pulse_8CosPulse_pulse(CYTHON_UNUSED struct __pyx_obj_5pul
   double __pyx_t_3;
   double __pyx_t_4;
 
-  /* "pulse.pyx":144
+  /* "qutip_qoc/pulse.pyx":144
  *         """
  *         cdef double s, m, v, pulse_val
  *         s, m, v = paras[0], paras[1], paras[2]             # <<<<<<<<<<<<<<
@@ -21922,7 +21922,7 @@ static double __pyx_f_5pulse_8CosPulse_pulse(CYTHON_UNUSED struct __pyx_obj_5pul
   __pyx_v_m = __pyx_t_3;
   __pyx_v_v = __pyx_t_4;
 
-  /* "pulse.pyx":146
+  /* "qutip_qoc/pulse.pyx":146
  *         s, m, v = paras[0], paras[1], paras[2]
  * 
  *         pulse_val = s * cos(m * time + v)             # <<<<<<<<<<<<<<
@@ -21931,7 +21931,7 @@ static double __pyx_f_5pulse_8CosPulse_pulse(CYTHON_UNUSED struct __pyx_obj_5pul
  */
   __pyx_v_pulse_val = (__pyx_v_s * cos(((__pyx_v_m * __pyx_v_time) + __pyx_v_v)));
 
-  /* "pulse.pyx":148
+  /* "qutip_qoc/pulse.pyx":148
  *         pulse_val = s * cos(m * time + v)
  * 
  *         return pulse_val             # <<<<<<<<<<<<<<
@@ -21941,7 +21941,7 @@ static double __pyx_f_5pulse_8CosPulse_pulse(CYTHON_UNUSED struct __pyx_obj_5pul
   __pyx_r = __pyx_v_pulse_val;
   goto __pyx_L0;
 
-  /* "pulse.pyx":139
+  /* "qutip_qoc/pulse.pyx":139
  *         super().__init__(n_sup, n_var=3)
  * 
  *     cdef double pulse(self, double time, double[:] paras):             # <<<<<<<<<<<<<<
@@ -21954,7 +21954,7 @@ static double __pyx_f_5pulse_8CosPulse_pulse(CYTHON_UNUSED struct __pyx_obj_5pul
   return __pyx_r;
 }
 
-/* "pulse.pyx":150
+/* "qutip_qoc/pulse.pyx":150
  *         return pulse_val
  * 
  *     cdef double pulse_grad(self, double time, double[:] paras, int idx):             # <<<<<<<<<<<<<<
@@ -21962,7 +21962,7 @@ static double __pyx_f_5pulse_8CosPulse_pulse(CYTHON_UNUSED struct __pyx_obj_5pul
  *         Generate the derivative of a pulse with sinusoidal shape
  */
 
-static double __pyx_f_5pulse_8CosPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj_5pulse_CosPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx) {
+static double __pyx_f_9qutip_qoc_5pulse_8CosPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj_9qutip_qoc_5pulse_CosPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx) {
   double __pyx_v_s;
   double __pyx_v_m;
   double __pyx_v_v;
@@ -21973,7 +21973,7 @@ static double __pyx_f_5pulse_8CosPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
   double __pyx_t_3;
   double __pyx_t_4;
 
-  /* "pulse.pyx":156
+  /* "qutip_qoc/pulse.pyx":156
  *         """
  *         cdef double s, m, v, grad
  *         s, m, v = paras[0], paras[1], paras[2]             # <<<<<<<<<<<<<<
@@ -21990,7 +21990,7 @@ static double __pyx_f_5pulse_8CosPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
   __pyx_v_m = __pyx_t_3;
   __pyx_v_v = __pyx_t_4;
 
-  /* "pulse.pyx":158
+  /* "qutip_qoc/pulse.pyx":158
  *         s, m, v = paras[0], paras[1], paras[2]
  * 
  *         if idx == 0:             # <<<<<<<<<<<<<<
@@ -22000,7 +22000,7 @@ static double __pyx_f_5pulse_8CosPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
   switch (__pyx_v_idx) {
     case 0:
 
-    /* "pulse.pyx":159
+    /* "qutip_qoc/pulse.pyx":159
  * 
  *         if idx == 0:
  *             grad = cos(m * time - v)             # <<<<<<<<<<<<<<
@@ -22009,7 +22009,7 @@ static double __pyx_f_5pulse_8CosPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
  */
     __pyx_v_grad = cos(((__pyx_v_m * __pyx_v_time) - __pyx_v_v));
 
-    /* "pulse.pyx":160
+    /* "qutip_qoc/pulse.pyx":160
  *         if idx == 0:
  *             grad = cos(m * time - v)
  *             return grad             # <<<<<<<<<<<<<<
@@ -22019,7 +22019,7 @@ static double __pyx_f_5pulse_8CosPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
     __pyx_r = __pyx_v_grad;
     goto __pyx_L0;
 
-    /* "pulse.pyx":158
+    /* "qutip_qoc/pulse.pyx":158
  *         s, m, v = paras[0], paras[1], paras[2]
  * 
  *         if idx == 0:             # <<<<<<<<<<<<<<
@@ -22029,7 +22029,7 @@ static double __pyx_f_5pulse_8CosPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
     break;
     case 1:
 
-    /* "pulse.pyx":162
+    /* "qutip_qoc/pulse.pyx":162
  *             return grad
  *         elif idx == 1:
  *             grad = s * (-1) * sin(m * time + v) * time             # <<<<<<<<<<<<<<
@@ -22038,7 +22038,7 @@ static double __pyx_f_5pulse_8CosPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
  */
     __pyx_v_grad = (((__pyx_v_s * -1.0) * sin(((__pyx_v_m * __pyx_v_time) + __pyx_v_v))) * __pyx_v_time);
 
-    /* "pulse.pyx":163
+    /* "qutip_qoc/pulse.pyx":163
  *         elif idx == 1:
  *             grad = s * (-1) * sin(m * time + v) * time
  *             return grad             # <<<<<<<<<<<<<<
@@ -22048,7 +22048,7 @@ static double __pyx_f_5pulse_8CosPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
     __pyx_r = __pyx_v_grad;
     goto __pyx_L0;
 
-    /* "pulse.pyx":161
+    /* "qutip_qoc/pulse.pyx":161
  *             grad = cos(m * time - v)
  *             return grad
  *         elif idx == 1:             # <<<<<<<<<<<<<<
@@ -22058,7 +22058,7 @@ static double __pyx_f_5pulse_8CosPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
     break;
     case 2:
 
-    /* "pulse.pyx":165
+    /* "qutip_qoc/pulse.pyx":165
  *             return grad
  *         elif idx == 2:
  *             grad = s * (-1) * sin(m * time + v)             # <<<<<<<<<<<<<<
@@ -22067,7 +22067,7 @@ static double __pyx_f_5pulse_8CosPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
  */
     __pyx_v_grad = ((__pyx_v_s * -1.0) * sin(((__pyx_v_m * __pyx_v_time) + __pyx_v_v)));
 
-    /* "pulse.pyx":166
+    /* "qutip_qoc/pulse.pyx":166
  *         elif idx == 2:
  *             grad = s * (-1) * sin(m * time + v)
  *             return grad             # <<<<<<<<<<<<<<
@@ -22077,7 +22077,7 @@ static double __pyx_f_5pulse_8CosPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
     __pyx_r = __pyx_v_grad;
     goto __pyx_L0;
 
-    /* "pulse.pyx":164
+    /* "qutip_qoc/pulse.pyx":164
  *             grad = s * (-1) * sin(m * time + v) * time
  *             return grad
  *         elif idx == 2:             # <<<<<<<<<<<<<<
@@ -22087,7 +22087,7 @@ static double __pyx_f_5pulse_8CosPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
     break;
     case 3:
 
-    /* "pulse.pyx":168
+    /* "qutip_qoc/pulse.pyx":168
  *             return grad
  *         elif idx == 3:
  *             grad = s * (-1) * sin(m * time + v) * m             # <<<<<<<<<<<<<<
@@ -22096,7 +22096,7 @@ static double __pyx_f_5pulse_8CosPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
  */
     __pyx_v_grad = (((__pyx_v_s * -1.0) * sin(((__pyx_v_m * __pyx_v_time) + __pyx_v_v))) * __pyx_v_m);
 
-    /* "pulse.pyx":169
+    /* "qutip_qoc/pulse.pyx":169
  *         elif idx == 3:
  *             grad = s * (-1) * sin(m * time + v) * m
  *             return grad             # <<<<<<<<<<<<<<
@@ -22106,7 +22106,7 @@ static double __pyx_f_5pulse_8CosPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
     __pyx_r = __pyx_v_grad;
     goto __pyx_L0;
 
-    /* "pulse.pyx":167
+    /* "qutip_qoc/pulse.pyx":167
  *             grad = s * (-1) * sin(m * time + v)
  *             return grad
  *         elif idx == 3:             # <<<<<<<<<<<<<<
@@ -22117,7 +22117,7 @@ static double __pyx_f_5pulse_8CosPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
     default: break;
   }
 
-  /* "pulse.pyx":150
+  /* "qutip_qoc/pulse.pyx":150
  *         return pulse_val
  * 
  *     cdef double pulse_grad(self, double time, double[:] paras, int idx):             # <<<<<<<<<<<<<<
@@ -22138,15 +22138,15 @@ static double __pyx_f_5pulse_8CosPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_8CosPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_8CosPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5pulse_8CosPulse_3__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_8CosPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5pulse_8CosPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
+static PyMethodDef __pyx_mdef_9qutip_qoc_5pulse_8CosPulse_3__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_8CosPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_8CosPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -22171,14 +22171,14 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   if (unlikely(__pyx_nargs > 0)) {
     __Pyx_RaiseArgtupleInvalid("__reduce_cython__", 1, 0, 0, __pyx_nargs); return NULL;}
   if (unlikely(__pyx_kwds) && __Pyx_NumKwargs_FASTCALL(__pyx_kwds) && unlikely(!__Pyx_CheckKeywordStrings(__pyx_kwds, "__reduce_cython__", 0))) return NULL;
-  __pyx_r = __pyx_pf_5pulse_8CosPulse_2__reduce_cython__(((struct __pyx_obj_5pulse_CosPulse *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_8CosPulse_2__reduce_cython__(((struct __pyx_obj_9qutip_qoc_5pulse_CosPulse *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_8CosPulse_2__reduce_cython__(struct __pyx_obj_5pulse_CosPulse *__pyx_v_self) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_8CosPulse_2__reduce_cython__(struct __pyx_obj_9qutip_qoc_5pulse_CosPulse *__pyx_v_self) {
   PyObject *__pyx_v_state = 0;
   PyObject *__pyx_v__dict = 0;
   int __pyx_v_use_setstate;
@@ -22393,7 +22393,7 @@ static PyObject *__pyx_pf_5pulse_8CosPulse_2__reduce_cython__(struct __pyx_obj_5
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("pulse.CosPulse.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.CosPulse.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_state);
@@ -22411,15 +22411,15 @@ static PyObject *__pyx_pf_5pulse_8CosPulse_2__reduce_cython__(struct __pyx_obj_5
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_8CosPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_8CosPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5pulse_8CosPulse_5__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_8CosPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5pulse_8CosPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
+static PyMethodDef __pyx_mdef_9qutip_qoc_5pulse_8CosPulse_5__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_8CosPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_8CosPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -22489,11 +22489,11 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
     }
   }
-  __Pyx_AddTraceback("pulse.CosPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.CosPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pulse_8CosPulse_4__setstate_cython__(((struct __pyx_obj_5pulse_CosPulse *)__pyx_v_self), __pyx_v___pyx_state);
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_8CosPulse_4__setstate_cython__(((struct __pyx_obj_9qutip_qoc_5pulse_CosPulse *)__pyx_v_self), __pyx_v___pyx_state);
 
   /* function exit code */
   {
@@ -22506,7 +22506,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_8CosPulse_4__setstate_cython__(struct __pyx_obj_5pulse_CosPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_8CosPulse_4__setstate_cython__(struct __pyx_obj_9qutip_qoc_5pulse_CosPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -22521,7 +22521,7 @@ static PyObject *__pyx_pf_5pulse_8CosPulse_4__setstate_cython__(struct __pyx_obj
  *     __pyx_unpickle_CosPulse__set_state(self, __pyx_state)             # <<<<<<<<<<<<<<
  */
   if (!(likely(PyTuple_CheckExact(__pyx_v___pyx_state))||((__pyx_v___pyx_state) == Py_None) || __Pyx_RaiseUnexpectedTypeError("tuple", __pyx_v___pyx_state))) __PYX_ERR(1, 17, __pyx_L1_error)
-  __pyx_t_1 = __pyx_f_5pulse___pyx_unpickle_CosPulse__set_state(__pyx_v_self, ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 17, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_9qutip_qoc_5pulse___pyx_unpickle_CosPulse__set_state(__pyx_v_self, ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -22537,7 +22537,7 @@ static PyObject *__pyx_pf_5pulse_8CosPulse_4__setstate_cython__(struct __pyx_obj
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("pulse.CosPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.CosPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -22545,7 +22545,7 @@ static PyObject *__pyx_pf_5pulse_8CosPulse_4__setstate_cython__(struct __pyx_obj
   return __pyx_r;
 }
 
-/* "pulse.pyx":175
+/* "qutip_qoc/pulse.pyx":175
  * @cython.wraparound(False)
  * cdef class CosCosPulse(Pulse):
  *     def __init__(self, n_sup=1, n_var=5):             # <<<<<<<<<<<<<<
@@ -22554,8 +22554,8 @@ static PyObject *__pyx_pf_5pulse_8CosPulse_4__setstate_cython__(struct __pyx_obj
  */
 
 /* Python wrapper */
-static int __pyx_pw_5pulse_11CosCosPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_pw_5pulse_11CosCosPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static int __pyx_pw_9qutip_qoc_5pulse_11CosCosPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_9qutip_qoc_5pulse_11CosCosPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_n_sup = 0;
   CYTHON_UNUSED PyObject *__pyx_v_n_var = 0;
   CYTHON_UNUSED Py_ssize_t __pyx_nargs;
@@ -22632,11 +22632,11 @@ static int __pyx_pw_5pulse_11CosCosPulse_1__init__(PyObject *__pyx_v_self, PyObj
       __Pyx_Arg_XDECREF_VARARGS(values[__pyx_temp]);
     }
   }
-  __Pyx_AddTraceback("pulse.CosCosPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.CosCosPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pulse_11CosCosPulse___init__(((struct __pyx_obj_5pulse_CosCosPulse *)__pyx_v_self), __pyx_v_n_sup, __pyx_v_n_var);
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_11CosCosPulse___init__(((struct __pyx_obj_9qutip_qoc_5pulse_CosCosPulse *)__pyx_v_self), __pyx_v_n_sup, __pyx_v_n_var);
 
   /* function exit code */
   {
@@ -22649,7 +22649,7 @@ static int __pyx_pw_5pulse_11CosCosPulse_1__init__(PyObject *__pyx_v_self, PyObj
   return __pyx_r;
 }
 
-static int __pyx_pf_5pulse_11CosCosPulse___init__(struct __pyx_obj_5pulse_CosCosPulse *__pyx_v_self, PyObject *__pyx_v_n_sup, CYTHON_UNUSED PyObject *__pyx_v_n_var) {
+static int __pyx_pf_9qutip_qoc_5pulse_11CosCosPulse___init__(struct __pyx_obj_9qutip_qoc_5pulse_CosCosPulse *__pyx_v_self, PyObject *__pyx_v_n_sup, CYTHON_UNUSED PyObject *__pyx_v_n_var) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -22661,7 +22661,7 @@ static int __pyx_pf_5pulse_11CosCosPulse___init__(struct __pyx_obj_5pulse_CosCos
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 1);
 
-  /* "pulse.pyx":176
+  /* "qutip_qoc/pulse.pyx":176
  * cdef class CosCosPulse(Pulse):
  *     def __init__(self, n_sup=1, n_var=5):
  *         super().__init__(n_sup, n_var=5)             # <<<<<<<<<<<<<<
@@ -22670,9 +22670,9 @@ static int __pyx_pf_5pulse_11CosCosPulse___init__(struct __pyx_obj_5pulse_CosCos
  */
   __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 176, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_INCREF((PyObject *)__pyx_ptype_5pulse_CosCosPulse);
-  __Pyx_GIVEREF((PyObject *)__pyx_ptype_5pulse_CosCosPulse);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_1, 0, ((PyObject *)__pyx_ptype_5pulse_CosCosPulse))) __PYX_ERR(0, 176, __pyx_L1_error);
+  __Pyx_INCREF((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_CosCosPulse);
+  __Pyx_GIVEREF((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_CosCosPulse);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_1, 0, ((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_CosCosPulse))) __PYX_ERR(0, 176, __pyx_L1_error);
   __Pyx_INCREF((PyObject *)__pyx_v_self);
   __Pyx_GIVEREF((PyObject *)__pyx_v_self);
   if (__Pyx_PyTuple_SET_ITEM(__pyx_t_1, 1, ((PyObject *)__pyx_v_self))) __PYX_ERR(0, 176, __pyx_L1_error);
@@ -22697,7 +22697,7 @@ static int __pyx_pf_5pulse_11CosCosPulse___init__(struct __pyx_obj_5pulse_CosCos
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "pulse.pyx":175
+  /* "qutip_qoc/pulse.pyx":175
  * @cython.wraparound(False)
  * cdef class CosCosPulse(Pulse):
  *     def __init__(self, n_sup=1, n_var=5):             # <<<<<<<<<<<<<<
@@ -22713,14 +22713,14 @@ static int __pyx_pf_5pulse_11CosCosPulse___init__(struct __pyx_obj_5pulse_CosCos
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("pulse.CosCosPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.CosCosPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "pulse.pyx":178
+/* "qutip_qoc/pulse.pyx":178
  *         super().__init__(n_sup, n_var=5)
  * 
  *     cdef double pulse(self, double time, double[:] paras):             # <<<<<<<<<<<<<<
@@ -22728,7 +22728,7 @@ static int __pyx_pf_5pulse_11CosCosPulse___init__(struct __pyx_obj_5pulse_CosCos
  *         Generate a pulse with modulated sinusoidal shape.
  */
 
-static double __pyx_f_5pulse_11CosCosPulse_pulse(CYTHON_UNUSED struct __pyx_obj_5pulse_CosCosPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras) {
+static double __pyx_f_9qutip_qoc_5pulse_11CosCosPulse_pulse(CYTHON_UNUSED struct __pyx_obj_9qutip_qoc_5pulse_CosCosPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras) {
   double __pyx_v_s;
   double __pyx_v_m1;
   double __pyx_v_v1;
@@ -22744,7 +22744,7 @@ static double __pyx_f_5pulse_11CosCosPulse_pulse(CYTHON_UNUSED struct __pyx_obj_
   double __pyx_t_5;
   double __pyx_t_6;
 
-  /* "pulse.pyx":184
+  /* "qutip_qoc/pulse.pyx":184
  *         """
  *         cdef double s, m1, v1, m2, v2, pulse_val
  *         s, m1, v1, m2, v2 = paras[0], paras[1], paras[2], paras[3], paras[4]             # <<<<<<<<<<<<<<
@@ -22767,7 +22767,7 @@ static double __pyx_f_5pulse_11CosCosPulse_pulse(CYTHON_UNUSED struct __pyx_obj_
   __pyx_v_m2 = __pyx_t_5;
   __pyx_v_v2 = __pyx_t_6;
 
-  /* "pulse.pyx":185
+  /* "qutip_qoc/pulse.pyx":185
  *         cdef double s, m1, v1, m2, v2, pulse_val
  *         s, m1, v1, m2, v2 = paras[0], paras[1], paras[2], paras[3], paras[4]
  *         cdef double t = time             # <<<<<<<<<<<<<<
@@ -22776,7 +22776,7 @@ static double __pyx_f_5pulse_11CosCosPulse_pulse(CYTHON_UNUSED struct __pyx_obj_
  */
   __pyx_v_t = __pyx_v_time;
 
-  /* "pulse.pyx":187
+  /* "qutip_qoc/pulse.pyx":187
  *         cdef double t = time
  * 
  *         pulse_val = s * cos(m1 * t - v1) * cos(m2 * t - v2)             # <<<<<<<<<<<<<<
@@ -22785,7 +22785,7 @@ static double __pyx_f_5pulse_11CosCosPulse_pulse(CYTHON_UNUSED struct __pyx_obj_
  */
   __pyx_v_pulse_val = ((__pyx_v_s * cos(((__pyx_v_m1 * __pyx_v_t) - __pyx_v_v1))) * cos(((__pyx_v_m2 * __pyx_v_t) - __pyx_v_v2)));
 
-  /* "pulse.pyx":188
+  /* "qutip_qoc/pulse.pyx":188
  * 
  *         pulse_val = s * cos(m1 * t - v1) * cos(m2 * t - v2)
  *         return pulse_val             # <<<<<<<<<<<<<<
@@ -22795,7 +22795,7 @@ static double __pyx_f_5pulse_11CosCosPulse_pulse(CYTHON_UNUSED struct __pyx_obj_
   __pyx_r = __pyx_v_pulse_val;
   goto __pyx_L0;
 
-  /* "pulse.pyx":178
+  /* "qutip_qoc/pulse.pyx":178
  *         super().__init__(n_sup, n_var=5)
  * 
  *     cdef double pulse(self, double time, double[:] paras):             # <<<<<<<<<<<<<<
@@ -22808,7 +22808,7 @@ static double __pyx_f_5pulse_11CosCosPulse_pulse(CYTHON_UNUSED struct __pyx_obj_
   return __pyx_r;
 }
 
-/* "pulse.pyx":190
+/* "qutip_qoc/pulse.pyx":190
  *         return pulse_val
  * 
  *     cdef double pulse_grad(self, double time, double[:] paras, int idx):             # <<<<<<<<<<<<<<
@@ -22816,7 +22816,7 @@ static double __pyx_f_5pulse_11CosCosPulse_pulse(CYTHON_UNUSED struct __pyx_obj_
  *         Generate the derivative of pulse with modulated sinusoidal shape
  */
 
-static double __pyx_f_5pulse_11CosCosPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj_5pulse_CosCosPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx) {
+static double __pyx_f_9qutip_qoc_5pulse_11CosCosPulse_pulse_grad(CYTHON_UNUSED struct __pyx_obj_9qutip_qoc_5pulse_CosCosPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx) {
   double __pyx_v_s;
   double __pyx_v_m1;
   double __pyx_v_v1;
@@ -22832,7 +22832,7 @@ static double __pyx_f_5pulse_11CosCosPulse_pulse_grad(CYTHON_UNUSED struct __pyx
   double __pyx_t_5;
   double __pyx_t_6;
 
-  /* "pulse.pyx":196
+  /* "qutip_qoc/pulse.pyx":196
  *         """
  *         cdef double s, m1, v1, m2, v2, grad
  *         s, m1, v1, m2, v2 = paras[0], paras[1], paras[2], paras[3], paras[4]             # <<<<<<<<<<<<<<
@@ -22855,7 +22855,7 @@ static double __pyx_f_5pulse_11CosCosPulse_pulse_grad(CYTHON_UNUSED struct __pyx
   __pyx_v_m2 = __pyx_t_5;
   __pyx_v_v2 = __pyx_t_6;
 
-  /* "pulse.pyx":197
+  /* "qutip_qoc/pulse.pyx":197
  *         cdef double s, m1, v1, m2, v2, grad
  *         s, m1, v1, m2, v2 = paras[0], paras[1], paras[2], paras[3], paras[4]
  *         cdef double t = time             # <<<<<<<<<<<<<<
@@ -22864,7 +22864,7 @@ static double __pyx_f_5pulse_11CosCosPulse_pulse_grad(CYTHON_UNUSED struct __pyx
  */
   __pyx_v_t = __pyx_v_time;
 
-  /* "pulse.pyx":199
+  /* "qutip_qoc/pulse.pyx":199
  *         cdef double t = time
  * 
  *         if idx == 0:             # <<<<<<<<<<<<<<
@@ -22874,7 +22874,7 @@ static double __pyx_f_5pulse_11CosCosPulse_pulse_grad(CYTHON_UNUSED struct __pyx
   switch (__pyx_v_idx) {
     case 0:
 
-    /* "pulse.pyx":200
+    /* "qutip_qoc/pulse.pyx":200
  * 
  *         if idx == 0:
  *             grad = cos(m1 * t - v1) * cos(m2 * t - v2)             # <<<<<<<<<<<<<<
@@ -22883,7 +22883,7 @@ static double __pyx_f_5pulse_11CosCosPulse_pulse_grad(CYTHON_UNUSED struct __pyx
  */
     __pyx_v_grad = (cos(((__pyx_v_m1 * __pyx_v_t) - __pyx_v_v1)) * cos(((__pyx_v_m2 * __pyx_v_t) - __pyx_v_v2)));
 
-    /* "pulse.pyx":201
+    /* "qutip_qoc/pulse.pyx":201
  *         if idx == 0:
  *             grad = cos(m1 * t - v1) * cos(m2 * t - v2)
  *             return grad             # <<<<<<<<<<<<<<
@@ -22893,7 +22893,7 @@ static double __pyx_f_5pulse_11CosCosPulse_pulse_grad(CYTHON_UNUSED struct __pyx
     __pyx_r = __pyx_v_grad;
     goto __pyx_L0;
 
-    /* "pulse.pyx":199
+    /* "qutip_qoc/pulse.pyx":199
  *         cdef double t = time
  * 
  *         if idx == 0:             # <<<<<<<<<<<<<<
@@ -22903,7 +22903,7 @@ static double __pyx_f_5pulse_11CosCosPulse_pulse_grad(CYTHON_UNUSED struct __pyx
     break;
     case 1:
 
-    /* "pulse.pyx":203
+    /* "qutip_qoc/pulse.pyx":203
  *             return grad
  *         elif idx == 1:
  *             grad = -s * t * cos(m2 * t - v2) * sin(m1 * t - v1)             # <<<<<<<<<<<<<<
@@ -22912,7 +22912,7 @@ static double __pyx_f_5pulse_11CosCosPulse_pulse_grad(CYTHON_UNUSED struct __pyx
  */
     __pyx_v_grad = ((((-__pyx_v_s) * __pyx_v_t) * cos(((__pyx_v_m2 * __pyx_v_t) - __pyx_v_v2))) * sin(((__pyx_v_m1 * __pyx_v_t) - __pyx_v_v1)));
 
-    /* "pulse.pyx":204
+    /* "qutip_qoc/pulse.pyx":204
  *         elif idx == 1:
  *             grad = -s * t * cos(m2 * t - v2) * sin(m1 * t - v1)
  *             return grad             # <<<<<<<<<<<<<<
@@ -22922,7 +22922,7 @@ static double __pyx_f_5pulse_11CosCosPulse_pulse_grad(CYTHON_UNUSED struct __pyx
     __pyx_r = __pyx_v_grad;
     goto __pyx_L0;
 
-    /* "pulse.pyx":202
+    /* "qutip_qoc/pulse.pyx":202
  *             grad = cos(m1 * t - v1) * cos(m2 * t - v2)
  *             return grad
  *         elif idx == 1:             # <<<<<<<<<<<<<<
@@ -22932,7 +22932,7 @@ static double __pyx_f_5pulse_11CosCosPulse_pulse_grad(CYTHON_UNUSED struct __pyx
     break;
     case 2:
 
-    /* "pulse.pyx":206
+    /* "qutip_qoc/pulse.pyx":206
  *             return grad
  *         elif idx == 2:
  *             grad = -s * cos(m2 * t - v2) * sin(v1 - m1 * t)             # <<<<<<<<<<<<<<
@@ -22941,7 +22941,7 @@ static double __pyx_f_5pulse_11CosCosPulse_pulse_grad(CYTHON_UNUSED struct __pyx
  */
     __pyx_v_grad = (((-__pyx_v_s) * cos(((__pyx_v_m2 * __pyx_v_t) - __pyx_v_v2))) * sin((__pyx_v_v1 - (__pyx_v_m1 * __pyx_v_t))));
 
-    /* "pulse.pyx":207
+    /* "qutip_qoc/pulse.pyx":207
  *         elif idx == 2:
  *             grad = -s * cos(m2 * t - v2) * sin(v1 - m1 * t)
  *             return grad             # <<<<<<<<<<<<<<
@@ -22951,7 +22951,7 @@ static double __pyx_f_5pulse_11CosCosPulse_pulse_grad(CYTHON_UNUSED struct __pyx
     __pyx_r = __pyx_v_grad;
     goto __pyx_L0;
 
-    /* "pulse.pyx":205
+    /* "qutip_qoc/pulse.pyx":205
  *             grad = -s * t * cos(m2 * t - v2) * sin(m1 * t - v1)
  *             return grad
  *         elif idx == 2:             # <<<<<<<<<<<<<<
@@ -22961,7 +22961,7 @@ static double __pyx_f_5pulse_11CosCosPulse_pulse_grad(CYTHON_UNUSED struct __pyx
     break;
     case 3:
 
-    /* "pulse.pyx":209
+    /* "qutip_qoc/pulse.pyx":209
  *             return grad
  *         elif idx == 3:
  *             grad = -s * t * cos(m1 * t - v1) * sin(m2 * t - v2)             # <<<<<<<<<<<<<<
@@ -22970,7 +22970,7 @@ static double __pyx_f_5pulse_11CosCosPulse_pulse_grad(CYTHON_UNUSED struct __pyx
  */
     __pyx_v_grad = ((((-__pyx_v_s) * __pyx_v_t) * cos(((__pyx_v_m1 * __pyx_v_t) - __pyx_v_v1))) * sin(((__pyx_v_m2 * __pyx_v_t) - __pyx_v_v2)));
 
-    /* "pulse.pyx":210
+    /* "qutip_qoc/pulse.pyx":210
  *         elif idx == 3:
  *             grad = -s * t * cos(m1 * t - v1) * sin(m2 * t - v2)
  *             return grad             # <<<<<<<<<<<<<<
@@ -22980,7 +22980,7 @@ static double __pyx_f_5pulse_11CosCosPulse_pulse_grad(CYTHON_UNUSED struct __pyx
     __pyx_r = __pyx_v_grad;
     goto __pyx_L0;
 
-    /* "pulse.pyx":208
+    /* "qutip_qoc/pulse.pyx":208
  *             grad = -s * cos(m2 * t - v2) * sin(v1 - m1 * t)
  *             return grad
  *         elif idx == 3:             # <<<<<<<<<<<<<<
@@ -22990,7 +22990,7 @@ static double __pyx_f_5pulse_11CosCosPulse_pulse_grad(CYTHON_UNUSED struct __pyx
     break;
     case 4:
 
-    /* "pulse.pyx":212
+    /* "qutip_qoc/pulse.pyx":212
  *             return grad
  *         elif idx == 4:
  *             grad = -s * cos(m1 * t - v1) * sin(v2 - m2 * t)             # <<<<<<<<<<<<<<
@@ -22999,7 +22999,7 @@ static double __pyx_f_5pulse_11CosCosPulse_pulse_grad(CYTHON_UNUSED struct __pyx
  */
     __pyx_v_grad = (((-__pyx_v_s) * cos(((__pyx_v_m1 * __pyx_v_t) - __pyx_v_v1))) * sin((__pyx_v_v2 - (__pyx_v_m2 * __pyx_v_t))));
 
-    /* "pulse.pyx":213
+    /* "qutip_qoc/pulse.pyx":213
  *         elif idx == 4:
  *             grad = -s * cos(m1 * t - v1) * sin(v2 - m2 * t)
  *             return grad             # <<<<<<<<<<<<<<
@@ -23009,7 +23009,7 @@ static double __pyx_f_5pulse_11CosCosPulse_pulse_grad(CYTHON_UNUSED struct __pyx
     __pyx_r = __pyx_v_grad;
     goto __pyx_L0;
 
-    /* "pulse.pyx":211
+    /* "qutip_qoc/pulse.pyx":211
  *             grad = -s * t * cos(m1 * t - v1) * sin(m2 * t - v2)
  *             return grad
  *         elif idx == 4:             # <<<<<<<<<<<<<<
@@ -23019,7 +23019,7 @@ static double __pyx_f_5pulse_11CosCosPulse_pulse_grad(CYTHON_UNUSED struct __pyx
     break;
     case 5:
 
-    /* "pulse.pyx":215
+    /* "qutip_qoc/pulse.pyx":215
  *             return grad
  *         elif idx == 5:
  *             grad = -s * (m1 * sin(m1 * t - v1) * cos(m2 * t - v2) +\             # <<<<<<<<<<<<<<
@@ -23028,7 +23028,7 @@ static double __pyx_f_5pulse_11CosCosPulse_pulse_grad(CYTHON_UNUSED struct __pyx
  */
     __pyx_v_grad = ((-__pyx_v_s) * (((__pyx_v_m1 * sin(((__pyx_v_m1 * __pyx_v_t) - __pyx_v_v1))) * cos(((__pyx_v_m2 * __pyx_v_t) - __pyx_v_v2))) + ((__pyx_v_m2 * cos(((__pyx_v_m1 * __pyx_v_t) - __pyx_v_v1))) * sin(((__pyx_v_m2 * __pyx_v_t) - __pyx_v_v2)))));
 
-    /* "pulse.pyx":217
+    /* "qutip_qoc/pulse.pyx":217
  *             grad = -s * (m1 * sin(m1 * t - v1) * cos(m2 * t - v2) +\
  *                          m2 * cos(m1 * t - v1) * sin(m2 * t - v2))
  *             return grad             # <<<<<<<<<<<<<<
@@ -23038,7 +23038,7 @@ static double __pyx_f_5pulse_11CosCosPulse_pulse_grad(CYTHON_UNUSED struct __pyx
     __pyx_r = __pyx_v_grad;
     goto __pyx_L0;
 
-    /* "pulse.pyx":214
+    /* "qutip_qoc/pulse.pyx":214
  *             grad = -s * cos(m1 * t - v1) * sin(v2 - m2 * t)
  *             return grad
  *         elif idx == 5:             # <<<<<<<<<<<<<<
@@ -23049,7 +23049,7 @@ static double __pyx_f_5pulse_11CosCosPulse_pulse_grad(CYTHON_UNUSED struct __pyx
     default: break;
   }
 
-  /* "pulse.pyx":190
+  /* "qutip_qoc/pulse.pyx":190
  *         return pulse_val
  * 
  *     cdef double pulse_grad(self, double time, double[:] paras, int idx):             # <<<<<<<<<<<<<<
@@ -23070,15 +23070,15 @@ static double __pyx_f_5pulse_11CosCosPulse_pulse_grad(CYTHON_UNUSED struct __pyx
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_11CosCosPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_11CosCosPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5pulse_11CosCosPulse_3__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_11CosCosPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5pulse_11CosCosPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
+static PyMethodDef __pyx_mdef_9qutip_qoc_5pulse_11CosCosPulse_3__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_11CosCosPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_11CosCosPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -23103,14 +23103,14 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   if (unlikely(__pyx_nargs > 0)) {
     __Pyx_RaiseArgtupleInvalid("__reduce_cython__", 1, 0, 0, __pyx_nargs); return NULL;}
   if (unlikely(__pyx_kwds) && __Pyx_NumKwargs_FASTCALL(__pyx_kwds) && unlikely(!__Pyx_CheckKeywordStrings(__pyx_kwds, "__reduce_cython__", 0))) return NULL;
-  __pyx_r = __pyx_pf_5pulse_11CosCosPulse_2__reduce_cython__(((struct __pyx_obj_5pulse_CosCosPulse *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_11CosCosPulse_2__reduce_cython__(((struct __pyx_obj_9qutip_qoc_5pulse_CosCosPulse *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_11CosCosPulse_2__reduce_cython__(struct __pyx_obj_5pulse_CosCosPulse *__pyx_v_self) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_11CosCosPulse_2__reduce_cython__(struct __pyx_obj_9qutip_qoc_5pulse_CosCosPulse *__pyx_v_self) {
   PyObject *__pyx_v_state = 0;
   PyObject *__pyx_v__dict = 0;
   int __pyx_v_use_setstate;
@@ -23325,7 +23325,7 @@ static PyObject *__pyx_pf_5pulse_11CosCosPulse_2__reduce_cython__(struct __pyx_o
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("pulse.CosCosPulse.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.CosCosPulse.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_state);
@@ -23343,15 +23343,15 @@ static PyObject *__pyx_pf_5pulse_11CosCosPulse_2__reduce_cython__(struct __pyx_o
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_11CosCosPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_11CosCosPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5pulse_11CosCosPulse_5__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_11CosCosPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5pulse_11CosCosPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
+static PyMethodDef __pyx_mdef_9qutip_qoc_5pulse_11CosCosPulse_5__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_11CosCosPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_11CosCosPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -23421,11 +23421,11 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
     }
   }
-  __Pyx_AddTraceback("pulse.CosCosPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.CosCosPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pulse_11CosCosPulse_4__setstate_cython__(((struct __pyx_obj_5pulse_CosCosPulse *)__pyx_v_self), __pyx_v___pyx_state);
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_11CosCosPulse_4__setstate_cython__(((struct __pyx_obj_9qutip_qoc_5pulse_CosCosPulse *)__pyx_v_self), __pyx_v___pyx_state);
 
   /* function exit code */
   {
@@ -23438,7 +23438,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_11CosCosPulse_4__setstate_cython__(struct __pyx_obj_5pulse_CosCosPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_11CosCosPulse_4__setstate_cython__(struct __pyx_obj_9qutip_qoc_5pulse_CosCosPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -23453,7 +23453,7 @@ static PyObject *__pyx_pf_5pulse_11CosCosPulse_4__setstate_cython__(struct __pyx
  *     __pyx_unpickle_CosCosPulse__set_state(self, __pyx_state)             # <<<<<<<<<<<<<<
  */
   if (!(likely(PyTuple_CheckExact(__pyx_v___pyx_state))||((__pyx_v___pyx_state) == Py_None) || __Pyx_RaiseUnexpectedTypeError("tuple", __pyx_v___pyx_state))) __PYX_ERR(1, 17, __pyx_L1_error)
-  __pyx_t_1 = __pyx_f_5pulse___pyx_unpickle_CosCosPulse__set_state(__pyx_v_self, ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 17, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_9qutip_qoc_5pulse___pyx_unpickle_CosCosPulse__set_state(__pyx_v_self, ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -23469,7 +23469,7 @@ static PyObject *__pyx_pf_5pulse_11CosCosPulse_4__setstate_cython__(struct __pyx
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("pulse.CosCosPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.CosCosPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -23477,7 +23477,7 @@ static PyObject *__pyx_pf_5pulse_11CosCosPulse_4__setstate_cython__(struct __pyx
   return __pyx_r;
 }
 
-/* "pulse.pyx":223
+/* "qutip_qoc/pulse.pyx":223
  * @cython.wraparound(False)
  * cdef class PolynomialPulse(Pulse):
  *     def __init__(self, n_sup=1, n_var=3):             # <<<<<<<<<<<<<<
@@ -23486,8 +23486,8 @@ static PyObject *__pyx_pf_5pulse_11CosCosPulse_4__setstate_cython__(struct __pyx
  */
 
 /* Python wrapper */
-static int __pyx_pw_5pulse_15PolynomialPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_pw_5pulse_15PolynomialPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static int __pyx_pw_9qutip_qoc_5pulse_15PolynomialPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_9qutip_qoc_5pulse_15PolynomialPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_n_sup = 0;
   PyObject *__pyx_v_n_var = 0;
   CYTHON_UNUSED Py_ssize_t __pyx_nargs;
@@ -23564,11 +23564,11 @@ static int __pyx_pw_5pulse_15PolynomialPulse_1__init__(PyObject *__pyx_v_self, P
       __Pyx_Arg_XDECREF_VARARGS(values[__pyx_temp]);
     }
   }
-  __Pyx_AddTraceback("pulse.PolynomialPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.PolynomialPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pulse_15PolynomialPulse___init__(((struct __pyx_obj_5pulse_PolynomialPulse *)__pyx_v_self), __pyx_v_n_sup, __pyx_v_n_var);
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_15PolynomialPulse___init__(((struct __pyx_obj_9qutip_qoc_5pulse_PolynomialPulse *)__pyx_v_self), __pyx_v_n_sup, __pyx_v_n_var);
 
   /* function exit code */
   {
@@ -23581,7 +23581,7 @@ static int __pyx_pw_5pulse_15PolynomialPulse_1__init__(PyObject *__pyx_v_self, P
   return __pyx_r;
 }
 
-static int __pyx_pf_5pulse_15PolynomialPulse___init__(struct __pyx_obj_5pulse_PolynomialPulse *__pyx_v_self, PyObject *__pyx_v_n_sup, PyObject *__pyx_v_n_var) {
+static int __pyx_pf_9qutip_qoc_5pulse_15PolynomialPulse___init__(struct __pyx_obj_9qutip_qoc_5pulse_PolynomialPulse *__pyx_v_self, PyObject *__pyx_v_n_sup, PyObject *__pyx_v_n_var) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -23593,7 +23593,7 @@ static int __pyx_pf_5pulse_15PolynomialPulse___init__(struct __pyx_obj_5pulse_Po
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 1);
 
-  /* "pulse.pyx":224
+  /* "qutip_qoc/pulse.pyx":224
  * cdef class PolynomialPulse(Pulse):
  *     def __init__(self, n_sup=1, n_var=3):
  *         super().__init__(n_sup, n_var)             # <<<<<<<<<<<<<<
@@ -23602,9 +23602,9 @@ static int __pyx_pf_5pulse_15PolynomialPulse___init__(struct __pyx_obj_5pulse_Po
  */
   __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 224, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_INCREF((PyObject *)__pyx_ptype_5pulse_PolynomialPulse);
-  __Pyx_GIVEREF((PyObject *)__pyx_ptype_5pulse_PolynomialPulse);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 0, ((PyObject *)__pyx_ptype_5pulse_PolynomialPulse))) __PYX_ERR(0, 224, __pyx_L1_error);
+  __Pyx_INCREF((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_PolynomialPulse);
+  __Pyx_GIVEREF((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_PolynomialPulse);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 0, ((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_PolynomialPulse))) __PYX_ERR(0, 224, __pyx_L1_error);
   __Pyx_INCREF((PyObject *)__pyx_v_self);
   __Pyx_GIVEREF((PyObject *)__pyx_v_self);
   if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 1, ((PyObject *)__pyx_v_self))) __PYX_ERR(0, 224, __pyx_L1_error);
@@ -23638,7 +23638,7 @@ static int __pyx_pf_5pulse_15PolynomialPulse___init__(struct __pyx_obj_5pulse_Po
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pulse.pyx":223
+  /* "qutip_qoc/pulse.pyx":223
  * @cython.wraparound(False)
  * cdef class PolynomialPulse(Pulse):
  *     def __init__(self, n_sup=1, n_var=3):             # <<<<<<<<<<<<<<
@@ -23653,14 +23653,14 @@ static int __pyx_pf_5pulse_15PolynomialPulse___init__(struct __pyx_obj_5pulse_Po
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_AddTraceback("pulse.PolynomialPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.PolynomialPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "pulse.pyx":226
+/* "qutip_qoc/pulse.pyx":226
  *         super().__init__(n_sup, n_var)
  * 
  *     cdef double pulse(self, double time, double[:] paras):             # <<<<<<<<<<<<<<
@@ -23668,7 +23668,7 @@ static int __pyx_pf_5pulse_15PolynomialPulse___init__(struct __pyx_obj_5pulse_Po
  *         Generate a pulse with polynomial shape.
  */
 
-static double __pyx_f_5pulse_15PolynomialPulse_pulse(struct __pyx_obj_5pulse_PolynomialPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras) {
+static double __pyx_f_9qutip_qoc_5pulse_15PolynomialPulse_pulse(struct __pyx_obj_9qutip_qoc_5pulse_PolynomialPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras) {
   double __pyx_v_pulse_val;
   int __pyx_v_i;
   double __pyx_r;
@@ -23677,7 +23677,7 @@ static double __pyx_f_5pulse_15PolynomialPulse_pulse(struct __pyx_obj_5pulse_Pol
   int __pyx_t_3;
   Py_ssize_t __pyx_t_4;
 
-  /* "pulse.pyx":230
+  /* "qutip_qoc/pulse.pyx":230
  *         Generate a pulse with polynomial shape.
  *         """
  *         cdef double pulse_val = 0.0             # <<<<<<<<<<<<<<
@@ -23686,7 +23686,7 @@ static double __pyx_f_5pulse_15PolynomialPulse_pulse(struct __pyx_obj_5pulse_Pol
  */
   __pyx_v_pulse_val = 0.0;
 
-  /* "pulse.pyx":233
+  /* "qutip_qoc/pulse.pyx":233
  *         cdef int i
  * 
  *         for i in range(self.n_par):             # <<<<<<<<<<<<<<
@@ -23698,7 +23698,7 @@ static double __pyx_f_5pulse_15PolynomialPulse_pulse(struct __pyx_obj_5pulse_Pol
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "pulse.pyx":234
+    /* "qutip_qoc/pulse.pyx":234
  * 
  *         for i in range(self.n_par):
  *             pulse_val += paras[i] * time**i             # <<<<<<<<<<<<<<
@@ -23709,7 +23709,7 @@ static double __pyx_f_5pulse_15PolynomialPulse_pulse(struct __pyx_obj_5pulse_Pol
     __pyx_v_pulse_val = (__pyx_v_pulse_val + ((*((double *) ( /* dim=0 */ (__pyx_v_paras.data + __pyx_t_4 * __pyx_v_paras.strides[0]) ))) * pow(__pyx_v_time, ((double)__pyx_v_i))));
   }
 
-  /* "pulse.pyx":235
+  /* "qutip_qoc/pulse.pyx":235
  *         for i in range(self.n_par):
  *             pulse_val += paras[i] * time**i
  *         return pulse_val             # <<<<<<<<<<<<<<
@@ -23719,7 +23719,7 @@ static double __pyx_f_5pulse_15PolynomialPulse_pulse(struct __pyx_obj_5pulse_Pol
   __pyx_r = __pyx_v_pulse_val;
   goto __pyx_L0;
 
-  /* "pulse.pyx":226
+  /* "qutip_qoc/pulse.pyx":226
  *         super().__init__(n_sup, n_var)
  * 
  *     cdef double pulse(self, double time, double[:] paras):             # <<<<<<<<<<<<<<
@@ -23732,7 +23732,7 @@ static double __pyx_f_5pulse_15PolynomialPulse_pulse(struct __pyx_obj_5pulse_Pol
   return __pyx_r;
 }
 
-/* "pulse.pyx":237
+/* "qutip_qoc/pulse.pyx":237
  *         return pulse_val
  * 
  *     cdef double pulse_grad(self, double time, double[:] paras, int idx):             # <<<<<<<<<<<<<<
@@ -23740,7 +23740,7 @@ static double __pyx_f_5pulse_15PolynomialPulse_pulse(struct __pyx_obj_5pulse_Pol
  *         Generate the derivative of the polynomial pulse.
  */
 
-static double __pyx_f_5pulse_15PolynomialPulse_pulse_grad(struct __pyx_obj_5pulse_PolynomialPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx) {
+static double __pyx_f_9qutip_qoc_5pulse_15PolynomialPulse_pulse_grad(struct __pyx_obj_9qutip_qoc_5pulse_PolynomialPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx) {
   double __pyx_v_grad;
   int __pyx_v_i;
   double __pyx_r;
@@ -23750,7 +23750,7 @@ static double __pyx_f_5pulse_15PolynomialPulse_pulse_grad(struct __pyx_obj_5puls
   int __pyx_t_4;
   Py_ssize_t __pyx_t_5;
 
-  /* "pulse.pyx":241
+  /* "qutip_qoc/pulse.pyx":241
  *         Generate the derivative of the polynomial pulse.
  *         """
  *         cdef double grad = 0.             # <<<<<<<<<<<<<<
@@ -23759,7 +23759,7 @@ static double __pyx_f_5pulse_15PolynomialPulse_pulse_grad(struct __pyx_obj_5puls
  */
   __pyx_v_grad = 0.;
 
-  /* "pulse.pyx":243
+  /* "qutip_qoc/pulse.pyx":243
  *         cdef double grad = 0.
  *         cdef int i
  *         if idx == self.n_par:             # <<<<<<<<<<<<<<
@@ -23769,7 +23769,7 @@ static double __pyx_f_5pulse_15PolynomialPulse_pulse_grad(struct __pyx_obj_5puls
   __pyx_t_1 = (__pyx_v_idx == __pyx_v_self->__pyx_base.n_par);
   if (__pyx_t_1) {
 
-    /* "pulse.pyx":244
+    /* "qutip_qoc/pulse.pyx":244
  *         cdef int i
  *         if idx == self.n_par:
  *             for i in range(1, self.n_par):             # <<<<<<<<<<<<<<
@@ -23781,7 +23781,7 @@ static double __pyx_f_5pulse_15PolynomialPulse_pulse_grad(struct __pyx_obj_5puls
     for (__pyx_t_4 = 1; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
       __pyx_v_i = __pyx_t_4;
 
-      /* "pulse.pyx":245
+      /* "qutip_qoc/pulse.pyx":245
  *         if idx == self.n_par:
  *             for i in range(1, self.n_par):
  *                 grad += paras[i] * i * time**(i-1)             # <<<<<<<<<<<<<<
@@ -23792,7 +23792,7 @@ static double __pyx_f_5pulse_15PolynomialPulse_pulse_grad(struct __pyx_obj_5puls
       __pyx_v_grad = (__pyx_v_grad + (((*((double *) ( /* dim=0 */ (__pyx_v_paras.data + __pyx_t_5 * __pyx_v_paras.strides[0]) ))) * __pyx_v_i) * pow(__pyx_v_time, ((double)(__pyx_v_i - 1)))));
     }
 
-    /* "pulse.pyx":243
+    /* "qutip_qoc/pulse.pyx":243
  *         cdef double grad = 0.
  *         cdef int i
  *         if idx == self.n_par:             # <<<<<<<<<<<<<<
@@ -23802,7 +23802,7 @@ static double __pyx_f_5pulse_15PolynomialPulse_pulse_grad(struct __pyx_obj_5puls
     goto __pyx_L3;
   }
 
-  /* "pulse.pyx":247
+  /* "qutip_qoc/pulse.pyx":247
  *                 grad += paras[i] * i * time**(i-1)
  *         else:
  *             grad = time**idx             # <<<<<<<<<<<<<<
@@ -23814,7 +23814,7 @@ static double __pyx_f_5pulse_15PolynomialPulse_pulse_grad(struct __pyx_obj_5puls
   }
   __pyx_L3:;
 
-  /* "pulse.pyx":248
+  /* "qutip_qoc/pulse.pyx":248
  *         else:
  *             grad = time**idx
  *         return grad             # <<<<<<<<<<<<<<
@@ -23824,7 +23824,7 @@ static double __pyx_f_5pulse_15PolynomialPulse_pulse_grad(struct __pyx_obj_5puls
   __pyx_r = __pyx_v_grad;
   goto __pyx_L0;
 
-  /* "pulse.pyx":237
+  /* "qutip_qoc/pulse.pyx":237
  *         return pulse_val
  * 
  *     cdef double pulse_grad(self, double time, double[:] paras, int idx):             # <<<<<<<<<<<<<<
@@ -23844,15 +23844,15 @@ static double __pyx_f_5pulse_15PolynomialPulse_pulse_grad(struct __pyx_obj_5puls
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_15PolynomialPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_15PolynomialPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5pulse_15PolynomialPulse_3__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_15PolynomialPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5pulse_15PolynomialPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
+static PyMethodDef __pyx_mdef_9qutip_qoc_5pulse_15PolynomialPulse_3__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_15PolynomialPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_15PolynomialPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -23877,14 +23877,14 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   if (unlikely(__pyx_nargs > 0)) {
     __Pyx_RaiseArgtupleInvalid("__reduce_cython__", 1, 0, 0, __pyx_nargs); return NULL;}
   if (unlikely(__pyx_kwds) && __Pyx_NumKwargs_FASTCALL(__pyx_kwds) && unlikely(!__Pyx_CheckKeywordStrings(__pyx_kwds, "__reduce_cython__", 0))) return NULL;
-  __pyx_r = __pyx_pf_5pulse_15PolynomialPulse_2__reduce_cython__(((struct __pyx_obj_5pulse_PolynomialPulse *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_15PolynomialPulse_2__reduce_cython__(((struct __pyx_obj_9qutip_qoc_5pulse_PolynomialPulse *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_15PolynomialPulse_2__reduce_cython__(struct __pyx_obj_5pulse_PolynomialPulse *__pyx_v_self) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_15PolynomialPulse_2__reduce_cython__(struct __pyx_obj_9qutip_qoc_5pulse_PolynomialPulse *__pyx_v_self) {
   PyObject *__pyx_v_state = 0;
   PyObject *__pyx_v__dict = 0;
   int __pyx_v_use_setstate;
@@ -24099,7 +24099,7 @@ static PyObject *__pyx_pf_5pulse_15PolynomialPulse_2__reduce_cython__(struct __p
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("pulse.PolynomialPulse.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.PolynomialPulse.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_state);
@@ -24117,15 +24117,15 @@ static PyObject *__pyx_pf_5pulse_15PolynomialPulse_2__reduce_cython__(struct __p
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_15PolynomialPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_15PolynomialPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5pulse_15PolynomialPulse_5__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_15PolynomialPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5pulse_15PolynomialPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
+static PyMethodDef __pyx_mdef_9qutip_qoc_5pulse_15PolynomialPulse_5__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_15PolynomialPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_15PolynomialPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -24195,11 +24195,11 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
     }
   }
-  __Pyx_AddTraceback("pulse.PolynomialPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.PolynomialPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pulse_15PolynomialPulse_4__setstate_cython__(((struct __pyx_obj_5pulse_PolynomialPulse *)__pyx_v_self), __pyx_v___pyx_state);
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_15PolynomialPulse_4__setstate_cython__(((struct __pyx_obj_9qutip_qoc_5pulse_PolynomialPulse *)__pyx_v_self), __pyx_v___pyx_state);
 
   /* function exit code */
   {
@@ -24212,7 +24212,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_15PolynomialPulse_4__setstate_cython__(struct __pyx_obj_5pulse_PolynomialPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_15PolynomialPulse_4__setstate_cython__(struct __pyx_obj_9qutip_qoc_5pulse_PolynomialPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -24227,7 +24227,7 @@ static PyObject *__pyx_pf_5pulse_15PolynomialPulse_4__setstate_cython__(struct _
  *     __pyx_unpickle_PolynomialPulse__set_state(self, __pyx_state)             # <<<<<<<<<<<<<<
  */
   if (!(likely(PyTuple_CheckExact(__pyx_v___pyx_state))||((__pyx_v___pyx_state) == Py_None) || __Pyx_RaiseUnexpectedTypeError("tuple", __pyx_v___pyx_state))) __PYX_ERR(1, 17, __pyx_L1_error)
-  __pyx_t_1 = __pyx_f_5pulse___pyx_unpickle_PolynomialPulse__set_state(__pyx_v_self, ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 17, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_9qutip_qoc_5pulse___pyx_unpickle_PolynomialPulse__set_state(__pyx_v_self, ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -24243,7 +24243,7 @@ static PyObject *__pyx_pf_5pulse_15PolynomialPulse_4__setstate_cython__(struct _
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("pulse.PolynomialPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.PolynomialPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -24251,7 +24251,7 @@ static PyObject *__pyx_pf_5pulse_15PolynomialPulse_4__setstate_cython__(struct _
   return __pyx_r;
 }
 
-/* "pulse.pyx":254
+/* "qutip_qoc/pulse.pyx":254
  * @cython.wraparound(False)
  * cdef class FourierPulse(Pulse):
  *     def __init__(self, n_sup=1, n_var=4):             # <<<<<<<<<<<<<<
@@ -24260,8 +24260,8 @@ static PyObject *__pyx_pf_5pulse_15PolynomialPulse_4__setstate_cython__(struct _
  */
 
 /* Python wrapper */
-static int __pyx_pw_5pulse_12FourierPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_pw_5pulse_12FourierPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static int __pyx_pw_9qutip_qoc_5pulse_12FourierPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_9qutip_qoc_5pulse_12FourierPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_n_sup = 0;
   PyObject *__pyx_v_n_var = 0;
   CYTHON_UNUSED Py_ssize_t __pyx_nargs;
@@ -24338,11 +24338,11 @@ static int __pyx_pw_5pulse_12FourierPulse_1__init__(PyObject *__pyx_v_self, PyOb
       __Pyx_Arg_XDECREF_VARARGS(values[__pyx_temp]);
     }
   }
-  __Pyx_AddTraceback("pulse.FourierPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.FourierPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pulse_12FourierPulse___init__(((struct __pyx_obj_5pulse_FourierPulse *)__pyx_v_self), __pyx_v_n_sup, __pyx_v_n_var);
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_12FourierPulse___init__(((struct __pyx_obj_9qutip_qoc_5pulse_FourierPulse *)__pyx_v_self), __pyx_v_n_sup, __pyx_v_n_var);
 
   /* function exit code */
   {
@@ -24355,7 +24355,7 @@ static int __pyx_pw_5pulse_12FourierPulse_1__init__(PyObject *__pyx_v_self, PyOb
   return __pyx_r;
 }
 
-static int __pyx_pf_5pulse_12FourierPulse___init__(struct __pyx_obj_5pulse_FourierPulse *__pyx_v_self, PyObject *__pyx_v_n_sup, PyObject *__pyx_v_n_var) {
+static int __pyx_pf_9qutip_qoc_5pulse_12FourierPulse___init__(struct __pyx_obj_9qutip_qoc_5pulse_FourierPulse *__pyx_v_self, PyObject *__pyx_v_n_sup, PyObject *__pyx_v_n_var) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   int __pyx_t_1;
@@ -24369,7 +24369,7 @@ static int __pyx_pf_5pulse_12FourierPulse___init__(struct __pyx_obj_5pulse_Fouri
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 1);
 
-  /* "pulse.pyx":255
+  /* "qutip_qoc/pulse.pyx":255
  * cdef class FourierPulse(Pulse):
  *     def __init__(self, n_sup=1, n_var=4):
  *         if n_var % 2 != 0 or n_var < 4:             # <<<<<<<<<<<<<<
@@ -24392,7 +24392,7 @@ static int __pyx_pf_5pulse_12FourierPulse___init__(struct __pyx_obj_5pulse_Fouri
   __pyx_L4_bool_binop_done:;
   if (unlikely(__pyx_t_1)) {
 
-    /* "pulse.pyx":256
+    /* "qutip_qoc/pulse.pyx":256
  *     def __init__(self, n_sup=1, n_var=4):
  *         if n_var % 2 != 0 or n_var < 4:
  *             raise ValueError("n_var must be an even number >= 4")             # <<<<<<<<<<<<<<
@@ -24405,7 +24405,7 @@ static int __pyx_pf_5pulse_12FourierPulse___init__(struct __pyx_obj_5pulse_Fouri
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __PYX_ERR(0, 256, __pyx_L1_error)
 
-    /* "pulse.pyx":255
+    /* "qutip_qoc/pulse.pyx":255
  * cdef class FourierPulse(Pulse):
  *     def __init__(self, n_sup=1, n_var=4):
  *         if n_var % 2 != 0 or n_var < 4:             # <<<<<<<<<<<<<<
@@ -24414,7 +24414,7 @@ static int __pyx_pf_5pulse_12FourierPulse___init__(struct __pyx_obj_5pulse_Fouri
  */
   }
 
-  /* "pulse.pyx":257
+  /* "qutip_qoc/pulse.pyx":257
  *         if n_var % 2 != 0 or n_var < 4:
  *             raise ValueError("n_var must be an even number >= 4")
  *         super().__init__(n_sup, n_var)             # <<<<<<<<<<<<<<
@@ -24423,9 +24423,9 @@ static int __pyx_pf_5pulse_12FourierPulse___init__(struct __pyx_obj_5pulse_Fouri
  */
   __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 257, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_INCREF((PyObject *)__pyx_ptype_5pulse_FourierPulse);
-  __Pyx_GIVEREF((PyObject *)__pyx_ptype_5pulse_FourierPulse);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 0, ((PyObject *)__pyx_ptype_5pulse_FourierPulse))) __PYX_ERR(0, 257, __pyx_L1_error);
+  __Pyx_INCREF((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_FourierPulse);
+  __Pyx_GIVEREF((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_FourierPulse);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 0, ((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_FourierPulse))) __PYX_ERR(0, 257, __pyx_L1_error);
   __Pyx_INCREF((PyObject *)__pyx_v_self);
   __Pyx_GIVEREF((PyObject *)__pyx_v_self);
   if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 1, ((PyObject *)__pyx_v_self))) __PYX_ERR(0, 257, __pyx_L1_error);
@@ -24459,7 +24459,7 @@ static int __pyx_pf_5pulse_12FourierPulse___init__(struct __pyx_obj_5pulse_Fouri
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "pulse.pyx":254
+  /* "qutip_qoc/pulse.pyx":254
  * @cython.wraparound(False)
  * cdef class FourierPulse(Pulse):
  *     def __init__(self, n_sup=1, n_var=4):             # <<<<<<<<<<<<<<
@@ -24474,14 +24474,14 @@ static int __pyx_pf_5pulse_12FourierPulse___init__(struct __pyx_obj_5pulse_Fouri
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_AddTraceback("pulse.FourierPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.FourierPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "pulse.pyx":259
+/* "qutip_qoc/pulse.pyx":259
  *         super().__init__(n_sup, n_var)
  * 
  *     cdef double pulse(self, double t, double[:] paras):             # <<<<<<<<<<<<<<
@@ -24489,7 +24489,7 @@ static int __pyx_pf_5pulse_12FourierPulse___init__(struct __pyx_obj_5pulse_Fouri
  *         Compute the Fourier series for a given set of parameters at point t.
  */
 
-static double __pyx_f_5pulse_12FourierPulse_pulse(struct __pyx_obj_5pulse_FourierPulse *__pyx_v_self, double __pyx_v_t, __Pyx_memviewslice __pyx_v_paras) {
+static double __pyx_f_9qutip_qoc_5pulse_12FourierPulse_pulse(struct __pyx_obj_9qutip_qoc_5pulse_FourierPulse *__pyx_v_self, double __pyx_v_t, __Pyx_memviewslice __pyx_v_paras) {
   double __pyx_v_period;
   double __pyx_v_result;
   int __pyx_v_n;
@@ -24503,7 +24503,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse(struct __pyx_obj_5pulse_Fourie
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
 
-  /* "pulse.pyx":268
+  /* "qutip_qoc/pulse.pyx":268
  *         ...
  *         """
  *         cdef double period = paras[0]             # <<<<<<<<<<<<<<
@@ -24513,7 +24513,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse(struct __pyx_obj_5pulse_Fourie
   __pyx_t_1 = 0;
   __pyx_v_period = (*((double *) ( /* dim=0 */ (__pyx_v_paras.data + __pyx_t_1 * __pyx_v_paras.strides[0]) )));
 
-  /* "pulse.pyx":269
+  /* "qutip_qoc/pulse.pyx":269
  *         """
  *         cdef double period = paras[0]
  *         cdef double result = paras[1] # A0             # <<<<<<<<<<<<<<
@@ -24523,7 +24523,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse(struct __pyx_obj_5pulse_Fourie
   __pyx_t_1 = 1;
   __pyx_v_result = (*((double *) ( /* dim=0 */ (__pyx_v_paras.data + __pyx_t_1 * __pyx_v_paras.strides[0]) )));
 
-  /* "pulse.pyx":272
+  /* "qutip_qoc/pulse.pyx":272
  *         cdef int n
  * 
  *         for n in range(1, self.n_par // 2):             # <<<<<<<<<<<<<<
@@ -24535,7 +24535,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse(struct __pyx_obj_5pulse_Fourie
   for (__pyx_t_4 = 1; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
     __pyx_v_n = __pyx_t_4;
 
-    /* "pulse.pyx":273
+    /* "qutip_qoc/pulse.pyx":273
  * 
  *         for n in range(1, self.n_par // 2):
  *             result += paras[2*n] * cos(2 * (pi / period) * n * t) + \             # <<<<<<<<<<<<<<
@@ -24548,7 +24548,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse(struct __pyx_obj_5pulse_Fourie
       __PYX_ERR(0, 273, __pyx_L1_error)
     }
 
-    /* "pulse.pyx":274
+    /* "qutip_qoc/pulse.pyx":274
  *         for n in range(1, self.n_par // 2):
  *             result += paras[2*n] * cos(2 * (pi / period) * n * t) + \
  *                   paras[2*n + 1] * sin(2 * (pi / period) * n * t)             # <<<<<<<<<<<<<<
@@ -24561,7 +24561,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse(struct __pyx_obj_5pulse_Fourie
       __PYX_ERR(0, 274, __pyx_L1_error)
     }
 
-    /* "pulse.pyx":273
+    /* "qutip_qoc/pulse.pyx":273
  * 
  *         for n in range(1, self.n_par // 2):
  *             result += paras[2*n] * cos(2 * (pi / period) * n * t) + \             # <<<<<<<<<<<<<<
@@ -24571,7 +24571,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse(struct __pyx_obj_5pulse_Fourie
     __pyx_v_result = (__pyx_v_result + (((*((double *) ( /* dim=0 */ (__pyx_v_paras.data + __pyx_t_1 * __pyx_v_paras.strides[0]) ))) * cos((((2.0 * (((double)M_PI) / __pyx_v_period)) * __pyx_v_n) * __pyx_v_t))) + ((*((double *) ( /* dim=0 */ (__pyx_v_paras.data + __pyx_t_5 * __pyx_v_paras.strides[0]) ))) * sin((((2.0 * (((double)M_PI) / __pyx_v_period)) * __pyx_v_n) * __pyx_v_t)))));
   }
 
-  /* "pulse.pyx":276
+  /* "qutip_qoc/pulse.pyx":276
  *                   paras[2*n + 1] * sin(2 * (pi / period) * n * t)
  * 
  *         return result             # <<<<<<<<<<<<<<
@@ -24581,7 +24581,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse(struct __pyx_obj_5pulse_Fourie
   __pyx_r = __pyx_v_result;
   goto __pyx_L0;
 
-  /* "pulse.pyx":259
+  /* "qutip_qoc/pulse.pyx":259
  *         super().__init__(n_sup, n_var)
  * 
  *     cdef double pulse(self, double t, double[:] paras):             # <<<<<<<<<<<<<<
@@ -24591,13 +24591,13 @@ static double __pyx_f_5pulse_12FourierPulse_pulse(struct __pyx_obj_5pulse_Fourie
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_AddTraceback("pulse.FourierPulse.pulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.FourierPulse.pulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   return __pyx_r;
 }
 
-/* "pulse.pyx":278
+/* "qutip_qoc/pulse.pyx":278
  *         return result
  * 
  *     cdef double pulse_grad(self, double t, double[:] paras,  int idx):             # <<<<<<<<<<<<<<
@@ -24605,7 +24605,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse(struct __pyx_obj_5pulse_Fourie
  *         Compute the gradient of the Fourier series with respect to a specific parameter at a given index.
  */
 
-static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_FourierPulse *__pyx_v_self, double __pyx_v_t, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx) {
+static double __pyx_f_9qutip_qoc_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_9qutip_qoc_5pulse_FourierPulse *__pyx_v_self, double __pyx_v_t, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx) {
   double __pyx_v_period;
   double __pyx_v_result;
   int __pyx_v_n;
@@ -24622,7 +24622,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
 
-  /* "pulse.pyx":282
+  /* "qutip_qoc/pulse.pyx":282
  *         Compute the gradient of the Fourier series with respect to a specific parameter at a given index.
  *         """
  *         cdef double period = paras[0]             # <<<<<<<<<<<<<<
@@ -24632,7 +24632,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
   __pyx_t_1 = 0;
   __pyx_v_period = (*((double *) ( /* dim=0 */ (__pyx_v_paras.data + __pyx_t_1 * __pyx_v_paras.strides[0]) )));
 
-  /* "pulse.pyx":283
+  /* "qutip_qoc/pulse.pyx":283
  *         """
  *         cdef double period = paras[0]
  *         cdef double result = 0.0             # <<<<<<<<<<<<<<
@@ -24641,7 +24641,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
  */
   __pyx_v_result = 0.0;
 
-  /* "pulse.pyx":286
+  /* "qutip_qoc/pulse.pyx":286
  *         cdef int n
  * 
  *         if idx == self.n_par: # wrt time             # <<<<<<<<<<<<<<
@@ -24651,7 +24651,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
   __pyx_t_2 = (__pyx_v_idx == __pyx_v_self->__pyx_base.n_par);
   if (__pyx_t_2) {
 
-    /* "pulse.pyx":287
+    /* "qutip_qoc/pulse.pyx":287
  * 
  *         if idx == self.n_par: # wrt time
  *             for n in range(1, self.n_par // 2):             # <<<<<<<<<<<<<<
@@ -24663,7 +24663,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
     for (__pyx_t_5 = 1; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
       __pyx_v_n = __pyx_t_5;
 
-      /* "pulse.pyx":288
+      /* "qutip_qoc/pulse.pyx":288
  *         if idx == self.n_par: # wrt time
  *             for n in range(1, self.n_par // 2):
  *                 result += (2 * (pi / period) * n ) *\             # <<<<<<<<<<<<<<
@@ -24675,7 +24675,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
         __PYX_ERR(0, 288, __pyx_L1_error)
       }
 
-      /* "pulse.pyx":289
+      /* "qutip_qoc/pulse.pyx":289
  *             for n in range(1, self.n_par // 2):
  *                 result += (2 * (pi / period) * n ) *\
  *                     (paras[2*n] * (-1) * sin(2 * (pi / period) * n * t) +\             # <<<<<<<<<<<<<<
@@ -24688,7 +24688,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
         __PYX_ERR(0, 289, __pyx_L1_error)
       }
 
-      /* "pulse.pyx":290
+      /* "qutip_qoc/pulse.pyx":290
  *                 result += (2 * (pi / period) * n ) *\
  *                     (paras[2*n] * (-1) * sin(2 * (pi / period) * n * t) +\
  *                      paras[2*n + 1] * cos(2 * (pi / period) * n * t))             # <<<<<<<<<<<<<<
@@ -24701,7 +24701,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
         __PYX_ERR(0, 290, __pyx_L1_error)
       }
 
-      /* "pulse.pyx":288
+      /* "qutip_qoc/pulse.pyx":288
  *         if idx == self.n_par: # wrt time
  *             for n in range(1, self.n_par // 2):
  *                 result += (2 * (pi / period) * n ) *\             # <<<<<<<<<<<<<<
@@ -24711,7 +24711,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
       __pyx_v_result = (__pyx_v_result + (((2.0 * (((double)M_PI) / __pyx_v_period)) * __pyx_v_n) * ((((*((double *) ( /* dim=0 */ (__pyx_v_paras.data + __pyx_t_1 * __pyx_v_paras.strides[0]) ))) * -1.0) * sin((((2.0 * (((double)M_PI) / __pyx_v_period)) * __pyx_v_n) * __pyx_v_t))) + ((*((double *) ( /* dim=0 */ (__pyx_v_paras.data + __pyx_t_6 * __pyx_v_paras.strides[0]) ))) * cos((((2.0 * (((double)M_PI) / __pyx_v_period)) * __pyx_v_n) * __pyx_v_t))))));
     }
 
-    /* "pulse.pyx":286
+    /* "qutip_qoc/pulse.pyx":286
  *         cdef int n
  * 
  *         if idx == self.n_par: # wrt time             # <<<<<<<<<<<<<<
@@ -24721,7 +24721,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
     goto __pyx_L3;
   }
 
-  /* "pulse.pyx":292
+  /* "qutip_qoc/pulse.pyx":292
  *                      paras[2*n + 1] * cos(2 * (pi / period) * n * t))
  * 
  *         elif idx == 0: # wrt period             # <<<<<<<<<<<<<<
@@ -24731,7 +24731,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
   __pyx_t_2 = (__pyx_v_idx == 0);
   if (__pyx_t_2) {
 
-    /* "pulse.pyx":293
+    /* "qutip_qoc/pulse.pyx":293
  * 
  *         elif idx == 0: # wrt period
  *             for n in range(1, self.n_par // 2):             # <<<<<<<<<<<<<<
@@ -24743,7 +24743,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
     for (__pyx_t_5 = 1; __pyx_t_5 < __pyx_t_4; __pyx_t_5+=1) {
       __pyx_v_n = __pyx_t_5;
 
-      /* "pulse.pyx":294
+      /* "qutip_qoc/pulse.pyx":294
  *         elif idx == 0: # wrt period
  *             for n in range(1, self.n_par // 2):
  *                 result += (-2 * pi / (period**2) * n * t) *\             # <<<<<<<<<<<<<<
@@ -24757,7 +24757,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
         __PYX_ERR(0, 294, __pyx_L1_error)
       }
 
-      /* "pulse.pyx":295
+      /* "qutip_qoc/pulse.pyx":295
  *             for n in range(1, self.n_par // 2):
  *                 result += (-2 * pi / (period**2) * n * t) *\
  *                     (paras[2*n] * (-1) * sin(2 * (pi / period) * n * t) +\             # <<<<<<<<<<<<<<
@@ -24770,7 +24770,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
         __PYX_ERR(0, 295, __pyx_L1_error)
       }
 
-      /* "pulse.pyx":296
+      /* "qutip_qoc/pulse.pyx":296
  *                 result += (-2 * pi / (period**2) * n * t) *\
  *                     (paras[2*n] * (-1) * sin(2 * (pi / period) * n * t) +\
  *                      paras[2*n + 1] * cos(2 * (pi / period) * n * t))             # <<<<<<<<<<<<<<
@@ -24783,7 +24783,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
         __PYX_ERR(0, 296, __pyx_L1_error)
       }
 
-      /* "pulse.pyx":294
+      /* "qutip_qoc/pulse.pyx":294
  *         elif idx == 0: # wrt period
  *             for n in range(1, self.n_par // 2):
  *                 result += (-2 * pi / (period**2) * n * t) *\             # <<<<<<<<<<<<<<
@@ -24793,7 +24793,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
       __pyx_v_result = (__pyx_v_result + ((((__pyx_t_7 / __pyx_t_8) * __pyx_v_n) * __pyx_v_t) * ((((*((double *) ( /* dim=0 */ (__pyx_v_paras.data + __pyx_t_6 * __pyx_v_paras.strides[0]) ))) * -1.0) * sin((((2.0 * (((double)M_PI) / __pyx_v_period)) * __pyx_v_n) * __pyx_v_t))) + ((*((double *) ( /* dim=0 */ (__pyx_v_paras.data + __pyx_t_1 * __pyx_v_paras.strides[0]) ))) * cos((((2.0 * (((double)M_PI) / __pyx_v_period)) * __pyx_v_n) * __pyx_v_t))))));
     }
 
-    /* "pulse.pyx":292
+    /* "qutip_qoc/pulse.pyx":292
  *                      paras[2*n + 1] * cos(2 * (pi / period) * n * t))
  * 
  *         elif idx == 0: # wrt period             # <<<<<<<<<<<<<<
@@ -24803,7 +24803,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
     goto __pyx_L3;
   }
 
-  /* "pulse.pyx":298
+  /* "qutip_qoc/pulse.pyx":298
  *                      paras[2*n + 1] * cos(2 * (pi / period) * n * t))
  * 
  *         elif idx==1: # wrt A0             # <<<<<<<<<<<<<<
@@ -24813,7 +24813,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
   __pyx_t_2 = (__pyx_v_idx == 1);
   if (__pyx_t_2) {
 
-    /* "pulse.pyx":299
+    /* "qutip_qoc/pulse.pyx":299
  * 
  *         elif idx==1: # wrt A0
  *             result = 1.             # <<<<<<<<<<<<<<
@@ -24822,7 +24822,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
  */
     __pyx_v_result = 1.;
 
-    /* "pulse.pyx":298
+    /* "qutip_qoc/pulse.pyx":298
  *                      paras[2*n + 1] * cos(2 * (pi / period) * n * t))
  * 
  *         elif idx==1: # wrt A0             # <<<<<<<<<<<<<<
@@ -24832,7 +24832,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
     goto __pyx_L3;
   }
 
-  /* "pulse.pyx":301
+  /* "qutip_qoc/pulse.pyx":301
  *             result = 1.
  * 
  *         elif idx % 2 == 0: # wrt A             # <<<<<<<<<<<<<<
@@ -24842,7 +24842,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
   __pyx_t_2 = (__Pyx_mod_long(__pyx_v_idx, 2) == 0);
   if (__pyx_t_2) {
 
-    /* "pulse.pyx":302
+    /* "qutip_qoc/pulse.pyx":302
  * 
  *         elif idx % 2 == 0: # wrt A
  *             n = idx // 2             # <<<<<<<<<<<<<<
@@ -24851,7 +24851,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
  */
     __pyx_v_n = __Pyx_div_long(__pyx_v_idx, 2);
 
-    /* "pulse.pyx":303
+    /* "qutip_qoc/pulse.pyx":303
  *         elif idx % 2 == 0: # wrt A
  *             n = idx // 2
  *             result = cos(2 * (pi / period) * n * t)             # <<<<<<<<<<<<<<
@@ -24864,7 +24864,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
     }
     __pyx_v_result = cos((((2.0 * (((double)M_PI) / __pyx_v_period)) * __pyx_v_n) * __pyx_v_t));
 
-    /* "pulse.pyx":301
+    /* "qutip_qoc/pulse.pyx":301
  *             result = 1.
  * 
  *         elif idx % 2 == 0: # wrt A             # <<<<<<<<<<<<<<
@@ -24874,7 +24874,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
     goto __pyx_L3;
   }
 
-  /* "pulse.pyx":305
+  /* "qutip_qoc/pulse.pyx":305
  *             result = cos(2 * (pi / period) * n * t)
  * 
  *         elif idx % 2 == 1: # wrt B             # <<<<<<<<<<<<<<
@@ -24884,7 +24884,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
   __pyx_t_2 = (__Pyx_mod_long(__pyx_v_idx, 2) == 1);
   if (__pyx_t_2) {
 
-    /* "pulse.pyx":306
+    /* "qutip_qoc/pulse.pyx":306
  * 
  *         elif idx % 2 == 1: # wrt B
  *             n = idx // 2             # <<<<<<<<<<<<<<
@@ -24893,7 +24893,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
  */
     __pyx_v_n = __Pyx_div_long(__pyx_v_idx, 2);
 
-    /* "pulse.pyx":307
+    /* "qutip_qoc/pulse.pyx":307
  *         elif idx % 2 == 1: # wrt B
  *             n = idx // 2
  *             result = sin(2 * (pi / period) * n * t)             # <<<<<<<<<<<<<<
@@ -24906,7 +24906,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
     }
     __pyx_v_result = sin((((2.0 * (((double)M_PI) / __pyx_v_period)) * __pyx_v_n) * __pyx_v_t));
 
-    /* "pulse.pyx":305
+    /* "qutip_qoc/pulse.pyx":305
  *             result = cos(2 * (pi / period) * n * t)
  * 
  *         elif idx % 2 == 1: # wrt B             # <<<<<<<<<<<<<<
@@ -24916,7 +24916,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
   }
   __pyx_L3:;
 
-  /* "pulse.pyx":309
+  /* "qutip_qoc/pulse.pyx":309
  *             result = sin(2 * (pi / period) * n * t)
  * 
  *         return result             # <<<<<<<<<<<<<<
@@ -24926,7 +24926,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
   __pyx_r = __pyx_v_result;
   goto __pyx_L0;
 
-  /* "pulse.pyx":278
+  /* "qutip_qoc/pulse.pyx":278
  *         return result
  * 
  *     cdef double pulse_grad(self, double t, double[:] paras,  int idx):             # <<<<<<<<<<<<<<
@@ -24936,7 +24936,7 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_AddTraceback("pulse.FourierPulse.pulse_grad", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.FourierPulse.pulse_grad", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   return __pyx_r;
@@ -24949,15 +24949,15 @@ static double __pyx_f_5pulse_12FourierPulse_pulse_grad(struct __pyx_obj_5pulse_F
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_12FourierPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_12FourierPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5pulse_12FourierPulse_3__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_12FourierPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5pulse_12FourierPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
+static PyMethodDef __pyx_mdef_9qutip_qoc_5pulse_12FourierPulse_3__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_12FourierPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_12FourierPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -24982,14 +24982,14 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   if (unlikely(__pyx_nargs > 0)) {
     __Pyx_RaiseArgtupleInvalid("__reduce_cython__", 1, 0, 0, __pyx_nargs); return NULL;}
   if (unlikely(__pyx_kwds) && __Pyx_NumKwargs_FASTCALL(__pyx_kwds) && unlikely(!__Pyx_CheckKeywordStrings(__pyx_kwds, "__reduce_cython__", 0))) return NULL;
-  __pyx_r = __pyx_pf_5pulse_12FourierPulse_2__reduce_cython__(((struct __pyx_obj_5pulse_FourierPulse *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_12FourierPulse_2__reduce_cython__(((struct __pyx_obj_9qutip_qoc_5pulse_FourierPulse *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_12FourierPulse_2__reduce_cython__(struct __pyx_obj_5pulse_FourierPulse *__pyx_v_self) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_12FourierPulse_2__reduce_cython__(struct __pyx_obj_9qutip_qoc_5pulse_FourierPulse *__pyx_v_self) {
   PyObject *__pyx_v_state = 0;
   PyObject *__pyx_v__dict = 0;
   int __pyx_v_use_setstate;
@@ -25204,7 +25204,7 @@ static PyObject *__pyx_pf_5pulse_12FourierPulse_2__reduce_cython__(struct __pyx_
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("pulse.FourierPulse.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.FourierPulse.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_state);
@@ -25222,15 +25222,15 @@ static PyObject *__pyx_pf_5pulse_12FourierPulse_2__reduce_cython__(struct __pyx_
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_12FourierPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_12FourierPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5pulse_12FourierPulse_5__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_12FourierPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5pulse_12FourierPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
+static PyMethodDef __pyx_mdef_9qutip_qoc_5pulse_12FourierPulse_5__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_12FourierPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_12FourierPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -25300,11 +25300,11 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
     }
   }
-  __Pyx_AddTraceback("pulse.FourierPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.FourierPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pulse_12FourierPulse_4__setstate_cython__(((struct __pyx_obj_5pulse_FourierPulse *)__pyx_v_self), __pyx_v___pyx_state);
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_12FourierPulse_4__setstate_cython__(((struct __pyx_obj_9qutip_qoc_5pulse_FourierPulse *)__pyx_v_self), __pyx_v___pyx_state);
 
   /* function exit code */
   {
@@ -25317,7 +25317,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_12FourierPulse_4__setstate_cython__(struct __pyx_obj_5pulse_FourierPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_12FourierPulse_4__setstate_cython__(struct __pyx_obj_9qutip_qoc_5pulse_FourierPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -25332,7 +25332,7 @@ static PyObject *__pyx_pf_5pulse_12FourierPulse_4__setstate_cython__(struct __py
  *     __pyx_unpickle_FourierPulse__set_state(self, __pyx_state)             # <<<<<<<<<<<<<<
  */
   if (!(likely(PyTuple_CheckExact(__pyx_v___pyx_state))||((__pyx_v___pyx_state) == Py_None) || __Pyx_RaiseUnexpectedTypeError("tuple", __pyx_v___pyx_state))) __PYX_ERR(1, 17, __pyx_L1_error)
-  __pyx_t_1 = __pyx_f_5pulse___pyx_unpickle_FourierPulse__set_state(__pyx_v_self, ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 17, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_9qutip_qoc_5pulse___pyx_unpickle_FourierPulse__set_state(__pyx_v_self, ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -25348,7 +25348,7 @@ static PyObject *__pyx_pf_5pulse_12FourierPulse_4__setstate_cython__(struct __py
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("pulse.FourierPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.FourierPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -25356,7 +25356,7 @@ static PyObject *__pyx_pf_5pulse_12FourierPulse_4__setstate_cython__(struct __py
   return __pyx_r;
 }
 
-/* "pulse.pyx":319
+/* "qutip_qoc/pulse.pyx":319
  *     cdef int max_idx
  * 
  *     def __init__(self, interval, n_sup=1, n_var=3):             # <<<<<<<<<<<<<<
@@ -25365,8 +25365,8 @@ static PyObject *__pyx_pf_5pulse_12FourierPulse_4__setstate_cython__(struct __py
  */
 
 /* Python wrapper */
-static int __pyx_pw_5pulse_8PWCPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_pw_5pulse_8PWCPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static int __pyx_pw_9qutip_qoc_5pulse_8PWCPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_9qutip_qoc_5pulse_8PWCPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_interval = 0;
   PyObject *__pyx_v_n_sup = 0;
   PyObject *__pyx_v_n_var = 0;
@@ -25456,11 +25456,11 @@ static int __pyx_pw_5pulse_8PWCPulse_1__init__(PyObject *__pyx_v_self, PyObject 
       __Pyx_Arg_XDECREF_VARARGS(values[__pyx_temp]);
     }
   }
-  __Pyx_AddTraceback("pulse.PWCPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.PWCPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pulse_8PWCPulse___init__(((struct __pyx_obj_5pulse_PWCPulse *)__pyx_v_self), __pyx_v_interval, __pyx_v_n_sup, __pyx_v_n_var);
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_8PWCPulse___init__(((struct __pyx_obj_9qutip_qoc_5pulse_PWCPulse *)__pyx_v_self), __pyx_v_interval, __pyx_v_n_sup, __pyx_v_n_var);
 
   /* function exit code */
   {
@@ -25473,7 +25473,7 @@ static int __pyx_pw_5pulse_8PWCPulse_1__init__(PyObject *__pyx_v_self, PyObject 
   return __pyx_r;
 }
 
-static int __pyx_pf_5pulse_8PWCPulse___init__(struct __pyx_obj_5pulse_PWCPulse *__pyx_v_self, PyObject *__pyx_v_interval, PyObject *__pyx_v_n_sup, PyObject *__pyx_v_n_var) {
+static int __pyx_pf_9qutip_qoc_5pulse_8PWCPulse___init__(struct __pyx_obj_9qutip_qoc_5pulse_PWCPulse *__pyx_v_self, PyObject *__pyx_v_interval, PyObject *__pyx_v_n_sup, PyObject *__pyx_v_n_var) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -25487,7 +25487,7 @@ static int __pyx_pf_5pulse_8PWCPulse___init__(struct __pyx_obj_5pulse_PWCPulse *
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 1);
 
-  /* "pulse.pyx":320
+  /* "qutip_qoc/pulse.pyx":320
  * 
  *     def __init__(self, interval, n_sup=1, n_var=3):
  *         super().__init__(n_sup, n_var)             # <<<<<<<<<<<<<<
@@ -25496,9 +25496,9 @@ static int __pyx_pf_5pulse_8PWCPulse___init__(struct __pyx_obj_5pulse_PWCPulse *
  */
   __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 320, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_INCREF((PyObject *)__pyx_ptype_5pulse_PWCPulse);
-  __Pyx_GIVEREF((PyObject *)__pyx_ptype_5pulse_PWCPulse);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 0, ((PyObject *)__pyx_ptype_5pulse_PWCPulse))) __PYX_ERR(0, 320, __pyx_L1_error);
+  __Pyx_INCREF((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_PWCPulse);
+  __Pyx_GIVEREF((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_PWCPulse);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 0, ((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_PWCPulse))) __PYX_ERR(0, 320, __pyx_L1_error);
   __Pyx_INCREF((PyObject *)__pyx_v_self);
   __Pyx_GIVEREF((PyObject *)__pyx_v_self);
   if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 1, ((PyObject *)__pyx_v_self))) __PYX_ERR(0, 320, __pyx_L1_error);
@@ -25532,7 +25532,7 @@ static int __pyx_pf_5pulse_8PWCPulse___init__(struct __pyx_obj_5pulse_PWCPulse *
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "pulse.pyx":321
+  /* "qutip_qoc/pulse.pyx":321
  *     def __init__(self, interval, n_sup=1, n_var=3):
  *         super().__init__(n_sup, n_var)
  *         self.interval = interval             # <<<<<<<<<<<<<<
@@ -25545,7 +25545,7 @@ static int __pyx_pf_5pulse_8PWCPulse___init__(struct __pyx_obj_5pulse_PWCPulse *
   __pyx_t_5.memview = NULL;
   __pyx_t_5.data = NULL;
 
-  /* "pulse.pyx":322
+  /* "qutip_qoc/pulse.pyx":322
  *         super().__init__(n_sup, n_var)
  *         self.interval = interval
  *         self.step = (interval[-1] - interval[0]) / n_var             # <<<<<<<<<<<<<<
@@ -25567,7 +25567,7 @@ static int __pyx_pf_5pulse_8PWCPulse___init__(struct __pyx_obj_5pulse_PWCPulse *
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_self->step = __pyx_t_6;
 
-  /* "pulse.pyx":323
+  /* "qutip_qoc/pulse.pyx":323
  *         self.interval = interval
  *         self.step = (interval[-1] - interval[0]) / n_var
  *         self.max_idx = n_var - 1             # <<<<<<<<<<<<<<
@@ -25580,7 +25580,7 @@ static int __pyx_pf_5pulse_8PWCPulse___init__(struct __pyx_obj_5pulse_PWCPulse *
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_self->max_idx = __pyx_t_4;
 
-  /* "pulse.pyx":319
+  /* "qutip_qoc/pulse.pyx":319
  *     cdef int max_idx
  * 
  *     def __init__(self, interval, n_sup=1, n_var=3):             # <<<<<<<<<<<<<<
@@ -25596,14 +25596,14 @@ static int __pyx_pf_5pulse_8PWCPulse___init__(struct __pyx_obj_5pulse_PWCPulse *
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __PYX_XCLEAR_MEMVIEW(&__pyx_t_5, 1);
-  __Pyx_AddTraceback("pulse.PWCPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.PWCPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "pulse.pyx":325
+/* "qutip_qoc/pulse.pyx":325
  *         self.max_idx = n_var - 1
  * 
  *     cdef double pulse(self, double time, double[:] paras):             # <<<<<<<<<<<<<<
@@ -25611,7 +25611,7 @@ static int __pyx_pf_5pulse_8PWCPulse___init__(struct __pyx_obj_5pulse_PWCPulse *
  *         Generate a pulse with piecewise constant shape.
  */
 
-static double __pyx_f_5pulse_8PWCPulse_pulse(struct __pyx_obj_5pulse_PWCPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras) {
+static double __pyx_f_9qutip_qoc_5pulse_8PWCPulse_pulse(struct __pyx_obj_9qutip_qoc_5pulse_PWCPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras) {
   int __pyx_v_i;
   int __pyx_v_idx;
   double __pyx_r;
@@ -25625,7 +25625,7 @@ static double __pyx_f_5pulse_8PWCPulse_pulse(struct __pyx_obj_5pulse_PWCPulse *_
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
 
-  /* "pulse.pyx":330
+  /* "qutip_qoc/pulse.pyx":330
  *         Assumes that interval is equidistantly spaced.
  *         """
  *         cdef int i = int((time - self.interval[0]) / self.step)             # <<<<<<<<<<<<<<
@@ -25641,7 +25641,7 @@ static double __pyx_f_5pulse_8PWCPulse_pulse(struct __pyx_obj_5pulse_PWCPulse *_
   }
   __pyx_v_i = ((int)(__pyx_t_2 / __pyx_v_self->step));
 
-  /* "pulse.pyx":331
+  /* "qutip_qoc/pulse.pyx":331
  *         """
  *         cdef int i = int((time - self.interval[0]) / self.step)
  *         cdef int idx = min(i, self.max_idx)             # <<<<<<<<<<<<<<
@@ -25658,7 +25658,7 @@ static double __pyx_f_5pulse_8PWCPulse_pulse(struct __pyx_obj_5pulse_PWCPulse *_
   }
   __pyx_v_idx = __pyx_t_5;
 
-  /* "pulse.pyx":332
+  /* "qutip_qoc/pulse.pyx":332
  *         cdef int i = int((time - self.interval[0]) / self.step)
  *         cdef int idx = min(i, self.max_idx)
  *         return paras[idx]             # <<<<<<<<<<<<<<
@@ -25669,7 +25669,7 @@ static double __pyx_f_5pulse_8PWCPulse_pulse(struct __pyx_obj_5pulse_PWCPulse *_
   __pyx_r = (*((double *) ( /* dim=0 */ (__pyx_v_paras.data + __pyx_t_1 * __pyx_v_paras.strides[0]) )));
   goto __pyx_L0;
 
-  /* "pulse.pyx":325
+  /* "qutip_qoc/pulse.pyx":325
  *         self.max_idx = n_var - 1
  * 
  *     cdef double pulse(self, double time, double[:] paras):             # <<<<<<<<<<<<<<
@@ -25679,13 +25679,13 @@ static double __pyx_f_5pulse_8PWCPulse_pulse(struct __pyx_obj_5pulse_PWCPulse *_
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_AddTraceback("pulse.PWCPulse.pulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.PWCPulse.pulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   return __pyx_r;
 }
 
-/* "pulse.pyx":334
+/* "qutip_qoc/pulse.pyx":334
  *         return paras[idx]
  * 
  *     cdef double pulse_grad(self, double time, double[:] paras, int idx):             # <<<<<<<<<<<<<<
@@ -25693,7 +25693,7 @@ static double __pyx_f_5pulse_8PWCPulse_pulse(struct __pyx_obj_5pulse_PWCPulse *_
  *         Generate the derivative of pulse with piecewise constant shape
  */
 
-static double __pyx_f_5pulse_8PWCPulse_pulse_grad(struct __pyx_obj_5pulse_PWCPulse *__pyx_v_self, double __pyx_v_time, CYTHON_UNUSED __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx) {
+static double __pyx_f_9qutip_qoc_5pulse_8PWCPulse_pulse_grad(struct __pyx_obj_9qutip_qoc_5pulse_PWCPulse *__pyx_v_self, double __pyx_v_time, CYTHON_UNUSED __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx) {
   int __pyx_v_i;
   int __pyx_v_index;
   double __pyx_r;
@@ -25707,7 +25707,7 @@ static double __pyx_f_5pulse_8PWCPulse_pulse_grad(struct __pyx_obj_5pulse_PWCPul
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
 
-  /* "pulse.pyx":339
+  /* "qutip_qoc/pulse.pyx":339
  *         for the idx-th parameter.
  *         """
  *         cdef int i = int((time - self.interval[0]) / self.step)             # <<<<<<<<<<<<<<
@@ -25723,7 +25723,7 @@ static double __pyx_f_5pulse_8PWCPulse_pulse_grad(struct __pyx_obj_5pulse_PWCPul
   }
   __pyx_v_i = ((int)(__pyx_t_2 / __pyx_v_self->step));
 
-  /* "pulse.pyx":340
+  /* "qutip_qoc/pulse.pyx":340
  *         """
  *         cdef int i = int((time - self.interval[0]) / self.step)
  *         cdef int index = min(i, self.max_idx)             # <<<<<<<<<<<<<<
@@ -25740,7 +25740,7 @@ static double __pyx_f_5pulse_8PWCPulse_pulse_grad(struct __pyx_obj_5pulse_PWCPul
   }
   __pyx_v_index = __pyx_t_5;
 
-  /* "pulse.pyx":341
+  /* "qutip_qoc/pulse.pyx":341
  *         cdef int i = int((time - self.interval[0]) / self.step)
  *         cdef int index = min(i, self.max_idx)
  *         if idx == self.n_par: # wrt time             # <<<<<<<<<<<<<<
@@ -25750,7 +25750,7 @@ static double __pyx_f_5pulse_8PWCPulse_pulse_grad(struct __pyx_obj_5pulse_PWCPul
   __pyx_t_6 = (__pyx_v_idx == __pyx_v_self->__pyx_base.n_par);
   if (__pyx_t_6) {
 
-    /* "pulse.pyx":342
+    /* "qutip_qoc/pulse.pyx":342
  *         cdef int index = min(i, self.max_idx)
  *         if idx == self.n_par: # wrt time
  *             return 0.             # <<<<<<<<<<<<<<
@@ -25760,7 +25760,7 @@ static double __pyx_f_5pulse_8PWCPulse_pulse_grad(struct __pyx_obj_5pulse_PWCPul
     __pyx_r = 0.;
     goto __pyx_L0;
 
-    /* "pulse.pyx":341
+    /* "qutip_qoc/pulse.pyx":341
  *         cdef int i = int((time - self.interval[0]) / self.step)
  *         cdef int index = min(i, self.max_idx)
  *         if idx == self.n_par: # wrt time             # <<<<<<<<<<<<<<
@@ -25769,7 +25769,7 @@ static double __pyx_f_5pulse_8PWCPulse_pulse_grad(struct __pyx_obj_5pulse_PWCPul
  */
   }
 
-  /* "pulse.pyx":343
+  /* "qutip_qoc/pulse.pyx":343
  *         if idx == self.n_par: # wrt time
  *             return 0.
  *         return 0. if index != idx else 1.             # <<<<<<<<<<<<<<
@@ -25785,7 +25785,7 @@ static double __pyx_f_5pulse_8PWCPulse_pulse_grad(struct __pyx_obj_5pulse_PWCPul
   __pyx_r = __pyx_t_2;
   goto __pyx_L0;
 
-  /* "pulse.pyx":334
+  /* "qutip_qoc/pulse.pyx":334
  *         return paras[idx]
  * 
  *     cdef double pulse_grad(self, double time, double[:] paras, int idx):             # <<<<<<<<<<<<<<
@@ -25795,7 +25795,7 @@ static double __pyx_f_5pulse_8PWCPulse_pulse_grad(struct __pyx_obj_5pulse_PWCPul
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_AddTraceback("pulse.PWCPulse.pulse_grad", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.PWCPulse.pulse_grad", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   return __pyx_r;
@@ -25808,15 +25808,15 @@ static double __pyx_f_5pulse_8PWCPulse_pulse_grad(struct __pyx_obj_5pulse_PWCPul
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_8PWCPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_8PWCPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5pulse_8PWCPulse_3__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_8PWCPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5pulse_8PWCPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
+static PyMethodDef __pyx_mdef_9qutip_qoc_5pulse_8PWCPulse_3__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_8PWCPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_8PWCPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -25841,14 +25841,14 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   if (unlikely(__pyx_nargs > 0)) {
     __Pyx_RaiseArgtupleInvalid("__reduce_cython__", 1, 0, 0, __pyx_nargs); return NULL;}
   if (unlikely(__pyx_kwds) && __Pyx_NumKwargs_FASTCALL(__pyx_kwds) && unlikely(!__Pyx_CheckKeywordStrings(__pyx_kwds, "__reduce_cython__", 0))) return NULL;
-  __pyx_r = __pyx_pf_5pulse_8PWCPulse_2__reduce_cython__(((struct __pyx_obj_5pulse_PWCPulse *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_8PWCPulse_2__reduce_cython__(((struct __pyx_obj_9qutip_qoc_5pulse_PWCPulse *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_8PWCPulse_2__reduce_cython__(struct __pyx_obj_5pulse_PWCPulse *__pyx_v_self) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_8PWCPulse_2__reduce_cython__(struct __pyx_obj_9qutip_qoc_5pulse_PWCPulse *__pyx_v_self) {
   PyObject *__pyx_v_state = 0;
   PyObject *__pyx_v__dict = 0;
   int __pyx_v_use_setstate;
@@ -26085,7 +26085,7 @@ static PyObject *__pyx_pf_5pulse_8PWCPulse_2__reduce_cython__(struct __pyx_obj_5
   __Pyx_XDECREF(__pyx_t_5);
   __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_7);
-  __Pyx_AddTraceback("pulse.PWCPulse.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.PWCPulse.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_state);
@@ -26103,15 +26103,15 @@ static PyObject *__pyx_pf_5pulse_8PWCPulse_2__reduce_cython__(struct __pyx_obj_5
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_8PWCPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_8PWCPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5pulse_8PWCPulse_5__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_8PWCPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5pulse_8PWCPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
+static PyMethodDef __pyx_mdef_9qutip_qoc_5pulse_8PWCPulse_5__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_8PWCPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_8PWCPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -26181,11 +26181,11 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
     }
   }
-  __Pyx_AddTraceback("pulse.PWCPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.PWCPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pulse_8PWCPulse_4__setstate_cython__(((struct __pyx_obj_5pulse_PWCPulse *)__pyx_v_self), __pyx_v___pyx_state);
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_8PWCPulse_4__setstate_cython__(((struct __pyx_obj_9qutip_qoc_5pulse_PWCPulse *)__pyx_v_self), __pyx_v___pyx_state);
 
   /* function exit code */
   {
@@ -26198,7 +26198,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_8PWCPulse_4__setstate_cython__(struct __pyx_obj_5pulse_PWCPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_8PWCPulse_4__setstate_cython__(struct __pyx_obj_9qutip_qoc_5pulse_PWCPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -26213,7 +26213,7 @@ static PyObject *__pyx_pf_5pulse_8PWCPulse_4__setstate_cython__(struct __pyx_obj
  *     __pyx_unpickle_PWCPulse__set_state(self, __pyx_state)             # <<<<<<<<<<<<<<
  */
   if (!(likely(PyTuple_CheckExact(__pyx_v___pyx_state))||((__pyx_v___pyx_state) == Py_None) || __Pyx_RaiseUnexpectedTypeError("tuple", __pyx_v___pyx_state))) __PYX_ERR(1, 17, __pyx_L1_error)
-  __pyx_t_1 = __pyx_f_5pulse___pyx_unpickle_PWCPulse__set_state(__pyx_v_self, ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 17, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_9qutip_qoc_5pulse___pyx_unpickle_PWCPulse__set_state(__pyx_v_self, ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -26229,7 +26229,7 @@ static PyObject *__pyx_pf_5pulse_8PWCPulse_4__setstate_cython__(struct __pyx_obj
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("pulse.PWCPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.PWCPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -26237,7 +26237,7 @@ static PyObject *__pyx_pf_5pulse_8PWCPulse_4__setstate_cython__(struct __pyx_obj
   return __pyx_r;
 }
 
-/* "pulse.pyx":353
+/* "qutip_qoc/pulse.pyx":353
  *     cdef int max_idx
  * 
  *     def __init__(self, interval, n_sup=1, n_var=3):             # <<<<<<<<<<<<<<
@@ -26246,8 +26246,8 @@ static PyObject *__pyx_pf_5pulse_8PWCPulse_4__setstate_cython__(struct __pyx_obj
  */
 
 /* Python wrapper */
-static int __pyx_pw_5pulse_8PWLPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static int __pyx_pw_5pulse_8PWLPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static int __pyx_pw_9qutip_qoc_5pulse_8PWLPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static int __pyx_pw_9qutip_qoc_5pulse_8PWLPulse_1__init__(PyObject *__pyx_v_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_interval = 0;
   CYTHON_UNUSED PyObject *__pyx_v_n_sup = 0;
   PyObject *__pyx_v_n_var = 0;
@@ -26337,11 +26337,11 @@ static int __pyx_pw_5pulse_8PWLPulse_1__init__(PyObject *__pyx_v_self, PyObject 
       __Pyx_Arg_XDECREF_VARARGS(values[__pyx_temp]);
     }
   }
-  __Pyx_AddTraceback("pulse.PWLPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.PWLPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return -1;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pulse_8PWLPulse___init__(((struct __pyx_obj_5pulse_PWLPulse *)__pyx_v_self), __pyx_v_interval, __pyx_v_n_sup, __pyx_v_n_var);
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_8PWLPulse___init__(((struct __pyx_obj_9qutip_qoc_5pulse_PWLPulse *)__pyx_v_self), __pyx_v_interval, __pyx_v_n_sup, __pyx_v_n_var);
 
   /* function exit code */
   {
@@ -26354,7 +26354,7 @@ static int __pyx_pw_5pulse_8PWLPulse_1__init__(PyObject *__pyx_v_self, PyObject 
   return __pyx_r;
 }
 
-static int __pyx_pf_5pulse_8PWLPulse___init__(struct __pyx_obj_5pulse_PWLPulse *__pyx_v_self, PyObject *__pyx_v_interval, CYTHON_UNUSED PyObject *__pyx_v_n_sup, PyObject *__pyx_v_n_var) {
+static int __pyx_pf_9qutip_qoc_5pulse_8PWLPulse___init__(struct __pyx_obj_9qutip_qoc_5pulse_PWLPulse *__pyx_v_self, PyObject *__pyx_v_interval, CYTHON_UNUSED PyObject *__pyx_v_n_sup, PyObject *__pyx_v_n_var) {
   int __pyx_r;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -26368,7 +26368,7 @@ static int __pyx_pf_5pulse_8PWLPulse___init__(struct __pyx_obj_5pulse_PWLPulse *
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__init__", 1);
 
-  /* "pulse.pyx":354
+  /* "qutip_qoc/pulse.pyx":354
  * 
  *     def __init__(self, interval, n_sup=1, n_var=3):
  *         super().__init__(n_sup=1, n_var=n_var)             # <<<<<<<<<<<<<<
@@ -26377,9 +26377,9 @@ static int __pyx_pf_5pulse_8PWLPulse___init__(struct __pyx_obj_5pulse_PWLPulse *
  */
   __pyx_t_1 = PyTuple_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 354, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_INCREF((PyObject *)__pyx_ptype_5pulse_PWLPulse);
-  __Pyx_GIVEREF((PyObject *)__pyx_ptype_5pulse_PWLPulse);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_1, 0, ((PyObject *)__pyx_ptype_5pulse_PWLPulse))) __PYX_ERR(0, 354, __pyx_L1_error);
+  __Pyx_INCREF((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_PWLPulse);
+  __Pyx_GIVEREF((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_PWLPulse);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_1, 0, ((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_PWLPulse))) __PYX_ERR(0, 354, __pyx_L1_error);
   __Pyx_INCREF((PyObject *)__pyx_v_self);
   __Pyx_GIVEREF((PyObject *)__pyx_v_self);
   if (__Pyx_PyTuple_SET_ITEM(__pyx_t_1, 1, ((PyObject *)__pyx_v_self))) __PYX_ERR(0, 354, __pyx_L1_error);
@@ -26399,7 +26399,7 @@ static int __pyx_pf_5pulse_8PWLPulse___init__(struct __pyx_obj_5pulse_PWLPulse *
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "pulse.pyx":355
+  /* "qutip_qoc/pulse.pyx":355
  *     def __init__(self, interval, n_sup=1, n_var=3):
  *         super().__init__(n_sup=1, n_var=n_var)
  *         self.interval = interval             # <<<<<<<<<<<<<<
@@ -26412,7 +26412,7 @@ static int __pyx_pf_5pulse_8PWLPulse___init__(struct __pyx_obj_5pulse_PWLPulse *
   __pyx_t_4.memview = NULL;
   __pyx_t_4.data = NULL;
 
-  /* "pulse.pyx":356
+  /* "qutip_qoc/pulse.pyx":356
  *         super().__init__(n_sup=1, n_var=n_var)
  *         self.interval = interval
  *         self.step = (interval[-1] - interval[0]) / (n_var / 2)             # <<<<<<<<<<<<<<
@@ -26437,7 +26437,7 @@ static int __pyx_pf_5pulse_8PWLPulse___init__(struct __pyx_obj_5pulse_PWLPulse *
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_self->step = __pyx_t_5;
 
-  /* "pulse.pyx":357
+  /* "qutip_qoc/pulse.pyx":357
  *         self.interval = interval
  *         self.step = (interval[-1] - interval[0]) / (n_var / 2)
  *         self.max_idx = (n_var / 2) - 1             # <<<<<<<<<<<<<<
@@ -26453,7 +26453,7 @@ static int __pyx_pf_5pulse_8PWLPulse___init__(struct __pyx_obj_5pulse_PWLPulse *
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_self->max_idx = __pyx_t_6;
 
-  /* "pulse.pyx":353
+  /* "qutip_qoc/pulse.pyx":353
  *     cdef int max_idx
  * 
  *     def __init__(self, interval, n_sup=1, n_var=3):             # <<<<<<<<<<<<<<
@@ -26469,14 +26469,14 @@ static int __pyx_pf_5pulse_8PWLPulse___init__(struct __pyx_obj_5pulse_PWLPulse *
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __PYX_XCLEAR_MEMVIEW(&__pyx_t_4, 1);
-  __Pyx_AddTraceback("pulse.PWLPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.PWLPulse.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = -1;
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-/* "pulse.pyx":359
+/* "qutip_qoc/pulse.pyx":359
  *         self.max_idx = (n_var / 2) - 1
  * 
  *     cdef double pulse(self, double time, double[:] paras):             # <<<<<<<<<<<<<<
@@ -26484,7 +26484,7 @@ static int __pyx_pf_5pulse_8PWLPulse___init__(struct __pyx_obj_5pulse_PWLPulse *
  *         Generate a pulse with piecewise linear shape.
  */
 
-static double __pyx_f_5pulse_8PWLPulse_pulse(struct __pyx_obj_5pulse_PWLPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras) {
+static double __pyx_f_9qutip_qoc_5pulse_8PWLPulse_pulse(struct __pyx_obj_9qutip_qoc_5pulse_PWLPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras) {
   int __pyx_v_i;
   int __pyx_v_idx;
   double __pyx_v_slope;
@@ -26500,7 +26500,7 @@ static double __pyx_f_5pulse_8PWLPulse_pulse(struct __pyx_obj_5pulse_PWLPulse *_
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
 
-  /* "pulse.pyx":368
+  /* "qutip_qoc/pulse.pyx":368
  *         """
  *         # calculate segment index on interval
  *         cdef int i = int((time - self.interval[0]) / self.step)             # <<<<<<<<<<<<<<
@@ -26516,7 +26516,7 @@ static double __pyx_f_5pulse_8PWLPulse_pulse(struct __pyx_obj_5pulse_PWLPulse *_
   }
   __pyx_v_i = ((int)(__pyx_t_2 / __pyx_v_self->step));
 
-  /* "pulse.pyx":369
+  /* "qutip_qoc/pulse.pyx":369
  *         # calculate segment index on interval
  *         cdef int i = int((time - self.interval[0]) / self.step)
  *         cdef int idx = min(i, self.max_idx)             # <<<<<<<<<<<<<<
@@ -26533,7 +26533,7 @@ static double __pyx_f_5pulse_8PWLPulse_pulse(struct __pyx_obj_5pulse_PWLPulse *_
   }
   __pyx_v_idx = __pyx_t_5;
 
-  /* "pulse.pyx":372
+  /* "qutip_qoc/pulse.pyx":372
  * 
  *         # get slope and intercept
  *         cdef double slope = paras[idx * 2]             # <<<<<<<<<<<<<<
@@ -26543,7 +26543,7 @@ static double __pyx_f_5pulse_8PWLPulse_pulse(struct __pyx_obj_5pulse_PWLPulse *_
   __pyx_t_1 = (__pyx_v_idx * 2);
   __pyx_v_slope = (*((double *) ( /* dim=0 */ (__pyx_v_paras.data + __pyx_t_1 * __pyx_v_paras.strides[0]) )));
 
-  /* "pulse.pyx":373
+  /* "qutip_qoc/pulse.pyx":373
  *         # get slope and intercept
  *         cdef double slope = paras[idx * 2]
  *         cdef double inter = paras[idx * 2 + 1]             # <<<<<<<<<<<<<<
@@ -26553,7 +26553,7 @@ static double __pyx_f_5pulse_8PWLPulse_pulse(struct __pyx_obj_5pulse_PWLPulse *_
   __pyx_t_1 = ((__pyx_v_idx * 2) + 1);
   __pyx_v_inter = (*((double *) ( /* dim=0 */ (__pyx_v_paras.data + __pyx_t_1 * __pyx_v_paras.strides[0]) )));
 
-  /* "pulse.pyx":375
+  /* "qutip_qoc/pulse.pyx":375
  *         cdef double inter = paras[idx * 2 + 1]
  * 
  *         return slope * (time - (idx * self.step)) + inter             # <<<<<<<<<<<<<<
@@ -26563,7 +26563,7 @@ static double __pyx_f_5pulse_8PWLPulse_pulse(struct __pyx_obj_5pulse_PWLPulse *_
   __pyx_r = ((__pyx_v_slope * (__pyx_v_time - (__pyx_v_idx * __pyx_v_self->step))) + __pyx_v_inter);
   goto __pyx_L0;
 
-  /* "pulse.pyx":359
+  /* "qutip_qoc/pulse.pyx":359
  *         self.max_idx = (n_var / 2) - 1
  * 
  *     cdef double pulse(self, double time, double[:] paras):             # <<<<<<<<<<<<<<
@@ -26573,13 +26573,13 @@ static double __pyx_f_5pulse_8PWLPulse_pulse(struct __pyx_obj_5pulse_PWLPulse *_
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_AddTraceback("pulse.PWLPulse.pulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.PWLPulse.pulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   return __pyx_r;
 }
 
-/* "pulse.pyx":377
+/* "qutip_qoc/pulse.pyx":377
  *         return slope * (time - (idx * self.step)) + inter
  * 
  *     cdef double pulse_grad(self, double time, double[:] paras, int idx):             # <<<<<<<<<<<<<<
@@ -26587,7 +26587,7 @@ static double __pyx_f_5pulse_8PWLPulse_pulse(struct __pyx_obj_5pulse_PWLPulse *_
  *         Generate the derivative of pulse with piecewise linear shape
  */
 
-static double __pyx_f_5pulse_8PWLPulse_pulse_grad(struct __pyx_obj_5pulse_PWLPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx) {
+static double __pyx_f_9qutip_qoc_5pulse_8PWLPulse_pulse_grad(struct __pyx_obj_9qutip_qoc_5pulse_PWLPulse *__pyx_v_self, double __pyx_v_time, __Pyx_memviewslice __pyx_v_paras, int __pyx_v_idx) {
   int __pyx_v_i;
   int __pyx_v_index;
   double __pyx_r;
@@ -26601,7 +26601,7 @@ static double __pyx_f_5pulse_8PWLPulse_pulse_grad(struct __pyx_obj_5pulse_PWLPul
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
 
-  /* "pulse.pyx":382
+  /* "qutip_qoc/pulse.pyx":382
  *         for the idx-th parameter.
  *         """
  *         cdef int i = int((time - self.interval[0]) / self.step)             # <<<<<<<<<<<<<<
@@ -26617,7 +26617,7 @@ static double __pyx_f_5pulse_8PWLPulse_pulse_grad(struct __pyx_obj_5pulse_PWLPul
   }
   __pyx_v_i = ((int)(__pyx_t_2 / __pyx_v_self->step));
 
-  /* "pulse.pyx":383
+  /* "qutip_qoc/pulse.pyx":383
  *         """
  *         cdef int i = int((time - self.interval[0]) / self.step)
  *         cdef int index = min(i, self.max_idx)             # <<<<<<<<<<<<<<
@@ -26634,7 +26634,7 @@ static double __pyx_f_5pulse_8PWLPulse_pulse_grad(struct __pyx_obj_5pulse_PWLPul
   }
   __pyx_v_index = __pyx_t_5;
 
-  /* "pulse.pyx":384
+  /* "qutip_qoc/pulse.pyx":384
  *         cdef int i = int((time - self.interval[0]) / self.step)
  *         cdef int index = min(i, self.max_idx)
  *         if idx == self.n_par: # wrt time             # <<<<<<<<<<<<<<
@@ -26644,7 +26644,7 @@ static double __pyx_f_5pulse_8PWLPulse_pulse_grad(struct __pyx_obj_5pulse_PWLPul
   __pyx_t_6 = (__pyx_v_idx == __pyx_v_self->__pyx_base.n_par);
   if (__pyx_t_6) {
 
-    /* "pulse.pyx":385
+    /* "qutip_qoc/pulse.pyx":385
  *         cdef int index = min(i, self.max_idx)
  *         if idx == self.n_par: # wrt time
  *              return paras[index * 2]             # <<<<<<<<<<<<<<
@@ -26655,7 +26655,7 @@ static double __pyx_f_5pulse_8PWLPulse_pulse_grad(struct __pyx_obj_5pulse_PWLPul
     __pyx_r = (*((double *) ( /* dim=0 */ (__pyx_v_paras.data + __pyx_t_1 * __pyx_v_paras.strides[0]) )));
     goto __pyx_L0;
 
-    /* "pulse.pyx":384
+    /* "qutip_qoc/pulse.pyx":384
  *         cdef int i = int((time - self.interval[0]) / self.step)
  *         cdef int index = min(i, self.max_idx)
  *         if idx == self.n_par: # wrt time             # <<<<<<<<<<<<<<
@@ -26664,7 +26664,7 @@ static double __pyx_f_5pulse_8PWLPulse_pulse_grad(struct __pyx_obj_5pulse_PWLPul
  */
   }
 
-  /* "pulse.pyx":386
+  /* "qutip_qoc/pulse.pyx":386
  *         if idx == self.n_par: # wrt time
  *              return paras[index * 2]
  *         elif idx == index * 2: # wrt slope             # <<<<<<<<<<<<<<
@@ -26674,7 +26674,7 @@ static double __pyx_f_5pulse_8PWLPulse_pulse_grad(struct __pyx_obj_5pulse_PWLPul
   __pyx_t_6 = (__pyx_v_idx == (__pyx_v_index * 2));
   if (__pyx_t_6) {
 
-    /* "pulse.pyx":387
+    /* "qutip_qoc/pulse.pyx":387
  *              return paras[index * 2]
  *         elif idx == index * 2: # wrt slope
  *             return time - (index * self.step)             # <<<<<<<<<<<<<<
@@ -26684,7 +26684,7 @@ static double __pyx_f_5pulse_8PWLPulse_pulse_grad(struct __pyx_obj_5pulse_PWLPul
     __pyx_r = (__pyx_v_time - (__pyx_v_index * __pyx_v_self->step));
     goto __pyx_L0;
 
-    /* "pulse.pyx":386
+    /* "qutip_qoc/pulse.pyx":386
  *         if idx == self.n_par: # wrt time
  *              return paras[index * 2]
  *         elif idx == index * 2: # wrt slope             # <<<<<<<<<<<<<<
@@ -26693,7 +26693,7 @@ static double __pyx_f_5pulse_8PWLPulse_pulse_grad(struct __pyx_obj_5pulse_PWLPul
  */
   }
 
-  /* "pulse.pyx":388
+  /* "qutip_qoc/pulse.pyx":388
  *         elif idx == index * 2: # wrt slope
  *             return time - (index * self.step)
  *         elif idx == index * 2 + 1: # wrt intercept             # <<<<<<<<<<<<<<
@@ -26703,7 +26703,7 @@ static double __pyx_f_5pulse_8PWLPulse_pulse_grad(struct __pyx_obj_5pulse_PWLPul
   __pyx_t_6 = (__pyx_v_idx == ((__pyx_v_index * 2) + 1));
   if (__pyx_t_6) {
 
-    /* "pulse.pyx":389
+    /* "qutip_qoc/pulse.pyx":389
  *             return time - (index * self.step)
  *         elif idx == index * 2 + 1: # wrt intercept
  *             return 1.             # <<<<<<<<<<<<<<
@@ -26713,7 +26713,7 @@ static double __pyx_f_5pulse_8PWLPulse_pulse_grad(struct __pyx_obj_5pulse_PWLPul
     __pyx_r = 1.;
     goto __pyx_L0;
 
-    /* "pulse.pyx":388
+    /* "qutip_qoc/pulse.pyx":388
  *         elif idx == index * 2: # wrt slope
  *             return time - (index * self.step)
  *         elif idx == index * 2 + 1: # wrt intercept             # <<<<<<<<<<<<<<
@@ -26722,7 +26722,7 @@ static double __pyx_f_5pulse_8PWLPulse_pulse_grad(struct __pyx_obj_5pulse_PWLPul
  */
   }
 
-  /* "pulse.pyx":391
+  /* "qutip_qoc/pulse.pyx":391
  *             return 1.
  *         else: # wrt parameters on different segment
  *             return 0.             # <<<<<<<<<<<<<<
@@ -26732,7 +26732,7 @@ static double __pyx_f_5pulse_8PWLPulse_pulse_grad(struct __pyx_obj_5pulse_PWLPul
     goto __pyx_L0;
   }
 
-  /* "pulse.pyx":377
+  /* "qutip_qoc/pulse.pyx":377
  *         return slope * (time - (idx * self.step)) + inter
  * 
  *     cdef double pulse_grad(self, double time, double[:] paras, int idx):             # <<<<<<<<<<<<<<
@@ -26742,7 +26742,7 @@ static double __pyx_f_5pulse_8PWLPulse_pulse_grad(struct __pyx_obj_5pulse_PWLPul
 
   /* function exit code */
   __pyx_L1_error:;
-  __Pyx_AddTraceback("pulse.PWLPulse.pulse_grad", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.PWLPulse.pulse_grad", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   return __pyx_r;
@@ -26755,15 +26755,15 @@ static double __pyx_f_5pulse_8PWLPulse_pulse_grad(struct __pyx_obj_5pulse_PWLPul
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_8PWLPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_8PWLPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5pulse_8PWLPulse_3__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_8PWLPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5pulse_8PWLPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
+static PyMethodDef __pyx_mdef_9qutip_qoc_5pulse_8PWLPulse_3__reduce_cython__ = {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_8PWLPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_8PWLPulse_3__reduce_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -26788,14 +26788,14 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   if (unlikely(__pyx_nargs > 0)) {
     __Pyx_RaiseArgtupleInvalid("__reduce_cython__", 1, 0, 0, __pyx_nargs); return NULL;}
   if (unlikely(__pyx_kwds) && __Pyx_NumKwargs_FASTCALL(__pyx_kwds) && unlikely(!__Pyx_CheckKeywordStrings(__pyx_kwds, "__reduce_cython__", 0))) return NULL;
-  __pyx_r = __pyx_pf_5pulse_8PWLPulse_2__reduce_cython__(((struct __pyx_obj_5pulse_PWLPulse *)__pyx_v_self));
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_8PWLPulse_2__reduce_cython__(((struct __pyx_obj_9qutip_qoc_5pulse_PWLPulse *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_8PWLPulse_2__reduce_cython__(struct __pyx_obj_5pulse_PWLPulse *__pyx_v_self) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_8PWLPulse_2__reduce_cython__(struct __pyx_obj_9qutip_qoc_5pulse_PWLPulse *__pyx_v_self) {
   PyObject *__pyx_v_state = 0;
   PyObject *__pyx_v__dict = 0;
   int __pyx_v_use_setstate;
@@ -27032,7 +27032,7 @@ static PyObject *__pyx_pf_5pulse_8PWLPulse_2__reduce_cython__(struct __pyx_obj_5
   __Pyx_XDECREF(__pyx_t_5);
   __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_7);
-  __Pyx_AddTraceback("pulse.PWLPulse.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.PWLPulse.__reduce_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_state);
@@ -27050,15 +27050,15 @@ static PyObject *__pyx_pf_5pulse_8PWLPulse_2__reduce_cython__(struct __pyx_obj_5
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_8PWLPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_8PWLPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5pulse_8PWLPulse_5__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_8PWLPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5pulse_8PWLPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
+static PyMethodDef __pyx_mdef_9qutip_qoc_5pulse_8PWLPulse_5__setstate_cython__ = {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_8PWLPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_8PWLPulse_5__setstate_cython__(PyObject *__pyx_v_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -27128,11 +27128,11 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
     }
   }
-  __Pyx_AddTraceback("pulse.PWLPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.PWLPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pulse_8PWLPulse_4__setstate_cython__(((struct __pyx_obj_5pulse_PWLPulse *)__pyx_v_self), __pyx_v___pyx_state);
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_8PWLPulse_4__setstate_cython__(((struct __pyx_obj_9qutip_qoc_5pulse_PWLPulse *)__pyx_v_self), __pyx_v___pyx_state);
 
   /* function exit code */
   {
@@ -27145,7 +27145,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_8PWLPulse_4__setstate_cython__(struct __pyx_obj_5pulse_PWLPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_8PWLPulse_4__setstate_cython__(struct __pyx_obj_9qutip_qoc_5pulse_PWLPulse *__pyx_v_self, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -27160,7 +27160,7 @@ static PyObject *__pyx_pf_5pulse_8PWLPulse_4__setstate_cython__(struct __pyx_obj
  *     __pyx_unpickle_PWLPulse__set_state(self, __pyx_state)             # <<<<<<<<<<<<<<
  */
   if (!(likely(PyTuple_CheckExact(__pyx_v___pyx_state))||((__pyx_v___pyx_state) == Py_None) || __Pyx_RaiseUnexpectedTypeError("tuple", __pyx_v___pyx_state))) __PYX_ERR(1, 17, __pyx_L1_error)
-  __pyx_t_1 = __pyx_f_5pulse___pyx_unpickle_PWLPulse__set_state(__pyx_v_self, ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 17, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_9qutip_qoc_5pulse___pyx_unpickle_PWLPulse__set_state(__pyx_v_self, ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -27176,7 +27176,7 @@ static PyObject *__pyx_pf_5pulse_8PWLPulse_4__setstate_cython__(struct __pyx_obj
   goto __pyx_L0;
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_AddTraceback("pulse.PWLPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.PWLPulse.__setstate_cython__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -27191,15 +27191,15 @@ static PyObject *__pyx_pf_5pulse_8PWLPulse_4__setstate_cython__(struct __pyx_obj
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_1__pyx_unpickle_Pulse(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_1__pyx_unpickle_Pulse(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5pulse_1__pyx_unpickle_Pulse = {"__pyx_unpickle_Pulse", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_1__pyx_unpickle_Pulse, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5pulse_1__pyx_unpickle_Pulse(PyObject *__pyx_self, 
+static PyMethodDef __pyx_mdef_9qutip_qoc_5pulse_1__pyx_unpickle_Pulse = {"__pyx_unpickle_Pulse", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_1__pyx_unpickle_Pulse, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_1__pyx_unpickle_Pulse(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -27299,11 +27299,11 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
     }
   }
-  __Pyx_AddTraceback("pulse.__pyx_unpickle_Pulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.__pyx_unpickle_Pulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pulse___pyx_unpickle_Pulse(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse___pyx_unpickle_Pulse(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
 
   /* function exit code */
   {
@@ -27316,7 +27316,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse___pyx_unpickle_Pulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse___pyx_unpickle_Pulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_v___pyx_PickleError = 0;
   PyObject *__pyx_v___pyx_result = 0;
   PyObject *__pyx_r = NULL;
@@ -27398,7 +27398,7 @@ static PyObject *__pyx_pf_5pulse___pyx_unpickle_Pulse(CYTHON_UNUSED PyObject *__
  *     if __pyx_state is not None:
  *         __pyx_unpickle_Pulse__set_state(<Pulse> __pyx_result, __pyx_state)
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_5pulse_Pulse), __pyx_n_s_new); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 7, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_Pulse), __pyx_n_s_new); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 7, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = NULL;
   __pyx_t_5 = 0;
@@ -27443,7 +27443,7 @@ static PyObject *__pyx_pf_5pulse___pyx_unpickle_Pulse(CYTHON_UNUSED PyObject *__
  * cdef __pyx_unpickle_Pulse__set_state(Pulse __pyx_result, tuple __pyx_state):
  */
     if (!(likely(PyTuple_CheckExact(__pyx_v___pyx_state))||((__pyx_v___pyx_state) == Py_None) || __Pyx_RaiseUnexpectedTypeError("tuple", __pyx_v___pyx_state))) __PYX_ERR(1, 9, __pyx_L1_error)
-    __pyx_t_1 = __pyx_f_5pulse___pyx_unpickle_Pulse__set_state(((struct __pyx_obj_5pulse_Pulse *)__pyx_v___pyx_result), ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 9, __pyx_L1_error)
+    __pyx_t_1 = __pyx_f_9qutip_qoc_5pulse___pyx_unpickle_Pulse__set_state(((struct __pyx_obj_9qutip_qoc_5pulse_Pulse *)__pyx_v___pyx_result), ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 9, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -27479,7 +27479,7 @@ static PyObject *__pyx_pf_5pulse___pyx_unpickle_Pulse(CYTHON_UNUSED PyObject *__
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("pulse.__pyx_unpickle_Pulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.__pyx_unpickle_Pulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v___pyx_PickleError);
@@ -27497,7 +27497,7 @@ static PyObject *__pyx_pf_5pulse___pyx_unpickle_Pulse(CYTHON_UNUSED PyObject *__
  *     if len(__pyx_state) > 3 and hasattr(__pyx_result, '__dict__'):
  */
 
-static PyObject *__pyx_f_5pulse___pyx_unpickle_Pulse__set_state(struct __pyx_obj_5pulse_Pulse *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_f_9qutip_qoc_5pulse___pyx_unpickle_Pulse__set_state(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -27635,7 +27635,7 @@ static PyObject *__pyx_f_5pulse___pyx_unpickle_Pulse__set_state(struct __pyx_obj
   __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_8);
-  __Pyx_AddTraceback("pulse.__pyx_unpickle_Pulse__set_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.__pyx_unpickle_Pulse__set_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -27650,15 +27650,15 @@ static PyObject *__pyx_f_5pulse___pyx_unpickle_Pulse__set_state(struct __pyx_obj
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_3__pyx_unpickle_GaussianPulse(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_3__pyx_unpickle_GaussianPulse(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5pulse_3__pyx_unpickle_GaussianPulse = {"__pyx_unpickle_GaussianPulse", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_3__pyx_unpickle_GaussianPulse, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5pulse_3__pyx_unpickle_GaussianPulse(PyObject *__pyx_self, 
+static PyMethodDef __pyx_mdef_9qutip_qoc_5pulse_3__pyx_unpickle_GaussianPulse = {"__pyx_unpickle_GaussianPulse", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_3__pyx_unpickle_GaussianPulse, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_3__pyx_unpickle_GaussianPulse(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -27758,11 +27758,11 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
     }
   }
-  __Pyx_AddTraceback("pulse.__pyx_unpickle_GaussianPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.__pyx_unpickle_GaussianPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pulse_2__pyx_unpickle_GaussianPulse(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_2__pyx_unpickle_GaussianPulse(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
 
   /* function exit code */
   {
@@ -27775,7 +27775,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_2__pyx_unpickle_GaussianPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_2__pyx_unpickle_GaussianPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_v___pyx_PickleError = 0;
   PyObject *__pyx_v___pyx_result = 0;
   PyObject *__pyx_r = NULL;
@@ -27857,7 +27857,7 @@ static PyObject *__pyx_pf_5pulse_2__pyx_unpickle_GaussianPulse(CYTHON_UNUSED PyO
  *     if __pyx_state is not None:
  *         __pyx_unpickle_GaussianPulse__set_state(<GaussianPulse> __pyx_result, __pyx_state)
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_5pulse_GaussianPulse), __pyx_n_s_new); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 7, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_GaussianPulse), __pyx_n_s_new); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 7, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = NULL;
   __pyx_t_5 = 0;
@@ -27902,7 +27902,7 @@ static PyObject *__pyx_pf_5pulse_2__pyx_unpickle_GaussianPulse(CYTHON_UNUSED PyO
  * cdef __pyx_unpickle_GaussianPulse__set_state(GaussianPulse __pyx_result, tuple __pyx_state):
  */
     if (!(likely(PyTuple_CheckExact(__pyx_v___pyx_state))||((__pyx_v___pyx_state) == Py_None) || __Pyx_RaiseUnexpectedTypeError("tuple", __pyx_v___pyx_state))) __PYX_ERR(1, 9, __pyx_L1_error)
-    __pyx_t_1 = __pyx_f_5pulse___pyx_unpickle_GaussianPulse__set_state(((struct __pyx_obj_5pulse_GaussianPulse *)__pyx_v___pyx_result), ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 9, __pyx_L1_error)
+    __pyx_t_1 = __pyx_f_9qutip_qoc_5pulse___pyx_unpickle_GaussianPulse__set_state(((struct __pyx_obj_9qutip_qoc_5pulse_GaussianPulse *)__pyx_v___pyx_result), ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 9, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -27938,7 +27938,7 @@ static PyObject *__pyx_pf_5pulse_2__pyx_unpickle_GaussianPulse(CYTHON_UNUSED PyO
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("pulse.__pyx_unpickle_GaussianPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.__pyx_unpickle_GaussianPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v___pyx_PickleError);
@@ -27956,7 +27956,7 @@ static PyObject *__pyx_pf_5pulse_2__pyx_unpickle_GaussianPulse(CYTHON_UNUSED PyO
  *     if len(__pyx_state) > 3 and hasattr(__pyx_result, '__dict__'):
  */
 
-static PyObject *__pyx_f_5pulse___pyx_unpickle_GaussianPulse__set_state(struct __pyx_obj_5pulse_GaussianPulse *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_f_9qutip_qoc_5pulse___pyx_unpickle_GaussianPulse__set_state(struct __pyx_obj_9qutip_qoc_5pulse_GaussianPulse *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -28094,7 +28094,7 @@ static PyObject *__pyx_f_5pulse___pyx_unpickle_GaussianPulse__set_state(struct _
   __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_8);
-  __Pyx_AddTraceback("pulse.__pyx_unpickle_GaussianPulse__set_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.__pyx_unpickle_GaussianPulse__set_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -28109,15 +28109,15 @@ static PyObject *__pyx_f_5pulse___pyx_unpickle_GaussianPulse__set_state(struct _
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_5__pyx_unpickle_SinPulse(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_5__pyx_unpickle_SinPulse(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5pulse_5__pyx_unpickle_SinPulse = {"__pyx_unpickle_SinPulse", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_5__pyx_unpickle_SinPulse, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5pulse_5__pyx_unpickle_SinPulse(PyObject *__pyx_self, 
+static PyMethodDef __pyx_mdef_9qutip_qoc_5pulse_5__pyx_unpickle_SinPulse = {"__pyx_unpickle_SinPulse", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_5__pyx_unpickle_SinPulse, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_5__pyx_unpickle_SinPulse(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -28217,11 +28217,11 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
     }
   }
-  __Pyx_AddTraceback("pulse.__pyx_unpickle_SinPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.__pyx_unpickle_SinPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pulse_4__pyx_unpickle_SinPulse(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_4__pyx_unpickle_SinPulse(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
 
   /* function exit code */
   {
@@ -28234,7 +28234,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_4__pyx_unpickle_SinPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_4__pyx_unpickle_SinPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_v___pyx_PickleError = 0;
   PyObject *__pyx_v___pyx_result = 0;
   PyObject *__pyx_r = NULL;
@@ -28316,7 +28316,7 @@ static PyObject *__pyx_pf_5pulse_4__pyx_unpickle_SinPulse(CYTHON_UNUSED PyObject
  *     if __pyx_state is not None:
  *         __pyx_unpickle_SinPulse__set_state(<SinPulse> __pyx_result, __pyx_state)
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_5pulse_SinPulse), __pyx_n_s_new); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 7, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_SinPulse), __pyx_n_s_new); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 7, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = NULL;
   __pyx_t_5 = 0;
@@ -28361,7 +28361,7 @@ static PyObject *__pyx_pf_5pulse_4__pyx_unpickle_SinPulse(CYTHON_UNUSED PyObject
  * cdef __pyx_unpickle_SinPulse__set_state(SinPulse __pyx_result, tuple __pyx_state):
  */
     if (!(likely(PyTuple_CheckExact(__pyx_v___pyx_state))||((__pyx_v___pyx_state) == Py_None) || __Pyx_RaiseUnexpectedTypeError("tuple", __pyx_v___pyx_state))) __PYX_ERR(1, 9, __pyx_L1_error)
-    __pyx_t_1 = __pyx_f_5pulse___pyx_unpickle_SinPulse__set_state(((struct __pyx_obj_5pulse_SinPulse *)__pyx_v___pyx_result), ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 9, __pyx_L1_error)
+    __pyx_t_1 = __pyx_f_9qutip_qoc_5pulse___pyx_unpickle_SinPulse__set_state(((struct __pyx_obj_9qutip_qoc_5pulse_SinPulse *)__pyx_v___pyx_result), ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 9, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -28397,7 +28397,7 @@ static PyObject *__pyx_pf_5pulse_4__pyx_unpickle_SinPulse(CYTHON_UNUSED PyObject
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("pulse.__pyx_unpickle_SinPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.__pyx_unpickle_SinPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v___pyx_PickleError);
@@ -28415,7 +28415,7 @@ static PyObject *__pyx_pf_5pulse_4__pyx_unpickle_SinPulse(CYTHON_UNUSED PyObject
  *     if len(__pyx_state) > 3 and hasattr(__pyx_result, '__dict__'):
  */
 
-static PyObject *__pyx_f_5pulse___pyx_unpickle_SinPulse__set_state(struct __pyx_obj_5pulse_SinPulse *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_f_9qutip_qoc_5pulse___pyx_unpickle_SinPulse__set_state(struct __pyx_obj_9qutip_qoc_5pulse_SinPulse *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -28553,7 +28553,7 @@ static PyObject *__pyx_f_5pulse___pyx_unpickle_SinPulse__set_state(struct __pyx_
   __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_8);
-  __Pyx_AddTraceback("pulse.__pyx_unpickle_SinPulse__set_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.__pyx_unpickle_SinPulse__set_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -28568,15 +28568,15 @@ static PyObject *__pyx_f_5pulse___pyx_unpickle_SinPulse__set_state(struct __pyx_
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_7__pyx_unpickle_CosPulse(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_7__pyx_unpickle_CosPulse(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5pulse_7__pyx_unpickle_CosPulse = {"__pyx_unpickle_CosPulse", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_7__pyx_unpickle_CosPulse, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5pulse_7__pyx_unpickle_CosPulse(PyObject *__pyx_self, 
+static PyMethodDef __pyx_mdef_9qutip_qoc_5pulse_7__pyx_unpickle_CosPulse = {"__pyx_unpickle_CosPulse", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_7__pyx_unpickle_CosPulse, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_7__pyx_unpickle_CosPulse(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -28676,11 +28676,11 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
     }
   }
-  __Pyx_AddTraceback("pulse.__pyx_unpickle_CosPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.__pyx_unpickle_CosPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pulse_6__pyx_unpickle_CosPulse(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_6__pyx_unpickle_CosPulse(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
 
   /* function exit code */
   {
@@ -28693,7 +28693,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_6__pyx_unpickle_CosPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_6__pyx_unpickle_CosPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_v___pyx_PickleError = 0;
   PyObject *__pyx_v___pyx_result = 0;
   PyObject *__pyx_r = NULL;
@@ -28775,7 +28775,7 @@ static PyObject *__pyx_pf_5pulse_6__pyx_unpickle_CosPulse(CYTHON_UNUSED PyObject
  *     if __pyx_state is not None:
  *         __pyx_unpickle_CosPulse__set_state(<CosPulse> __pyx_result, __pyx_state)
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_5pulse_CosPulse), __pyx_n_s_new); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 7, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_CosPulse), __pyx_n_s_new); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 7, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = NULL;
   __pyx_t_5 = 0;
@@ -28820,7 +28820,7 @@ static PyObject *__pyx_pf_5pulse_6__pyx_unpickle_CosPulse(CYTHON_UNUSED PyObject
  * cdef __pyx_unpickle_CosPulse__set_state(CosPulse __pyx_result, tuple __pyx_state):
  */
     if (!(likely(PyTuple_CheckExact(__pyx_v___pyx_state))||((__pyx_v___pyx_state) == Py_None) || __Pyx_RaiseUnexpectedTypeError("tuple", __pyx_v___pyx_state))) __PYX_ERR(1, 9, __pyx_L1_error)
-    __pyx_t_1 = __pyx_f_5pulse___pyx_unpickle_CosPulse__set_state(((struct __pyx_obj_5pulse_CosPulse *)__pyx_v___pyx_result), ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 9, __pyx_L1_error)
+    __pyx_t_1 = __pyx_f_9qutip_qoc_5pulse___pyx_unpickle_CosPulse__set_state(((struct __pyx_obj_9qutip_qoc_5pulse_CosPulse *)__pyx_v___pyx_result), ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 9, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -28856,7 +28856,7 @@ static PyObject *__pyx_pf_5pulse_6__pyx_unpickle_CosPulse(CYTHON_UNUSED PyObject
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("pulse.__pyx_unpickle_CosPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.__pyx_unpickle_CosPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v___pyx_PickleError);
@@ -28874,7 +28874,7 @@ static PyObject *__pyx_pf_5pulse_6__pyx_unpickle_CosPulse(CYTHON_UNUSED PyObject
  *     if len(__pyx_state) > 3 and hasattr(__pyx_result, '__dict__'):
  */
 
-static PyObject *__pyx_f_5pulse___pyx_unpickle_CosPulse__set_state(struct __pyx_obj_5pulse_CosPulse *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_f_9qutip_qoc_5pulse___pyx_unpickle_CosPulse__set_state(struct __pyx_obj_9qutip_qoc_5pulse_CosPulse *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -29012,7 +29012,7 @@ static PyObject *__pyx_f_5pulse___pyx_unpickle_CosPulse__set_state(struct __pyx_
   __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_8);
-  __Pyx_AddTraceback("pulse.__pyx_unpickle_CosPulse__set_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.__pyx_unpickle_CosPulse__set_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -29027,15 +29027,15 @@ static PyObject *__pyx_f_5pulse___pyx_unpickle_CosPulse__set_state(struct __pyx_
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_9__pyx_unpickle_CosCosPulse(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_9__pyx_unpickle_CosCosPulse(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5pulse_9__pyx_unpickle_CosCosPulse = {"__pyx_unpickle_CosCosPulse", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_9__pyx_unpickle_CosCosPulse, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5pulse_9__pyx_unpickle_CosCosPulse(PyObject *__pyx_self, 
+static PyMethodDef __pyx_mdef_9qutip_qoc_5pulse_9__pyx_unpickle_CosCosPulse = {"__pyx_unpickle_CosCosPulse", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_9__pyx_unpickle_CosCosPulse, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_9__pyx_unpickle_CosCosPulse(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -29135,11 +29135,11 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
     }
   }
-  __Pyx_AddTraceback("pulse.__pyx_unpickle_CosCosPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.__pyx_unpickle_CosCosPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pulse_8__pyx_unpickle_CosCosPulse(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_8__pyx_unpickle_CosCosPulse(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
 
   /* function exit code */
   {
@@ -29152,7 +29152,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_8__pyx_unpickle_CosCosPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_8__pyx_unpickle_CosCosPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_v___pyx_PickleError = 0;
   PyObject *__pyx_v___pyx_result = 0;
   PyObject *__pyx_r = NULL;
@@ -29234,7 +29234,7 @@ static PyObject *__pyx_pf_5pulse_8__pyx_unpickle_CosCosPulse(CYTHON_UNUSED PyObj
  *     if __pyx_state is not None:
  *         __pyx_unpickle_CosCosPulse__set_state(<CosCosPulse> __pyx_result, __pyx_state)
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_5pulse_CosCosPulse), __pyx_n_s_new); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 7, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_CosCosPulse), __pyx_n_s_new); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 7, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = NULL;
   __pyx_t_5 = 0;
@@ -29279,7 +29279,7 @@ static PyObject *__pyx_pf_5pulse_8__pyx_unpickle_CosCosPulse(CYTHON_UNUSED PyObj
  * cdef __pyx_unpickle_CosCosPulse__set_state(CosCosPulse __pyx_result, tuple __pyx_state):
  */
     if (!(likely(PyTuple_CheckExact(__pyx_v___pyx_state))||((__pyx_v___pyx_state) == Py_None) || __Pyx_RaiseUnexpectedTypeError("tuple", __pyx_v___pyx_state))) __PYX_ERR(1, 9, __pyx_L1_error)
-    __pyx_t_1 = __pyx_f_5pulse___pyx_unpickle_CosCosPulse__set_state(((struct __pyx_obj_5pulse_CosCosPulse *)__pyx_v___pyx_result), ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 9, __pyx_L1_error)
+    __pyx_t_1 = __pyx_f_9qutip_qoc_5pulse___pyx_unpickle_CosCosPulse__set_state(((struct __pyx_obj_9qutip_qoc_5pulse_CosCosPulse *)__pyx_v___pyx_result), ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 9, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -29315,7 +29315,7 @@ static PyObject *__pyx_pf_5pulse_8__pyx_unpickle_CosCosPulse(CYTHON_UNUSED PyObj
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("pulse.__pyx_unpickle_CosCosPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.__pyx_unpickle_CosCosPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v___pyx_PickleError);
@@ -29333,7 +29333,7 @@ static PyObject *__pyx_pf_5pulse_8__pyx_unpickle_CosCosPulse(CYTHON_UNUSED PyObj
  *     if len(__pyx_state) > 3 and hasattr(__pyx_result, '__dict__'):
  */
 
-static PyObject *__pyx_f_5pulse___pyx_unpickle_CosCosPulse__set_state(struct __pyx_obj_5pulse_CosCosPulse *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_f_9qutip_qoc_5pulse___pyx_unpickle_CosCosPulse__set_state(struct __pyx_obj_9qutip_qoc_5pulse_CosCosPulse *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -29471,7 +29471,7 @@ static PyObject *__pyx_f_5pulse___pyx_unpickle_CosCosPulse__set_state(struct __p
   __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_8);
-  __Pyx_AddTraceback("pulse.__pyx_unpickle_CosCosPulse__set_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.__pyx_unpickle_CosCosPulse__set_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -29486,15 +29486,15 @@ static PyObject *__pyx_f_5pulse___pyx_unpickle_CosCosPulse__set_state(struct __p
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_11__pyx_unpickle_PolynomialPulse(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_11__pyx_unpickle_PolynomialPulse(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5pulse_11__pyx_unpickle_PolynomialPulse = {"__pyx_unpickle_PolynomialPulse", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_11__pyx_unpickle_PolynomialPulse, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5pulse_11__pyx_unpickle_PolynomialPulse(PyObject *__pyx_self, 
+static PyMethodDef __pyx_mdef_9qutip_qoc_5pulse_11__pyx_unpickle_PolynomialPulse = {"__pyx_unpickle_PolynomialPulse", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_11__pyx_unpickle_PolynomialPulse, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_11__pyx_unpickle_PolynomialPulse(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -29594,11 +29594,11 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
     }
   }
-  __Pyx_AddTraceback("pulse.__pyx_unpickle_PolynomialPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.__pyx_unpickle_PolynomialPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pulse_10__pyx_unpickle_PolynomialPulse(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_10__pyx_unpickle_PolynomialPulse(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
 
   /* function exit code */
   {
@@ -29611,7 +29611,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_10__pyx_unpickle_PolynomialPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_10__pyx_unpickle_PolynomialPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_v___pyx_PickleError = 0;
   PyObject *__pyx_v___pyx_result = 0;
   PyObject *__pyx_r = NULL;
@@ -29693,7 +29693,7 @@ static PyObject *__pyx_pf_5pulse_10__pyx_unpickle_PolynomialPulse(CYTHON_UNUSED 
  *     if __pyx_state is not None:
  *         __pyx_unpickle_PolynomialPulse__set_state(<PolynomialPulse> __pyx_result, __pyx_state)
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_5pulse_PolynomialPulse), __pyx_n_s_new); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 7, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_PolynomialPulse), __pyx_n_s_new); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 7, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = NULL;
   __pyx_t_5 = 0;
@@ -29738,7 +29738,7 @@ static PyObject *__pyx_pf_5pulse_10__pyx_unpickle_PolynomialPulse(CYTHON_UNUSED 
  * cdef __pyx_unpickle_PolynomialPulse__set_state(PolynomialPulse __pyx_result, tuple __pyx_state):
  */
     if (!(likely(PyTuple_CheckExact(__pyx_v___pyx_state))||((__pyx_v___pyx_state) == Py_None) || __Pyx_RaiseUnexpectedTypeError("tuple", __pyx_v___pyx_state))) __PYX_ERR(1, 9, __pyx_L1_error)
-    __pyx_t_1 = __pyx_f_5pulse___pyx_unpickle_PolynomialPulse__set_state(((struct __pyx_obj_5pulse_PolynomialPulse *)__pyx_v___pyx_result), ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 9, __pyx_L1_error)
+    __pyx_t_1 = __pyx_f_9qutip_qoc_5pulse___pyx_unpickle_PolynomialPulse__set_state(((struct __pyx_obj_9qutip_qoc_5pulse_PolynomialPulse *)__pyx_v___pyx_result), ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 9, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -29774,7 +29774,7 @@ static PyObject *__pyx_pf_5pulse_10__pyx_unpickle_PolynomialPulse(CYTHON_UNUSED 
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("pulse.__pyx_unpickle_PolynomialPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.__pyx_unpickle_PolynomialPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v___pyx_PickleError);
@@ -29792,7 +29792,7 @@ static PyObject *__pyx_pf_5pulse_10__pyx_unpickle_PolynomialPulse(CYTHON_UNUSED 
  *     if len(__pyx_state) > 3 and hasattr(__pyx_result, '__dict__'):
  */
 
-static PyObject *__pyx_f_5pulse___pyx_unpickle_PolynomialPulse__set_state(struct __pyx_obj_5pulse_PolynomialPulse *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_f_9qutip_qoc_5pulse___pyx_unpickle_PolynomialPulse__set_state(struct __pyx_obj_9qutip_qoc_5pulse_PolynomialPulse *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -29930,7 +29930,7 @@ static PyObject *__pyx_f_5pulse___pyx_unpickle_PolynomialPulse__set_state(struct
   __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_8);
-  __Pyx_AddTraceback("pulse.__pyx_unpickle_PolynomialPulse__set_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.__pyx_unpickle_PolynomialPulse__set_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -29945,15 +29945,15 @@ static PyObject *__pyx_f_5pulse___pyx_unpickle_PolynomialPulse__set_state(struct
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_13__pyx_unpickle_FourierPulse(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_13__pyx_unpickle_FourierPulse(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5pulse_13__pyx_unpickle_FourierPulse = {"__pyx_unpickle_FourierPulse", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_13__pyx_unpickle_FourierPulse, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5pulse_13__pyx_unpickle_FourierPulse(PyObject *__pyx_self, 
+static PyMethodDef __pyx_mdef_9qutip_qoc_5pulse_13__pyx_unpickle_FourierPulse = {"__pyx_unpickle_FourierPulse", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_13__pyx_unpickle_FourierPulse, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_13__pyx_unpickle_FourierPulse(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -30053,11 +30053,11 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
     }
   }
-  __Pyx_AddTraceback("pulse.__pyx_unpickle_FourierPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.__pyx_unpickle_FourierPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pulse_12__pyx_unpickle_FourierPulse(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_12__pyx_unpickle_FourierPulse(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
 
   /* function exit code */
   {
@@ -30070,7 +30070,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_12__pyx_unpickle_FourierPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_12__pyx_unpickle_FourierPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_v___pyx_PickleError = 0;
   PyObject *__pyx_v___pyx_result = 0;
   PyObject *__pyx_r = NULL;
@@ -30152,7 +30152,7 @@ static PyObject *__pyx_pf_5pulse_12__pyx_unpickle_FourierPulse(CYTHON_UNUSED PyO
  *     if __pyx_state is not None:
  *         __pyx_unpickle_FourierPulse__set_state(<FourierPulse> __pyx_result, __pyx_state)
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_5pulse_FourierPulse), __pyx_n_s_new); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 7, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_FourierPulse), __pyx_n_s_new); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 7, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = NULL;
   __pyx_t_5 = 0;
@@ -30197,7 +30197,7 @@ static PyObject *__pyx_pf_5pulse_12__pyx_unpickle_FourierPulse(CYTHON_UNUSED PyO
  * cdef __pyx_unpickle_FourierPulse__set_state(FourierPulse __pyx_result, tuple __pyx_state):
  */
     if (!(likely(PyTuple_CheckExact(__pyx_v___pyx_state))||((__pyx_v___pyx_state) == Py_None) || __Pyx_RaiseUnexpectedTypeError("tuple", __pyx_v___pyx_state))) __PYX_ERR(1, 9, __pyx_L1_error)
-    __pyx_t_1 = __pyx_f_5pulse___pyx_unpickle_FourierPulse__set_state(((struct __pyx_obj_5pulse_FourierPulse *)__pyx_v___pyx_result), ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 9, __pyx_L1_error)
+    __pyx_t_1 = __pyx_f_9qutip_qoc_5pulse___pyx_unpickle_FourierPulse__set_state(((struct __pyx_obj_9qutip_qoc_5pulse_FourierPulse *)__pyx_v___pyx_result), ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 9, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -30233,7 +30233,7 @@ static PyObject *__pyx_pf_5pulse_12__pyx_unpickle_FourierPulse(CYTHON_UNUSED PyO
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("pulse.__pyx_unpickle_FourierPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.__pyx_unpickle_FourierPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v___pyx_PickleError);
@@ -30251,7 +30251,7 @@ static PyObject *__pyx_pf_5pulse_12__pyx_unpickle_FourierPulse(CYTHON_UNUSED PyO
  *     if len(__pyx_state) > 3 and hasattr(__pyx_result, '__dict__'):
  */
 
-static PyObject *__pyx_f_5pulse___pyx_unpickle_FourierPulse__set_state(struct __pyx_obj_5pulse_FourierPulse *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_f_9qutip_qoc_5pulse___pyx_unpickle_FourierPulse__set_state(struct __pyx_obj_9qutip_qoc_5pulse_FourierPulse *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -30389,7 +30389,7 @@ static PyObject *__pyx_f_5pulse___pyx_unpickle_FourierPulse__set_state(struct __
   __Pyx_XDECREF(__pyx_t_6);
   __Pyx_XDECREF(__pyx_t_7);
   __Pyx_XDECREF(__pyx_t_8);
-  __Pyx_AddTraceback("pulse.__pyx_unpickle_FourierPulse__set_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.__pyx_unpickle_FourierPulse__set_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -30404,15 +30404,15 @@ static PyObject *__pyx_f_5pulse___pyx_unpickle_FourierPulse__set_state(struct __
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_15__pyx_unpickle_PWCPulse(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_15__pyx_unpickle_PWCPulse(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5pulse_15__pyx_unpickle_PWCPulse = {"__pyx_unpickle_PWCPulse", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_15__pyx_unpickle_PWCPulse, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5pulse_15__pyx_unpickle_PWCPulse(PyObject *__pyx_self, 
+static PyMethodDef __pyx_mdef_9qutip_qoc_5pulse_15__pyx_unpickle_PWCPulse = {"__pyx_unpickle_PWCPulse", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_15__pyx_unpickle_PWCPulse, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_15__pyx_unpickle_PWCPulse(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -30512,11 +30512,11 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
     }
   }
-  __Pyx_AddTraceback("pulse.__pyx_unpickle_PWCPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.__pyx_unpickle_PWCPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pulse_14__pyx_unpickle_PWCPulse(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_14__pyx_unpickle_PWCPulse(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
 
   /* function exit code */
   {
@@ -30529,7 +30529,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_14__pyx_unpickle_PWCPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_14__pyx_unpickle_PWCPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_v___pyx_PickleError = 0;
   PyObject *__pyx_v___pyx_result = 0;
   PyObject *__pyx_r = NULL;
@@ -30611,7 +30611,7 @@ static PyObject *__pyx_pf_5pulse_14__pyx_unpickle_PWCPulse(CYTHON_UNUSED PyObjec
  *     if __pyx_state is not None:
  *         __pyx_unpickle_PWCPulse__set_state(<PWCPulse> __pyx_result, __pyx_state)
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_5pulse_PWCPulse), __pyx_n_s_new); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 7, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_PWCPulse), __pyx_n_s_new); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 7, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = NULL;
   __pyx_t_5 = 0;
@@ -30656,7 +30656,7 @@ static PyObject *__pyx_pf_5pulse_14__pyx_unpickle_PWCPulse(CYTHON_UNUSED PyObjec
  * cdef __pyx_unpickle_PWCPulse__set_state(PWCPulse __pyx_result, tuple __pyx_state):
  */
     if (!(likely(PyTuple_CheckExact(__pyx_v___pyx_state))||((__pyx_v___pyx_state) == Py_None) || __Pyx_RaiseUnexpectedTypeError("tuple", __pyx_v___pyx_state))) __PYX_ERR(1, 9, __pyx_L1_error)
-    __pyx_t_1 = __pyx_f_5pulse___pyx_unpickle_PWCPulse__set_state(((struct __pyx_obj_5pulse_PWCPulse *)__pyx_v___pyx_result), ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 9, __pyx_L1_error)
+    __pyx_t_1 = __pyx_f_9qutip_qoc_5pulse___pyx_unpickle_PWCPulse__set_state(((struct __pyx_obj_9qutip_qoc_5pulse_PWCPulse *)__pyx_v___pyx_result), ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 9, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -30692,7 +30692,7 @@ static PyObject *__pyx_pf_5pulse_14__pyx_unpickle_PWCPulse(CYTHON_UNUSED PyObjec
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("pulse.__pyx_unpickle_PWCPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.__pyx_unpickle_PWCPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v___pyx_PickleError);
@@ -30710,7 +30710,7 @@ static PyObject *__pyx_pf_5pulse_14__pyx_unpickle_PWCPulse(CYTHON_UNUSED PyObjec
  *     if len(__pyx_state) > 6 and hasattr(__pyx_result, '__dict__'):
  */
 
-static PyObject *__pyx_f_5pulse___pyx_unpickle_PWCPulse__set_state(struct __pyx_obj_5pulse_PWCPulse *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_f_9qutip_qoc_5pulse___pyx_unpickle_PWCPulse__set_state(struct __pyx_obj_9qutip_qoc_5pulse_PWCPulse *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -30881,7 +30881,7 @@ static PyObject *__pyx_f_5pulse___pyx_unpickle_PWCPulse__set_state(struct __pyx_
   __Pyx_XDECREF(__pyx_t_8);
   __Pyx_XDECREF(__pyx_t_9);
   __Pyx_XDECREF(__pyx_t_10);
-  __Pyx_AddTraceback("pulse.__pyx_unpickle_PWCPulse__set_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.__pyx_unpickle_PWCPulse__set_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -30896,15 +30896,15 @@ static PyObject *__pyx_f_5pulse___pyx_unpickle_PWCPulse__set_state(struct __pyx_
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_5pulse_17__pyx_unpickle_PWLPulse(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_17__pyx_unpickle_PWLPulse(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_5pulse_17__pyx_unpickle_PWLPulse = {"__pyx_unpickle_PWLPulse", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_17__pyx_unpickle_PWLPulse, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_5pulse_17__pyx_unpickle_PWLPulse(PyObject *__pyx_self, 
+static PyMethodDef __pyx_mdef_9qutip_qoc_5pulse_17__pyx_unpickle_PWLPulse = {"__pyx_unpickle_PWLPulse", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_17__pyx_unpickle_PWLPulse, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_9qutip_qoc_5pulse_17__pyx_unpickle_PWLPulse(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -31004,11 +31004,11 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
     }
   }
-  __Pyx_AddTraceback("pulse.__pyx_unpickle_PWLPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.__pyx_unpickle_PWLPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_5pulse_16__pyx_unpickle_PWLPulse(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
+  __pyx_r = __pyx_pf_9qutip_qoc_5pulse_16__pyx_unpickle_PWLPulse(__pyx_self, __pyx_v___pyx_type, __pyx_v___pyx_checksum, __pyx_v___pyx_state);
 
   /* function exit code */
   {
@@ -31021,7 +31021,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_5pulse_16__pyx_unpickle_PWLPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_pf_9qutip_qoc_5pulse_16__pyx_unpickle_PWLPulse(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_v___pyx_PickleError = 0;
   PyObject *__pyx_v___pyx_result = 0;
   PyObject *__pyx_r = NULL;
@@ -31103,7 +31103,7 @@ static PyObject *__pyx_pf_5pulse_16__pyx_unpickle_PWLPulse(CYTHON_UNUSED PyObjec
  *     if __pyx_state is not None:
  *         __pyx_unpickle_PWLPulse__set_state(<PWLPulse> __pyx_result, __pyx_state)
  */
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_5pulse_PWLPulse), __pyx_n_s_new); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 7, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_PWLPulse), __pyx_n_s_new); if (unlikely(!__pyx_t_3)) __PYX_ERR(1, 7, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __pyx_t_4 = NULL;
   __pyx_t_5 = 0;
@@ -31148,7 +31148,7 @@ static PyObject *__pyx_pf_5pulse_16__pyx_unpickle_PWLPulse(CYTHON_UNUSED PyObjec
  * cdef __pyx_unpickle_PWLPulse__set_state(PWLPulse __pyx_result, tuple __pyx_state):
  */
     if (!(likely(PyTuple_CheckExact(__pyx_v___pyx_state))||((__pyx_v___pyx_state) == Py_None) || __Pyx_RaiseUnexpectedTypeError("tuple", __pyx_v___pyx_state))) __PYX_ERR(1, 9, __pyx_L1_error)
-    __pyx_t_1 = __pyx_f_5pulse___pyx_unpickle_PWLPulse__set_state(((struct __pyx_obj_5pulse_PWLPulse *)__pyx_v___pyx_result), ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 9, __pyx_L1_error)
+    __pyx_t_1 = __pyx_f_9qutip_qoc_5pulse___pyx_unpickle_PWLPulse__set_state(((struct __pyx_obj_9qutip_qoc_5pulse_PWLPulse *)__pyx_v___pyx_result), ((PyObject*)__pyx_v___pyx_state)); if (unlikely(!__pyx_t_1)) __PYX_ERR(1, 9, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
@@ -31184,7 +31184,7 @@ static PyObject *__pyx_pf_5pulse_16__pyx_unpickle_PWLPulse(CYTHON_UNUSED PyObjec
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("pulse.__pyx_unpickle_PWLPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.__pyx_unpickle_PWLPulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v___pyx_PickleError);
@@ -31202,7 +31202,7 @@ static PyObject *__pyx_pf_5pulse_16__pyx_unpickle_PWLPulse(CYTHON_UNUSED PyObjec
  *     if len(__pyx_state) > 6 and hasattr(__pyx_result, '__dict__'):
  */
 
-static PyObject *__pyx_f_5pulse___pyx_unpickle_PWLPulse__set_state(struct __pyx_obj_5pulse_PWLPulse *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
+static PyObject *__pyx_f_9qutip_qoc_5pulse___pyx_unpickle_PWLPulse__set_state(struct __pyx_obj_9qutip_qoc_5pulse_PWLPulse *__pyx_v___pyx_result, PyObject *__pyx_v___pyx_state) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -31373,17 +31373,17 @@ static PyObject *__pyx_f_5pulse___pyx_unpickle_PWLPulse__set_state(struct __pyx_
   __Pyx_XDECREF(__pyx_t_8);
   __Pyx_XDECREF(__pyx_t_9);
   __Pyx_XDECREF(__pyx_t_10);
-  __Pyx_AddTraceback("pulse.__pyx_unpickle_PWLPulse__set_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("qutip_qoc.pulse.__pyx_unpickle_PWLPulse__set_state", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = 0;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
-static struct __pyx_vtabstruct_5pulse_Pulse __pyx_vtable_5pulse_Pulse;
+static struct __pyx_vtabstruct_9qutip_qoc_5pulse_Pulse __pyx_vtable_9qutip_qoc_5pulse_Pulse;
 
-static PyObject *__pyx_tp_new_5pulse_Pulse(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
-  struct __pyx_obj_5pulse_Pulse *p;
+static PyObject *__pyx_tp_new_9qutip_qoc_5pulse_Pulse(PyTypeObject *t, CYTHON_UNUSED PyObject *a, CYTHON_UNUSED PyObject *k) {
+  struct __pyx_obj_9qutip_qoc_5pulse_Pulse *p;
   PyObject *o;
   #if CYTHON_COMPILING_IN_LIMITED_API
   allocfunc alloc_func = (allocfunc)PyType_GetSlot(t, Py_tp_alloc);
@@ -31396,15 +31396,15 @@ static PyObject *__pyx_tp_new_5pulse_Pulse(PyTypeObject *t, CYTHON_UNUSED PyObje
   }
   if (unlikely(!o)) return 0;
   #endif
-  p = ((struct __pyx_obj_5pulse_Pulse *)o);
-  p->__pyx_vtab = __pyx_vtabptr_5pulse_Pulse;
+  p = ((struct __pyx_obj_9qutip_qoc_5pulse_Pulse *)o);
+  p->__pyx_vtab = __pyx_vtabptr_9qutip_qoc_5pulse_Pulse;
   return o;
 }
 
-static void __pyx_tp_dealloc_5pulse_Pulse(PyObject *o) {
+static void __pyx_tp_dealloc_9qutip_qoc_5pulse_Pulse(PyObject *o) {
   #if CYTHON_USE_TP_FINALIZE
   if (unlikely((PY_VERSION_HEX >= 0x03080000 || __Pyx_PyType_HasFeature(Py_TYPE(o), Py_TPFLAGS_HAVE_FINALIZE)) && __Pyx_PyObject_GetSlot(o, tp_finalize, destructor)) && (!PyType_IS_GC(Py_TYPE(o)) || !__Pyx_PyObject_GC_IsFinalized(o))) {
-    if (__Pyx_PyObject_GetSlot(o, tp_dealloc, destructor) == __pyx_tp_dealloc_5pulse_Pulse) {
+    if (__Pyx_PyObject_GetSlot(o, tp_dealloc, destructor) == __pyx_tp_dealloc_9qutip_qoc_5pulse_Pulse) {
       if (PyObject_CallFinalizerFromDealloc(o)) return;
     }
   }
@@ -31419,13 +31419,13 @@ static void __pyx_tp_dealloc_5pulse_Pulse(PyObject *o) {
   #endif
 }
 
-static PyObject *__pyx_getprop_5pulse_5Pulse_n_sup(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_5pulse_5Pulse_5n_sup_1__get__(o);
+static PyObject *__pyx_getprop_9qutip_qoc_5pulse_5Pulse_n_sup(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_9qutip_qoc_5pulse_5Pulse_5n_sup_1__get__(o);
 }
 
-static int __pyx_setprop_5pulse_5Pulse_n_sup(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
+static int __pyx_setprop_9qutip_qoc_5pulse_5Pulse_n_sup(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
   if (v) {
-    return __pyx_pw_5pulse_5Pulse_5n_sup_3__set__(o, v);
+    return __pyx_pw_9qutip_qoc_5pulse_5Pulse_5n_sup_3__set__(o, v);
   }
   else {
     PyErr_SetString(PyExc_NotImplementedError, "__del__");
@@ -31433,13 +31433,13 @@ static int __pyx_setprop_5pulse_5Pulse_n_sup(PyObject *o, PyObject *v, CYTHON_UN
   }
 }
 
-static PyObject *__pyx_getprop_5pulse_5Pulse_n_var(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_5pulse_5Pulse_5n_var_1__get__(o);
+static PyObject *__pyx_getprop_9qutip_qoc_5pulse_5Pulse_n_var(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_9qutip_qoc_5pulse_5Pulse_5n_var_1__get__(o);
 }
 
-static int __pyx_setprop_5pulse_5Pulse_n_var(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
+static int __pyx_setprop_9qutip_qoc_5pulse_5Pulse_n_var(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
   if (v) {
-    return __pyx_pw_5pulse_5Pulse_5n_var_3__set__(o, v);
+    return __pyx_pw_9qutip_qoc_5pulse_5Pulse_5n_var_3__set__(o, v);
   }
   else {
     PyErr_SetString(PyExc_NotImplementedError, "__del__");
@@ -31447,13 +31447,13 @@ static int __pyx_setprop_5pulse_5Pulse_n_var(PyObject *o, PyObject *v, CYTHON_UN
   }
 }
 
-static PyObject *__pyx_getprop_5pulse_5Pulse_n_par(PyObject *o, CYTHON_UNUSED void *x) {
-  return __pyx_pw_5pulse_5Pulse_5n_par_1__get__(o);
+static PyObject *__pyx_getprop_9qutip_qoc_5pulse_5Pulse_n_par(PyObject *o, CYTHON_UNUSED void *x) {
+  return __pyx_pw_9qutip_qoc_5pulse_5Pulse_5n_par_1__get__(o);
 }
 
-static int __pyx_setprop_5pulse_5Pulse_n_par(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
+static int __pyx_setprop_9qutip_qoc_5pulse_5Pulse_n_par(PyObject *o, PyObject *v, CYTHON_UNUSED void *x) {
   if (v) {
-    return __pyx_pw_5pulse_5Pulse_5n_par_3__set__(o, v);
+    return __pyx_pw_9qutip_qoc_5pulse_5Pulse_5n_par_3__set__(o, v);
   }
   else {
     PyErr_SetString(PyExc_NotImplementedError, "__del__");
@@ -31461,42 +31461,42 @@ static int __pyx_setprop_5pulse_5Pulse_n_par(PyObject *o, PyObject *v, CYTHON_UN
   }
 }
 
-static PyMethodDef __pyx_methods_5pulse_Pulse[] = {
-  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_5Pulse_7__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
-  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_5Pulse_9__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+static PyMethodDef __pyx_methods_9qutip_qoc_5pulse_Pulse[] = {
+  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_5Pulse_7__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_5Pulse_9__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
   {0, 0, 0, 0}
 };
 
-static struct PyGetSetDef __pyx_getsets_5pulse_Pulse[] = {
-  {(char *)"n_sup", __pyx_getprop_5pulse_5Pulse_n_sup, __pyx_setprop_5pulse_5Pulse_n_sup, (char *)0, 0},
-  {(char *)"n_var", __pyx_getprop_5pulse_5Pulse_n_var, __pyx_setprop_5pulse_5Pulse_n_var, (char *)0, 0},
-  {(char *)"n_par", __pyx_getprop_5pulse_5Pulse_n_par, __pyx_setprop_5pulse_5Pulse_n_par, (char *)0, 0},
+static struct PyGetSetDef __pyx_getsets_9qutip_qoc_5pulse_Pulse[] = {
+  {(char *)"n_sup", __pyx_getprop_9qutip_qoc_5pulse_5Pulse_n_sup, __pyx_setprop_9qutip_qoc_5pulse_5Pulse_n_sup, (char *)0, 0},
+  {(char *)"n_var", __pyx_getprop_9qutip_qoc_5pulse_5Pulse_n_var, __pyx_setprop_9qutip_qoc_5pulse_5Pulse_n_var, (char *)0, 0},
+  {(char *)"n_par", __pyx_getprop_9qutip_qoc_5pulse_5Pulse_n_par, __pyx_setprop_9qutip_qoc_5pulse_5Pulse_n_par, (char *)0, 0},
   {0, 0, 0, 0, 0}
 };
 #if CYTHON_USE_TYPE_SPECS
-static PyType_Slot __pyx_type_5pulse_Pulse_slots[] = {
-  {Py_tp_dealloc, (void *)__pyx_tp_dealloc_5pulse_Pulse},
-  {Py_tp_methods, (void *)__pyx_methods_5pulse_Pulse},
-  {Py_tp_getset, (void *)__pyx_getsets_5pulse_Pulse},
-  {Py_tp_init, (void *)__pyx_pw_5pulse_5Pulse_1__init__},
-  {Py_tp_new, (void *)__pyx_tp_new_5pulse_Pulse},
+static PyType_Slot __pyx_type_9qutip_qoc_5pulse_Pulse_slots[] = {
+  {Py_tp_dealloc, (void *)__pyx_tp_dealloc_9qutip_qoc_5pulse_Pulse},
+  {Py_tp_methods, (void *)__pyx_methods_9qutip_qoc_5pulse_Pulse},
+  {Py_tp_getset, (void *)__pyx_getsets_9qutip_qoc_5pulse_Pulse},
+  {Py_tp_init, (void *)__pyx_pw_9qutip_qoc_5pulse_5Pulse_1__init__},
+  {Py_tp_new, (void *)__pyx_tp_new_9qutip_qoc_5pulse_Pulse},
   {0, 0},
 };
-static PyType_Spec __pyx_type_5pulse_Pulse_spec = {
-  "pulse.Pulse",
-  sizeof(struct __pyx_obj_5pulse_Pulse),
+static PyType_Spec __pyx_type_9qutip_qoc_5pulse_Pulse_spec = {
+  "qutip_qoc.pulse.Pulse",
+  sizeof(struct __pyx_obj_9qutip_qoc_5pulse_Pulse),
   0,
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE,
-  __pyx_type_5pulse_Pulse_slots,
+  __pyx_type_9qutip_qoc_5pulse_Pulse_slots,
 };
 #else
 
-static PyTypeObject __pyx_type_5pulse_Pulse = {
+static PyTypeObject __pyx_type_9qutip_qoc_5pulse_Pulse = {
   PyVarObject_HEAD_INIT(0, 0)
-  "pulse.""Pulse", /*tp_name*/
-  sizeof(struct __pyx_obj_5pulse_Pulse), /*tp_basicsize*/
+  "qutip_qoc.pulse.""Pulse", /*tp_name*/
+  sizeof(struct __pyx_obj_9qutip_qoc_5pulse_Pulse), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc_5pulse_Pulse, /*tp_dealloc*/
+  __pyx_tp_dealloc_9qutip_qoc_5pulse_Pulse, /*tp_dealloc*/
   #if PY_VERSION_HEX < 0x030800b4
   0, /*tp_print*/
   #endif
@@ -31529,9 +31529,9 @@ static PyTypeObject __pyx_type_5pulse_Pulse = {
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
   0, /*tp_iternext*/
-  __pyx_methods_5pulse_Pulse, /*tp_methods*/
+  __pyx_methods_9qutip_qoc_5pulse_Pulse, /*tp_methods*/
   0, /*tp_members*/
-  __pyx_getsets_5pulse_Pulse, /*tp_getset*/
+  __pyx_getsets_9qutip_qoc_5pulse_Pulse, /*tp_getset*/
   0, /*tp_base*/
   0, /*tp_dict*/
   0, /*tp_descr_get*/
@@ -31539,9 +31539,9 @@ static PyTypeObject __pyx_type_5pulse_Pulse = {
   #if !CYTHON_USE_TYPE_SPECS
   0, /*tp_dictoffset*/
   #endif
-  __pyx_pw_5pulse_5Pulse_1__init__, /*tp_init*/
+  __pyx_pw_9qutip_qoc_5pulse_5Pulse_1__init__, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new_5pulse_Pulse, /*tp_new*/
+  __pyx_tp_new_9qutip_qoc_5pulse_Pulse, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -31572,44 +31572,44 @@ static PyTypeObject __pyx_type_5pulse_Pulse = {
   #endif
 };
 #endif
-static struct __pyx_vtabstruct_5pulse_GaussianPulse __pyx_vtable_5pulse_GaussianPulse;
+static struct __pyx_vtabstruct_9qutip_qoc_5pulse_GaussianPulse __pyx_vtable_9qutip_qoc_5pulse_GaussianPulse;
 
-static PyObject *__pyx_tp_new_5pulse_GaussianPulse(PyTypeObject *t, PyObject *a, PyObject *k) {
-  struct __pyx_obj_5pulse_GaussianPulse *p;
-  PyObject *o = __pyx_tp_new_5pulse_Pulse(t, a, k);
+static PyObject *__pyx_tp_new_9qutip_qoc_5pulse_GaussianPulse(PyTypeObject *t, PyObject *a, PyObject *k) {
+  struct __pyx_obj_9qutip_qoc_5pulse_GaussianPulse *p;
+  PyObject *o = __pyx_tp_new_9qutip_qoc_5pulse_Pulse(t, a, k);
   if (unlikely(!o)) return 0;
-  p = ((struct __pyx_obj_5pulse_GaussianPulse *)o);
-  p->__pyx_base.__pyx_vtab = (struct __pyx_vtabstruct_5pulse_Pulse*)__pyx_vtabptr_5pulse_GaussianPulse;
+  p = ((struct __pyx_obj_9qutip_qoc_5pulse_GaussianPulse *)o);
+  p->__pyx_base.__pyx_vtab = (struct __pyx_vtabstruct_9qutip_qoc_5pulse_Pulse*)__pyx_vtabptr_9qutip_qoc_5pulse_GaussianPulse;
   return o;
 }
 
-static PyMethodDef __pyx_methods_5pulse_GaussianPulse[] = {
-  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_13GaussianPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
-  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_13GaussianPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+static PyMethodDef __pyx_methods_9qutip_qoc_5pulse_GaussianPulse[] = {
+  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_13GaussianPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_13GaussianPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
   {0, 0, 0, 0}
 };
 #if CYTHON_USE_TYPE_SPECS
-static PyType_Slot __pyx_type_5pulse_GaussianPulse_slots[] = {
-  {Py_tp_methods, (void *)__pyx_methods_5pulse_GaussianPulse},
-  {Py_tp_init, (void *)__pyx_pw_5pulse_13GaussianPulse_1__init__},
-  {Py_tp_new, (void *)__pyx_tp_new_5pulse_GaussianPulse},
+static PyType_Slot __pyx_type_9qutip_qoc_5pulse_GaussianPulse_slots[] = {
+  {Py_tp_methods, (void *)__pyx_methods_9qutip_qoc_5pulse_GaussianPulse},
+  {Py_tp_init, (void *)__pyx_pw_9qutip_qoc_5pulse_13GaussianPulse_1__init__},
+  {Py_tp_new, (void *)__pyx_tp_new_9qutip_qoc_5pulse_GaussianPulse},
   {0, 0},
 };
-static PyType_Spec __pyx_type_5pulse_GaussianPulse_spec = {
-  "pulse.GaussianPulse",
-  sizeof(struct __pyx_obj_5pulse_GaussianPulse),
+static PyType_Spec __pyx_type_9qutip_qoc_5pulse_GaussianPulse_spec = {
+  "qutip_qoc.pulse.GaussianPulse",
+  sizeof(struct __pyx_obj_9qutip_qoc_5pulse_GaussianPulse),
   0,
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE,
-  __pyx_type_5pulse_GaussianPulse_slots,
+  __pyx_type_9qutip_qoc_5pulse_GaussianPulse_slots,
 };
 #else
 
-static PyTypeObject __pyx_type_5pulse_GaussianPulse = {
+static PyTypeObject __pyx_type_9qutip_qoc_5pulse_GaussianPulse = {
   PyVarObject_HEAD_INIT(0, 0)
-  "pulse.""GaussianPulse", /*tp_name*/
-  sizeof(struct __pyx_obj_5pulse_GaussianPulse), /*tp_basicsize*/
+  "qutip_qoc.pulse.""GaussianPulse", /*tp_name*/
+  sizeof(struct __pyx_obj_9qutip_qoc_5pulse_GaussianPulse), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc_5pulse_Pulse, /*tp_dealloc*/
+  __pyx_tp_dealloc_9qutip_qoc_5pulse_Pulse, /*tp_dealloc*/
   #if PY_VERSION_HEX < 0x030800b4
   0, /*tp_print*/
   #endif
@@ -31642,7 +31642,7 @@ static PyTypeObject __pyx_type_5pulse_GaussianPulse = {
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
   0, /*tp_iternext*/
-  __pyx_methods_5pulse_GaussianPulse, /*tp_methods*/
+  __pyx_methods_9qutip_qoc_5pulse_GaussianPulse, /*tp_methods*/
   0, /*tp_members*/
   0, /*tp_getset*/
   0, /*tp_base*/
@@ -31652,9 +31652,9 @@ static PyTypeObject __pyx_type_5pulse_GaussianPulse = {
   #if !CYTHON_USE_TYPE_SPECS
   0, /*tp_dictoffset*/
   #endif
-  __pyx_pw_5pulse_13GaussianPulse_1__init__, /*tp_init*/
+  __pyx_pw_9qutip_qoc_5pulse_13GaussianPulse_1__init__, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new_5pulse_GaussianPulse, /*tp_new*/
+  __pyx_tp_new_9qutip_qoc_5pulse_GaussianPulse, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -31685,44 +31685,44 @@ static PyTypeObject __pyx_type_5pulse_GaussianPulse = {
   #endif
 };
 #endif
-static struct __pyx_vtabstruct_5pulse_SinPulse __pyx_vtable_5pulse_SinPulse;
+static struct __pyx_vtabstruct_9qutip_qoc_5pulse_SinPulse __pyx_vtable_9qutip_qoc_5pulse_SinPulse;
 
-static PyObject *__pyx_tp_new_5pulse_SinPulse(PyTypeObject *t, PyObject *a, PyObject *k) {
-  struct __pyx_obj_5pulse_SinPulse *p;
-  PyObject *o = __pyx_tp_new_5pulse_Pulse(t, a, k);
+static PyObject *__pyx_tp_new_9qutip_qoc_5pulse_SinPulse(PyTypeObject *t, PyObject *a, PyObject *k) {
+  struct __pyx_obj_9qutip_qoc_5pulse_SinPulse *p;
+  PyObject *o = __pyx_tp_new_9qutip_qoc_5pulse_Pulse(t, a, k);
   if (unlikely(!o)) return 0;
-  p = ((struct __pyx_obj_5pulse_SinPulse *)o);
-  p->__pyx_base.__pyx_vtab = (struct __pyx_vtabstruct_5pulse_Pulse*)__pyx_vtabptr_5pulse_SinPulse;
+  p = ((struct __pyx_obj_9qutip_qoc_5pulse_SinPulse *)o);
+  p->__pyx_base.__pyx_vtab = (struct __pyx_vtabstruct_9qutip_qoc_5pulse_Pulse*)__pyx_vtabptr_9qutip_qoc_5pulse_SinPulse;
   return o;
 }
 
-static PyMethodDef __pyx_methods_5pulse_SinPulse[] = {
-  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_8SinPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
-  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_8SinPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+static PyMethodDef __pyx_methods_9qutip_qoc_5pulse_SinPulse[] = {
+  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_8SinPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_8SinPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
   {0, 0, 0, 0}
 };
 #if CYTHON_USE_TYPE_SPECS
-static PyType_Slot __pyx_type_5pulse_SinPulse_slots[] = {
-  {Py_tp_methods, (void *)__pyx_methods_5pulse_SinPulse},
-  {Py_tp_init, (void *)__pyx_pw_5pulse_8SinPulse_1__init__},
-  {Py_tp_new, (void *)__pyx_tp_new_5pulse_SinPulse},
+static PyType_Slot __pyx_type_9qutip_qoc_5pulse_SinPulse_slots[] = {
+  {Py_tp_methods, (void *)__pyx_methods_9qutip_qoc_5pulse_SinPulse},
+  {Py_tp_init, (void *)__pyx_pw_9qutip_qoc_5pulse_8SinPulse_1__init__},
+  {Py_tp_new, (void *)__pyx_tp_new_9qutip_qoc_5pulse_SinPulse},
   {0, 0},
 };
-static PyType_Spec __pyx_type_5pulse_SinPulse_spec = {
-  "pulse.SinPulse",
-  sizeof(struct __pyx_obj_5pulse_SinPulse),
+static PyType_Spec __pyx_type_9qutip_qoc_5pulse_SinPulse_spec = {
+  "qutip_qoc.pulse.SinPulse",
+  sizeof(struct __pyx_obj_9qutip_qoc_5pulse_SinPulse),
   0,
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE,
-  __pyx_type_5pulse_SinPulse_slots,
+  __pyx_type_9qutip_qoc_5pulse_SinPulse_slots,
 };
 #else
 
-static PyTypeObject __pyx_type_5pulse_SinPulse = {
+static PyTypeObject __pyx_type_9qutip_qoc_5pulse_SinPulse = {
   PyVarObject_HEAD_INIT(0, 0)
-  "pulse.""SinPulse", /*tp_name*/
-  sizeof(struct __pyx_obj_5pulse_SinPulse), /*tp_basicsize*/
+  "qutip_qoc.pulse.""SinPulse", /*tp_name*/
+  sizeof(struct __pyx_obj_9qutip_qoc_5pulse_SinPulse), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc_5pulse_Pulse, /*tp_dealloc*/
+  __pyx_tp_dealloc_9qutip_qoc_5pulse_Pulse, /*tp_dealloc*/
   #if PY_VERSION_HEX < 0x030800b4
   0, /*tp_print*/
   #endif
@@ -31755,7 +31755,7 @@ static PyTypeObject __pyx_type_5pulse_SinPulse = {
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
   0, /*tp_iternext*/
-  __pyx_methods_5pulse_SinPulse, /*tp_methods*/
+  __pyx_methods_9qutip_qoc_5pulse_SinPulse, /*tp_methods*/
   0, /*tp_members*/
   0, /*tp_getset*/
   0, /*tp_base*/
@@ -31765,9 +31765,9 @@ static PyTypeObject __pyx_type_5pulse_SinPulse = {
   #if !CYTHON_USE_TYPE_SPECS
   0, /*tp_dictoffset*/
   #endif
-  __pyx_pw_5pulse_8SinPulse_1__init__, /*tp_init*/
+  __pyx_pw_9qutip_qoc_5pulse_8SinPulse_1__init__, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new_5pulse_SinPulse, /*tp_new*/
+  __pyx_tp_new_9qutip_qoc_5pulse_SinPulse, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -31798,44 +31798,44 @@ static PyTypeObject __pyx_type_5pulse_SinPulse = {
   #endif
 };
 #endif
-static struct __pyx_vtabstruct_5pulse_CosPulse __pyx_vtable_5pulse_CosPulse;
+static struct __pyx_vtabstruct_9qutip_qoc_5pulse_CosPulse __pyx_vtable_9qutip_qoc_5pulse_CosPulse;
 
-static PyObject *__pyx_tp_new_5pulse_CosPulse(PyTypeObject *t, PyObject *a, PyObject *k) {
-  struct __pyx_obj_5pulse_CosPulse *p;
-  PyObject *o = __pyx_tp_new_5pulse_Pulse(t, a, k);
+static PyObject *__pyx_tp_new_9qutip_qoc_5pulse_CosPulse(PyTypeObject *t, PyObject *a, PyObject *k) {
+  struct __pyx_obj_9qutip_qoc_5pulse_CosPulse *p;
+  PyObject *o = __pyx_tp_new_9qutip_qoc_5pulse_Pulse(t, a, k);
   if (unlikely(!o)) return 0;
-  p = ((struct __pyx_obj_5pulse_CosPulse *)o);
-  p->__pyx_base.__pyx_vtab = (struct __pyx_vtabstruct_5pulse_Pulse*)__pyx_vtabptr_5pulse_CosPulse;
+  p = ((struct __pyx_obj_9qutip_qoc_5pulse_CosPulse *)o);
+  p->__pyx_base.__pyx_vtab = (struct __pyx_vtabstruct_9qutip_qoc_5pulse_Pulse*)__pyx_vtabptr_9qutip_qoc_5pulse_CosPulse;
   return o;
 }
 
-static PyMethodDef __pyx_methods_5pulse_CosPulse[] = {
-  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_8CosPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
-  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_8CosPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+static PyMethodDef __pyx_methods_9qutip_qoc_5pulse_CosPulse[] = {
+  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_8CosPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_8CosPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
   {0, 0, 0, 0}
 };
 #if CYTHON_USE_TYPE_SPECS
-static PyType_Slot __pyx_type_5pulse_CosPulse_slots[] = {
-  {Py_tp_methods, (void *)__pyx_methods_5pulse_CosPulse},
-  {Py_tp_init, (void *)__pyx_pw_5pulse_8CosPulse_1__init__},
-  {Py_tp_new, (void *)__pyx_tp_new_5pulse_CosPulse},
+static PyType_Slot __pyx_type_9qutip_qoc_5pulse_CosPulse_slots[] = {
+  {Py_tp_methods, (void *)__pyx_methods_9qutip_qoc_5pulse_CosPulse},
+  {Py_tp_init, (void *)__pyx_pw_9qutip_qoc_5pulse_8CosPulse_1__init__},
+  {Py_tp_new, (void *)__pyx_tp_new_9qutip_qoc_5pulse_CosPulse},
   {0, 0},
 };
-static PyType_Spec __pyx_type_5pulse_CosPulse_spec = {
-  "pulse.CosPulse",
-  sizeof(struct __pyx_obj_5pulse_CosPulse),
+static PyType_Spec __pyx_type_9qutip_qoc_5pulse_CosPulse_spec = {
+  "qutip_qoc.pulse.CosPulse",
+  sizeof(struct __pyx_obj_9qutip_qoc_5pulse_CosPulse),
   0,
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE,
-  __pyx_type_5pulse_CosPulse_slots,
+  __pyx_type_9qutip_qoc_5pulse_CosPulse_slots,
 };
 #else
 
-static PyTypeObject __pyx_type_5pulse_CosPulse = {
+static PyTypeObject __pyx_type_9qutip_qoc_5pulse_CosPulse = {
   PyVarObject_HEAD_INIT(0, 0)
-  "pulse.""CosPulse", /*tp_name*/
-  sizeof(struct __pyx_obj_5pulse_CosPulse), /*tp_basicsize*/
+  "qutip_qoc.pulse.""CosPulse", /*tp_name*/
+  sizeof(struct __pyx_obj_9qutip_qoc_5pulse_CosPulse), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc_5pulse_Pulse, /*tp_dealloc*/
+  __pyx_tp_dealloc_9qutip_qoc_5pulse_Pulse, /*tp_dealloc*/
   #if PY_VERSION_HEX < 0x030800b4
   0, /*tp_print*/
   #endif
@@ -31868,7 +31868,7 @@ static PyTypeObject __pyx_type_5pulse_CosPulse = {
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
   0, /*tp_iternext*/
-  __pyx_methods_5pulse_CosPulse, /*tp_methods*/
+  __pyx_methods_9qutip_qoc_5pulse_CosPulse, /*tp_methods*/
   0, /*tp_members*/
   0, /*tp_getset*/
   0, /*tp_base*/
@@ -31878,9 +31878,9 @@ static PyTypeObject __pyx_type_5pulse_CosPulse = {
   #if !CYTHON_USE_TYPE_SPECS
   0, /*tp_dictoffset*/
   #endif
-  __pyx_pw_5pulse_8CosPulse_1__init__, /*tp_init*/
+  __pyx_pw_9qutip_qoc_5pulse_8CosPulse_1__init__, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new_5pulse_CosPulse, /*tp_new*/
+  __pyx_tp_new_9qutip_qoc_5pulse_CosPulse, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -31911,44 +31911,44 @@ static PyTypeObject __pyx_type_5pulse_CosPulse = {
   #endif
 };
 #endif
-static struct __pyx_vtabstruct_5pulse_CosCosPulse __pyx_vtable_5pulse_CosCosPulse;
+static struct __pyx_vtabstruct_9qutip_qoc_5pulse_CosCosPulse __pyx_vtable_9qutip_qoc_5pulse_CosCosPulse;
 
-static PyObject *__pyx_tp_new_5pulse_CosCosPulse(PyTypeObject *t, PyObject *a, PyObject *k) {
-  struct __pyx_obj_5pulse_CosCosPulse *p;
-  PyObject *o = __pyx_tp_new_5pulse_Pulse(t, a, k);
+static PyObject *__pyx_tp_new_9qutip_qoc_5pulse_CosCosPulse(PyTypeObject *t, PyObject *a, PyObject *k) {
+  struct __pyx_obj_9qutip_qoc_5pulse_CosCosPulse *p;
+  PyObject *o = __pyx_tp_new_9qutip_qoc_5pulse_Pulse(t, a, k);
   if (unlikely(!o)) return 0;
-  p = ((struct __pyx_obj_5pulse_CosCosPulse *)o);
-  p->__pyx_base.__pyx_vtab = (struct __pyx_vtabstruct_5pulse_Pulse*)__pyx_vtabptr_5pulse_CosCosPulse;
+  p = ((struct __pyx_obj_9qutip_qoc_5pulse_CosCosPulse *)o);
+  p->__pyx_base.__pyx_vtab = (struct __pyx_vtabstruct_9qutip_qoc_5pulse_Pulse*)__pyx_vtabptr_9qutip_qoc_5pulse_CosCosPulse;
   return o;
 }
 
-static PyMethodDef __pyx_methods_5pulse_CosCosPulse[] = {
-  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_11CosCosPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
-  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_11CosCosPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+static PyMethodDef __pyx_methods_9qutip_qoc_5pulse_CosCosPulse[] = {
+  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_11CosCosPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_11CosCosPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
   {0, 0, 0, 0}
 };
 #if CYTHON_USE_TYPE_SPECS
-static PyType_Slot __pyx_type_5pulse_CosCosPulse_slots[] = {
-  {Py_tp_methods, (void *)__pyx_methods_5pulse_CosCosPulse},
-  {Py_tp_init, (void *)__pyx_pw_5pulse_11CosCosPulse_1__init__},
-  {Py_tp_new, (void *)__pyx_tp_new_5pulse_CosCosPulse},
+static PyType_Slot __pyx_type_9qutip_qoc_5pulse_CosCosPulse_slots[] = {
+  {Py_tp_methods, (void *)__pyx_methods_9qutip_qoc_5pulse_CosCosPulse},
+  {Py_tp_init, (void *)__pyx_pw_9qutip_qoc_5pulse_11CosCosPulse_1__init__},
+  {Py_tp_new, (void *)__pyx_tp_new_9qutip_qoc_5pulse_CosCosPulse},
   {0, 0},
 };
-static PyType_Spec __pyx_type_5pulse_CosCosPulse_spec = {
-  "pulse.CosCosPulse",
-  sizeof(struct __pyx_obj_5pulse_CosCosPulse),
+static PyType_Spec __pyx_type_9qutip_qoc_5pulse_CosCosPulse_spec = {
+  "qutip_qoc.pulse.CosCosPulse",
+  sizeof(struct __pyx_obj_9qutip_qoc_5pulse_CosCosPulse),
   0,
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE,
-  __pyx_type_5pulse_CosCosPulse_slots,
+  __pyx_type_9qutip_qoc_5pulse_CosCosPulse_slots,
 };
 #else
 
-static PyTypeObject __pyx_type_5pulse_CosCosPulse = {
+static PyTypeObject __pyx_type_9qutip_qoc_5pulse_CosCosPulse = {
   PyVarObject_HEAD_INIT(0, 0)
-  "pulse.""CosCosPulse", /*tp_name*/
-  sizeof(struct __pyx_obj_5pulse_CosCosPulse), /*tp_basicsize*/
+  "qutip_qoc.pulse.""CosCosPulse", /*tp_name*/
+  sizeof(struct __pyx_obj_9qutip_qoc_5pulse_CosCosPulse), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc_5pulse_Pulse, /*tp_dealloc*/
+  __pyx_tp_dealloc_9qutip_qoc_5pulse_Pulse, /*tp_dealloc*/
   #if PY_VERSION_HEX < 0x030800b4
   0, /*tp_print*/
   #endif
@@ -31981,7 +31981,7 @@ static PyTypeObject __pyx_type_5pulse_CosCosPulse = {
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
   0, /*tp_iternext*/
-  __pyx_methods_5pulse_CosCosPulse, /*tp_methods*/
+  __pyx_methods_9qutip_qoc_5pulse_CosCosPulse, /*tp_methods*/
   0, /*tp_members*/
   0, /*tp_getset*/
   0, /*tp_base*/
@@ -31991,9 +31991,9 @@ static PyTypeObject __pyx_type_5pulse_CosCosPulse = {
   #if !CYTHON_USE_TYPE_SPECS
   0, /*tp_dictoffset*/
   #endif
-  __pyx_pw_5pulse_11CosCosPulse_1__init__, /*tp_init*/
+  __pyx_pw_9qutip_qoc_5pulse_11CosCosPulse_1__init__, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new_5pulse_CosCosPulse, /*tp_new*/
+  __pyx_tp_new_9qutip_qoc_5pulse_CosCosPulse, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -32024,44 +32024,44 @@ static PyTypeObject __pyx_type_5pulse_CosCosPulse = {
   #endif
 };
 #endif
-static struct __pyx_vtabstruct_5pulse_PolynomialPulse __pyx_vtable_5pulse_PolynomialPulse;
+static struct __pyx_vtabstruct_9qutip_qoc_5pulse_PolynomialPulse __pyx_vtable_9qutip_qoc_5pulse_PolynomialPulse;
 
-static PyObject *__pyx_tp_new_5pulse_PolynomialPulse(PyTypeObject *t, PyObject *a, PyObject *k) {
-  struct __pyx_obj_5pulse_PolynomialPulse *p;
-  PyObject *o = __pyx_tp_new_5pulse_Pulse(t, a, k);
+static PyObject *__pyx_tp_new_9qutip_qoc_5pulse_PolynomialPulse(PyTypeObject *t, PyObject *a, PyObject *k) {
+  struct __pyx_obj_9qutip_qoc_5pulse_PolynomialPulse *p;
+  PyObject *o = __pyx_tp_new_9qutip_qoc_5pulse_Pulse(t, a, k);
   if (unlikely(!o)) return 0;
-  p = ((struct __pyx_obj_5pulse_PolynomialPulse *)o);
-  p->__pyx_base.__pyx_vtab = (struct __pyx_vtabstruct_5pulse_Pulse*)__pyx_vtabptr_5pulse_PolynomialPulse;
+  p = ((struct __pyx_obj_9qutip_qoc_5pulse_PolynomialPulse *)o);
+  p->__pyx_base.__pyx_vtab = (struct __pyx_vtabstruct_9qutip_qoc_5pulse_Pulse*)__pyx_vtabptr_9qutip_qoc_5pulse_PolynomialPulse;
   return o;
 }
 
-static PyMethodDef __pyx_methods_5pulse_PolynomialPulse[] = {
-  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_15PolynomialPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
-  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_15PolynomialPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+static PyMethodDef __pyx_methods_9qutip_qoc_5pulse_PolynomialPulse[] = {
+  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_15PolynomialPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_15PolynomialPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
   {0, 0, 0, 0}
 };
 #if CYTHON_USE_TYPE_SPECS
-static PyType_Slot __pyx_type_5pulse_PolynomialPulse_slots[] = {
-  {Py_tp_methods, (void *)__pyx_methods_5pulse_PolynomialPulse},
-  {Py_tp_init, (void *)__pyx_pw_5pulse_15PolynomialPulse_1__init__},
-  {Py_tp_new, (void *)__pyx_tp_new_5pulse_PolynomialPulse},
+static PyType_Slot __pyx_type_9qutip_qoc_5pulse_PolynomialPulse_slots[] = {
+  {Py_tp_methods, (void *)__pyx_methods_9qutip_qoc_5pulse_PolynomialPulse},
+  {Py_tp_init, (void *)__pyx_pw_9qutip_qoc_5pulse_15PolynomialPulse_1__init__},
+  {Py_tp_new, (void *)__pyx_tp_new_9qutip_qoc_5pulse_PolynomialPulse},
   {0, 0},
 };
-static PyType_Spec __pyx_type_5pulse_PolynomialPulse_spec = {
-  "pulse.PolynomialPulse",
-  sizeof(struct __pyx_obj_5pulse_PolynomialPulse),
+static PyType_Spec __pyx_type_9qutip_qoc_5pulse_PolynomialPulse_spec = {
+  "qutip_qoc.pulse.PolynomialPulse",
+  sizeof(struct __pyx_obj_9qutip_qoc_5pulse_PolynomialPulse),
   0,
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE,
-  __pyx_type_5pulse_PolynomialPulse_slots,
+  __pyx_type_9qutip_qoc_5pulse_PolynomialPulse_slots,
 };
 #else
 
-static PyTypeObject __pyx_type_5pulse_PolynomialPulse = {
+static PyTypeObject __pyx_type_9qutip_qoc_5pulse_PolynomialPulse = {
   PyVarObject_HEAD_INIT(0, 0)
-  "pulse.""PolynomialPulse", /*tp_name*/
-  sizeof(struct __pyx_obj_5pulse_PolynomialPulse), /*tp_basicsize*/
+  "qutip_qoc.pulse.""PolynomialPulse", /*tp_name*/
+  sizeof(struct __pyx_obj_9qutip_qoc_5pulse_PolynomialPulse), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc_5pulse_Pulse, /*tp_dealloc*/
+  __pyx_tp_dealloc_9qutip_qoc_5pulse_Pulse, /*tp_dealloc*/
   #if PY_VERSION_HEX < 0x030800b4
   0, /*tp_print*/
   #endif
@@ -32094,7 +32094,7 @@ static PyTypeObject __pyx_type_5pulse_PolynomialPulse = {
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
   0, /*tp_iternext*/
-  __pyx_methods_5pulse_PolynomialPulse, /*tp_methods*/
+  __pyx_methods_9qutip_qoc_5pulse_PolynomialPulse, /*tp_methods*/
   0, /*tp_members*/
   0, /*tp_getset*/
   0, /*tp_base*/
@@ -32104,9 +32104,9 @@ static PyTypeObject __pyx_type_5pulse_PolynomialPulse = {
   #if !CYTHON_USE_TYPE_SPECS
   0, /*tp_dictoffset*/
   #endif
-  __pyx_pw_5pulse_15PolynomialPulse_1__init__, /*tp_init*/
+  __pyx_pw_9qutip_qoc_5pulse_15PolynomialPulse_1__init__, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new_5pulse_PolynomialPulse, /*tp_new*/
+  __pyx_tp_new_9qutip_qoc_5pulse_PolynomialPulse, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -32137,44 +32137,44 @@ static PyTypeObject __pyx_type_5pulse_PolynomialPulse = {
   #endif
 };
 #endif
-static struct __pyx_vtabstruct_5pulse_FourierPulse __pyx_vtable_5pulse_FourierPulse;
+static struct __pyx_vtabstruct_9qutip_qoc_5pulse_FourierPulse __pyx_vtable_9qutip_qoc_5pulse_FourierPulse;
 
-static PyObject *__pyx_tp_new_5pulse_FourierPulse(PyTypeObject *t, PyObject *a, PyObject *k) {
-  struct __pyx_obj_5pulse_FourierPulse *p;
-  PyObject *o = __pyx_tp_new_5pulse_Pulse(t, a, k);
+static PyObject *__pyx_tp_new_9qutip_qoc_5pulse_FourierPulse(PyTypeObject *t, PyObject *a, PyObject *k) {
+  struct __pyx_obj_9qutip_qoc_5pulse_FourierPulse *p;
+  PyObject *o = __pyx_tp_new_9qutip_qoc_5pulse_Pulse(t, a, k);
   if (unlikely(!o)) return 0;
-  p = ((struct __pyx_obj_5pulse_FourierPulse *)o);
-  p->__pyx_base.__pyx_vtab = (struct __pyx_vtabstruct_5pulse_Pulse*)__pyx_vtabptr_5pulse_FourierPulse;
+  p = ((struct __pyx_obj_9qutip_qoc_5pulse_FourierPulse *)o);
+  p->__pyx_base.__pyx_vtab = (struct __pyx_vtabstruct_9qutip_qoc_5pulse_Pulse*)__pyx_vtabptr_9qutip_qoc_5pulse_FourierPulse;
   return o;
 }
 
-static PyMethodDef __pyx_methods_5pulse_FourierPulse[] = {
-  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_12FourierPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
-  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_12FourierPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+static PyMethodDef __pyx_methods_9qutip_qoc_5pulse_FourierPulse[] = {
+  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_12FourierPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_12FourierPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
   {0, 0, 0, 0}
 };
 #if CYTHON_USE_TYPE_SPECS
-static PyType_Slot __pyx_type_5pulse_FourierPulse_slots[] = {
-  {Py_tp_methods, (void *)__pyx_methods_5pulse_FourierPulse},
-  {Py_tp_init, (void *)__pyx_pw_5pulse_12FourierPulse_1__init__},
-  {Py_tp_new, (void *)__pyx_tp_new_5pulse_FourierPulse},
+static PyType_Slot __pyx_type_9qutip_qoc_5pulse_FourierPulse_slots[] = {
+  {Py_tp_methods, (void *)__pyx_methods_9qutip_qoc_5pulse_FourierPulse},
+  {Py_tp_init, (void *)__pyx_pw_9qutip_qoc_5pulse_12FourierPulse_1__init__},
+  {Py_tp_new, (void *)__pyx_tp_new_9qutip_qoc_5pulse_FourierPulse},
   {0, 0},
 };
-static PyType_Spec __pyx_type_5pulse_FourierPulse_spec = {
-  "pulse.FourierPulse",
-  sizeof(struct __pyx_obj_5pulse_FourierPulse),
+static PyType_Spec __pyx_type_9qutip_qoc_5pulse_FourierPulse_spec = {
+  "qutip_qoc.pulse.FourierPulse",
+  sizeof(struct __pyx_obj_9qutip_qoc_5pulse_FourierPulse),
   0,
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE,
-  __pyx_type_5pulse_FourierPulse_slots,
+  __pyx_type_9qutip_qoc_5pulse_FourierPulse_slots,
 };
 #else
 
-static PyTypeObject __pyx_type_5pulse_FourierPulse = {
+static PyTypeObject __pyx_type_9qutip_qoc_5pulse_FourierPulse = {
   PyVarObject_HEAD_INIT(0, 0)
-  "pulse.""FourierPulse", /*tp_name*/
-  sizeof(struct __pyx_obj_5pulse_FourierPulse), /*tp_basicsize*/
+  "qutip_qoc.pulse.""FourierPulse", /*tp_name*/
+  sizeof(struct __pyx_obj_9qutip_qoc_5pulse_FourierPulse), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc_5pulse_Pulse, /*tp_dealloc*/
+  __pyx_tp_dealloc_9qutip_qoc_5pulse_Pulse, /*tp_dealloc*/
   #if PY_VERSION_HEX < 0x030800b4
   0, /*tp_print*/
   #endif
@@ -32207,7 +32207,7 @@ static PyTypeObject __pyx_type_5pulse_FourierPulse = {
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
   0, /*tp_iternext*/
-  __pyx_methods_5pulse_FourierPulse, /*tp_methods*/
+  __pyx_methods_9qutip_qoc_5pulse_FourierPulse, /*tp_methods*/
   0, /*tp_members*/
   0, /*tp_getset*/
   0, /*tp_base*/
@@ -32217,9 +32217,9 @@ static PyTypeObject __pyx_type_5pulse_FourierPulse = {
   #if !CYTHON_USE_TYPE_SPECS
   0, /*tp_dictoffset*/
   #endif
-  __pyx_pw_5pulse_12FourierPulse_1__init__, /*tp_init*/
+  __pyx_pw_9qutip_qoc_5pulse_12FourierPulse_1__init__, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new_5pulse_FourierPulse, /*tp_new*/
+  __pyx_tp_new_9qutip_qoc_5pulse_FourierPulse, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -32250,61 +32250,61 @@ static PyTypeObject __pyx_type_5pulse_FourierPulse = {
   #endif
 };
 #endif
-static struct __pyx_vtabstruct_5pulse_PWCPulse __pyx_vtable_5pulse_PWCPulse;
+static struct __pyx_vtabstruct_9qutip_qoc_5pulse_PWCPulse __pyx_vtable_9qutip_qoc_5pulse_PWCPulse;
 
-static PyObject *__pyx_tp_new_5pulse_PWCPulse(PyTypeObject *t, PyObject *a, PyObject *k) {
-  struct __pyx_obj_5pulse_PWCPulse *p;
-  PyObject *o = __pyx_tp_new_5pulse_Pulse(t, a, k);
+static PyObject *__pyx_tp_new_9qutip_qoc_5pulse_PWCPulse(PyTypeObject *t, PyObject *a, PyObject *k) {
+  struct __pyx_obj_9qutip_qoc_5pulse_PWCPulse *p;
+  PyObject *o = __pyx_tp_new_9qutip_qoc_5pulse_Pulse(t, a, k);
   if (unlikely(!o)) return 0;
-  p = ((struct __pyx_obj_5pulse_PWCPulse *)o);
-  p->__pyx_base.__pyx_vtab = (struct __pyx_vtabstruct_5pulse_Pulse*)__pyx_vtabptr_5pulse_PWCPulse;
+  p = ((struct __pyx_obj_9qutip_qoc_5pulse_PWCPulse *)o);
+  p->__pyx_base.__pyx_vtab = (struct __pyx_vtabstruct_9qutip_qoc_5pulse_Pulse*)__pyx_vtabptr_9qutip_qoc_5pulse_PWCPulse;
   p->interval.data = NULL;
   p->interval.memview = NULL;
   return o;
 }
 
-static void __pyx_tp_dealloc_5pulse_PWCPulse(PyObject *o) {
-  struct __pyx_obj_5pulse_PWCPulse *p = (struct __pyx_obj_5pulse_PWCPulse *)o;
+static void __pyx_tp_dealloc_9qutip_qoc_5pulse_PWCPulse(PyObject *o) {
+  struct __pyx_obj_9qutip_qoc_5pulse_PWCPulse *p = (struct __pyx_obj_9qutip_qoc_5pulse_PWCPulse *)o;
   #if CYTHON_USE_TP_FINALIZE
   if (unlikely((PY_VERSION_HEX >= 0x03080000 || __Pyx_PyType_HasFeature(Py_TYPE(o), Py_TPFLAGS_HAVE_FINALIZE)) && __Pyx_PyObject_GetSlot(o, tp_finalize, destructor)) && (!PyType_IS_GC(Py_TYPE(o)) || !__Pyx_PyObject_GC_IsFinalized(o))) {
-    if (__Pyx_PyObject_GetSlot(o, tp_dealloc, destructor) == __pyx_tp_dealloc_5pulse_PWCPulse) {
+    if (__Pyx_PyObject_GetSlot(o, tp_dealloc, destructor) == __pyx_tp_dealloc_9qutip_qoc_5pulse_PWCPulse) {
       if (PyObject_CallFinalizerFromDealloc(o)) return;
     }
   }
   #endif
   __PYX_XCLEAR_MEMVIEW(&p->interval, 1);
   p->interval.memview = NULL; p->interval.data = NULL;
-  __pyx_tp_dealloc_5pulse_Pulse(o);
+  __pyx_tp_dealloc_9qutip_qoc_5pulse_Pulse(o);
 }
 
-static PyMethodDef __pyx_methods_5pulse_PWCPulse[] = {
-  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_8PWCPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
-  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_8PWCPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+static PyMethodDef __pyx_methods_9qutip_qoc_5pulse_PWCPulse[] = {
+  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_8PWCPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_8PWCPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
   {0, 0, 0, 0}
 };
 #if CYTHON_USE_TYPE_SPECS
-static PyType_Slot __pyx_type_5pulse_PWCPulse_slots[] = {
-  {Py_tp_dealloc, (void *)__pyx_tp_dealloc_5pulse_PWCPulse},
-  {Py_tp_methods, (void *)__pyx_methods_5pulse_PWCPulse},
-  {Py_tp_init, (void *)__pyx_pw_5pulse_8PWCPulse_1__init__},
-  {Py_tp_new, (void *)__pyx_tp_new_5pulse_PWCPulse},
+static PyType_Slot __pyx_type_9qutip_qoc_5pulse_PWCPulse_slots[] = {
+  {Py_tp_dealloc, (void *)__pyx_tp_dealloc_9qutip_qoc_5pulse_PWCPulse},
+  {Py_tp_methods, (void *)__pyx_methods_9qutip_qoc_5pulse_PWCPulse},
+  {Py_tp_init, (void *)__pyx_pw_9qutip_qoc_5pulse_8PWCPulse_1__init__},
+  {Py_tp_new, (void *)__pyx_tp_new_9qutip_qoc_5pulse_PWCPulse},
   {0, 0},
 };
-static PyType_Spec __pyx_type_5pulse_PWCPulse_spec = {
-  "pulse.PWCPulse",
-  sizeof(struct __pyx_obj_5pulse_PWCPulse),
+static PyType_Spec __pyx_type_9qutip_qoc_5pulse_PWCPulse_spec = {
+  "qutip_qoc.pulse.PWCPulse",
+  sizeof(struct __pyx_obj_9qutip_qoc_5pulse_PWCPulse),
   0,
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE,
-  __pyx_type_5pulse_PWCPulse_slots,
+  __pyx_type_9qutip_qoc_5pulse_PWCPulse_slots,
 };
 #else
 
-static PyTypeObject __pyx_type_5pulse_PWCPulse = {
+static PyTypeObject __pyx_type_9qutip_qoc_5pulse_PWCPulse = {
   PyVarObject_HEAD_INIT(0, 0)
-  "pulse.""PWCPulse", /*tp_name*/
-  sizeof(struct __pyx_obj_5pulse_PWCPulse), /*tp_basicsize*/
+  "qutip_qoc.pulse.""PWCPulse", /*tp_name*/
+  sizeof(struct __pyx_obj_9qutip_qoc_5pulse_PWCPulse), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc_5pulse_PWCPulse, /*tp_dealloc*/
+  __pyx_tp_dealloc_9qutip_qoc_5pulse_PWCPulse, /*tp_dealloc*/
   #if PY_VERSION_HEX < 0x030800b4
   0, /*tp_print*/
   #endif
@@ -32337,7 +32337,7 @@ static PyTypeObject __pyx_type_5pulse_PWCPulse = {
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
   0, /*tp_iternext*/
-  __pyx_methods_5pulse_PWCPulse, /*tp_methods*/
+  __pyx_methods_9qutip_qoc_5pulse_PWCPulse, /*tp_methods*/
   0, /*tp_members*/
   0, /*tp_getset*/
   0, /*tp_base*/
@@ -32347,9 +32347,9 @@ static PyTypeObject __pyx_type_5pulse_PWCPulse = {
   #if !CYTHON_USE_TYPE_SPECS
   0, /*tp_dictoffset*/
   #endif
-  __pyx_pw_5pulse_8PWCPulse_1__init__, /*tp_init*/
+  __pyx_pw_9qutip_qoc_5pulse_8PWCPulse_1__init__, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new_5pulse_PWCPulse, /*tp_new*/
+  __pyx_tp_new_9qutip_qoc_5pulse_PWCPulse, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -32380,61 +32380,61 @@ static PyTypeObject __pyx_type_5pulse_PWCPulse = {
   #endif
 };
 #endif
-static struct __pyx_vtabstruct_5pulse_PWLPulse __pyx_vtable_5pulse_PWLPulse;
+static struct __pyx_vtabstruct_9qutip_qoc_5pulse_PWLPulse __pyx_vtable_9qutip_qoc_5pulse_PWLPulse;
 
-static PyObject *__pyx_tp_new_5pulse_PWLPulse(PyTypeObject *t, PyObject *a, PyObject *k) {
-  struct __pyx_obj_5pulse_PWLPulse *p;
-  PyObject *o = __pyx_tp_new_5pulse_Pulse(t, a, k);
+static PyObject *__pyx_tp_new_9qutip_qoc_5pulse_PWLPulse(PyTypeObject *t, PyObject *a, PyObject *k) {
+  struct __pyx_obj_9qutip_qoc_5pulse_PWLPulse *p;
+  PyObject *o = __pyx_tp_new_9qutip_qoc_5pulse_Pulse(t, a, k);
   if (unlikely(!o)) return 0;
-  p = ((struct __pyx_obj_5pulse_PWLPulse *)o);
-  p->__pyx_base.__pyx_vtab = (struct __pyx_vtabstruct_5pulse_Pulse*)__pyx_vtabptr_5pulse_PWLPulse;
+  p = ((struct __pyx_obj_9qutip_qoc_5pulse_PWLPulse *)o);
+  p->__pyx_base.__pyx_vtab = (struct __pyx_vtabstruct_9qutip_qoc_5pulse_Pulse*)__pyx_vtabptr_9qutip_qoc_5pulse_PWLPulse;
   p->interval.data = NULL;
   p->interval.memview = NULL;
   return o;
 }
 
-static void __pyx_tp_dealloc_5pulse_PWLPulse(PyObject *o) {
-  struct __pyx_obj_5pulse_PWLPulse *p = (struct __pyx_obj_5pulse_PWLPulse *)o;
+static void __pyx_tp_dealloc_9qutip_qoc_5pulse_PWLPulse(PyObject *o) {
+  struct __pyx_obj_9qutip_qoc_5pulse_PWLPulse *p = (struct __pyx_obj_9qutip_qoc_5pulse_PWLPulse *)o;
   #if CYTHON_USE_TP_FINALIZE
   if (unlikely((PY_VERSION_HEX >= 0x03080000 || __Pyx_PyType_HasFeature(Py_TYPE(o), Py_TPFLAGS_HAVE_FINALIZE)) && __Pyx_PyObject_GetSlot(o, tp_finalize, destructor)) && (!PyType_IS_GC(Py_TYPE(o)) || !__Pyx_PyObject_GC_IsFinalized(o))) {
-    if (__Pyx_PyObject_GetSlot(o, tp_dealloc, destructor) == __pyx_tp_dealloc_5pulse_PWLPulse) {
+    if (__Pyx_PyObject_GetSlot(o, tp_dealloc, destructor) == __pyx_tp_dealloc_9qutip_qoc_5pulse_PWLPulse) {
       if (PyObject_CallFinalizerFromDealloc(o)) return;
     }
   }
   #endif
   __PYX_XCLEAR_MEMVIEW(&p->interval, 1);
   p->interval.memview = NULL; p->interval.data = NULL;
-  __pyx_tp_dealloc_5pulse_Pulse(o);
+  __pyx_tp_dealloc_9qutip_qoc_5pulse_Pulse(o);
 }
 
-static PyMethodDef __pyx_methods_5pulse_PWLPulse[] = {
-  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_8PWLPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
-  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_5pulse_8PWLPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+static PyMethodDef __pyx_methods_9qutip_qoc_5pulse_PWLPulse[] = {
+  {"__reduce_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_8PWLPulse_3__reduce_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
+  {"__setstate_cython__", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_9qutip_qoc_5pulse_8PWLPulse_5__setstate_cython__, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0},
   {0, 0, 0, 0}
 };
 #if CYTHON_USE_TYPE_SPECS
-static PyType_Slot __pyx_type_5pulse_PWLPulse_slots[] = {
-  {Py_tp_dealloc, (void *)__pyx_tp_dealloc_5pulse_PWLPulse},
-  {Py_tp_methods, (void *)__pyx_methods_5pulse_PWLPulse},
-  {Py_tp_init, (void *)__pyx_pw_5pulse_8PWLPulse_1__init__},
-  {Py_tp_new, (void *)__pyx_tp_new_5pulse_PWLPulse},
+static PyType_Slot __pyx_type_9qutip_qoc_5pulse_PWLPulse_slots[] = {
+  {Py_tp_dealloc, (void *)__pyx_tp_dealloc_9qutip_qoc_5pulse_PWLPulse},
+  {Py_tp_methods, (void *)__pyx_methods_9qutip_qoc_5pulse_PWLPulse},
+  {Py_tp_init, (void *)__pyx_pw_9qutip_qoc_5pulse_8PWLPulse_1__init__},
+  {Py_tp_new, (void *)__pyx_tp_new_9qutip_qoc_5pulse_PWLPulse},
   {0, 0},
 };
-static PyType_Spec __pyx_type_5pulse_PWLPulse_spec = {
-  "pulse.PWLPulse",
-  sizeof(struct __pyx_obj_5pulse_PWLPulse),
+static PyType_Spec __pyx_type_9qutip_qoc_5pulse_PWLPulse_spec = {
+  "qutip_qoc.pulse.PWLPulse",
+  sizeof(struct __pyx_obj_9qutip_qoc_5pulse_PWLPulse),
   0,
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE,
-  __pyx_type_5pulse_PWLPulse_slots,
+  __pyx_type_9qutip_qoc_5pulse_PWLPulse_slots,
 };
 #else
 
-static PyTypeObject __pyx_type_5pulse_PWLPulse = {
+static PyTypeObject __pyx_type_9qutip_qoc_5pulse_PWLPulse = {
   PyVarObject_HEAD_INIT(0, 0)
-  "pulse.""PWLPulse", /*tp_name*/
-  sizeof(struct __pyx_obj_5pulse_PWLPulse), /*tp_basicsize*/
+  "qutip_qoc.pulse.""PWLPulse", /*tp_name*/
+  sizeof(struct __pyx_obj_9qutip_qoc_5pulse_PWLPulse), /*tp_basicsize*/
   0, /*tp_itemsize*/
-  __pyx_tp_dealloc_5pulse_PWLPulse, /*tp_dealloc*/
+  __pyx_tp_dealloc_9qutip_qoc_5pulse_PWLPulse, /*tp_dealloc*/
   #if PY_VERSION_HEX < 0x030800b4
   0, /*tp_print*/
   #endif
@@ -32467,7 +32467,7 @@ static PyTypeObject __pyx_type_5pulse_PWLPulse = {
   0, /*tp_weaklistoffset*/
   0, /*tp_iter*/
   0, /*tp_iternext*/
-  __pyx_methods_5pulse_PWLPulse, /*tp_methods*/
+  __pyx_methods_9qutip_qoc_5pulse_PWLPulse, /*tp_methods*/
   0, /*tp_members*/
   0, /*tp_getset*/
   0, /*tp_base*/
@@ -32477,9 +32477,9 @@ static PyTypeObject __pyx_type_5pulse_PWLPulse = {
   #if !CYTHON_USE_TYPE_SPECS
   0, /*tp_dictoffset*/
   #endif
-  __pyx_pw_5pulse_8PWLPulse_1__init__, /*tp_init*/
+  __pyx_pw_9qutip_qoc_5pulse_8PWLPulse_1__init__, /*tp_init*/
   0, /*tp_alloc*/
-  __pyx_tp_new_5pulse_PWLPulse, /*tp_new*/
+  __pyx_tp_new_9qutip_qoc_5pulse_PWLPulse, /*tp_new*/
   0, /*tp_free*/
   0, /*tp_is_gc*/
   0, /*tp_bases*/
@@ -32648,7 +32648,7 @@ static PyType_Slot __pyx_type___pyx_array_slots[] = {
   {0, 0},
 };
 static PyType_Spec __pyx_type___pyx_array_spec = {
-  "pulse.array",
+  "qutip_qoc.pulse.array",
   sizeof(struct __pyx_array_obj),
   0,
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_SEQUENCE,
@@ -32694,7 +32694,7 @@ static PyBufferProcs __pyx_tp_as_buffer_array = {
 
 static PyTypeObject __pyx_type___pyx_array = {
   PyVarObject_HEAD_INIT(0, 0)
-  "pulse.""array", /*tp_name*/
+  "qutip_qoc.pulse.""array", /*tp_name*/
   sizeof(struct __pyx_array_obj), /*tp_basicsize*/
   0, /*tp_itemsize*/
   __pyx_tp_dealloc_array, /*tp_dealloc*/
@@ -32854,7 +32854,7 @@ static PyType_Slot __pyx_type___pyx_MemviewEnum_slots[] = {
   {0, 0},
 };
 static PyType_Spec __pyx_type___pyx_MemviewEnum_spec = {
-  "pulse.Enum",
+  "qutip_qoc.pulse.Enum",
   sizeof(struct __pyx_MemviewEnum_obj),
   0,
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC,
@@ -32864,7 +32864,7 @@ static PyType_Spec __pyx_type___pyx_MemviewEnum_spec = {
 
 static PyTypeObject __pyx_type___pyx_MemviewEnum = {
   PyVarObject_HEAD_INIT(0, 0)
-  "pulse.""Enum", /*tp_name*/
+  "qutip_qoc.pulse.""Enum", /*tp_name*/
   sizeof(struct __pyx_MemviewEnum_obj), /*tp_basicsize*/
   0, /*tp_itemsize*/
   __pyx_tp_dealloc_Enum, /*tp_dealloc*/
@@ -33161,7 +33161,7 @@ static PyType_Slot __pyx_type___pyx_memoryview_slots[] = {
   {0, 0},
 };
 static PyType_Spec __pyx_type___pyx_memoryview_spec = {
-  "pulse.memoryview",
+  "qutip_qoc.pulse.memoryview",
   sizeof(struct __pyx_memoryview_obj),
   0,
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC,
@@ -33207,7 +33207,7 @@ static PyBufferProcs __pyx_tp_as_buffer_memoryview = {
 
 static PyTypeObject __pyx_type___pyx_memoryview = {
   PyVarObject_HEAD_INIT(0, 0)
-  "pulse.""memoryview", /*tp_name*/
+  "qutip_qoc.pulse.""memoryview", /*tp_name*/
   sizeof(struct __pyx_memoryview_obj), /*tp_basicsize*/
   0, /*tp_itemsize*/
   __pyx_tp_dealloc_memoryview, /*tp_dealloc*/
@@ -33359,7 +33359,7 @@ static PyType_Slot __pyx_type___pyx_memoryviewslice_slots[] = {
   {0, 0},
 };
 static PyType_Spec __pyx_type___pyx_memoryviewslice_spec = {
-  "pulse._memoryviewslice",
+  "qutip_qoc.pulse._memoryviewslice",
   sizeof(struct __pyx_memoryviewslice_obj),
   0,
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC|Py_TPFLAGS_SEQUENCE,
@@ -33369,7 +33369,7 @@ static PyType_Spec __pyx_type___pyx_memoryviewslice_spec = {
 
 static PyTypeObject __pyx_type___pyx_memoryviewslice = {
   PyVarObject_HEAD_INIT(0, 0)
-  "pulse.""_memoryviewslice", /*tp_name*/
+  "qutip_qoc.pulse.""_memoryviewslice", /*tp_name*/
   sizeof(struct __pyx_memoryviewslice_obj), /*tp_basicsize*/
   0, /*tp_itemsize*/
   __pyx_tp_dealloc__memoryviewslice, /*tp_dealloc*/
@@ -33599,7 +33599,6 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_pack, __pyx_k_pack, sizeof(__pyx_k_pack), 0, 0, 1, 1},
     {&__pyx_n_s_paras, __pyx_k_paras, sizeof(__pyx_k_paras), 0, 0, 1, 1},
     {&__pyx_n_s_pickle, __pyx_k_pickle, sizeof(__pyx_k_pickle), 0, 0, 1, 1},
-    {&__pyx_n_s_pulse, __pyx_k_pulse, sizeof(__pyx_k_pulse), 0, 0, 1, 1},
     {&__pyx_n_s_pyx_PickleError, __pyx_k_pyx_PickleError, sizeof(__pyx_k_pyx_PickleError), 0, 0, 1, 1},
     {&__pyx_n_s_pyx_checksum, __pyx_k_pyx_checksum, sizeof(__pyx_k_pyx_checksum), 0, 0, 1, 1},
     {&__pyx_n_s_pyx_result, __pyx_k_pyx_result, sizeof(__pyx_k_pyx_result), 0, 0, 1, 1},
@@ -33616,6 +33615,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_pyx_unpickle_Pulse, __pyx_k_pyx_unpickle_Pulse, sizeof(__pyx_k_pyx_unpickle_Pulse), 0, 0, 1, 1},
     {&__pyx_n_s_pyx_unpickle_SinPulse, __pyx_k_pyx_unpickle_SinPulse, sizeof(__pyx_k_pyx_unpickle_SinPulse), 0, 0, 1, 1},
     {&__pyx_n_s_pyx_vtable, __pyx_k_pyx_vtable, sizeof(__pyx_k_pyx_vtable), 0, 0, 1, 1},
+    {&__pyx_n_s_qutip_qoc_pulse, __pyx_k_qutip_qoc_pulse, sizeof(__pyx_k_qutip_qoc_pulse), 0, 0, 1, 1},
     {&__pyx_n_s_range, __pyx_k_range, sizeof(__pyx_k_range), 0, 0, 1, 1},
     {&__pyx_n_s_reduce, __pyx_k_reduce, sizeof(__pyx_k_reduce), 0, 0, 1, 1},
     {&__pyx_n_s_reduce_cython, __pyx_k_reduce_cython, sizeof(__pyx_k_reduce_cython), 0, 0, 1, 1},
@@ -33627,7 +33627,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_shape, __pyx_k_shape, sizeof(__pyx_k_shape), 0, 0, 1, 1},
     {&__pyx_n_s_size, __pyx_k_size, sizeof(__pyx_k_size), 0, 0, 1, 1},
     {&__pyx_n_s_spec, __pyx_k_spec, sizeof(__pyx_k_spec), 0, 0, 1, 1},
-    {&__pyx_kp_s_src_qutip_qoc_cython_pulse_pyx, __pyx_k_src_qutip_qoc_cython_pulse_pyx, sizeof(__pyx_k_src_qutip_qoc_cython_pulse_pyx), 0, 0, 1, 0},
+    {&__pyx_kp_s_src_qutip_qoc_pulse_pyx, __pyx_k_src_qutip_qoc_pulse_pyx, sizeof(__pyx_k_src_qutip_qoc_pulse_pyx), 0, 0, 1, 0},
     {&__pyx_n_s_start, __pyx_k_start, sizeof(__pyx_k_start), 0, 0, 1, 1},
     {&__pyx_n_s_state, __pyx_k_state, sizeof(__pyx_k_state), 0, 0, 1, 1},
     {&__pyx_n_s_step, __pyx_k_step, sizeof(__pyx_k_step), 0, 0, 1, 1},
@@ -33710,7 +33710,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__8);
   __Pyx_GIVEREF(__pyx_tuple__8);
 
-  /* "pulse.pyx":256
+  /* "qutip_qoc/pulse.pyx":256
  *     def __init__(self, n_sup=1, n_var=4):
  *         if n_var % 2 != 0 or n_var < 4:
  *             raise ValueError("n_var must be an even number >= 4")             # <<<<<<<<<<<<<<
@@ -33836,7 +33836,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__21);
   __pyx_codeobj__22 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__21, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_Enum, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__22)) __PYX_ERR(1, 1, __pyx_L1_error)
 
-  /* "pulse.pyx":17
+  /* "qutip_qoc/pulse.pyx":17
  *         self.n_par = n_sup * n_var  # total num of paras
  * 
  *     cpdef double gen_pulse(self, double time, double[:] paras):             # <<<<<<<<<<<<<<
@@ -33846,9 +33846,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__23 = PyTuple_Pack(3, __pyx_n_s_self, __pyx_n_s_time, __pyx_n_s_paras); if (unlikely(!__pyx_tuple__23)) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__23);
   __Pyx_GIVEREF(__pyx_tuple__23);
-  __pyx_codeobj__24 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__23, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src_qutip_qoc_cython_pulse_pyx, __pyx_n_s_gen_pulse, 17, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__24)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __pyx_codeobj__24 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__23, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src_qutip_qoc_pulse_pyx, __pyx_n_s_gen_pulse, 17, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__24)) __PYX_ERR(0, 17, __pyx_L1_error)
 
-  /* "pulse.pyx":30
+  /* "qutip_qoc/pulse.pyx":30
  *         return pulse_val
  * 
  *     cpdef double gen_grad(self, double time, double[:] paras, int idx):             # <<<<<<<<<<<<<<
@@ -33858,7 +33858,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__25 = PyTuple_Pack(4, __pyx_n_s_self, __pyx_n_s_time, __pyx_n_s_paras, __pyx_n_s_idx); if (unlikely(!__pyx_tuple__25)) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__25);
   __Pyx_GIVEREF(__pyx_tuple__25);
-  __pyx_codeobj__26 = (PyObject*)__Pyx_PyCode_New(4, 0, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__25, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src_qutip_qoc_cython_pulse_pyx, __pyx_n_s_gen_grad, 30, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__26)) __PYX_ERR(0, 30, __pyx_L1_error)
+  __pyx_codeobj__26 = (PyObject*)__Pyx_PyCode_New(4, 0, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__25, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src_qutip_qoc_pulse_pyx, __pyx_n_s_gen_grad, 30, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__26)) __PYX_ERR(0, 30, __pyx_L1_error)
 
   /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
@@ -34105,325 +34105,325 @@ static int __Pyx_modinit_type_init_code(void) {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__Pyx_modinit_type_init_code", 0);
   /*--- Type init code ---*/
-  __pyx_vtabptr_5pulse_Pulse = &__pyx_vtable_5pulse_Pulse;
-  __pyx_vtable_5pulse_Pulse.gen_pulse = (double (*)(struct __pyx_obj_5pulse_Pulse *, double, __Pyx_memviewslice, int __pyx_skip_dispatch))__pyx_f_5pulse_5Pulse_gen_pulse;
-  __pyx_vtable_5pulse_Pulse.gen_grad = (double (*)(struct __pyx_obj_5pulse_Pulse *, double, __Pyx_memviewslice, int, int __pyx_skip_dispatch))__pyx_f_5pulse_5Pulse_gen_grad;
-  __pyx_vtable_5pulse_Pulse.pulse = (double (*)(struct __pyx_obj_5pulse_Pulse *, double, __Pyx_memviewslice))__pyx_f_5pulse_5Pulse_pulse;
-  __pyx_vtable_5pulse_Pulse.pulse_grad = (double (*)(struct __pyx_obj_5pulse_Pulse *, double, __Pyx_memviewslice, int))__pyx_f_5pulse_5Pulse_pulse_grad;
+  __pyx_vtabptr_9qutip_qoc_5pulse_Pulse = &__pyx_vtable_9qutip_qoc_5pulse_Pulse;
+  __pyx_vtable_9qutip_qoc_5pulse_Pulse.gen_pulse = (double (*)(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *, double, __Pyx_memviewslice, int __pyx_skip_dispatch))__pyx_f_9qutip_qoc_5pulse_5Pulse_gen_pulse;
+  __pyx_vtable_9qutip_qoc_5pulse_Pulse.gen_grad = (double (*)(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *, double, __Pyx_memviewslice, int, int __pyx_skip_dispatch))__pyx_f_9qutip_qoc_5pulse_5Pulse_gen_grad;
+  __pyx_vtable_9qutip_qoc_5pulse_Pulse.pulse = (double (*)(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *, double, __Pyx_memviewslice))__pyx_f_9qutip_qoc_5pulse_5Pulse_pulse;
+  __pyx_vtable_9qutip_qoc_5pulse_Pulse.pulse_grad = (double (*)(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *, double, __Pyx_memviewslice, int))__pyx_f_9qutip_qoc_5pulse_5Pulse_pulse_grad;
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_ptype_5pulse_Pulse = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_5pulse_Pulse_spec, NULL); if (unlikely(!__pyx_ptype_5pulse_Pulse)) __PYX_ERR(0, 7, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_5pulse_Pulse_spec, __pyx_ptype_5pulse_Pulse) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
+  __pyx_ptype_9qutip_qoc_5pulse_Pulse = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_9qutip_qoc_5pulse_Pulse_spec, NULL); if (unlikely(!__pyx_ptype_9qutip_qoc_5pulse_Pulse)) __PYX_ERR(0, 7, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_9qutip_qoc_5pulse_Pulse_spec, __pyx_ptype_9qutip_qoc_5pulse_Pulse) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
   #else
-  __pyx_ptype_5pulse_Pulse = &__pyx_type_5pulse_Pulse;
+  __pyx_ptype_9qutip_qoc_5pulse_Pulse = &__pyx_type_9qutip_qoc_5pulse_Pulse;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_ptype_5pulse_Pulse) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_ptype_9qutip_qoc_5pulse_Pulse) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
   #endif
   #if PY_MAJOR_VERSION < 3
-  __pyx_ptype_5pulse_Pulse->tp_print = 0;
+  __pyx_ptype_9qutip_qoc_5pulse_Pulse->tp_print = 0;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_ptype_5pulse_Pulse->tp_dictoffset && __pyx_ptype_5pulse_Pulse->tp_getattro == PyObject_GenericGetAttr)) {
-    __pyx_ptype_5pulse_Pulse->tp_getattro = __Pyx_PyObject_GenericGetAttr;
+  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_ptype_9qutip_qoc_5pulse_Pulse->tp_dictoffset && __pyx_ptype_9qutip_qoc_5pulse_Pulse->tp_getattro == PyObject_GenericGetAttr)) {
+    __pyx_ptype_9qutip_qoc_5pulse_Pulse->tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
   #endif
-  if (__Pyx_SetVtable(__pyx_ptype_5pulse_Pulse, __pyx_vtabptr_5pulse_Pulse) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_ptype_9qutip_qoc_5pulse_Pulse, __pyx_vtabptr_9qutip_qoc_5pulse_Pulse) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_MergeVtables(__pyx_ptype_5pulse_Pulse) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
+  if (__Pyx_MergeVtables(__pyx_ptype_9qutip_qoc_5pulse_Pulse) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
   #endif
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_Pulse, (PyObject *) __pyx_ptype_5pulse_Pulse) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_Pulse, (PyObject *) __pyx_ptype_9qutip_qoc_5pulse_Pulse) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_5pulse_Pulse) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_9qutip_qoc_5pulse_Pulse) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
   #endif
-  __pyx_vtabptr_5pulse_GaussianPulse = &__pyx_vtable_5pulse_GaussianPulse;
-  __pyx_vtable_5pulse_GaussianPulse.__pyx_base = *__pyx_vtabptr_5pulse_Pulse;
-  __pyx_vtable_5pulse_GaussianPulse.__pyx_base.pulse = (double (*)(struct __pyx_obj_5pulse_Pulse *, double, __Pyx_memviewslice))__pyx_f_5pulse_13GaussianPulse_pulse;
-  __pyx_vtable_5pulse_GaussianPulse.__pyx_base.pulse_grad = (double (*)(struct __pyx_obj_5pulse_Pulse *, double, __Pyx_memviewslice, int))__pyx_f_5pulse_13GaussianPulse_pulse_grad;
+  __pyx_vtabptr_9qutip_qoc_5pulse_GaussianPulse = &__pyx_vtable_9qutip_qoc_5pulse_GaussianPulse;
+  __pyx_vtable_9qutip_qoc_5pulse_GaussianPulse.__pyx_base = *__pyx_vtabptr_9qutip_qoc_5pulse_Pulse;
+  __pyx_vtable_9qutip_qoc_5pulse_GaussianPulse.__pyx_base.pulse = (double (*)(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *, double, __Pyx_memviewslice))__pyx_f_9qutip_qoc_5pulse_13GaussianPulse_pulse;
+  __pyx_vtable_9qutip_qoc_5pulse_GaussianPulse.__pyx_base.pulse_grad = (double (*)(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *, double, __Pyx_memviewslice, int))__pyx_f_9qutip_qoc_5pulse_13GaussianPulse_pulse_grad;
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_t_1 = PyTuple_Pack(1, (PyObject *)__pyx_ptype_5pulse_Pulse); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 57, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_Pack(1, (PyObject *)__pyx_ptype_9qutip_qoc_5pulse_Pulse); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 57, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_ptype_5pulse_GaussianPulse = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_5pulse_GaussianPulse_spec, __pyx_t_1);
+  __pyx_ptype_9qutip_qoc_5pulse_GaussianPulse = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_9qutip_qoc_5pulse_GaussianPulse_spec, __pyx_t_1);
   __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (unlikely(!__pyx_ptype_5pulse_GaussianPulse)) __PYX_ERR(0, 57, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_5pulse_GaussianPulse_spec, __pyx_ptype_5pulse_GaussianPulse) < 0) __PYX_ERR(0, 57, __pyx_L1_error)
+  if (unlikely(!__pyx_ptype_9qutip_qoc_5pulse_GaussianPulse)) __PYX_ERR(0, 57, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_9qutip_qoc_5pulse_GaussianPulse_spec, __pyx_ptype_9qutip_qoc_5pulse_GaussianPulse) < 0) __PYX_ERR(0, 57, __pyx_L1_error)
   #else
-  __pyx_ptype_5pulse_GaussianPulse = &__pyx_type_5pulse_GaussianPulse;
+  __pyx_ptype_9qutip_qoc_5pulse_GaussianPulse = &__pyx_type_9qutip_qoc_5pulse_GaussianPulse;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  __pyx_ptype_5pulse_GaussianPulse->tp_base = __pyx_ptype_5pulse_Pulse;
+  __pyx_ptype_9qutip_qoc_5pulse_GaussianPulse->tp_base = __pyx_ptype_9qutip_qoc_5pulse_Pulse;
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_ptype_5pulse_GaussianPulse) < 0) __PYX_ERR(0, 57, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_ptype_9qutip_qoc_5pulse_GaussianPulse) < 0) __PYX_ERR(0, 57, __pyx_L1_error)
   #endif
   #if PY_MAJOR_VERSION < 3
-  __pyx_ptype_5pulse_GaussianPulse->tp_print = 0;
+  __pyx_ptype_9qutip_qoc_5pulse_GaussianPulse->tp_print = 0;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_ptype_5pulse_GaussianPulse->tp_dictoffset && __pyx_ptype_5pulse_GaussianPulse->tp_getattro == PyObject_GenericGetAttr)) {
-    __pyx_ptype_5pulse_GaussianPulse->tp_getattro = __Pyx_PyObject_GenericGetAttr;
+  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_ptype_9qutip_qoc_5pulse_GaussianPulse->tp_dictoffset && __pyx_ptype_9qutip_qoc_5pulse_GaussianPulse->tp_getattro == PyObject_GenericGetAttr)) {
+    __pyx_ptype_9qutip_qoc_5pulse_GaussianPulse->tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
   #endif
-  if (__Pyx_SetVtable(__pyx_ptype_5pulse_GaussianPulse, __pyx_vtabptr_5pulse_GaussianPulse) < 0) __PYX_ERR(0, 57, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_ptype_9qutip_qoc_5pulse_GaussianPulse, __pyx_vtabptr_9qutip_qoc_5pulse_GaussianPulse) < 0) __PYX_ERR(0, 57, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_MergeVtables(__pyx_ptype_5pulse_GaussianPulse) < 0) __PYX_ERR(0, 57, __pyx_L1_error)
+  if (__Pyx_MergeVtables(__pyx_ptype_9qutip_qoc_5pulse_GaussianPulse) < 0) __PYX_ERR(0, 57, __pyx_L1_error)
   #endif
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_GaussianPulse, (PyObject *) __pyx_ptype_5pulse_GaussianPulse) < 0) __PYX_ERR(0, 57, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_GaussianPulse, (PyObject *) __pyx_ptype_9qutip_qoc_5pulse_GaussianPulse) < 0) __PYX_ERR(0, 57, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_5pulse_GaussianPulse) < 0) __PYX_ERR(0, 57, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_9qutip_qoc_5pulse_GaussianPulse) < 0) __PYX_ERR(0, 57, __pyx_L1_error)
   #endif
-  __pyx_vtabptr_5pulse_SinPulse = &__pyx_vtable_5pulse_SinPulse;
-  __pyx_vtable_5pulse_SinPulse.__pyx_base = *__pyx_vtabptr_5pulse_Pulse;
-  __pyx_vtable_5pulse_SinPulse.__pyx_base.pulse = (double (*)(struct __pyx_obj_5pulse_Pulse *, double, __Pyx_memviewslice))__pyx_f_5pulse_8SinPulse_pulse;
-  __pyx_vtable_5pulse_SinPulse.__pyx_base.pulse_grad = (double (*)(struct __pyx_obj_5pulse_Pulse *, double, __Pyx_memviewslice, int))__pyx_f_5pulse_8SinPulse_pulse_grad;
+  __pyx_vtabptr_9qutip_qoc_5pulse_SinPulse = &__pyx_vtable_9qutip_qoc_5pulse_SinPulse;
+  __pyx_vtable_9qutip_qoc_5pulse_SinPulse.__pyx_base = *__pyx_vtabptr_9qutip_qoc_5pulse_Pulse;
+  __pyx_vtable_9qutip_qoc_5pulse_SinPulse.__pyx_base.pulse = (double (*)(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *, double, __Pyx_memviewslice))__pyx_f_9qutip_qoc_5pulse_8SinPulse_pulse;
+  __pyx_vtable_9qutip_qoc_5pulse_SinPulse.__pyx_base.pulse_grad = (double (*)(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *, double, __Pyx_memviewslice, int))__pyx_f_9qutip_qoc_5pulse_8SinPulse_pulse_grad;
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_t_1 = PyTuple_Pack(1, (PyObject *)__pyx_ptype_5pulse_Pulse); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 96, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_Pack(1, (PyObject *)__pyx_ptype_9qutip_qoc_5pulse_Pulse); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 96, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_ptype_5pulse_SinPulse = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_5pulse_SinPulse_spec, __pyx_t_1);
+  __pyx_ptype_9qutip_qoc_5pulse_SinPulse = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_9qutip_qoc_5pulse_SinPulse_spec, __pyx_t_1);
   __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (unlikely(!__pyx_ptype_5pulse_SinPulse)) __PYX_ERR(0, 96, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_5pulse_SinPulse_spec, __pyx_ptype_5pulse_SinPulse) < 0) __PYX_ERR(0, 96, __pyx_L1_error)
+  if (unlikely(!__pyx_ptype_9qutip_qoc_5pulse_SinPulse)) __PYX_ERR(0, 96, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_9qutip_qoc_5pulse_SinPulse_spec, __pyx_ptype_9qutip_qoc_5pulse_SinPulse) < 0) __PYX_ERR(0, 96, __pyx_L1_error)
   #else
-  __pyx_ptype_5pulse_SinPulse = &__pyx_type_5pulse_SinPulse;
+  __pyx_ptype_9qutip_qoc_5pulse_SinPulse = &__pyx_type_9qutip_qoc_5pulse_SinPulse;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  __pyx_ptype_5pulse_SinPulse->tp_base = __pyx_ptype_5pulse_Pulse;
+  __pyx_ptype_9qutip_qoc_5pulse_SinPulse->tp_base = __pyx_ptype_9qutip_qoc_5pulse_Pulse;
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_ptype_5pulse_SinPulse) < 0) __PYX_ERR(0, 96, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_ptype_9qutip_qoc_5pulse_SinPulse) < 0) __PYX_ERR(0, 96, __pyx_L1_error)
   #endif
   #if PY_MAJOR_VERSION < 3
-  __pyx_ptype_5pulse_SinPulse->tp_print = 0;
+  __pyx_ptype_9qutip_qoc_5pulse_SinPulse->tp_print = 0;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_ptype_5pulse_SinPulse->tp_dictoffset && __pyx_ptype_5pulse_SinPulse->tp_getattro == PyObject_GenericGetAttr)) {
-    __pyx_ptype_5pulse_SinPulse->tp_getattro = __Pyx_PyObject_GenericGetAttr;
+  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_ptype_9qutip_qoc_5pulse_SinPulse->tp_dictoffset && __pyx_ptype_9qutip_qoc_5pulse_SinPulse->tp_getattro == PyObject_GenericGetAttr)) {
+    __pyx_ptype_9qutip_qoc_5pulse_SinPulse->tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
   #endif
-  if (__Pyx_SetVtable(__pyx_ptype_5pulse_SinPulse, __pyx_vtabptr_5pulse_SinPulse) < 0) __PYX_ERR(0, 96, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_ptype_9qutip_qoc_5pulse_SinPulse, __pyx_vtabptr_9qutip_qoc_5pulse_SinPulse) < 0) __PYX_ERR(0, 96, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_MergeVtables(__pyx_ptype_5pulse_SinPulse) < 0) __PYX_ERR(0, 96, __pyx_L1_error)
+  if (__Pyx_MergeVtables(__pyx_ptype_9qutip_qoc_5pulse_SinPulse) < 0) __PYX_ERR(0, 96, __pyx_L1_error)
   #endif
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_SinPulse, (PyObject *) __pyx_ptype_5pulse_SinPulse) < 0) __PYX_ERR(0, 96, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_SinPulse, (PyObject *) __pyx_ptype_9qutip_qoc_5pulse_SinPulse) < 0) __PYX_ERR(0, 96, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_5pulse_SinPulse) < 0) __PYX_ERR(0, 96, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_9qutip_qoc_5pulse_SinPulse) < 0) __PYX_ERR(0, 96, __pyx_L1_error)
   #endif
-  __pyx_vtabptr_5pulse_CosPulse = &__pyx_vtable_5pulse_CosPulse;
-  __pyx_vtable_5pulse_CosPulse.__pyx_base = *__pyx_vtabptr_5pulse_Pulse;
-  __pyx_vtable_5pulse_CosPulse.__pyx_base.pulse = (double (*)(struct __pyx_obj_5pulse_Pulse *, double, __Pyx_memviewslice))__pyx_f_5pulse_8CosPulse_pulse;
-  __pyx_vtable_5pulse_CosPulse.__pyx_base.pulse_grad = (double (*)(struct __pyx_obj_5pulse_Pulse *, double, __Pyx_memviewslice, int))__pyx_f_5pulse_8CosPulse_pulse_grad;
+  __pyx_vtabptr_9qutip_qoc_5pulse_CosPulse = &__pyx_vtable_9qutip_qoc_5pulse_CosPulse;
+  __pyx_vtable_9qutip_qoc_5pulse_CosPulse.__pyx_base = *__pyx_vtabptr_9qutip_qoc_5pulse_Pulse;
+  __pyx_vtable_9qutip_qoc_5pulse_CosPulse.__pyx_base.pulse = (double (*)(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *, double, __Pyx_memviewslice))__pyx_f_9qutip_qoc_5pulse_8CosPulse_pulse;
+  __pyx_vtable_9qutip_qoc_5pulse_CosPulse.__pyx_base.pulse_grad = (double (*)(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *, double, __Pyx_memviewslice, int))__pyx_f_9qutip_qoc_5pulse_8CosPulse_pulse_grad;
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_t_1 = PyTuple_Pack(1, (PyObject *)__pyx_ptype_5pulse_Pulse); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 135, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_Pack(1, (PyObject *)__pyx_ptype_9qutip_qoc_5pulse_Pulse); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 135, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_ptype_5pulse_CosPulse = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_5pulse_CosPulse_spec, __pyx_t_1);
+  __pyx_ptype_9qutip_qoc_5pulse_CosPulse = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_9qutip_qoc_5pulse_CosPulse_spec, __pyx_t_1);
   __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (unlikely(!__pyx_ptype_5pulse_CosPulse)) __PYX_ERR(0, 135, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_5pulse_CosPulse_spec, __pyx_ptype_5pulse_CosPulse) < 0) __PYX_ERR(0, 135, __pyx_L1_error)
+  if (unlikely(!__pyx_ptype_9qutip_qoc_5pulse_CosPulse)) __PYX_ERR(0, 135, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_9qutip_qoc_5pulse_CosPulse_spec, __pyx_ptype_9qutip_qoc_5pulse_CosPulse) < 0) __PYX_ERR(0, 135, __pyx_L1_error)
   #else
-  __pyx_ptype_5pulse_CosPulse = &__pyx_type_5pulse_CosPulse;
+  __pyx_ptype_9qutip_qoc_5pulse_CosPulse = &__pyx_type_9qutip_qoc_5pulse_CosPulse;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  __pyx_ptype_5pulse_CosPulse->tp_base = __pyx_ptype_5pulse_Pulse;
+  __pyx_ptype_9qutip_qoc_5pulse_CosPulse->tp_base = __pyx_ptype_9qutip_qoc_5pulse_Pulse;
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_ptype_5pulse_CosPulse) < 0) __PYX_ERR(0, 135, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_ptype_9qutip_qoc_5pulse_CosPulse) < 0) __PYX_ERR(0, 135, __pyx_L1_error)
   #endif
   #if PY_MAJOR_VERSION < 3
-  __pyx_ptype_5pulse_CosPulse->tp_print = 0;
+  __pyx_ptype_9qutip_qoc_5pulse_CosPulse->tp_print = 0;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_ptype_5pulse_CosPulse->tp_dictoffset && __pyx_ptype_5pulse_CosPulse->tp_getattro == PyObject_GenericGetAttr)) {
-    __pyx_ptype_5pulse_CosPulse->tp_getattro = __Pyx_PyObject_GenericGetAttr;
+  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_ptype_9qutip_qoc_5pulse_CosPulse->tp_dictoffset && __pyx_ptype_9qutip_qoc_5pulse_CosPulse->tp_getattro == PyObject_GenericGetAttr)) {
+    __pyx_ptype_9qutip_qoc_5pulse_CosPulse->tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
   #endif
-  if (__Pyx_SetVtable(__pyx_ptype_5pulse_CosPulse, __pyx_vtabptr_5pulse_CosPulse) < 0) __PYX_ERR(0, 135, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_ptype_9qutip_qoc_5pulse_CosPulse, __pyx_vtabptr_9qutip_qoc_5pulse_CosPulse) < 0) __PYX_ERR(0, 135, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_MergeVtables(__pyx_ptype_5pulse_CosPulse) < 0) __PYX_ERR(0, 135, __pyx_L1_error)
+  if (__Pyx_MergeVtables(__pyx_ptype_9qutip_qoc_5pulse_CosPulse) < 0) __PYX_ERR(0, 135, __pyx_L1_error)
   #endif
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_CosPulse, (PyObject *) __pyx_ptype_5pulse_CosPulse) < 0) __PYX_ERR(0, 135, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_CosPulse, (PyObject *) __pyx_ptype_9qutip_qoc_5pulse_CosPulse) < 0) __PYX_ERR(0, 135, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_5pulse_CosPulse) < 0) __PYX_ERR(0, 135, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_9qutip_qoc_5pulse_CosPulse) < 0) __PYX_ERR(0, 135, __pyx_L1_error)
   #endif
-  __pyx_vtabptr_5pulse_CosCosPulse = &__pyx_vtable_5pulse_CosCosPulse;
-  __pyx_vtable_5pulse_CosCosPulse.__pyx_base = *__pyx_vtabptr_5pulse_Pulse;
-  __pyx_vtable_5pulse_CosCosPulse.__pyx_base.pulse = (double (*)(struct __pyx_obj_5pulse_Pulse *, double, __Pyx_memviewslice))__pyx_f_5pulse_11CosCosPulse_pulse;
-  __pyx_vtable_5pulse_CosCosPulse.__pyx_base.pulse_grad = (double (*)(struct __pyx_obj_5pulse_Pulse *, double, __Pyx_memviewslice, int))__pyx_f_5pulse_11CosCosPulse_pulse_grad;
+  __pyx_vtabptr_9qutip_qoc_5pulse_CosCosPulse = &__pyx_vtable_9qutip_qoc_5pulse_CosCosPulse;
+  __pyx_vtable_9qutip_qoc_5pulse_CosCosPulse.__pyx_base = *__pyx_vtabptr_9qutip_qoc_5pulse_Pulse;
+  __pyx_vtable_9qutip_qoc_5pulse_CosCosPulse.__pyx_base.pulse = (double (*)(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *, double, __Pyx_memviewslice))__pyx_f_9qutip_qoc_5pulse_11CosCosPulse_pulse;
+  __pyx_vtable_9qutip_qoc_5pulse_CosCosPulse.__pyx_base.pulse_grad = (double (*)(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *, double, __Pyx_memviewslice, int))__pyx_f_9qutip_qoc_5pulse_11CosCosPulse_pulse_grad;
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_t_1 = PyTuple_Pack(1, (PyObject *)__pyx_ptype_5pulse_Pulse); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 174, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_Pack(1, (PyObject *)__pyx_ptype_9qutip_qoc_5pulse_Pulse); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 174, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_ptype_5pulse_CosCosPulse = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_5pulse_CosCosPulse_spec, __pyx_t_1);
+  __pyx_ptype_9qutip_qoc_5pulse_CosCosPulse = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_9qutip_qoc_5pulse_CosCosPulse_spec, __pyx_t_1);
   __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (unlikely(!__pyx_ptype_5pulse_CosCosPulse)) __PYX_ERR(0, 174, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_5pulse_CosCosPulse_spec, __pyx_ptype_5pulse_CosCosPulse) < 0) __PYX_ERR(0, 174, __pyx_L1_error)
+  if (unlikely(!__pyx_ptype_9qutip_qoc_5pulse_CosCosPulse)) __PYX_ERR(0, 174, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_9qutip_qoc_5pulse_CosCosPulse_spec, __pyx_ptype_9qutip_qoc_5pulse_CosCosPulse) < 0) __PYX_ERR(0, 174, __pyx_L1_error)
   #else
-  __pyx_ptype_5pulse_CosCosPulse = &__pyx_type_5pulse_CosCosPulse;
+  __pyx_ptype_9qutip_qoc_5pulse_CosCosPulse = &__pyx_type_9qutip_qoc_5pulse_CosCosPulse;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  __pyx_ptype_5pulse_CosCosPulse->tp_base = __pyx_ptype_5pulse_Pulse;
+  __pyx_ptype_9qutip_qoc_5pulse_CosCosPulse->tp_base = __pyx_ptype_9qutip_qoc_5pulse_Pulse;
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_ptype_5pulse_CosCosPulse) < 0) __PYX_ERR(0, 174, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_ptype_9qutip_qoc_5pulse_CosCosPulse) < 0) __PYX_ERR(0, 174, __pyx_L1_error)
   #endif
   #if PY_MAJOR_VERSION < 3
-  __pyx_ptype_5pulse_CosCosPulse->tp_print = 0;
+  __pyx_ptype_9qutip_qoc_5pulse_CosCosPulse->tp_print = 0;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_ptype_5pulse_CosCosPulse->tp_dictoffset && __pyx_ptype_5pulse_CosCosPulse->tp_getattro == PyObject_GenericGetAttr)) {
-    __pyx_ptype_5pulse_CosCosPulse->tp_getattro = __Pyx_PyObject_GenericGetAttr;
+  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_ptype_9qutip_qoc_5pulse_CosCosPulse->tp_dictoffset && __pyx_ptype_9qutip_qoc_5pulse_CosCosPulse->tp_getattro == PyObject_GenericGetAttr)) {
+    __pyx_ptype_9qutip_qoc_5pulse_CosCosPulse->tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
   #endif
-  if (__Pyx_SetVtable(__pyx_ptype_5pulse_CosCosPulse, __pyx_vtabptr_5pulse_CosCosPulse) < 0) __PYX_ERR(0, 174, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_ptype_9qutip_qoc_5pulse_CosCosPulse, __pyx_vtabptr_9qutip_qoc_5pulse_CosCosPulse) < 0) __PYX_ERR(0, 174, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_MergeVtables(__pyx_ptype_5pulse_CosCosPulse) < 0) __PYX_ERR(0, 174, __pyx_L1_error)
+  if (__Pyx_MergeVtables(__pyx_ptype_9qutip_qoc_5pulse_CosCosPulse) < 0) __PYX_ERR(0, 174, __pyx_L1_error)
   #endif
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_CosCosPulse, (PyObject *) __pyx_ptype_5pulse_CosCosPulse) < 0) __PYX_ERR(0, 174, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_CosCosPulse, (PyObject *) __pyx_ptype_9qutip_qoc_5pulse_CosCosPulse) < 0) __PYX_ERR(0, 174, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_5pulse_CosCosPulse) < 0) __PYX_ERR(0, 174, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_9qutip_qoc_5pulse_CosCosPulse) < 0) __PYX_ERR(0, 174, __pyx_L1_error)
   #endif
-  __pyx_vtabptr_5pulse_PolynomialPulse = &__pyx_vtable_5pulse_PolynomialPulse;
-  __pyx_vtable_5pulse_PolynomialPulse.__pyx_base = *__pyx_vtabptr_5pulse_Pulse;
-  __pyx_vtable_5pulse_PolynomialPulse.__pyx_base.pulse = (double (*)(struct __pyx_obj_5pulse_Pulse *, double, __Pyx_memviewslice))__pyx_f_5pulse_15PolynomialPulse_pulse;
-  __pyx_vtable_5pulse_PolynomialPulse.__pyx_base.pulse_grad = (double (*)(struct __pyx_obj_5pulse_Pulse *, double, __Pyx_memviewslice, int))__pyx_f_5pulse_15PolynomialPulse_pulse_grad;
+  __pyx_vtabptr_9qutip_qoc_5pulse_PolynomialPulse = &__pyx_vtable_9qutip_qoc_5pulse_PolynomialPulse;
+  __pyx_vtable_9qutip_qoc_5pulse_PolynomialPulse.__pyx_base = *__pyx_vtabptr_9qutip_qoc_5pulse_Pulse;
+  __pyx_vtable_9qutip_qoc_5pulse_PolynomialPulse.__pyx_base.pulse = (double (*)(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *, double, __Pyx_memviewslice))__pyx_f_9qutip_qoc_5pulse_15PolynomialPulse_pulse;
+  __pyx_vtable_9qutip_qoc_5pulse_PolynomialPulse.__pyx_base.pulse_grad = (double (*)(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *, double, __Pyx_memviewslice, int))__pyx_f_9qutip_qoc_5pulse_15PolynomialPulse_pulse_grad;
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_t_1 = PyTuple_Pack(1, (PyObject *)__pyx_ptype_5pulse_Pulse); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 222, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_Pack(1, (PyObject *)__pyx_ptype_9qutip_qoc_5pulse_Pulse); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 222, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_ptype_5pulse_PolynomialPulse = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_5pulse_PolynomialPulse_spec, __pyx_t_1);
+  __pyx_ptype_9qutip_qoc_5pulse_PolynomialPulse = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_9qutip_qoc_5pulse_PolynomialPulse_spec, __pyx_t_1);
   __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (unlikely(!__pyx_ptype_5pulse_PolynomialPulse)) __PYX_ERR(0, 222, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_5pulse_PolynomialPulse_spec, __pyx_ptype_5pulse_PolynomialPulse) < 0) __PYX_ERR(0, 222, __pyx_L1_error)
+  if (unlikely(!__pyx_ptype_9qutip_qoc_5pulse_PolynomialPulse)) __PYX_ERR(0, 222, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_9qutip_qoc_5pulse_PolynomialPulse_spec, __pyx_ptype_9qutip_qoc_5pulse_PolynomialPulse) < 0) __PYX_ERR(0, 222, __pyx_L1_error)
   #else
-  __pyx_ptype_5pulse_PolynomialPulse = &__pyx_type_5pulse_PolynomialPulse;
+  __pyx_ptype_9qutip_qoc_5pulse_PolynomialPulse = &__pyx_type_9qutip_qoc_5pulse_PolynomialPulse;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  __pyx_ptype_5pulse_PolynomialPulse->tp_base = __pyx_ptype_5pulse_Pulse;
+  __pyx_ptype_9qutip_qoc_5pulse_PolynomialPulse->tp_base = __pyx_ptype_9qutip_qoc_5pulse_Pulse;
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_ptype_5pulse_PolynomialPulse) < 0) __PYX_ERR(0, 222, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_ptype_9qutip_qoc_5pulse_PolynomialPulse) < 0) __PYX_ERR(0, 222, __pyx_L1_error)
   #endif
   #if PY_MAJOR_VERSION < 3
-  __pyx_ptype_5pulse_PolynomialPulse->tp_print = 0;
+  __pyx_ptype_9qutip_qoc_5pulse_PolynomialPulse->tp_print = 0;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_ptype_5pulse_PolynomialPulse->tp_dictoffset && __pyx_ptype_5pulse_PolynomialPulse->tp_getattro == PyObject_GenericGetAttr)) {
-    __pyx_ptype_5pulse_PolynomialPulse->tp_getattro = __Pyx_PyObject_GenericGetAttr;
+  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_ptype_9qutip_qoc_5pulse_PolynomialPulse->tp_dictoffset && __pyx_ptype_9qutip_qoc_5pulse_PolynomialPulse->tp_getattro == PyObject_GenericGetAttr)) {
+    __pyx_ptype_9qutip_qoc_5pulse_PolynomialPulse->tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
   #endif
-  if (__Pyx_SetVtable(__pyx_ptype_5pulse_PolynomialPulse, __pyx_vtabptr_5pulse_PolynomialPulse) < 0) __PYX_ERR(0, 222, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_ptype_9qutip_qoc_5pulse_PolynomialPulse, __pyx_vtabptr_9qutip_qoc_5pulse_PolynomialPulse) < 0) __PYX_ERR(0, 222, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_MergeVtables(__pyx_ptype_5pulse_PolynomialPulse) < 0) __PYX_ERR(0, 222, __pyx_L1_error)
+  if (__Pyx_MergeVtables(__pyx_ptype_9qutip_qoc_5pulse_PolynomialPulse) < 0) __PYX_ERR(0, 222, __pyx_L1_error)
   #endif
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_PolynomialPulse, (PyObject *) __pyx_ptype_5pulse_PolynomialPulse) < 0) __PYX_ERR(0, 222, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_PolynomialPulse, (PyObject *) __pyx_ptype_9qutip_qoc_5pulse_PolynomialPulse) < 0) __PYX_ERR(0, 222, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_5pulse_PolynomialPulse) < 0) __PYX_ERR(0, 222, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_9qutip_qoc_5pulse_PolynomialPulse) < 0) __PYX_ERR(0, 222, __pyx_L1_error)
   #endif
-  __pyx_vtabptr_5pulse_FourierPulse = &__pyx_vtable_5pulse_FourierPulse;
-  __pyx_vtable_5pulse_FourierPulse.__pyx_base = *__pyx_vtabptr_5pulse_Pulse;
-  __pyx_vtable_5pulse_FourierPulse.__pyx_base.pulse = (double (*)(struct __pyx_obj_5pulse_Pulse *, double, __Pyx_memviewslice))__pyx_f_5pulse_12FourierPulse_pulse;
-  __pyx_vtable_5pulse_FourierPulse.__pyx_base.pulse_grad = (double (*)(struct __pyx_obj_5pulse_Pulse *, double, __Pyx_memviewslice, int))__pyx_f_5pulse_12FourierPulse_pulse_grad;
+  __pyx_vtabptr_9qutip_qoc_5pulse_FourierPulse = &__pyx_vtable_9qutip_qoc_5pulse_FourierPulse;
+  __pyx_vtable_9qutip_qoc_5pulse_FourierPulse.__pyx_base = *__pyx_vtabptr_9qutip_qoc_5pulse_Pulse;
+  __pyx_vtable_9qutip_qoc_5pulse_FourierPulse.__pyx_base.pulse = (double (*)(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *, double, __Pyx_memviewslice))__pyx_f_9qutip_qoc_5pulse_12FourierPulse_pulse;
+  __pyx_vtable_9qutip_qoc_5pulse_FourierPulse.__pyx_base.pulse_grad = (double (*)(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *, double, __Pyx_memviewslice, int))__pyx_f_9qutip_qoc_5pulse_12FourierPulse_pulse_grad;
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_t_1 = PyTuple_Pack(1, (PyObject *)__pyx_ptype_5pulse_Pulse); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 253, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_Pack(1, (PyObject *)__pyx_ptype_9qutip_qoc_5pulse_Pulse); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 253, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_ptype_5pulse_FourierPulse = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_5pulse_FourierPulse_spec, __pyx_t_1);
+  __pyx_ptype_9qutip_qoc_5pulse_FourierPulse = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_9qutip_qoc_5pulse_FourierPulse_spec, __pyx_t_1);
   __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (unlikely(!__pyx_ptype_5pulse_FourierPulse)) __PYX_ERR(0, 253, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_5pulse_FourierPulse_spec, __pyx_ptype_5pulse_FourierPulse) < 0) __PYX_ERR(0, 253, __pyx_L1_error)
+  if (unlikely(!__pyx_ptype_9qutip_qoc_5pulse_FourierPulse)) __PYX_ERR(0, 253, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_9qutip_qoc_5pulse_FourierPulse_spec, __pyx_ptype_9qutip_qoc_5pulse_FourierPulse) < 0) __PYX_ERR(0, 253, __pyx_L1_error)
   #else
-  __pyx_ptype_5pulse_FourierPulse = &__pyx_type_5pulse_FourierPulse;
+  __pyx_ptype_9qutip_qoc_5pulse_FourierPulse = &__pyx_type_9qutip_qoc_5pulse_FourierPulse;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  __pyx_ptype_5pulse_FourierPulse->tp_base = __pyx_ptype_5pulse_Pulse;
+  __pyx_ptype_9qutip_qoc_5pulse_FourierPulse->tp_base = __pyx_ptype_9qutip_qoc_5pulse_Pulse;
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_ptype_5pulse_FourierPulse) < 0) __PYX_ERR(0, 253, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_ptype_9qutip_qoc_5pulse_FourierPulse) < 0) __PYX_ERR(0, 253, __pyx_L1_error)
   #endif
   #if PY_MAJOR_VERSION < 3
-  __pyx_ptype_5pulse_FourierPulse->tp_print = 0;
+  __pyx_ptype_9qutip_qoc_5pulse_FourierPulse->tp_print = 0;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_ptype_5pulse_FourierPulse->tp_dictoffset && __pyx_ptype_5pulse_FourierPulse->tp_getattro == PyObject_GenericGetAttr)) {
-    __pyx_ptype_5pulse_FourierPulse->tp_getattro = __Pyx_PyObject_GenericGetAttr;
+  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_ptype_9qutip_qoc_5pulse_FourierPulse->tp_dictoffset && __pyx_ptype_9qutip_qoc_5pulse_FourierPulse->tp_getattro == PyObject_GenericGetAttr)) {
+    __pyx_ptype_9qutip_qoc_5pulse_FourierPulse->tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
   #endif
-  if (__Pyx_SetVtable(__pyx_ptype_5pulse_FourierPulse, __pyx_vtabptr_5pulse_FourierPulse) < 0) __PYX_ERR(0, 253, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_ptype_9qutip_qoc_5pulse_FourierPulse, __pyx_vtabptr_9qutip_qoc_5pulse_FourierPulse) < 0) __PYX_ERR(0, 253, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_MergeVtables(__pyx_ptype_5pulse_FourierPulse) < 0) __PYX_ERR(0, 253, __pyx_L1_error)
+  if (__Pyx_MergeVtables(__pyx_ptype_9qutip_qoc_5pulse_FourierPulse) < 0) __PYX_ERR(0, 253, __pyx_L1_error)
   #endif
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_FourierPulse, (PyObject *) __pyx_ptype_5pulse_FourierPulse) < 0) __PYX_ERR(0, 253, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_FourierPulse, (PyObject *) __pyx_ptype_9qutip_qoc_5pulse_FourierPulse) < 0) __PYX_ERR(0, 253, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_5pulse_FourierPulse) < 0) __PYX_ERR(0, 253, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_9qutip_qoc_5pulse_FourierPulse) < 0) __PYX_ERR(0, 253, __pyx_L1_error)
   #endif
-  __pyx_vtabptr_5pulse_PWCPulse = &__pyx_vtable_5pulse_PWCPulse;
-  __pyx_vtable_5pulse_PWCPulse.__pyx_base = *__pyx_vtabptr_5pulse_Pulse;
-  __pyx_vtable_5pulse_PWCPulse.__pyx_base.pulse = (double (*)(struct __pyx_obj_5pulse_Pulse *, double, __Pyx_memviewslice))__pyx_f_5pulse_8PWCPulse_pulse;
-  __pyx_vtable_5pulse_PWCPulse.__pyx_base.pulse_grad = (double (*)(struct __pyx_obj_5pulse_Pulse *, double, __Pyx_memviewslice, int))__pyx_f_5pulse_8PWCPulse_pulse_grad;
+  __pyx_vtabptr_9qutip_qoc_5pulse_PWCPulse = &__pyx_vtable_9qutip_qoc_5pulse_PWCPulse;
+  __pyx_vtable_9qutip_qoc_5pulse_PWCPulse.__pyx_base = *__pyx_vtabptr_9qutip_qoc_5pulse_Pulse;
+  __pyx_vtable_9qutip_qoc_5pulse_PWCPulse.__pyx_base.pulse = (double (*)(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *, double, __Pyx_memviewslice))__pyx_f_9qutip_qoc_5pulse_8PWCPulse_pulse;
+  __pyx_vtable_9qutip_qoc_5pulse_PWCPulse.__pyx_base.pulse_grad = (double (*)(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *, double, __Pyx_memviewslice, int))__pyx_f_9qutip_qoc_5pulse_8PWCPulse_pulse_grad;
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_t_1 = PyTuple_Pack(1, (PyObject *)__pyx_ptype_5pulse_Pulse); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 314, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_Pack(1, (PyObject *)__pyx_ptype_9qutip_qoc_5pulse_Pulse); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 314, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_ptype_5pulse_PWCPulse = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_5pulse_PWCPulse_spec, __pyx_t_1);
+  __pyx_ptype_9qutip_qoc_5pulse_PWCPulse = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_9qutip_qoc_5pulse_PWCPulse_spec, __pyx_t_1);
   __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (unlikely(!__pyx_ptype_5pulse_PWCPulse)) __PYX_ERR(0, 314, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_5pulse_PWCPulse_spec, __pyx_ptype_5pulse_PWCPulse) < 0) __PYX_ERR(0, 314, __pyx_L1_error)
+  if (unlikely(!__pyx_ptype_9qutip_qoc_5pulse_PWCPulse)) __PYX_ERR(0, 314, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_9qutip_qoc_5pulse_PWCPulse_spec, __pyx_ptype_9qutip_qoc_5pulse_PWCPulse) < 0) __PYX_ERR(0, 314, __pyx_L1_error)
   #else
-  __pyx_ptype_5pulse_PWCPulse = &__pyx_type_5pulse_PWCPulse;
+  __pyx_ptype_9qutip_qoc_5pulse_PWCPulse = &__pyx_type_9qutip_qoc_5pulse_PWCPulse;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  __pyx_ptype_5pulse_PWCPulse->tp_base = __pyx_ptype_5pulse_Pulse;
+  __pyx_ptype_9qutip_qoc_5pulse_PWCPulse->tp_base = __pyx_ptype_9qutip_qoc_5pulse_Pulse;
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_ptype_5pulse_PWCPulse) < 0) __PYX_ERR(0, 314, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_ptype_9qutip_qoc_5pulse_PWCPulse) < 0) __PYX_ERR(0, 314, __pyx_L1_error)
   #endif
   #if PY_MAJOR_VERSION < 3
-  __pyx_ptype_5pulse_PWCPulse->tp_print = 0;
+  __pyx_ptype_9qutip_qoc_5pulse_PWCPulse->tp_print = 0;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_ptype_5pulse_PWCPulse->tp_dictoffset && __pyx_ptype_5pulse_PWCPulse->tp_getattro == PyObject_GenericGetAttr)) {
-    __pyx_ptype_5pulse_PWCPulse->tp_getattro = __Pyx_PyObject_GenericGetAttr;
+  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_ptype_9qutip_qoc_5pulse_PWCPulse->tp_dictoffset && __pyx_ptype_9qutip_qoc_5pulse_PWCPulse->tp_getattro == PyObject_GenericGetAttr)) {
+    __pyx_ptype_9qutip_qoc_5pulse_PWCPulse->tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
   #endif
-  if (__Pyx_SetVtable(__pyx_ptype_5pulse_PWCPulse, __pyx_vtabptr_5pulse_PWCPulse) < 0) __PYX_ERR(0, 314, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_ptype_9qutip_qoc_5pulse_PWCPulse, __pyx_vtabptr_9qutip_qoc_5pulse_PWCPulse) < 0) __PYX_ERR(0, 314, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_MergeVtables(__pyx_ptype_5pulse_PWCPulse) < 0) __PYX_ERR(0, 314, __pyx_L1_error)
+  if (__Pyx_MergeVtables(__pyx_ptype_9qutip_qoc_5pulse_PWCPulse) < 0) __PYX_ERR(0, 314, __pyx_L1_error)
   #endif
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_PWCPulse, (PyObject *) __pyx_ptype_5pulse_PWCPulse) < 0) __PYX_ERR(0, 314, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_PWCPulse, (PyObject *) __pyx_ptype_9qutip_qoc_5pulse_PWCPulse) < 0) __PYX_ERR(0, 314, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_5pulse_PWCPulse) < 0) __PYX_ERR(0, 314, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_9qutip_qoc_5pulse_PWCPulse) < 0) __PYX_ERR(0, 314, __pyx_L1_error)
   #endif
-  __pyx_vtabptr_5pulse_PWLPulse = &__pyx_vtable_5pulse_PWLPulse;
-  __pyx_vtable_5pulse_PWLPulse.__pyx_base = *__pyx_vtabptr_5pulse_Pulse;
-  __pyx_vtable_5pulse_PWLPulse.__pyx_base.pulse = (double (*)(struct __pyx_obj_5pulse_Pulse *, double, __Pyx_memviewslice))__pyx_f_5pulse_8PWLPulse_pulse;
-  __pyx_vtable_5pulse_PWLPulse.__pyx_base.pulse_grad = (double (*)(struct __pyx_obj_5pulse_Pulse *, double, __Pyx_memviewslice, int))__pyx_f_5pulse_8PWLPulse_pulse_grad;
+  __pyx_vtabptr_9qutip_qoc_5pulse_PWLPulse = &__pyx_vtable_9qutip_qoc_5pulse_PWLPulse;
+  __pyx_vtable_9qutip_qoc_5pulse_PWLPulse.__pyx_base = *__pyx_vtabptr_9qutip_qoc_5pulse_Pulse;
+  __pyx_vtable_9qutip_qoc_5pulse_PWLPulse.__pyx_base.pulse = (double (*)(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *, double, __Pyx_memviewslice))__pyx_f_9qutip_qoc_5pulse_8PWLPulse_pulse;
+  __pyx_vtable_9qutip_qoc_5pulse_PWLPulse.__pyx_base.pulse_grad = (double (*)(struct __pyx_obj_9qutip_qoc_5pulse_Pulse *, double, __Pyx_memviewslice, int))__pyx_f_9qutip_qoc_5pulse_8PWLPulse_pulse_grad;
   #if CYTHON_USE_TYPE_SPECS
-  __pyx_t_1 = PyTuple_Pack(1, (PyObject *)__pyx_ptype_5pulse_Pulse); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 348, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_Pack(1, (PyObject *)__pyx_ptype_9qutip_qoc_5pulse_Pulse); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 348, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_ptype_5pulse_PWLPulse = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_5pulse_PWLPulse_spec, __pyx_t_1);
+  __pyx_ptype_9qutip_qoc_5pulse_PWLPulse = (PyTypeObject *) __Pyx_PyType_FromModuleAndSpec(__pyx_m, &__pyx_type_9qutip_qoc_5pulse_PWLPulse_spec, __pyx_t_1);
   __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (unlikely(!__pyx_ptype_5pulse_PWLPulse)) __PYX_ERR(0, 348, __pyx_L1_error)
-  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_5pulse_PWLPulse_spec, __pyx_ptype_5pulse_PWLPulse) < 0) __PYX_ERR(0, 348, __pyx_L1_error)
+  if (unlikely(!__pyx_ptype_9qutip_qoc_5pulse_PWLPulse)) __PYX_ERR(0, 348, __pyx_L1_error)
+  if (__Pyx_fix_up_extension_type_from_spec(&__pyx_type_9qutip_qoc_5pulse_PWLPulse_spec, __pyx_ptype_9qutip_qoc_5pulse_PWLPulse) < 0) __PYX_ERR(0, 348, __pyx_L1_error)
   #else
-  __pyx_ptype_5pulse_PWLPulse = &__pyx_type_5pulse_PWLPulse;
+  __pyx_ptype_9qutip_qoc_5pulse_PWLPulse = &__pyx_type_9qutip_qoc_5pulse_PWLPulse;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  __pyx_ptype_5pulse_PWLPulse->tp_base = __pyx_ptype_5pulse_Pulse;
+  __pyx_ptype_9qutip_qoc_5pulse_PWLPulse->tp_base = __pyx_ptype_9qutip_qoc_5pulse_Pulse;
   #endif
   #if !CYTHON_USE_TYPE_SPECS
-  if (__Pyx_PyType_Ready(__pyx_ptype_5pulse_PWLPulse) < 0) __PYX_ERR(0, 348, __pyx_L1_error)
+  if (__Pyx_PyType_Ready(__pyx_ptype_9qutip_qoc_5pulse_PWLPulse) < 0) __PYX_ERR(0, 348, __pyx_L1_error)
   #endif
   #if PY_MAJOR_VERSION < 3
-  __pyx_ptype_5pulse_PWLPulse->tp_print = 0;
+  __pyx_ptype_9qutip_qoc_5pulse_PWLPulse->tp_print = 0;
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_ptype_5pulse_PWLPulse->tp_dictoffset && __pyx_ptype_5pulse_PWLPulse->tp_getattro == PyObject_GenericGetAttr)) {
-    __pyx_ptype_5pulse_PWLPulse->tp_getattro = __Pyx_PyObject_GenericGetAttr;
+  if ((CYTHON_USE_TYPE_SLOTS && CYTHON_USE_PYTYPE_LOOKUP) && likely(!__pyx_ptype_9qutip_qoc_5pulse_PWLPulse->tp_dictoffset && __pyx_ptype_9qutip_qoc_5pulse_PWLPulse->tp_getattro == PyObject_GenericGetAttr)) {
+    __pyx_ptype_9qutip_qoc_5pulse_PWLPulse->tp_getattro = __Pyx_PyObject_GenericGetAttr;
   }
   #endif
-  if (__Pyx_SetVtable(__pyx_ptype_5pulse_PWLPulse, __pyx_vtabptr_5pulse_PWLPulse) < 0) __PYX_ERR(0, 348, __pyx_L1_error)
+  if (__Pyx_SetVtable(__pyx_ptype_9qutip_qoc_5pulse_PWLPulse, __pyx_vtabptr_9qutip_qoc_5pulse_PWLPulse) < 0) __PYX_ERR(0, 348, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_MergeVtables(__pyx_ptype_5pulse_PWLPulse) < 0) __PYX_ERR(0, 348, __pyx_L1_error)
+  if (__Pyx_MergeVtables(__pyx_ptype_9qutip_qoc_5pulse_PWLPulse) < 0) __PYX_ERR(0, 348, __pyx_L1_error)
   #endif
-  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_PWLPulse, (PyObject *) __pyx_ptype_5pulse_PWLPulse) < 0) __PYX_ERR(0, 348, __pyx_L1_error)
+  if (PyObject_SetAttr(__pyx_m, __pyx_n_s_PWLPulse, (PyObject *) __pyx_ptype_9qutip_qoc_5pulse_PWLPulse) < 0) __PYX_ERR(0, 348, __pyx_L1_error)
   #if !CYTHON_COMPILING_IN_LIMITED_API
-  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_5pulse_PWLPulse) < 0) __PYX_ERR(0, 348, __pyx_L1_error)
+  if (__Pyx_setup_reduce((PyObject *) __pyx_ptype_9qutip_qoc_5pulse_PWLPulse) < 0) __PYX_ERR(0, 348, __pyx_L1_error)
   #endif
   __pyx_vtabptr_array = &__pyx_vtable_array;
   __pyx_vtable_array.get_memview = (PyObject *(*)(struct __pyx_array_obj *))__pyx_array_get_memview;
@@ -34853,14 +34853,14 @@ if (!__Pyx_RefNanny) {
   #if PY_MAJOR_VERSION < 3 && (__PYX_DEFAULT_STRING_ENCODING_IS_ASCII || __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT)
   if (__Pyx_init_sys_getdefaultencoding_params() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
-  if (__pyx_module_is_main_pulse) {
+  if (__pyx_module_is_main_qutip_qoc__pulse) {
     if (PyObject_SetAttr(__pyx_m, __pyx_n_s_name_2, __pyx_n_s_main) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   }
   #if PY_MAJOR_VERSION >= 3
   {
     PyObject *modules = PyImport_GetModuleDict(); if (unlikely(!modules)) __PYX_ERR(0, 1, __pyx_L1_error)
-    if (!PyDict_GetItemString(modules, "pulse")) {
-      if (unlikely((PyDict_SetItemString(modules, "pulse", __pyx_m) < 0))) __PYX_ERR(0, 1, __pyx_L1_error)
+    if (!PyDict_GetItemString(modules, "qutip_qoc.pulse")) {
+      if (unlikely((PyDict_SetItemString(modules, "qutip_qoc.pulse", __pyx_m) < 0))) __PYX_ERR(0, 1, __pyx_L1_error)
     }
   }
   #endif
@@ -35394,42 +35394,42 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_Enum, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "pulse.pyx":17
+  /* "qutip_qoc/pulse.pyx":17
  *         self.n_par = n_sup * n_var  # total num of paras
  * 
  *     cpdef double gen_pulse(self, double time, double[:] paras):             # <<<<<<<<<<<<<<
  *         """
  *         Generate a supposition of pulses.
  */
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_5pulse_5Pulse_3gen_pulse, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Pulse_gen_pulse, NULL, __pyx_n_s_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__24)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 17, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9qutip_qoc_5pulse_5Pulse_3gen_pulse, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Pulse_gen_pulse, NULL, __pyx_n_s_qutip_qoc_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__24)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_5pulse_Pulse, __pyx_n_s_gen_pulse, __pyx_t_7) < 0) __PYX_ERR(0, 17, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_Pulse, __pyx_n_s_gen_pulse, __pyx_t_7) < 0) __PYX_ERR(0, 17, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  PyType_Modified(__pyx_ptype_5pulse_Pulse);
+  PyType_Modified(__pyx_ptype_9qutip_qoc_5pulse_Pulse);
 
-  /* "pulse.pyx":30
+  /* "qutip_qoc/pulse.pyx":30
  *         return pulse_val
  * 
  *     cpdef double gen_grad(self, double time, double[:] paras, int idx):             # <<<<<<<<<<<<<<
  *         """
  *         Generate the gradient of a superposition of pulses.
  */
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_5pulse_5Pulse_5gen_grad, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Pulse_gen_grad, NULL, __pyx_n_s_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__26)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 30, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9qutip_qoc_5pulse_5Pulse_5gen_grad, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Pulse_gen_grad, NULL, __pyx_n_s_qutip_qoc_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__26)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_5pulse_Pulse, __pyx_n_s_gen_grad, __pyx_t_7) < 0) __PYX_ERR(0, 30, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_Pulse, __pyx_n_s_gen_grad, __pyx_t_7) < 0) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  PyType_Modified(__pyx_ptype_5pulse_Pulse);
+  PyType_Modified(__pyx_ptype_9qutip_qoc_5pulse_Pulse);
 
   /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
  *     cdef tuple state
  *     cdef object _dict
  */
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_5pulse_5Pulse_7__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Pulse___reduce_cython, NULL, __pyx_n_s_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__28)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9qutip_qoc_5pulse_5Pulse_7__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Pulse___reduce_cython, NULL, __pyx_n_s_qutip_qoc_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__28)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_5pulse_Pulse, __pyx_n_s_reduce_cython, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_Pulse, __pyx_n_s_reduce_cython, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  PyType_Modified(__pyx_ptype_5pulse_Pulse);
+  PyType_Modified(__pyx_ptype_9qutip_qoc_5pulse_Pulse);
 
   /* "(tree fragment)":16
  *     else:
@@ -35437,22 +35437,22 @@ if (!__Pyx_RefNanny) {
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     __pyx_unpickle_Pulse__set_state(self, __pyx_state)
  */
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_5pulse_5Pulse_9__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Pulse___setstate_cython, NULL, __pyx_n_s_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__30)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 16, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9qutip_qoc_5pulse_5Pulse_9__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_Pulse___setstate_cython, NULL, __pyx_n_s_qutip_qoc_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__30)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_5pulse_Pulse, __pyx_n_s_setstate_cython, __pyx_t_7) < 0) __PYX_ERR(1, 16, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_Pulse, __pyx_n_s_setstate_cython, __pyx_t_7) < 0) __PYX_ERR(1, 16, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  PyType_Modified(__pyx_ptype_5pulse_Pulse);
+  PyType_Modified(__pyx_ptype_9qutip_qoc_5pulse_Pulse);
 
   /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
  *     cdef tuple state
  *     cdef object _dict
  */
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_5pulse_13GaussianPulse_3__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_GaussianPulse___reduce_cython, NULL, __pyx_n_s_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__31)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9qutip_qoc_5pulse_13GaussianPulse_3__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_GaussianPulse___reduce_cython, NULL, __pyx_n_s_qutip_qoc_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__31)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_5pulse_GaussianPulse, __pyx_n_s_reduce_cython, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_GaussianPulse, __pyx_n_s_reduce_cython, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  PyType_Modified(__pyx_ptype_5pulse_GaussianPulse);
+  PyType_Modified(__pyx_ptype_9qutip_qoc_5pulse_GaussianPulse);
 
   /* "(tree fragment)":16
  *     else:
@@ -35460,22 +35460,22 @@ if (!__Pyx_RefNanny) {
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     __pyx_unpickle_GaussianPulse__set_state(self, __pyx_state)
  */
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_5pulse_13GaussianPulse_5__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_GaussianPulse___setstate_cython, NULL, __pyx_n_s_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__32)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 16, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9qutip_qoc_5pulse_13GaussianPulse_5__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_GaussianPulse___setstate_cython, NULL, __pyx_n_s_qutip_qoc_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__32)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_5pulse_GaussianPulse, __pyx_n_s_setstate_cython, __pyx_t_7) < 0) __PYX_ERR(1, 16, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_GaussianPulse, __pyx_n_s_setstate_cython, __pyx_t_7) < 0) __PYX_ERR(1, 16, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  PyType_Modified(__pyx_ptype_5pulse_GaussianPulse);
+  PyType_Modified(__pyx_ptype_9qutip_qoc_5pulse_GaussianPulse);
 
   /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
  *     cdef tuple state
  *     cdef object _dict
  */
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_5pulse_8SinPulse_3__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_SinPulse___reduce_cython, NULL, __pyx_n_s_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__33)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9qutip_qoc_5pulse_8SinPulse_3__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_SinPulse___reduce_cython, NULL, __pyx_n_s_qutip_qoc_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__33)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_5pulse_SinPulse, __pyx_n_s_reduce_cython, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_SinPulse, __pyx_n_s_reduce_cython, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  PyType_Modified(__pyx_ptype_5pulse_SinPulse);
+  PyType_Modified(__pyx_ptype_9qutip_qoc_5pulse_SinPulse);
 
   /* "(tree fragment)":16
  *     else:
@@ -35483,22 +35483,22 @@ if (!__Pyx_RefNanny) {
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     __pyx_unpickle_SinPulse__set_state(self, __pyx_state)
  */
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_5pulse_8SinPulse_5__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_SinPulse___setstate_cython, NULL, __pyx_n_s_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__34)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 16, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9qutip_qoc_5pulse_8SinPulse_5__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_SinPulse___setstate_cython, NULL, __pyx_n_s_qutip_qoc_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__34)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_5pulse_SinPulse, __pyx_n_s_setstate_cython, __pyx_t_7) < 0) __PYX_ERR(1, 16, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_SinPulse, __pyx_n_s_setstate_cython, __pyx_t_7) < 0) __PYX_ERR(1, 16, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  PyType_Modified(__pyx_ptype_5pulse_SinPulse);
+  PyType_Modified(__pyx_ptype_9qutip_qoc_5pulse_SinPulse);
 
   /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
  *     cdef tuple state
  *     cdef object _dict
  */
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_5pulse_8CosPulse_3__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_CosPulse___reduce_cython, NULL, __pyx_n_s_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__35)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9qutip_qoc_5pulse_8CosPulse_3__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_CosPulse___reduce_cython, NULL, __pyx_n_s_qutip_qoc_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__35)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_5pulse_CosPulse, __pyx_n_s_reduce_cython, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_CosPulse, __pyx_n_s_reduce_cython, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  PyType_Modified(__pyx_ptype_5pulse_CosPulse);
+  PyType_Modified(__pyx_ptype_9qutip_qoc_5pulse_CosPulse);
 
   /* "(tree fragment)":16
  *     else:
@@ -35506,22 +35506,22 @@ if (!__Pyx_RefNanny) {
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     __pyx_unpickle_CosPulse__set_state(self, __pyx_state)
  */
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_5pulse_8CosPulse_5__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_CosPulse___setstate_cython, NULL, __pyx_n_s_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__36)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 16, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9qutip_qoc_5pulse_8CosPulse_5__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_CosPulse___setstate_cython, NULL, __pyx_n_s_qutip_qoc_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__36)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_5pulse_CosPulse, __pyx_n_s_setstate_cython, __pyx_t_7) < 0) __PYX_ERR(1, 16, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_CosPulse, __pyx_n_s_setstate_cython, __pyx_t_7) < 0) __PYX_ERR(1, 16, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  PyType_Modified(__pyx_ptype_5pulse_CosPulse);
+  PyType_Modified(__pyx_ptype_9qutip_qoc_5pulse_CosPulse);
 
   /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
  *     cdef tuple state
  *     cdef object _dict
  */
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_5pulse_11CosCosPulse_3__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_CosCosPulse___reduce_cython, NULL, __pyx_n_s_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__37)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9qutip_qoc_5pulse_11CosCosPulse_3__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_CosCosPulse___reduce_cython, NULL, __pyx_n_s_qutip_qoc_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__37)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_5pulse_CosCosPulse, __pyx_n_s_reduce_cython, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_CosCosPulse, __pyx_n_s_reduce_cython, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  PyType_Modified(__pyx_ptype_5pulse_CosCosPulse);
+  PyType_Modified(__pyx_ptype_9qutip_qoc_5pulse_CosCosPulse);
 
   /* "(tree fragment)":16
  *     else:
@@ -35529,22 +35529,22 @@ if (!__Pyx_RefNanny) {
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     __pyx_unpickle_CosCosPulse__set_state(self, __pyx_state)
  */
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_5pulse_11CosCosPulse_5__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_CosCosPulse___setstate_cython, NULL, __pyx_n_s_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__38)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 16, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9qutip_qoc_5pulse_11CosCosPulse_5__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_CosCosPulse___setstate_cython, NULL, __pyx_n_s_qutip_qoc_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__38)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_5pulse_CosCosPulse, __pyx_n_s_setstate_cython, __pyx_t_7) < 0) __PYX_ERR(1, 16, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_CosCosPulse, __pyx_n_s_setstate_cython, __pyx_t_7) < 0) __PYX_ERR(1, 16, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  PyType_Modified(__pyx_ptype_5pulse_CosCosPulse);
+  PyType_Modified(__pyx_ptype_9qutip_qoc_5pulse_CosCosPulse);
 
   /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
  *     cdef tuple state
  *     cdef object _dict
  */
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_5pulse_15PolynomialPulse_3__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_PolynomialPulse___reduce_cython, NULL, __pyx_n_s_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__39)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9qutip_qoc_5pulse_15PolynomialPulse_3__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_PolynomialPulse___reduce_cython, NULL, __pyx_n_s_qutip_qoc_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__39)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_5pulse_PolynomialPulse, __pyx_n_s_reduce_cython, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_PolynomialPulse, __pyx_n_s_reduce_cython, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  PyType_Modified(__pyx_ptype_5pulse_PolynomialPulse);
+  PyType_Modified(__pyx_ptype_9qutip_qoc_5pulse_PolynomialPulse);
 
   /* "(tree fragment)":16
  *     else:
@@ -35552,22 +35552,22 @@ if (!__Pyx_RefNanny) {
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     __pyx_unpickle_PolynomialPulse__set_state(self, __pyx_state)
  */
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_5pulse_15PolynomialPulse_5__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_PolynomialPulse___setstate_cytho, NULL, __pyx_n_s_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__40)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 16, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9qutip_qoc_5pulse_15PolynomialPulse_5__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_PolynomialPulse___setstate_cytho, NULL, __pyx_n_s_qutip_qoc_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__40)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_5pulse_PolynomialPulse, __pyx_n_s_setstate_cython, __pyx_t_7) < 0) __PYX_ERR(1, 16, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_PolynomialPulse, __pyx_n_s_setstate_cython, __pyx_t_7) < 0) __PYX_ERR(1, 16, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  PyType_Modified(__pyx_ptype_5pulse_PolynomialPulse);
+  PyType_Modified(__pyx_ptype_9qutip_qoc_5pulse_PolynomialPulse);
 
   /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
  *     cdef tuple state
  *     cdef object _dict
  */
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_5pulse_12FourierPulse_3__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_FourierPulse___reduce_cython, NULL, __pyx_n_s_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__41)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9qutip_qoc_5pulse_12FourierPulse_3__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_FourierPulse___reduce_cython, NULL, __pyx_n_s_qutip_qoc_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__41)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_5pulse_FourierPulse, __pyx_n_s_reduce_cython, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_FourierPulse, __pyx_n_s_reduce_cython, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  PyType_Modified(__pyx_ptype_5pulse_FourierPulse);
+  PyType_Modified(__pyx_ptype_9qutip_qoc_5pulse_FourierPulse);
 
   /* "(tree fragment)":16
  *     else:
@@ -35575,22 +35575,22 @@ if (!__Pyx_RefNanny) {
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     __pyx_unpickle_FourierPulse__set_state(self, __pyx_state)
  */
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_5pulse_12FourierPulse_5__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_FourierPulse___setstate_cython, NULL, __pyx_n_s_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__42)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 16, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9qutip_qoc_5pulse_12FourierPulse_5__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_FourierPulse___setstate_cython, NULL, __pyx_n_s_qutip_qoc_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__42)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_5pulse_FourierPulse, __pyx_n_s_setstate_cython, __pyx_t_7) < 0) __PYX_ERR(1, 16, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_FourierPulse, __pyx_n_s_setstate_cython, __pyx_t_7) < 0) __PYX_ERR(1, 16, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  PyType_Modified(__pyx_ptype_5pulse_FourierPulse);
+  PyType_Modified(__pyx_ptype_9qutip_qoc_5pulse_FourierPulse);
 
   /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
  *     cdef tuple state
  *     cdef object _dict
  */
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_5pulse_8PWCPulse_3__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_PWCPulse___reduce_cython, NULL, __pyx_n_s_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__43)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9qutip_qoc_5pulse_8PWCPulse_3__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_PWCPulse___reduce_cython, NULL, __pyx_n_s_qutip_qoc_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__43)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_5pulse_PWCPulse, __pyx_n_s_reduce_cython, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_PWCPulse, __pyx_n_s_reduce_cython, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  PyType_Modified(__pyx_ptype_5pulse_PWCPulse);
+  PyType_Modified(__pyx_ptype_9qutip_qoc_5pulse_PWCPulse);
 
   /* "(tree fragment)":16
  *     else:
@@ -35598,22 +35598,22 @@ if (!__Pyx_RefNanny) {
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     __pyx_unpickle_PWCPulse__set_state(self, __pyx_state)
  */
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_5pulse_8PWCPulse_5__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_PWCPulse___setstate_cython, NULL, __pyx_n_s_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__44)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 16, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9qutip_qoc_5pulse_8PWCPulse_5__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_PWCPulse___setstate_cython, NULL, __pyx_n_s_qutip_qoc_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__44)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_5pulse_PWCPulse, __pyx_n_s_setstate_cython, __pyx_t_7) < 0) __PYX_ERR(1, 16, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_PWCPulse, __pyx_n_s_setstate_cython, __pyx_t_7) < 0) __PYX_ERR(1, 16, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  PyType_Modified(__pyx_ptype_5pulse_PWCPulse);
+  PyType_Modified(__pyx_ptype_9qutip_qoc_5pulse_PWCPulse);
 
   /* "(tree fragment)":1
  * def __reduce_cython__(self):             # <<<<<<<<<<<<<<
  *     cdef tuple state
  *     cdef object _dict
  */
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_5pulse_8PWLPulse_3__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_PWLPulse___reduce_cython, NULL, __pyx_n_s_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__45)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9qutip_qoc_5pulse_8PWLPulse_3__reduce_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_PWLPulse___reduce_cython, NULL, __pyx_n_s_qutip_qoc_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__45)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_5pulse_PWLPulse, __pyx_n_s_reduce_cython, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_PWLPulse, __pyx_n_s_reduce_cython, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  PyType_Modified(__pyx_ptype_5pulse_PWLPulse);
+  PyType_Modified(__pyx_ptype_9qutip_qoc_5pulse_PWLPulse);
 
   /* "(tree fragment)":16
  *     else:
@@ -35621,18 +35621,18 @@ if (!__Pyx_RefNanny) {
  * def __setstate_cython__(self, __pyx_state):             # <<<<<<<<<<<<<<
  *     __pyx_unpickle_PWLPulse__set_state(self, __pyx_state)
  */
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_5pulse_8PWLPulse_5__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_PWLPulse___setstate_cython, NULL, __pyx_n_s_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__46)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 16, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9qutip_qoc_5pulse_8PWLPulse_5__setstate_cython__, __Pyx_CYFUNCTION_CCLASS, __pyx_n_s_PWLPulse___setstate_cython, NULL, __pyx_n_s_qutip_qoc_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__46)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_5pulse_PWLPulse, __pyx_n_s_setstate_cython, __pyx_t_7) < 0) __PYX_ERR(1, 16, __pyx_L1_error)
+  if (__Pyx_SetItemOnTypeDict((PyObject *)__pyx_ptype_9qutip_qoc_5pulse_PWLPulse, __pyx_n_s_setstate_cython, __pyx_t_7) < 0) __PYX_ERR(1, 16, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  PyType_Modified(__pyx_ptype_5pulse_PWLPulse);
+  PyType_Modified(__pyx_ptype_9qutip_qoc_5pulse_PWLPulse);
 
   /* "(tree fragment)":1
  * def __pyx_unpickle_Pulse(__pyx_type, long __pyx_checksum, __pyx_state):             # <<<<<<<<<<<<<<
  *     cdef object __pyx_PickleError
  *     cdef object __pyx_result
  */
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_5pulse_1__pyx_unpickle_Pulse, 0, __pyx_n_s_pyx_unpickle_Pulse, NULL, __pyx_n_s_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__47)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9qutip_qoc_5pulse_1__pyx_unpickle_Pulse, 0, __pyx_n_s_pyx_unpickle_Pulse, NULL, __pyx_n_s_qutip_qoc_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__47)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_Pulse, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
@@ -35644,7 +35644,7 @@ if (!__Pyx_RefNanny) {
  *     __pyx_result.n_par = __pyx_state[0]; __pyx_result.n_sup = __pyx_state[1]; __pyx_result.n_var = __pyx_state[2]
  *     if len(__pyx_state) > 3 and hasattr(__pyx_result, '__dict__'):
  */
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_5pulse_3__pyx_unpickle_GaussianPulse, 0, __pyx_n_s_pyx_unpickle_GaussianPulse, NULL, __pyx_n_s_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__48)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9qutip_qoc_5pulse_3__pyx_unpickle_GaussianPulse, 0, __pyx_n_s_pyx_unpickle_GaussianPulse, NULL, __pyx_n_s_qutip_qoc_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__48)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_GaussianPulse, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
@@ -35654,7 +35654,7 @@ if (!__Pyx_RefNanny) {
  *     cdef object __pyx_PickleError
  *     cdef object __pyx_result
  */
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_5pulse_5__pyx_unpickle_SinPulse, 0, __pyx_n_s_pyx_unpickle_SinPulse, NULL, __pyx_n_s_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__49)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9qutip_qoc_5pulse_5__pyx_unpickle_SinPulse, 0, __pyx_n_s_pyx_unpickle_SinPulse, NULL, __pyx_n_s_qutip_qoc_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__49)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_SinPulse, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
@@ -35666,7 +35666,7 @@ if (!__Pyx_RefNanny) {
  *     __pyx_result.n_par = __pyx_state[0]; __pyx_result.n_sup = __pyx_state[1]; __pyx_result.n_var = __pyx_state[2]
  *     if len(__pyx_state) > 3 and hasattr(__pyx_result, '__dict__'):
  */
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_5pulse_7__pyx_unpickle_CosPulse, 0, __pyx_n_s_pyx_unpickle_CosPulse, NULL, __pyx_n_s_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__50)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9qutip_qoc_5pulse_7__pyx_unpickle_CosPulse, 0, __pyx_n_s_pyx_unpickle_CosPulse, NULL, __pyx_n_s_qutip_qoc_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__50)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_CosPulse, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
@@ -35676,7 +35676,7 @@ if (!__Pyx_RefNanny) {
  *     cdef object __pyx_PickleError
  *     cdef object __pyx_result
  */
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_5pulse_9__pyx_unpickle_CosCosPulse, 0, __pyx_n_s_pyx_unpickle_CosCosPulse, NULL, __pyx_n_s_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__51)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9qutip_qoc_5pulse_9__pyx_unpickle_CosCosPulse, 0, __pyx_n_s_pyx_unpickle_CosCosPulse, NULL, __pyx_n_s_qutip_qoc_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__51)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_CosCosPulse, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
@@ -35688,7 +35688,7 @@ if (!__Pyx_RefNanny) {
  *     __pyx_result.n_par = __pyx_state[0]; __pyx_result.n_sup = __pyx_state[1]; __pyx_result.n_var = __pyx_state[2]
  *     if len(__pyx_state) > 3 and hasattr(__pyx_result, '__dict__'):
  */
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_5pulse_11__pyx_unpickle_PolynomialPulse, 0, __pyx_n_s_pyx_unpickle_PolynomialPulse, NULL, __pyx_n_s_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__52)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9qutip_qoc_5pulse_11__pyx_unpickle_PolynomialPulse, 0, __pyx_n_s_pyx_unpickle_PolynomialPulse, NULL, __pyx_n_s_qutip_qoc_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__52)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_PolynomialPulse, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
@@ -35698,7 +35698,7 @@ if (!__Pyx_RefNanny) {
  *     cdef object __pyx_PickleError
  *     cdef object __pyx_result
  */
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_5pulse_13__pyx_unpickle_FourierPulse, 0, __pyx_n_s_pyx_unpickle_FourierPulse, NULL, __pyx_n_s_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__53)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9qutip_qoc_5pulse_13__pyx_unpickle_FourierPulse, 0, __pyx_n_s_pyx_unpickle_FourierPulse, NULL, __pyx_n_s_qutip_qoc_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__53)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_FourierPulse, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
@@ -35710,7 +35710,7 @@ if (!__Pyx_RefNanny) {
  *     __pyx_result.n_par = __pyx_state[0]; __pyx_result.n_sup = __pyx_state[1]; __pyx_result.n_var = __pyx_state[2]
  *     if len(__pyx_state) > 3 and hasattr(__pyx_result, '__dict__'):
  */
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_5pulse_15__pyx_unpickle_PWCPulse, 0, __pyx_n_s_pyx_unpickle_PWCPulse, NULL, __pyx_n_s_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__54)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9qutip_qoc_5pulse_15__pyx_unpickle_PWCPulse, 0, __pyx_n_s_pyx_unpickle_PWCPulse, NULL, __pyx_n_s_qutip_qoc_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__54)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_PWCPulse, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
@@ -35720,12 +35720,12 @@ if (!__Pyx_RefNanny) {
  *     cdef object __pyx_PickleError
  *     cdef object __pyx_result
  */
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_5pulse_17__pyx_unpickle_PWLPulse, 0, __pyx_n_s_pyx_unpickle_PWLPulse, NULL, __pyx_n_s_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__55)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_9qutip_qoc_5pulse_17__pyx_unpickle_PWLPulse, 0, __pyx_n_s_pyx_unpickle_PWLPulse, NULL, __pyx_n_s_qutip_qoc_pulse, __pyx_d, ((PyObject *)__pyx_codeobj__55)); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_PWLPulse, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "pulse.pyx":1
+  /* "qutip_qoc/pulse.pyx":1
  * from libc.math cimport sin, cos, exp, pi             # <<<<<<<<<<<<<<
  * cimport cython
  * 
@@ -35744,7 +35744,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_XDECREF(__pyx_t_7);
   if (__pyx_m) {
     if (__pyx_d && stringtab_initialized) {
-      __Pyx_AddTraceback("init pulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      __Pyx_AddTraceback("init qutip_qoc.pulse", __pyx_clineno, __pyx_lineno, __pyx_filename);
     }
     #if !CYTHON_USE_MODULE_STATE
     Py_CLEAR(__pyx_m);
@@ -35758,7 +35758,7 @@ if (!__Pyx_RefNanny) {
     }
     #endif
   } else if (!PyErr_Occurred()) {
-    PyErr_SetString(PyExc_ImportError, "init pulse");
+    PyErr_SetString(PyExc_ImportError, "init qutip_qoc.pulse");
   }
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
