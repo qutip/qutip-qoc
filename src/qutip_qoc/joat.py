@@ -6,7 +6,7 @@ import qutip as qt
 from qutip import Qobj, QobjEvo
 import qutip_jax
 
-from diffrax import Dopri5, Tsit5, PIDController
+from diffrax import Dopri5, PIDController
 
 import jax
 from jax import custom_jvp

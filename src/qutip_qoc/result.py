@@ -262,26 +262,35 @@ class Result():
             for key, val in zip(para_keys, self.optimized_params):
                 args_dict[key] = val
 
-            # choose integrator method based on type of control function
+            # choose solver method based on type of control function
             if isinstance(
                     self.optimized_objectives[0].H[1][1],
                     jaxlib.xla_extension.PjitFunction):
-                method = "diffrax"  # for JAX
+                method = "diffrax"  # for JAX defined contols
             else:
                 method = "adams"
 
             for obj in self.optimized_objectives:
-                states.append(
-                    qt.mesolve(
-                        obj.H,
-                        obj.initial,
-                        tlist=[0., evo_time],
-                        args=args_dict,
-                        options={
+
+                H = qt.QobjEvo(obj.H, args=args_dict)
+
+                if obj.H[0].issuper:  # choose solver
+                    self.solver = qt.MESolver(
+                        H, options={
                             'normalize_output': False,
                             'method': method,
                         }
-                    ).final_state
+                    )
+                else:
+                    solver = qt.SESolver(
+                        H, options={
+                            'normalize_output': False,
+                            'method': method,
+                        }
+                    )
+
+                states.append(  # compute evolution
+                    solver.run(obj.initial, tlist=[0., evo_time]).final_state
                 )
 
             self._final_states = states
