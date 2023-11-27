@@ -69,9 +69,7 @@ state2state = Case(
         "alg": "GOAT",
         "fid_err_targ": 0.01,
     },
-    optimizer_kwargs={
-        "seed": 0,
-    },
+    optimizer_kwargs={"seed": 0},
     minimizer_kwargs={},
     integrator_kwargs={}
 )
@@ -81,14 +79,40 @@ state2state = Case(
 initial_U = qt.qeye(2)
 target_U = qt.sigmaz()
 
-unitary = state2state._replace(
+unitary = Case(
     objectives=[Objective(initial_U, H, target_U)],
+    pulse_options={
+        "p": {"guess": p_guess, "bounds": p_bounds},
+        "q": {"guess": q_guess, "bounds": q_bounds}
+    },
+    time_interval=TimeInterval(evo_time=1.),
+    time_options={},
+    algorithm_kwargs={
+        "alg": "GOAT",
+        "fid_err_targ": 0.01,
+    },
+    optimizer_kwargs={"seed": 0},
+    minimizer_kwargs={},
+    integrator_kwargs={}
 )
 
 
 # unitary gate synthesis - time optimization
-time = unitary._replace(
+time = Case(
+    objectives=[Objective(initial_U, H, target_U)],
+    pulse_options={
+        "p": {"guess": p_guess, "bounds": p_bounds},
+        "q": {"guess": q_guess, "bounds": q_bounds}
+    },
+    time_interval=TimeInterval(evo_time=1.),
     time_options={"guess": 5, "bounds": (0, 10)},
+    algorithm_kwargs={
+        "alg": "GOAT",
+        "fid_err_targ": 0.01,
+    },
+    optimizer_kwargs={"seed": 0},
+    minimizer_kwargs={},
+    integrator_kwargs={}
 )
 
 
@@ -102,10 +126,23 @@ L_c = [[qt.liouvillian(qt.sigmax()), lambda t, p: sin(t, p), {"grad": grad_sin}]
 
 L = L_d + L_c
 
-mapping = unitary._replace(
+mapping = Case(
     objectives=[Objective(initial_map, L, target_map)],
-    algorithm_kwargs={"alg": "JOAT", "fid_err_targ": 0.1},  # relaxed objective
+    pulse_options={
+        "p": {"guess": p_guess, "bounds": p_bounds},
+        "q": {"guess": q_guess, "bounds": q_bounds}
+    },
+    time_interval=TimeInterval(evo_time=1.),
+    time_options={},
+    algorithm_kwargs={
+        "alg": "GOAT",
+        "fid_err_targ": 0.1  # relaxed objective
+    },
+    optimizer_kwargs={"seed": 0},
+    minimizer_kwargs={},
+    integrator_kwargs={}
 )
+
 
 # ----------------------- System and JAX Control ---------------------
 
