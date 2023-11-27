@@ -12,6 +12,8 @@ from qutip_qoc.result import Result
 from qutip_qoc.joat import Multi_JOAT
 from qutip_qoc.goat import Multi_GOAT
 
+__all__ = ["optimize_pulses"]
+
 
 def extraction_helper(lst, input):
     """

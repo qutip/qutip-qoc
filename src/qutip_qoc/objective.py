@@ -1,3 +1,6 @@
+__all__ = ['Objective']
+
+
 class Objective:
     """
     A class for storing information about an optimization objective.

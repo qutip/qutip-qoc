@@ -7,6 +7,8 @@ from qutip_qtrl.pulseoptim import optimize_pulse
 from qutip_qoc.analytical_control import optimize_pulses as opt_pulses
 from qutip_qoc.result import Result
 
+__all__ = ["optimize_pulses"]
+
 
 def optimize_pulses(objectives, pulse_options, time_interval, time_options={},
                     algorithm_kwargs={}, optimizer_kwargs={},

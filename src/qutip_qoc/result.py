@@ -7,6 +7,8 @@ from inspect import signature
 import qutip as qt
 from qutip_qoc.objective import Objective
 
+__all__ = ["Result"]
+
 
 class Result():
     """

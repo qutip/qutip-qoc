@@ -8,6 +8,8 @@ import scipy as sp
 import qutip as qt
 from qutip import Qobj, QobjEvo
 
+__all__ = ["GOAT", "Multi_GOAT"]
+
 
 class GOAT:
     """
