@@ -8,6 +8,8 @@ import numpy as np
 import scipy as sp
 import qutip as qt
 
+from scipy.optimize import OptimizeResult
+
 from qutip_qoc.result import Result
 from qutip_qoc.joat import Multi_JOAT
 from qutip_qoc.goat import Multi_GOAT
@@ -92,7 +94,7 @@ class Callback:
                 idx += 1
         return True
 
-    def min_callback(self, intermediate_result):
+    def min_callback(self, intermediate_result: OptimizeResult):
         """
         callback function for the local minimizer
         terminates if the infidelity error target is reached or
