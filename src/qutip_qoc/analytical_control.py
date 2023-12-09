@@ -1,7 +1,7 @@
 """
 This module contains the optimization routine
 for optimizing analytical control functions
-with GOAT resp. JOAT.
+with GOAT and JOAT.
 """
 import time
 import numpy as np
@@ -17,10 +17,10 @@ from qutip_qoc.goat import Multi_GOAT
 __all__ = ["optimize_pulses"]
 
 
-def extraction_helper(lst, input):
+def get_init_and_bounds_from_options(lst, input):
     """
-    to extract initial and boundary values of any kind and shape
-    from the pulse_options and time_options dictionary
+    Extract initial and boundary values of any kind and shape
+    from the pulse_options and time_options dictionary.
     """
     if input is None:
         return lst
@@ -40,6 +40,7 @@ class Callback:
     Callback functions for the local and global optimization algorithm.
     Keeps track of time and saves intermediate results.
     Terminates the optimization if the infidelity error target is reached.
+    Class initialization starts the clock.
     """
 
     def __init__(self, result, fid_err_targ, max_wall_time, bounds, disp):
@@ -54,18 +55,21 @@ class Callback:
         self.start_time = self.iter_time = time.time()
 
     def stop_clock(self):
+        """
+        Stops the clock and saves the start-,end- and iterations- time in result.
+        """
         self.end_time = time.time()
 
-        # save information in result
         self.result.start_local_time = time.strftime(
             '%Y-%m-%d %H:%M:%S', time.localtime(self.start_time))
         self.result.end_local_time = time.strftime(
             '%Y-%m-%d %H:%M:%S', time.localtime(self.end_time))
+        
         self.result.iter_seconds = self.iter_seconds
 
     def time_iter(self):
         """
-        Calculates and stores the time for each iteration
+        Calculates and stores the time for each iteration.
         """
         iter_time = time.time()
         diff = round(iter_time - self.iter_time, 4)
@@ -82,23 +86,24 @@ class Callback:
 
     def inside_bounds(self, x):
         """
-        check if the current parameters are inside the boundaries
-        used for the global and local optimization callback
+        Check if the current parameters are inside the boundaries
+        used for the global and local optimization callback.
         """
         idx = 0
         for bound in self.bounds:
             for b in bound:
                 if not (b[0] <= x[idx] <= b[1]):
-                    print("parameter out of bounds, continuing optimization")
+                    if self.disp:
+                        print("parameter out of bounds, continuing optimization")
                     return False
                 idx += 1
         return True
 
     def min_callback(self, intermediate_result: OptimizeResult):
         """
-        callback function for the local minimizer
-        terminates if the infidelity error target is reached or
-        the maximum wall time is exceeded
+        Callback function for the local minimizer,
+        terminates if the infidelity target is reached or
+        the maximum wall time is exceeded.
         """
         terminate = False
 
@@ -125,7 +130,9 @@ class Callback:
 
     def opt_callback(self, x, f, accept):
         """
-        callback function for the global optimizer
+        Callback function for the global optimizer,
+        terminates if the infidelity target is reached or
+        the maximum wall time is exceeded.
         """
         terminate = False
         global_step_seconds = self.time_iter()
@@ -267,11 +274,11 @@ def optimize_pulses(
     # extract initial and boundary values
     x0, bounds = [], []
     for key in pulse_options.keys():
-        extraction_helper(x0, pulse_options[key].get("guess"))
-        extraction_helper(bounds, pulse_options[key].get("bounds"))
+        get_init_and_bounds_from_options(x0, pulse_options[key].get("guess"))
+        get_init_and_bounds_from_options(bounds, pulse_options[key].get("bounds"))
 
-    extraction_helper(x0, time_options.get("guess", None))
-    extraction_helper(bounds, time_options.get("bounds", None))
+    get_init_and_bounds_from_options(x0, time_options.get("guess", None))
+    get_init_and_bounds_from_options(bounds, time_options.get("bounds", None))
 
     optimizer_kwargs.setdefault("x0", np.concatenate(x0))
 

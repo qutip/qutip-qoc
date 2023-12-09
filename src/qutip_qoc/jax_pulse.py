@@ -5,6 +5,9 @@ import qutip_jax
 
 
 class Pulse:
+    """
+    Base class for pulse generation.
+    """
     def __init__(self, n_sup, n_var):
         self.n_sup = n_sup  # num of superpositions, 'm' in paper
         self.n_var = n_var  # num of paras for each control function

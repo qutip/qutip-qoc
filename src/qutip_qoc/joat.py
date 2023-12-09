@@ -21,12 +21,14 @@ def abs(x):
 
 
 def abs_jvp(primals, tangents):
-    # forward pass autodiff
+    """
+    Custom jvp for absolute value of complex functions
+    """
     x, = primals
     t, = tangents
 
     abs_x = abs(x)
-    res = jnp.where(abs_x == 0, 0.,
+    res = jnp.where(abs_x == 0, 0., # prevent division by zero
                     jnp.real(jnp.multiply(jnp.conj(x), t)) / abs_x)
 
     return abs_x, res
@@ -171,6 +173,9 @@ class Multi_JOAT:
         self.mean_infid = None
 
     def goal_fun(self, params):
+        """
+        Calculates the mean infidelity over all objectives
+        """
         infid_sum = 0
 
         for j in self.joats:  # TODO: parallelize
@@ -181,6 +186,9 @@ class Multi_JOAT:
         return self.mean_infid
 
     def grad_fun(self, params):
+        """
+        Calculates the sum of gradients over all objectives
+        """
         grads = 0
 
         for j in self.joats:

@@ -14,12 +14,22 @@ __all__ = ["GOAT", "Multi_GOAT"]
 class GOAT:
     """
     Class for storing a control problem and calculating
-    the fidelity error function and its gradient wrt the control parameters.
+    the fidelity error function and its gradient wrt the control parameters,
+    according to the GOAT algorithm.
+
+    Attributes
+    ----------
+    g: float
+        Normalized overlap of X and target.
+    X: Qobj
+        Most recently calculated evolution operator.
+    dX: list
+        Derivative of X wrt control parameters.
     """
     # calculated during optimization
-    g = None  # normalized overlap of X and target
-    X = None  # current evolution operator
-    dX = None  # derivative of X wrt control parameters
+    g = None
+    X = None
+    dX = None
 
     def __init__(
             self,
@@ -89,11 +99,11 @@ class GOAT:
 
     def prepare_psi0(self):
         """
-        inital state for coupled system (X, dX):
-        [[  H, 0, 0, ...], [[  X],
-         [d1H, H, 0, ...],  [d1U],
-         [d2H, 0, H, ...],  [d2U],
-         [...,         ]]   [...]]
+        inital state (t=0) for coupled system (X, dX):
+        [[  X(0)], -> [[1],
+         [d1X(0)], ->  [0],
+         [d2X(0)], ->  [0],
+         [  ... ]] ->  [0]]
         """
         scale = sp.sparse.csr_matrix(
             ([1], ([0], [0])), shape=(1 + self.tot_n_para, 1)
@@ -103,11 +113,11 @@ class GOAT:
 
     def prepare_H_dia(self):
         """
-        Combines the scaled and parameterized Hamiltonian diagonal elements
-        for the coupled system (X, dX) with associated pulses:
+        Combines the scaled and parameterized Hamiltonian elements on the diagonal
+        of the coupled system (X, dX) Hamiltonian, with associated pulses:
         [[  H, 0, 0, ...], [[  X],
-         [d1H, H, 0, ...],  [d1U],
-         [d2H, 0, H, ...],  [d2U],
+         [d1H, H, 0, ...],  [d1X],
+         [d2H, 0, H, ...],  [d2X],
          [...,         ]]   [...]]
         Additionlly, if the time is a parameter, the time-dependent
         parameterized Hamiltonian without scaling
@@ -145,7 +155,7 @@ class GOAT:
          [...,         ]]   [...]]
         The off-diagonal elements correspond to the derivative elements
         """
-        def helper(control, lower, upper, idx):
+        def helper(grad, lower, upper, idx):
             # to fix parameter index in loop
             return lambda t, p: grad(t, p[lower:upper], idx)
 
@@ -170,7 +180,7 @@ class GOAT:
     def solve_EOM(self, evo_time, params):
         """
         Calculates X, and dX i.e. the derivative of the evolution operator X
-        wrt the control parameters by solving the Schrodinger operator equation
+        wrt the control parameters by solving the Schroedinger operator equation
         returns X as Qobj and dX as list of dense matrices
         """
         res = self.solver.run(self.psi0, [0., evo_time], args={'p': params})
@@ -209,7 +219,7 @@ class GOAT:
     def gradient(self, params):
         """
         Calculates the gradient of the fidelity error function
-        wrt control parameters by solving the Schrodinger operator equation
+        wrt control parameters by solving the Schroedinger operator equation
         """
         X, dX, g = self.X, self.dX, self.g  # calculated before
 
@@ -266,6 +276,9 @@ class Multi_GOAT:
         self.mean_infid = None
 
     def goal_fun(self, params):
+        """
+        Calculates the mean infidelity over all objectives
+        """
         infid_sum = 0
 
         for goat in self.goats:  # TODO: parallelize
@@ -276,6 +289,9 @@ class Multi_GOAT:
         return self.mean_infid
 
     def grad_fun(self, params):
+        """
+        Calculates the sum of gradients over all objectives
+        """
         grads = 0
 
         for g in self.goats:
