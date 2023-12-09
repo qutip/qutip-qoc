@@ -13,7 +13,6 @@ __all__ = ["optimize_pulses"]
 def optimize_pulses(objectives, pulse_options, time_interval, time_options={},
                     algorithm_kwargs={}, optimizer_kwargs={},
                     minimizer_kwargs={}, integrator_kwargs={}):
-    print(minimizer_kwargs)
     """
     Wrapper to choose between GOAT/JOAT and GRAPE/CRAB optimization.
 

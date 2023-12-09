@@ -167,7 +167,7 @@ class Result():
             for Hc, xf in zip(self.objectives[0].H[1:], self.optimized_params):
 
                 control = Hc[1]
-                if callable(control):
+                if callable(control): # continuous control as in JOAT/GOAT
                     cf = []
                     try:
                         tslots = self.time_interval.tslots
@@ -181,7 +181,7 @@ class Result():
 
                     for t in tslots:
                         cf.append(control(t, xf))
-                else:
+                else: # discrete control as in GRAPE/CRAB
                     cf = xf
                 opt_ctrl.append(cf)
 
@@ -249,7 +249,7 @@ class Result():
             states = []
 
             if self.var_time:  # last parameter is optimized time
-                evo_time = self.optimized_params[-1]
+                evo_time = self.optimized_params[-1][0]
             else:
                 evo_time = self.time_interval.evo_time
 
@@ -273,9 +273,10 @@ class Result():
             for obj in self.optimized_objectives:
 
                 H = qt.QobjEvo(obj.H, args=args_dict)
+                solver = None
 
                 if obj.H[0].issuper:  # choose solver
-                    self.solver = qt.MESolver(
+                    solver = qt.MESolver(
                         H, options={
                             'normalize_output': False,
                             'method': method,
