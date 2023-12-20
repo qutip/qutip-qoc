@@ -1,20 +1,77 @@
-import time
+import jaxlib
 import pickle
 import textwrap
 import numpy as np
 from inspect import signature
+
 import qutip as qt
-from objective import Objective
+from qutip_qoc.objective import Objective
+
+__all__ = ["Result"]
 
 
 class Result():
+    """
+    Class for storing the results of a pulse control optimization run.
+
+    Attributes:
+    ----------
+    objectives : list of :class:`qutip_qoc.Objective`
+        List of objectives to be optimized.
+
+    time_interval : :class:`qutip_qoc.TimeInterval`
+        Time interval for the optimization.
+
+    start_local_time : struct_time
+        Time when the optimization started.
+
+    end_local_time : struct_time
+        Time when the optimization ended.
+
+    total_seconds : float
+        Total time in seconds the optimization took.
+        Equal to the sum of iter_seconds.
+        Equal to difference between end_local_time and start_local_time.
+
+    iters : int
+        Number of iterations until convergence.
+        Equal to the length of iter_seconds.
+
+    iter_seconds : list of float
+        Seconds between each iteration.
+
+    message : str
+        Reason for termination.
+
+    guess_controls : list of ndarray
+        List of guess control pulses used to initialize the optimization.
+
+    optimized_controls : list of ndarray
+        List of optimized control pulses.
+
+    optimized_objectives : list of :class:`qutip_qoc.Objective`
+        List of objectives with optimized control pulses.
+
+    final_states : list of :class:`qutip.Qobj`
+        List of final states after the optimization.
+        One for each objective.
+
+    infidelity : float
+        Final infidelity error after the optimization.
+
+    var_time : bool
+        Whether the optimization was performed with variable time.
+        If True, the last parameter in optimized_params is the evolution time.
+    """
+
     def __init__(
             self,
             objectives=None,
             time_interval=None,
             start_local_time=None,
             end_local_time=None,
-            iters=None,
+            total_seconds=None,
+            n_iters=None,
             iter_seconds=None,
             message=None,
             guess_controls=None,
@@ -25,13 +82,14 @@ class Result():
             new_params=None,
             optimized_params=None,
             infidelity=np.inf,
-            var_time=False
+            var_time=False,
     ):
         self.time_interval = time_interval
         self.objectives = objectives
         self.start_local_time = start_local_time
         self.end_local_time = end_local_time
-        self.iters = iters
+        self._total_seconds = total_seconds
+        self.n_iters = n_iters
         self.iter_seconds = iter_seconds
         self.message = message
         self._guess_controls = guess_controls
@@ -58,47 +116,24 @@ class Result():
         - Reason for termination: {message}
         - Ended at {end_local_time} ({time_delta}s)
         '''.format(
-                start_local_time=time.strftime(
-                    '%Y-%m-%d %H:%M:%S', self.start_local_time),
+                start_local_time=self.start_local_time,
                 n_objectives=len(self.objectives),
                 final_infid=self.infidelity,
                 final_params=self.optimized_params,
-                n_iters=self.iters,
-                end_local_time=time.strftime(
-                    '%Y-%m-%d %H:%M:%S', self.end_local_time),
-                time_delta=self.time_delta,
+                n_iters=self.n_iters,
+                end_local_time=self.end_local_time,
+                time_delta=self.total_seconds,
                 message=self.message)
         ).strip()
 
     def __repr__(self):
         return self.__str__()
 
-    def start_time(self):
-        self.start_local_time = self.iter_time = time.time()
-        self.elapsed_time = 0
-        self.iter_seconds = []
-
-    def end_time(self):
-        end_local_time = time.time()
-        # prepare information for printing
-        self.time_delta = round(end_local_time - self.start_local_time, 4)
-        self.start_local_time = time.localtime(self.start_local_time)
-        self.end_local_time = time.localtime(end_local_time)
-
-    def time_iter(self):
-        """
-        Calculates and stores the time
-        after each iteration. (optimizer callback)
-        """
-        iter_time = time.time()
-        diff = round(iter_time - self.iter_time, 4)
-        self.iter_time = iter_time
-        self.iter_seconds.append(diff)
-        return diff
-
-    def time_elapsed(self):
-        self.elapsed_time = round(time.time() - self.start_local_time, 4)
-        return self.elapsed_time
+    @property
+    def total_seconds(self):
+        if self._total_seconds is None:
+            self._total_seconds = sum(self.iter_seconds)
+        return self._total_seconds
 
     @property
     def optimized_params(self):
@@ -126,19 +161,27 @@ class Result():
 
     @property
     def optimized_controls(self):
-        """
-        """
         if self._optimized_controls is None:
             opt_ctrl = []
 
-            for Hc, xf in zip(self.objectives[0].H_evo[1:], self.optimized_params):
+            for Hc, xf in zip(self.objectives[0].H[1:], self.optimized_params):
 
                 control = Hc[1]
-                if callable(control):
+                if callable(control): # continuous control as in JOAT/GOAT
                     cf = []
-                    for t in self.time_interval.tlist:
+                    try:
+                        tslots = self.time_interval.tslots
+                    except Exception:
+                        print(
+                            "time_interval.tslots not specified "
+                            "(probably missing n_tslots), defaulting to 100 "
+                            "collocation points for result.optimized_controls")
+                        tslots = np.linspace(
+                            0., self.time_interval.evo_time, 100)
+
+                    for t in tslots:
                         cf.append(control(t, xf))
-                else:
+                else: # discrete control as in GRAPE/CRAB
                     cf = xf
                 opt_ctrl.append(cf)
 
@@ -147,17 +190,25 @@ class Result():
 
     @property
     def guess_controls(self):
-        """
-        """
         if self._guess_controls is None:
             gss_ctrl = []
 
-            for Hc, x0 in zip(self.objectives[0].H_evo[1:], self.guess_params):
+            for Hc, x0 in zip(self.objectives[0].H[1:], self.guess_params):
 
                 control = Hc[1]
                 if callable(control):
                     c0 = []
-                    for t in self.time_interval.tlist:
+                    try:
+                        tslots = self.time_interval.tslots
+                    except Exception:
+                        print(
+                            "time_interval.tslots not specified "
+                            "(probably missing n_tslots), defaulting to 100 "
+                            "collocation points for result.optimized_controls")
+                        tslots = np.linspace(
+                            0., self.time_interval.evo_time, 100)
+
+                    for t in tslots:
                         c0.append(control(t, x0))
                 else:
                     c0 = x0
@@ -174,13 +225,13 @@ class Result():
             opt_obj = []
 
             for obj in self.objectives:
-                optimized_H = [obj.H_evo[0]]
+                optimized_H = [obj.H[0]]
 
-                for Hc, cf in zip(obj.H_evo[1:], self.optimized_controls):
+                for Hc, cf in zip(obj.H[1:], self.optimized_controls):
                     control = Hc[1]
 
                     if callable(control):
-                        optimized_H = obj.H_evo
+                        optimized_H = obj.H
                         break
                     else:
                         optimized_H.append([Hc[0], cf])
@@ -198,12 +249,12 @@ class Result():
             states = []
 
             if self.var_time:  # last parameter is optimized time
-                evo_time = self.optimized_params[-1]
+                evo_time = self.optimized_params[-1][0]
             else:
                 evo_time = self.time_interval.evo_time
 
             # extract parameter names from control functions f(t, para_key)
-            c_sigs = [signature(Hc[1]) for Hc in self.objectives[0].H_evo[1:]]
+            c_sigs = [signature(Hc[1]) for Hc in self.objectives[0].H[1:]]
             c_keys = [sig.parameters.keys() for sig in c_sigs]
             para_keys = [list(keys)[1] for keys in c_keys]
 
@@ -211,15 +262,36 @@ class Result():
             for key, val in zip(para_keys, self.optimized_params):
                 args_dict[key] = val
 
+            # choose solver method based on type of control function
+            if isinstance(
+                    self.optimized_objectives[0].H[1][1],
+                    jaxlib.xla_extension.PjitFunction):
+                method = "diffrax"  # for JAX defined contols
+            else:
+                method = "adams"
+
             for obj in self.optimized_objectives:
-                states.append(
-                    qt.mesolve(
-                        obj.H_evo,
-                        obj.initial,
-                        tlist=[0., evo_time],
-                        args=args_dict,
-                        options={'normalize_output': False}
-                    ).final_state
+
+                H = qt.QobjEvo(obj.H, args=args_dict)
+                solver = None
+
+                if obj.H[0].issuper:  # choose solver
+                    solver = qt.MESolver(
+                        H, options={
+                            'normalize_output': False,
+                            'method': method,
+                        }
+                    )
+                else:
+                    solver = qt.SESolver(
+                        H, options={
+                            'normalize_output': False,
+                            'method': method,
+                        }
+                    )
+
+                states.append(  # compute evolution
+                    solver.run(obj.initial, tlist=[0., evo_time]).final_state
                 )
 
             self._final_states = states
@@ -234,38 +306,12 @@ class Result():
         self.new_params = parameters
 
     def dump(self, filename):
-        """Dump the :class:`Result` to a binary :mod:`pickle` file.
-
-        The original :class:`Result` object can be restored from the resulting
-        file using :meth:`load`. However, time-dependent control fields that
-        are callables/functions will not be preserved, as they are not
-        "pickleable".
-
-        Args:
-            filename (str): Name of file to which to dump the :class:`Result`.
-        """
         with open(filename, 'wb') as dump_fh:
             pickler = pickle.Pickler(dump_fh)
-            # slf = copy.deepcopy(self)
-            # slf.objectives = None
-            # slf.optimized_objectives = None
             pickler.dump(self)
 
     @classmethod
     def load(cls, filename, objectives=None):
-        """Construct :class:`Result` object from a :meth:`dump` file
-
-        Args:
-            filename (str): The file from which to load the :class:`Result`.
-                Must be in the format created by :meth:`dump`.
-            objectives (None or list[Objective]): If given, after loading
-                :class:`Result` from the given `filename`, overwrite
-                :attr:`objectives` with the given `objectives`. This is
-                necessary because :meth:`dump` does not preserve time-dependent
-                controls that are Python functions.
-        Returns:
-            Result: The :class:`Result` instance loaded from `filename`
-        """
         with open(filename, 'rb') as dump_fh:
             result = pickle.load(dump_fh)
         result.objectives = objectives

@@ -5,14 +5,30 @@ cimport cython
 @cython.boundscheck(False)
 @cython.wraparound(False)
 cdef class Pulse:
+    """
+    Base class for analytically defined pulse shapes.
+
+    Attributes:
+        n_sup (int): 
+            number of superpositions i.e. summands
+
+        n_var (int): 
+            number of parameters for each summand
+
+        n_par (int): 
+            total number of parameters
+    """
     cdef public int n_sup
     cdef public int n_var
     cdef public int n_par
 
     def __init__(self, n_sup, n_var):
-        self.n_sup = n_sup  # num of superpositions, 'm' in paper
-        self.n_var = n_var  # num of paras for each control function
-        self.n_par = n_sup * n_var  # total num of paras
+        self.n_sup = n_sup
+        self.n_var = n_var
+        self.n_par = n_sup * n_var 
+
+    def __call__(self, time, paras):
+        return self.gen_pulse(time, paras)
 
     cpdef double gen_pulse(self, double time, double[:] paras):
         """
@@ -30,6 +46,9 @@ cdef class Pulse:
     cpdef double gen_grad(self, double time, double[:] paras, int idx):
         """
         Generate the gradient of a superposition of pulses.
+        Index runs over all parameters 0, 1, ..., (self.n_par-1).
+        If time is also a parameter, then idx = self.n_par refers to
+        the derivative with respect to time.
         """
         cdef int i
         cdef double grad = 0.0
@@ -46,15 +65,23 @@ cdef class Pulse:
         return grad
 
     cdef double pulse(self, double time, double[:] paras):
+        # to be implemented by subclass    
         return 0.
 
     cdef double pulse_grad(self, double time, double[:] paras, int idx):
+        # to be implemented by subclass
         return 0.
+
 
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
 cdef class GaussianPulse(Pulse):
+    """
+    Gaussian pulse with summands of shape:
+    s * exp(-1 * ((time - m) ** 2) / (v ** 2))
+    Number of parameters per summand is fixed: 3
+    """
     def __init__(self, n_sup=1, n_var=3):
         super().__init__(n_sup, n_var=3)
 
@@ -91,9 +118,16 @@ cdef class GaussianPulse(Pulse):
             return grad
 
 
+
 @cython.boundscheck(False)
 @cython.wraparound(False)
 cdef class SinPulse(Pulse):
+    """
+    Sine pulse with summands of shape:
+    p0 * sin(p1 * time + p2)
+    Number of parameters per summand is fixed: 3
+    """
+
     def __init__(self, n_sup=1, n_var=3):
         super().__init__(n_sup, n_var=3)
 
@@ -101,10 +135,10 @@ cdef class SinPulse(Pulse):
         """
         Generate a pulse with sinusoidal shape.
         """
-        cdef double s, m, v, pulse_val
-        s, m, v = paras[0], paras[1], paras[2]
+        cdef double p0, p1, p2, pulse_val
+        p0, p1, p2 = paras[0], paras[1], paras[2]
 
-        pulse_val = s * sin(m * time + v)
+        pulse_val = p0 * sin(p1 * time + p2)
 
         return pulse_val
 
@@ -113,26 +147,33 @@ cdef class SinPulse(Pulse):
         Generate the derivative of pulse with sinusoidal shape
         for idx-th parameter.
         """
-        cdef double s, m, v, grad
-        s, m, v = paras[0], paras[1], paras[2]
+        cdef double p0, p1, p2, grad
+        p0, p1, p2 = paras[0], paras[1], paras[2]
 
         if idx == 0:
-            grad = sin(m * time + v)
+            grad = sin(p1 * time + p2)
             return grad
         elif idx == 1:
-            grad = s * cos(m * time + v) * time
+            grad = p0 * cos(p1 * time + p2) * time
             return grad
         elif idx == 2:
-            grad = s * cos(m * time + v)
+            grad = p0 * cos(p1 * time + p2)
             return grad
         elif idx == 3:
-            grad = s * cos(m * time + v) * m
+            grad = p0 * cos(p1 * time + p2) * p1
             return grad
+
 
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
 cdef class CosPulse(Pulse):
+    """
+    Cosine pulse with summands of shape:
+    p0 * cos(p1 * time + p2)
+    Number of parameters per summand is fixed: 3
+    """
+
     def __init__(self, n_sup=1, n_var=3):
         super().__init__(n_sup, n_var=3)
 
@@ -140,38 +181,45 @@ cdef class CosPulse(Pulse):
         """
         Generate a pulse with sinusoidal shape.
         """
-        cdef double s, m, v, pulse_val
-        s, m, v = paras[0], paras[1], paras[2]
+        cdef double p0, p1, p2, pulse_val
+        p0, p1, p2 = paras[0], paras[1], paras[2]
 
-        pulse_val = s * cos(m * time + v)
+        pulse_val = p0 * cos(p1 * time + p2)
 
         return pulse_val
 
     cdef double pulse_grad(self, double time, double[:] paras, int idx):
         """
-        Generate the derivative of a pulse with sinusoidal shape
-        for the idx-th parameter.
+        Generate the derivative of pulse with sinusoidal shape
+        for idx-th parameter.
         """
-        cdef double s, m, v, grad
-        s, m, v = paras[0], paras[1], paras[2]
+        cdef double p0, p1, p2, grad
+        p0, p1, p2 = paras[0], paras[1], paras[2]
 
         if idx == 0:
-            grad = cos(m * time - v)
+            grad = cos(p1 * time + p2)
             return grad
         elif idx == 1:
-            grad = s * (-1) * sin(m * time + v) * time
+            grad = p0 * (-1) * sin(p1 * time + p2) * time
             return grad
         elif idx == 2:
-            grad = s * (-1) * sin(m * time + v)
+            grad = p0 * (-1) * sin(p1 * time + p2)
             return grad
         elif idx == 3:
-            grad = s * (-1) * sin(m * time + v) * m
+            grad = p0 * (-1) * sin(p1 * time + p2) * p1
             return grad
+
 
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
 cdef class CosCosPulse(Pulse):
+    """
+    Modulated cosine pulse with summands of shape:
+    p0 * cos(p1 * time - p2) * cos(p3 * time - p4)
+    Number of parameters per summand is fixed: 5
+    """
+
     def __init__(self, n_sup=1, n_var=5):
         super().__init__(n_sup, n_var=5)
 
@@ -180,11 +228,11 @@ cdef class CosCosPulse(Pulse):
         Generate a pulse with modulated sinusoidal shape.
         Cosine envelope for the amplitude of the other cosine.
         """
-        cdef double s, m1, v1, m2, v2, pulse_val
-        s, m1, v1, m2, v2 = paras[0], paras[1], paras[2], paras[3], paras[4]
+        cdef double p0, p1, p2, p3, p4, pulse_val
+        p0, p1, p2, p3, p4 = paras[0], paras[1], paras[2], paras[3], paras[4]
         cdef double t = time
 
-        pulse_val = s * cos(m1 * t - v1) * cos(m2 * t - v2)
+        pulse_val = p0 * cos(p1 * t - p2) * cos(p3 * t - p4)
         return pulse_val
 
     cdef double pulse_grad(self, double time, double[:] paras, int idx):
@@ -192,34 +240,39 @@ cdef class CosCosPulse(Pulse):
         Generate the derivative of pulse with modulated sinusoidal shape
         for the idx-th parameter.
         """
-        cdef double s, m1, v1, m2, v2, grad
-        s, m1, v1, m2, v2 = paras[0], paras[1], paras[2], paras[3], paras[4]
+        cdef double p0, p1, p2, p3, p4, grad
+        p0, p1, p2, p3, p4 = paras[0], paras[1], paras[2], paras[3], paras[4]
         cdef double t = time
 
         if idx == 0:
-            grad = cos(m1 * t - v1) * cos(m2 * t - v2)
+            grad = cos(p1 * t - p2) * cos(p3 * t - p4)
             return grad
         elif idx == 1:
-            grad = -s * t * cos(m2 * t - v2) * sin(m1 * t - v1)
+            grad = -p0 * t * cos(p3 * t - p4) * sin(p1 * t - p2)
             return grad
         elif idx == 2:
-            grad = -s * cos(m2 * t - v2) * sin(v1 - m1 * t)
+            grad = -p0 * cos(p3 * t - p4) * sin(p2 - p1 * t)
             return grad
         elif idx == 3:
-            grad = -s * t * cos(m1 * t - v1) * sin(m2 * t - v2)
+            grad = -p0 * t * cos(p1 * t - p2) * sin(p3 * t - p4)
             return grad
         elif idx == 4:
-            grad = -s * cos(m1 * t - v1) * sin(v2 - m2 * t)
+            grad = -p0 * cos(p1 * t - p2) * sin(p4 - p3 * t)
             return grad
         elif idx == 5:
-            grad = -s * (m1 * sin(m1 * t - v1) * cos(m2 * t - v2) +\
-                         m2 * cos(m1 * t - v1) * sin(m2 * t - v2))
+            grad = -p0 * (p1 * sin(p1 * t - p2) * cos(p3 * t - p4) +\
+                         p3 * cos(p1 * t - p2) * sin(p3 * t - p4))
             return grad
 
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
 cdef class PolynomialPulse(Pulse):
+    """
+    Polynomial pulse with summands of shape:
+    p0 + p1 * time + p2 * time**2 + p3 * time**3 + ...
+    """
+
     def __init__(self, n_sup=1, n_var=3):
         super().__init__(n_sup, n_var)
 
@@ -251,6 +304,14 @@ cdef class PolynomialPulse(Pulse):
 @cython.boundscheck(False)
 @cython.wraparound(False)
 cdef class FourierPulse(Pulse):
+    """
+    Fourier pulse with summands of shape:
+    A0 + A1 * cos(2 * pi / period * 1 * t) + B1 * sin(2 * pi / period * 1 * t) 
+       + A2 * cos(2 * pi / period * 2 * t) + B2 * sin(2 * pi / period * 2 * t) 
+       + ...
+    where the period is the first parameter.
+    """
+
     def __init__(self, n_sup=1, n_var=4):
         if n_var % 2 != 0 or n_var < 4:
             raise ValueError("n_var must be an even number >= 4")
@@ -259,11 +320,6 @@ cdef class FourierPulse(Pulse):
     cdef double pulse(self, double t, double[:] paras):
         """
         Compute the Fourier series for a given set of parameters at point t.
-
-        A0 + 
-        A1 * cos(2 * pi / period * 1 * t) + B1 * sin(2 * pi / period * 1 * t) +
-        A2 * cos(2 * pi / period * 2 * t) + B2 * sin(2 * pi / period * 2 * t) +
-        ...
         """
         cdef double period = paras[0]
         cdef double result = paras[1] # A0
@@ -312,12 +368,18 @@ cdef class FourierPulse(Pulse):
 @cython.boundscheck(False)
 @cython.wraparound(False)
 cdef class PWCPulse(Pulse):
+    """
+    Piecewise constant pulse with parameters specifying the value of the pulse
+    during equidistant segments of lenth (interval[-1] - interval[0]) / n_var.
+    n_var is the number of segments (parameters).
+    """
+
     cdef double[:] interval
     cdef double step
     cdef int max_idx
 
-    def __init__(self, interval, n_sup=1, n_var=3):
-        super().__init__(n_sup, n_var)
+    def __init__(self, interval, n_var=3):
+        super().__init__(n_var, n_sup=1)
         self.interval = interval
         self.step = (interval[-1] - interval[0]) / n_var
         self.max_idx = n_var - 1
@@ -346,12 +408,20 @@ cdef class PWCPulse(Pulse):
 @cython.boundscheck(False)
 @cython.wraparound(False)
 cdef class PWLPulse(Pulse):
+    """
+    Piecewise linear pulse with parameters specifying the value of the pulse
+    during equidistant segments of lenth (interval[-1] - interval[0]) / n_var.
+    Parameters are the slope and intercept of each segment:
+    slope_1, inter_1, slope_2, inter_2, ...
+    There are 2x(n_segments) parameters.
+    """
+
     cdef double[:] interval
     cdef double step
     cdef int max_idx
 
-    def __init__(self, interval, n_sup=1, n_var=3):
-        super().__init__(n_sup=1, n_var=n_var)
+    def __init__(self, interval, n_var=3):
+        super().__init__(n_var=n_var, n_sup=1)
         self.interval = interval
         self.step = (interval[-1] - interval[0]) / (n_var / 2)
         self.max_idx = (n_var / 2) - 1

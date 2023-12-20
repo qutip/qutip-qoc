@@ -8,27 +8,46 @@ import scipy as sp
 import qutip as qt
 from qutip import Qobj, QobjEvo
 
+__all__ = ["GOAT", "Multi_GOAT"]
+
 
 class GOAT:
     """
     Class for storing a control problem and calculating
-    the fidelity error function and its gradient wrt the control parameters.
+    the fidelity error function and its gradient wrt the control parameters,
+    according to the GOAT algorithm.
+
+    Attributes
+    ----------
+    g: float
+        Normalized overlap of X and target.
+    X: Qobj
+        Most recently calculated evolution operator.
+    dX: list
+        Derivative of X wrt control parameters.
     """
     # calculated during optimization
-    g = None  # normalized overlap of X and target
-    X = None  # current evolution operator
-    dX = None  # derivative of X wrt control parameters
-    infid = None  # infidelity
+    g = None
+    X = None
+    dX = None
 
-    def __init__(self, objective, time_interval, time_options, pulse_options, alg_kwargs, guess_params, **integrator_kwargs):
+    def __init__(
+            self,
+            objective,
+            time_interval,
+            time_options,
+            pulse_options,
+            alg_kwargs,
+            guess_params,
+            **integrator_kwargs):
 
         # make superoperators conform with SESolver
-        if objective.H_evo[0].issuper:
+        if objective.H[0].issuper:
             self.is_super = True
 
             # extract drift and control Hamiltonians from the objective
-            self.Hd = Qobj(objective.H_evo[0].data)  # super -> oper
-            self.Hc_lst = [Qobj(Hc[0].data) for Hc in objective.H_evo[1:]]
+            self.Hd = Qobj(objective.H[0].data)  # super -> oper
+            self.Hc_lst = [Qobj(Hc[0].data) for Hc in objective.H[1:]]
 
             # extract initial and target state or operator from the objective
             self.initial = Qobj(objective.initial.data)
@@ -38,15 +57,15 @@ class GOAT:
 
         else:
             self.is_super = False
-            self.Hd = objective.H_evo[0]
-            self.Hc_lst = [Hc[0] for Hc in objective.H_evo[1:]]
+            self.Hd = objective.H[0]
+            self.Hc_lst = [Hc[0] for Hc in objective.H[1:]]
             self.initial = objective.initial
             self.target = objective.target
             self.fid_type = alg_kwargs.get("fid_type", "PSU")
 
         # extract control functions and gradients from the objective
-        self.controls = [H[1] for H in objective.H_evo[1:]]
-        self.grads = [H[2].get("grad", None) for H in objective.H_evo[1:]]
+        self.controls = [H[1] for H in objective.H[1:]]
+        self.grads = [H[2].get("grad", None) for H in objective.H[1:]]
         if None in self.grads:
             raise KeyError("No gradient function found for control function "
                            "at index {}.".format(self.grads.index(None)))
@@ -80,11 +99,11 @@ class GOAT:
 
     def prepare_psi0(self):
         """
-        inital state for coupled system (X, dX):
-        [[  H, 0, 0, ...], [[  X],
-         [d1H, H, 0, ...],  [d1U],
-         [d2H, 0, H, ...],  [d2U],
-         [...,         ]]   [...]]
+        inital state (t=0) for coupled system (X, dX):
+        [[  X(0)], -> [[1],
+         [d1X(0)], ->  [0],
+         [d2X(0)], ->  [0],
+         [  ... ]] ->  [0]]
         """
         scale = sp.sparse.csr_matrix(
             ([1], ([0], [0])), shape=(1 + self.tot_n_para, 1)
@@ -94,11 +113,11 @@ class GOAT:
 
     def prepare_H_dia(self):
         """
-        Combines the scaled and parameterized Hamiltonian diagonal elements
-        for the coupled system (X, dX) with associated pulses:
+        Combines the scaled and parameterized Hamiltonian elements on the diagonal
+        of the coupled system (X, dX) Hamiltonian, with associated pulses:
         [[  H, 0, 0, ...], [[  X],
-         [d1H, H, 0, ...],  [d1U],
-         [d2H, 0, H, ...],  [d2U],
+         [d1H, H, 0, ...],  [d1X],
+         [d2H, 0, H, ...],  [d2X],
          [...,         ]]   [...]]
         Additionlly, if the time is a parameter, the time-dependent
         parameterized Hamiltonian without scaling
@@ -114,7 +133,8 @@ class GOAT:
         H_dia = [dia & self.Hd]
 
         idx = 0
-        for control, M, Hc in zip(self.controls, self.para_counts, self.Hc_lst):
+        for control, M, Hc in zip(
+                self.controls, self.para_counts, self.Hc_lst):
 
             if self.var_t:
                 H.append([Hc, helper(control, idx, idx + M)])
@@ -135,11 +155,11 @@ class GOAT:
          [...,         ]]   [...]]
         The off-diagonal elements correspond to the derivative elements
         """
-        def helper(control, lower, upper, idx):
+        def helper(grad, lower, upper, idx):
             # to fix parameter index in loop
             return lambda t, p: grad(t, p[lower:upper], idx)
 
-        csr_shape = (1 + self.tot_n_para,  1 + self.tot_n_para)
+        csr_shape = (1 + self.tot_n_para, 1 + self.tot_n_para)
 
         # dH = [[H1', dc1'(t)], [H1", dc1"(t)], ... , [H2', dc2'(t)], ...]
         dH = []
@@ -160,7 +180,7 @@ class GOAT:
     def solve_EOM(self, evo_time, params):
         """
         Calculates X, and dX i.e. the derivative of the evolution operator X
-        wrt the control parameters by solving the Schrodinger operator equation
+        wrt the control parameters by solving the Schroedinger operator equation
         returns X as Qobj and dX as list of dense matrices
         """
         res = self.solver.run(self.psi0, [0., evo_time], args={'p': params})
@@ -185,21 +205,21 @@ class GOAT:
 
         if self.fid_type == "TRACEDIFF":
             diff = self.X - self.target
-            self.g = 1/2 * diff.overlap(diff)
-            self.infid = self.norm_fac * np.real(self.g)
+            self.g = 1 / 2 * diff.overlap(diff)
+            infid = self.norm_fac * np.real(self.g)
         else:
             self.g = self.norm_fac * self.target.overlap(self.X)
             if self.fid_type == "PSU":  # f_PSU (drop global phase)
-                self.infid = 1 - np.abs(self.g)
+                infid = 1 - np.abs(self.g)
             elif self.fid_type == "SU":  # f_SU (incl global phase)
-                self.infid = 1 - np.real(self.g)
+                infid = 1 - np.real(self.g)
 
-        return self.infid
+        return infid
 
     def gradient(self, params):
         """
         Calculates the gradient of the fidelity error function
-        wrt control parameters by solving the Schrodinger operator equation
+        wrt control parameters by solving the Schroedinger operator equation
         """
         X, dX, g = self.X, self.dX, self.g  # calculated before
 
@@ -210,7 +230,8 @@ class GOAT:
             dX_lst.append(Qobj(dx))
 
         if self.var_t:
-            H_T = self.H_evo(params[-1], args={'p': params})
+            # args={'p': params} TODO: report bug
+            H_T = self.H_evo(params[-1], p=params)
             dX_dT = -1j * H_T * X
             if self.is_super:
                 dX_dT = (1j) * dX_dT
@@ -220,7 +241,7 @@ class GOAT:
             diff = X - self.target
             # product rule
             trc = [dx.overlap(diff) + diff.overlap(dx) for dx in dX_lst]
-            grad = self.norm_fac * 1/2 * np.real(np.array(trc))
+            grad = self.norm_fac * 1 / 2 * np.real(np.array(trc))
 
         else:  # -Re(... * Tr(...)) NOTE: gradient will be zero at local maximum
             trc = [self.target.overlap(dx) for dx in dX_lst]
@@ -243,26 +264,37 @@ class Multi_GOAT:
     to optimize multiple objectives simultaneously
     """
 
-    def __init__(self, objectives, time_interval, time_options, pulse_options, alg_kwargs, guess_params, **integrator_kwargs):
-        self.goats = [GOAT(obj, time_interval, time_options, pulse_options, alg_kwargs, guess_params, ** integrator_kwargs)
-                      for obj in objectives]
+    def __init__(self, objectives, time_interval, time_options, pulse_options,
+                 alg_kwargs, guess_params, **integrator_kwargs):
+
+        self.goats = [
+            GOAT(obj, time_interval, time_options, pulse_options,
+                 alg_kwargs, guess_params, **integrator_kwargs)
+            for obj in objectives
+        ]
+
         self.mean_infid = None
 
     def goal_fun(self, params):
+        """
+        Calculates the mean infidelity over all objectives
+        """
         infid_sum = 0
+
         for goat in self.goats:  # TODO: parallelize
             infid = goat.infidelity(params)
-            if infid < 0:
-                print(
-                    "WARNING: infidelity < 0 -> inaccurate integration, "
-                    "try reducing integrator tolerance (atol, rtol)"
-                )
             infid_sum += infid
+
         self.mean_infid = np.mean(infid_sum)
         return self.mean_infid
 
     def grad_fun(self, params):
+        """
+        Calculates the sum of gradients over all objectives
+        """
         grads = 0
+
         for g in self.goats:
             grads += g.gradient(params)
+
         return grads
