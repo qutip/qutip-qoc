@@ -29,7 +29,6 @@
       PIDController
       Qobj
       QobjEvo
-      Tsit5
       custom_jvp
    
    

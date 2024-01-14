@@ -13,7 +13,7 @@
 
    .. autosummary::
    
-      extraction_helper
+      get_init_and_bounds_from_options
       optimize_pulses
    
    
@@ -27,6 +27,7 @@
       Callback
       Multi_GOAT
       Multi_JOAT
+      OptimizeResult
       Result
    
    
