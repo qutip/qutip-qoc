@@ -132,3 +132,4 @@ dmypy.json
 
 # Visual Studio Code
 .vscode/
+src/qutip_qoc/pulse.c
