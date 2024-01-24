@@ -2,7 +2,7 @@ import time
 import numpy as np
 
 import qutip_qtrl.logging_utils as logging
-from qutip_qtrl.pulseoptim import optimize_pulse
+from qutip_qtrl.pulseoptim import optimize_pulse, create_pulse_optimizer
 
 from qutip_qoc.analytical_control import optimize_pulses as opt_pulses
 from qutip_qoc.result import Result
@@ -154,23 +154,6 @@ def optimize_pulses(objectives, pulse_options, time_interval, time_options={},
             lbound = [b[0] for b in bounds]
             ubound = [b[1] for b in bounds]
 
-        if alg == "CRAB":
-            min_g = 0.
-            algorithm_kwargs["alg_params"] = {
-                "guess_pulse": x0,
-            }
-
-        elif alg == "GRAPE":
-            # only alowes for scalar bound
-            lbound = lbound[0]
-            ubound = ubound[0]
-
-            min_g = minimizer_kwargs.get("gtol", 1e-10)
-
-            algorithm_kwargs["alg_params"] = {
-                "init_amps": np.array(x0).T,
-            }
-
         # default "log_level" if not specified
         if algorithm_kwargs.get("disp", False):
             log_level = logging.INFO
@@ -182,80 +165,218 @@ def optimize_pulses(objectives, pulse_options, time_interval, time_options={},
             "maxiter", algorithm_kwargs.get("max_iter", 1000))
 
         optim_method = minimizer_kwargs.get(
-            "method", algorithm_kwargs.get("optim_method", "DEF"))
+            "method", algorithm_kwargs.get("optim_method", "BFGS"))
 
         result = Result(objectives, time_interval)
 
         start_time = time.time()
 
-        res = optimize_pulse(
-            drift=Hd,
-            ctrls=Hc_lst,
-            initial=init,
-            target=targ,
-            num_tslots=time_interval.n_tslots,
-            evo_time=time_interval.evo_time,
-            tau=None,  # implicitly derived from tslots
-            amp_lbound=lbound,
-            amp_ubound=ubound,
-            fid_err_targ=algorithm_kwargs.get("fid_err_targ", 1e-10),
-            min_grad=min_g,
-            max_iter=max_iter,
-            max_wall_time=algorithm_kwargs.get("max_wall_time", 180),
-            alg=alg,
-            optim_method=optim_method,
-            method_params=minimizer_kwargs,
+        if alg == "CRAB":
 
-            optim_alg=None,  # deprecated
-            max_metric_corr=None,  # deprecated
-            accuracy_factor=None,  # deprecated
-            alg_params=algorithm_kwargs.get("alg_params", None),
-            optim_params=algorithm_kwargs.get("optim_params", None),
-            dyn_type=algorithm_kwargs.get("dyn_type", "GEN_MAT"),
-            dyn_params=algorithm_kwargs.get("dyn_params", None),
-            prop_type=algorithm_kwargs.get("prop_type", "DEF"),
-            prop_params=algorithm_kwargs.get("prop_params", None),
-            fid_type=algorithm_kwargs.get("fid_type", "DEF"),
-            fid_params=algorithm_kwargs.get("fid_params", None),
-            phase_option=None,  # deprecated
-            fid_err_scale_factor=None,  # deprecated
-            tslot_type=algorithm_kwargs.get("tslot_type", "DEF"),
-            tslot_params=algorithm_kwargs.get("tslot_params", None),
-            amp_update_mode=None,  # deprecated
-            init_pulse_type=algorithm_kwargs.get("init_pulse_type", "DEF"),
-            init_pulse_params=algorithm_kwargs.get("init_pulse_params", None),
-            pulse_scaling=algorithm_kwargs.get("pulse_scaling", 1.0),
-            pulse_offset=algorithm_kwargs.get("pulse_offset", 0.0),
-            ramping_pulse_type=algorithm_kwargs.get(
-                "ramping_pulse_type", None),
-            ramping_pulse_params=algorithm_kwargs.get(
-                "ramping_pulse_params", None),
-            log_level=algorithm_kwargs.get("log_level", log_level),
-            out_file_ext=algorithm_kwargs.get("out_file_ext", None),
-            gen_stats=algorithm_kwargs.get("gen_stats", False),
-        )
+            alg_params = {
+                "drift": Hd,
+                "ctrls": Hc_lst,
+                "initial": init,
+                "target": targ,
+                "num_tslots": time_interval.n_tslots,
+                "evo_time": time_interval.evo_time,
+                "tau": None,  # implicitly derived from tslots
+                "amp_lbound": lbound,
+                "amp_ubound": ubound,
+                "fid_err_targ": algorithm_kwargs.get("fid_err_targ", 1e-10),
+                "min_grad": 0.,
+                "max_iter": max_iter,
+                "max_wall_time": algorithm_kwargs.get("max_wall_time", 180),
+                "alg": alg,
+                "optim_method": optim_method,
+                "method_params": minimizer_kwargs,
+                "optim_alg": None,  # deprecated
+                "max_metric_corr": None,  # deprecated
+                "accuracy_factor": None,  # deprecated
+                "alg_params": {
+                    "num_coeffs": None, # TODO
+                    "init_coeff_scaling": None, # TODO
+                    "crab_pulse_params": None, # TODO
+                },
+                "optim_params": algorithm_kwargs.get("optim_params", None),
+                "dyn_type": algorithm_kwargs.get("dyn_type", "GEN_MAT"),
+                "dyn_params": algorithm_kwargs.get("dyn_params", None),
+                "prop_type": algorithm_kwargs.get("prop_type", "FRECHET"),
+                "prop_params": algorithm_kwargs.get("prop_params", None),
+                "fid_type": algorithm_kwargs.get("fid_type", "DEF"),
+                "fid_params": algorithm_kwargs.get("fid_params", None),
+                "phase_option": None,  # deprecated
+                "fid_err_scale_factor": None,  # deprecated
+                "tslot_type": algorithm_kwargs.get("tslot_type", "DEF"),
+                "tslot_params": algorithm_kwargs.get("tslot_params", None),
+                "amp_update_mode": None,  # deprecated
+                "init_pulse_type": algorithm_kwargs.get("init_pulse_type", "DEF"),
+                "init_pulse_params": algorithm_kwargs.get("init_pulse_params", None), # wavelength, frequency, phase etc.
+                "pulse_scaling": algorithm_kwargs.get("pulse_scaling", 1.0),
+                "pulse_offset": algorithm_kwargs.get("pulse_offset", 0.0),
+                "ramping_pulse_type": algorithm_kwargs.get(
+                    "ramping_pulse_type", None),
+                "ramping_pulse_params": algorithm_kwargs.get(
+                    "ramping_pulse_params", None),
+                "log_level": algorithm_kwargs.get("log_level", log_level), # TODO: deprecate
+                "gen_stats": algorithm_kwargs.get("gen_stats", False),
+            }
 
-        end_time = time.time()
+            ###### code from qutip_qtrl.pulseoptim.optimize_pulse ######
 
-        # extract runtime information
-        result.start_local_time = time.strftime(
-            '%Y-%m-%d %H:%M:%S', time.localtime(start_time))
-        result.end_local_time = time.strftime(
-            '%Y-%m-%d %H:%M:%S', time.localtime(end_time))
-        total_seconds = end_time - start_time
-        result.iter_seconds = [res.num_iter / total_seconds] * res.num_iter
-        result.n_iters = res.num_iter
-        result.message = res.termination_reason
-        result.final_states = [res.evo_full_final]
-        result.infidelity = res.fid_err
-        result.guess_params = res.initial_amps.T
-        result.optimized_params = res.final_amps.T
+            crab_optimizer = create_pulse_optimizer(
+                drift=alg_params["drift"],
+                ctrls=alg_params["ctrls"],
+                initial=alg_params["initial"],
+                target=alg_params["target"],
+                num_tslots=alg_params["num_tslots"],
+                evo_time=alg_params["evo_time"],
+                tau=alg_params["tau"],
+                amp_lbound=alg_params["amp_lbound"],
+                amp_ubound=alg_params["amp_ubound"],
+                fid_err_targ=alg_params["fid_err_targ"],
+                min_grad=alg_params["min_grad"],
+                max_iter=alg_params["max_iter"],
+                max_wall_time=alg_params["max_wall_time"],
+                alg=alg_params["alg"],
+                optim_method=alg_params["optim_method"],
+                method_params=alg_params["method_params"],
+                optim_alg=alg_params["optim_alg"],
+                max_metric_corr=alg_params["max_metric_corr"],
+                accuracy_factor=alg_params["accuracy_factor"],
+                alg_params=alg_params["alg_params"],
+                optim_params=alg_params["optim_params"],
+                dyn_type=alg_params["dyn_type"],
+                dyn_params=alg_params["dyn_params"],
+                prop_type=alg_params["prop_type"],
+                prop_params=alg_params["prop_params"],
+                fid_type=alg_params["fid_type"],
+                fid_params=alg_params["fid_params"],
+                phase_option=alg_params["phase_option"],
+                fid_err_scale_factor=alg_params["fid_err_scale_factor"],
+                tslot_type=alg_params["tslot_type"],
+                tslot_params=alg_params["tslot_params"],
+                amp_update_mode=alg_params["amp_update_mode"],
+                init_pulse_type=alg_params["init_pulse_type"],
+                init_pulse_params=alg_params["init_pulse_params"],
+                pulse_scaling=alg_params["pulse_scaling"],
+                pulse_offset=alg_params["pulse_offset"],
+                ramping_pulse_type=alg_params["ramping_pulse_type"],
+                ramping_pulse_params=alg_params["ramping_pulse_params"],
+                log_level=alg_params["log_level"],
+                gen_stats=alg_params["gen_stats"],
+            )
 
-        # not present in analytical results
-        result.stats = res.stats
+            dyn = crab_optimizer.dynamics
+            dyn.init_timeslots()
 
-        return result
-    else:
-        raise ValueError(
-            "Unknown algorithm: %s; choose either GOAT, JOAT, GRAPE or CRAB." %
-            alg)
+            # Generate initial pulses for each control
+            init_amps = np.zeros([dyn.num_tslots, dyn.num_ctrls])
+            for j in range(dyn.num_ctrls):
+                pgen = crab_optimizer.pulse_generator[j]
+                pgen.init_pulse()
+                init_amps[:, j] = pgen.gen_pulse()
+
+            # Initialise the starting amplitudes
+            dyn.initialize_controls(init_amps)
+            # And store the corresponding parameters (x0)
+            init_params = crab_optimizer._get_optim_var_vals()
+
+            # guess and bounds for parameters are not supported
+            # the amplitude bounds are taken care of by the pulse generator
+            x0, bounds = [], []
+            num_params = len(init_params) // len(pulse_options)
+            for i, key in enumerate(pulse_options.keys()):
+                pulse_options[key]["guess"] = init_params[i*num_params:(i+1)*num_params]
+                pulse_options[key]["bounds"] = None
+            
+            return opt_pulses(
+                    objectives,
+                    pulse_options,
+                    time_interval,
+                    time_options,
+                    algorithm_kwargs,
+                    optimizer_kwargs,
+                    minimizer_kwargs,
+                    integrator_kwargs,
+                    crab_optimizer,
+                )
+
+        else:
+            # only alowes for scalar bound
+            lbound = lbound[0]
+            ubound = ubound[0]
+
+            min_g = minimizer_kwargs.get("gtol", 1e-10)
+
+            algorithm_kwargs["alg_params"] = {
+                "init_amps": np.array(x0).T,
+            }
+
+            res = optimize_pulse(
+                drift=Hd,
+                ctrls=Hc_lst,
+                initial=init,
+                target=targ,
+                num_tslots=time_interval.n_tslots,
+                evo_time=time_interval.evo_time,
+                tau=None,  # implicitly derived from tslots
+                amp_lbound=lbound,
+                amp_ubound=ubound,
+                fid_err_targ=algorithm_kwargs.get("fid_err_targ", 1e-10),
+                min_grad=min_g,
+                max_iter=max_iter,
+                max_wall_time=algorithm_kwargs.get("max_wall_time", 180),
+                alg=alg,
+                optim_method=optim_method,
+                method_params=minimizer_kwargs,
+
+                optim_alg=None,  # deprecated
+                max_metric_corr=None,  # deprecated
+                accuracy_factor=None,  # deprecated
+                alg_params=algorithm_kwargs.get("alg_params", None),
+                optim_params=algorithm_kwargs.get("optim_params", None),
+                dyn_type=algorithm_kwargs.get("dyn_type", "GEN_MAT"),
+                dyn_params=algorithm_kwargs.get("dyn_params", None),
+                prop_type=algorithm_kwargs.get("prop_type", "DEF"),
+                prop_params=algorithm_kwargs.get("prop_params", None),
+                fid_type=algorithm_kwargs.get("fid_type", "DEF"),
+                fid_params=algorithm_kwargs.get("fid_params", None),
+                phase_option=None,  # deprecated
+                fid_err_scale_factor=None,  # deprecated
+                tslot_type=algorithm_kwargs.get("tslot_type", "DEF"),
+                tslot_params=algorithm_kwargs.get("tslot_params", None),
+                amp_update_mode=None,  # deprecated
+                init_pulse_type=algorithm_kwargs.get("init_pulse_type", "DEF"),
+                init_pulse_params=algorithm_kwargs.get("init_pulse_params", None),
+                pulse_scaling=algorithm_kwargs.get("pulse_scaling", 1.0),
+                pulse_offset=algorithm_kwargs.get("pulse_offset", 0.0),
+                ramping_pulse_type=algorithm_kwargs.get(
+                    "ramping_pulse_type", None),
+                ramping_pulse_params=algorithm_kwargs.get(
+                    "ramping_pulse_params", None),
+                log_level=algorithm_kwargs.get("log_level", log_level),
+                out_file_ext=algorithm_kwargs.get("out_file_ext", None),
+                gen_stats=algorithm_kwargs.get("gen_stats", False),
+            )
+
+            end_time = time.time()
+
+            # extract runtime information
+            result.start_local_time = time.strftime(
+                '%Y-%m-%d %H:%M:%S', time.localtime(start_time))
+            result.end_local_time = time.strftime(
+                '%Y-%m-%d %H:%M:%S', time.localtime(end_time))
+            total_seconds = end_time - start_time
+            result.iter_seconds = [res.num_iter / total_seconds] * res.num_iter
+            result.n_iters = res.num_iter
+            result.message = res.termination_reason
+            result.final_states = [res.evo_full_final]
+            result.infidelity = res.fid_err
+            result.guess_params = res.initial_amps.T
+            result.optimized_params = res.final_amps.T
+
+            # not present in analytical results
+            result.stats = res.stats
+
+            return result

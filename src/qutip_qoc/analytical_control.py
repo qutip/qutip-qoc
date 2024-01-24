@@ -13,6 +13,7 @@ from scipy.optimize import OptimizeResult
 from qutip_qoc.result import Result
 from qutip_qoc.joat import Multi_JOAT
 from qutip_qoc.goat import Multi_GOAT
+from qutip_qoc.crab import Multi_CRAB
 
 __all__ = ["optimize_pulses"]
 
@@ -173,7 +174,8 @@ def optimize_pulses(
         algorithm_kwargs,
         optimizer_kwargs,
         minimizer_kwargs,
-        integrator_kwargs):
+        integrator_kwargs,
+        crab_optimizer=None):
     """
     Optimize a pulse sequence to implement a given target unitary by optimizing
     the parameters of the pulse functions. The algorithm is a two-layered
@@ -280,7 +282,8 @@ def optimize_pulses(
     get_init_and_bounds_from_options(x0, time_options.get("guess", None))
     get_init_and_bounds_from_options(bounds, time_options.get("bounds", None))
 
-    optimizer_kwargs.setdefault("x0", np.concatenate(x0))
+    if len(x0) != 0:
+        optimizer_kwargs.setdefault("x0", np.concatenate(x0))
 
     # algorithm specific settings
     if algorithm_kwargs.get("alg") == "JOAT":
@@ -292,6 +295,12 @@ def optimize_pulses(
                                          **integrator_kwargs)
     elif algorithm_kwargs.get("alg") == "GOAT":
         multi_objective = Multi_GOAT(objectives, time_interval, time_options,
+                                     pulse_options, algorithm_kwargs,
+                                     guess_params=optimizer_kwargs["x0"],
+                                     **integrator_kwargs)
+    elif algorithm_kwargs.get("alg") == "CRAB":
+        multi_objective = Multi_CRAB(crab_optimizer,
+                                     objectives, time_interval, time_options,
                                      pulse_options, algorithm_kwargs,
                                      guess_params=optimizer_kwargs["x0"],
                                      **integrator_kwargs)
@@ -308,8 +317,8 @@ def optimize_pulses(
             "niter", optimizer_kwargs.get(  # use algorithm_kwargs
                 "max_iter", algorithm_kwargs.get("max_iter", 1000)))
 
-        # realizes boundaries through minimizer
-        minimizer_kwargs.setdefault("bounds", np.concatenate(bounds))
+        if len(bounds) != 0:# realizes boundaries through minimizer
+            minimizer_kwargs.setdefault("bounds", np.concatenate(bounds))
 
     elif opt_method == "dual_annealing":
         optimizer = sp.optimize.dual_annealing
@@ -319,8 +328,8 @@ def optimize_pulses(
             "maxiter", optimizer_kwargs.get(  # use algorithm_kwargs
                 "max_iter", algorithm_kwargs.get("max_iter", 1000)))
 
-        # realizes boundaries through optimizer
-        optimizer_kwargs.setdefault("bounds", np.concatenate(bounds))
+        if len(bounds) != 0:# realizes boundaries through optimizer
+            optimizer_kwargs.setdefault("bounds", np.concatenate(bounds))
 
     # remove overload from optimizer_kwargs
     optimizer_kwargs.pop("max_iter", None)
@@ -346,7 +355,7 @@ def optimize_pulses(
     min_res = optimizer(
         func=multi_objective.goal_fun,
         minimizer_kwargs={
-            'jac': multi_objective.grad_fun,
+            'jac': None,#multi_objective.grad_fun,
             'callback': cllbck.min_callback,
             **minimizer_kwargs
         },
