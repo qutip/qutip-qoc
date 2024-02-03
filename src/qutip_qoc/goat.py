@@ -26,21 +26,22 @@ class GOAT:
     dX: list
         Derivative of X wrt control parameters.
     """
+
     # calculated during optimization
     g = None
     X = None
     dX = None
 
     def __init__(
-            self,
-            objective,
-            time_interval,
-            time_options,
-            pulse_options,
-            alg_kwargs,
-            guess_params,
-            **integrator_kwargs):
-
+        self,
+        objective,
+        time_interval,
+        time_options,
+        pulse_options,
+        alg_kwargs,
+        guess_params,
+        **integrator_kwargs,
+    ):
         # make superoperators conform with SESolver
         if objective.H[0].issuper:
             self.is_super = True
@@ -67,8 +68,10 @@ class GOAT:
         self.controls = [H[1] for H in objective.H[1:]]
         self.grads = [H[2].get("grad", None) for H in objective.H[1:]]
         if None in self.grads:
-            raise KeyError("No gradient function found for control function "
-                           "at index {}.".format(self.grads.index(None)))
+            raise KeyError(
+                "No gradient function found for control function "
+                "at index {}.".format(self.grads.index(None))
+            )
 
         self.evo_time = time_interval.evo_time
         self.var_t = "guess" in time_options
@@ -105,9 +108,7 @@ class GOAT:
          [d2X(0)], ->  [0],
          [  ... ]] ->  [0]]
         """
-        scale = sp.sparse.csr_matrix(
-            ([1], ([0], [0])), shape=(1 + self.tot_n_para, 1)
-        )
+        scale = sp.sparse.csr_matrix(([1], ([0], [0])), shape=(1 + self.tot_n_para, 1))
         psi0 = Qobj(scale) & self.initial
         return psi0
 
@@ -122,6 +123,7 @@ class GOAT:
         Additionlly, if the time is a parameter, the time-dependent
         parameterized Hamiltonian without scaling
         """
+
         def helper(control, lower, upper):
             # to fix parameter index in loop
             return lambda t, p: control(t, p[lower:upper])
@@ -133,9 +135,7 @@ class GOAT:
         H_dia = [dia & self.Hd]
 
         idx = 0
-        for control, M, Hc in zip(
-                self.controls, self.para_counts, self.Hc_lst):
-
+        for control, M, Hc in zip(self.controls, self.para_counts, self.Hc_lst):
             if self.var_t:
                 H.append([Hc, helper(control, idx, idx + M)])
 
@@ -155,6 +155,7 @@ class GOAT:
          [...,         ]]   [...]]
         The off-diagonal elements correspond to the derivative elements
         """
+
         def helper(grad, lower, upper, idx):
             # to fix parameter index in loop
             return lambda t, p: grad(t, p[lower:upper], idx)
@@ -166,7 +167,6 @@ class GOAT:
 
         idx = 0
         for grad, M, Hc in zip(self.grads, self.para_counts, self.Hc_lst):
-
             for grad_idx in range(M):
                 i = 1 + idx + grad_idx
                 csr = sp.sparse.csr_matrix(([1], ([i], [0])), csr_shape)
@@ -183,10 +183,10 @@ class GOAT:
         wrt the control parameters by solving the Schroedinger operator equation
         returns X as Qobj and dX as list of dense matrices
         """
-        res = self.solver.run(self.psi0, [0., evo_time], args={'p': params})
+        res = self.solver.run(self.psi0, [0.0, evo_time], args={"p": params})
 
-        X = res.final_state[:self.sys_size, :self.sys_size]
-        dX = res.final_state[self.sys_size:, :self.sys_size]
+        X = res.final_state[: self.sys_size, : self.sys_size]
+        dX = res.final_state[self.sys_size :, : self.sys_size]
 
         return X, dX
 
@@ -197,7 +197,7 @@ class GOAT:
         the normalized overlap, the current unitary and its gradient
         """
         # adjust integration time-interval, if time is parameter
-        evo_time = self.evo_time if self.var_t == False else params[-1]
+        evo_time = self.evo_time if self.var_t is False else params[-1]
 
         X, self.dX = self.solve_EOM(evo_time, params)
 
@@ -226,7 +226,7 @@ class GOAT:
         dX_lst = []  # collect for each parameter
         for i in range(self.tot_n_para):
             idx = i * self.sys_size  # row index for parameter set i
-            dx = dX[idx: idx + self.sys_size, :]
+            dx = dX[idx : idx + self.sys_size, :]
             dX_lst.append(Qobj(dx))
 
         if self.var_t:
@@ -264,12 +264,26 @@ class Multi_GOAT:
     to optimize multiple objectives simultaneously
     """
 
-    def __init__(self, objectives, time_interval, time_options, pulse_options,
-                 alg_kwargs, guess_params, **integrator_kwargs):
-
+    def __init__(
+        self,
+        objectives,
+        time_interval,
+        time_options,
+        pulse_options,
+        alg_kwargs,
+        guess_params,
+        **integrator_kwargs,
+    ):
         self.goats = [
-            GOAT(obj, time_interval, time_options, pulse_options,
-                 alg_kwargs, guess_params, **integrator_kwargs)
+            GOAT(
+                obj,
+                time_interval,
+                time_options,
+                pulse_options,
+                alg_kwargs,
+                guess_params,
+                **integrator_kwargs,
+            )
             for obj in objectives
         ]
 

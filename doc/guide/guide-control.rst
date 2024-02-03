@@ -213,7 +213,7 @@ Both initial and target can be specified through ``Qobj`` instances.
 
 
 The system evovles under some drift Hamiltonian or Liouvillian, that can be expressed with a ``QobjEvo`` instance.
-Instead of defining the full ``QobjEvo`` object, it is sufficient to only specify a list of Hamiltonians and possible control functions 
+Instead of defining the full ``QobjEvo`` object, it is sufficient to only specify a list of Hamiltonians and possible control functions
 to construct the objective (similar to initializing ``QobjEvo``).
 
 .. code-block:: bash
@@ -223,11 +223,11 @@ to construct the objective (similar to initializing ``QobjEvo``).
   drift = qt.sigmaz()
 
   # discretized control
-  control = [[qt.sigmax(), np.ones(100)], 
+  control = [[qt.sigmax(), np.ones(100)],
              [qt.sigmay(), np.ones(100)]]
 
   # continuous control
-  control = [[qt.sigmax(), lambda t, p: p[0] * t + p[1]], 
+  control = [[qt.sigmax(), lambda t, p: p[0] * t + p[1]],
              [qt.sigmay(), lambda t, q: p[0] * t + p[1]]]
 
   H = [drift, control]
@@ -245,7 +245,7 @@ After having defined the control problem, the ``qutip_qoc.optimize`` function ca
 It requires some extra arguments to prepare the optimization.
 
 .. code-block:: bash
-  
+
   # initial parameters to be optimized
   p_guess = q_guess = [0., 0.]
 

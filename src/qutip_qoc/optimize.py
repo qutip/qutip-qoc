@@ -10,9 +10,16 @@ from qutip_qoc.result import Result
 __all__ = ["optimize_pulses"]
 
 
-def optimize_pulses(objectives, pulse_options, time_interval, time_options={},
-                    algorithm_kwargs={}, optimizer_kwargs={},
-                    minimizer_kwargs={}, integrator_kwargs={}):
+def optimize_pulses(
+    objectives,
+    pulse_options,
+    time_interval,
+    time_options={},
+    algorithm_kwargs={},
+    optimizer_kwargs={},
+    minimizer_kwargs={},
+    integrator_kwargs={},
+):
     """
     Wrapper to choose between GOAT/JOAT and GRAPE/CRAB optimization.
 
@@ -155,7 +162,7 @@ def optimize_pulses(objectives, pulse_options, time_interval, time_options={},
             ubound = [b[1] for b in bounds]
 
         if alg == "CRAB":
-            min_g = 0.
+            min_g = 0.0
             algorithm_kwargs["alg_params"] = {
                 "guess_pulse": x0,
             }
@@ -179,10 +186,12 @@ def optimize_pulses(objectives, pulse_options, time_interval, time_options={},
 
         # low level minimizer overrides high level algorithm kwargs
         max_iter = minimizer_kwargs.get("options", {}).get(
-            "maxiter", algorithm_kwargs.get("max_iter", 1000))
+            "maxiter", algorithm_kwargs.get("max_iter", 1000)
+        )
 
         optim_method = minimizer_kwargs.get(
-            "method", algorithm_kwargs.get("optim_method", "DEF"))
+            "method", algorithm_kwargs.get("optim_method", "DEF")
+        )
 
         result = Result(objectives, time_interval)
 
@@ -205,7 +214,6 @@ def optimize_pulses(objectives, pulse_options, time_interval, time_options={},
             alg=alg,
             optim_method=optim_method,
             method_params=minimizer_kwargs,
-
             optim_alg=None,  # deprecated
             max_metric_corr=None,  # deprecated
             accuracy_factor=None,  # deprecated
@@ -226,10 +234,8 @@ def optimize_pulses(objectives, pulse_options, time_interval, time_options={},
             init_pulse_params=algorithm_kwargs.get("init_pulse_params", None),
             pulse_scaling=algorithm_kwargs.get("pulse_scaling", 1.0),
             pulse_offset=algorithm_kwargs.get("pulse_offset", 0.0),
-            ramping_pulse_type=algorithm_kwargs.get(
-                "ramping_pulse_type", None),
-            ramping_pulse_params=algorithm_kwargs.get(
-                "ramping_pulse_params", None),
+            ramping_pulse_type=algorithm_kwargs.get("ramping_pulse_type", None),
+            ramping_pulse_params=algorithm_kwargs.get("ramping_pulse_params", None),
             log_level=algorithm_kwargs.get("log_level", log_level),
             out_file_ext=algorithm_kwargs.get("out_file_ext", None),
             gen_stats=algorithm_kwargs.get("gen_stats", False),
@@ -239,9 +245,11 @@ def optimize_pulses(objectives, pulse_options, time_interval, time_options={},
 
         # extract runtime information
         result.start_local_time = time.strftime(
-            '%Y-%m-%d %H:%M:%S', time.localtime(start_time))
+            "%Y-%m-%d %H:%M:%S", time.localtime(start_time)
+        )
         result.end_local_time = time.strftime(
-            '%Y-%m-%d %H:%M:%S', time.localtime(end_time))
+            "%Y-%m-%d %H:%M:%S", time.localtime(end_time)
+        )
         total_seconds = end_time - start_time
         result.iter_seconds = [res.num_iter / total_seconds] * res.num_iter
         result.n_iters = res.num_iter
@@ -257,5 +265,5 @@ def optimize_pulses(objectives, pulse_options, time_interval, time_options={},
         return result
     else:
         raise ValueError(
-            "Unknown algorithm: %s; choose either GOAT, JOAT, GRAPE or CRAB." %
-            alg)
+            "Unknown algorithm: %s; choose either GOAT, JOAT, GRAPE or CRAB." % alg
+        )

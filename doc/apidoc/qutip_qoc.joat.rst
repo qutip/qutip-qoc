@@ -3,26 +3,26 @@
 
 .. automodule:: qutip_qoc.joat
 
-   
-   
-   
 
-   
-   
+
+
+
+
+
    .. rubric:: Functions
 
    .. autosummary::
-   
-      abs_jvp
-   
-   
 
-   
-   
+      abs_jvp
+
+
+
+
+
    .. rubric:: Classes
 
    .. autosummary::
-   
+
       Dopri5
       JOAT
       Multi_JOAT
@@ -30,12 +30,3 @@
       Qobj
       QobjEvo
       custom_jvp
-   
-   
-
-   
-   
-   
-
-
-

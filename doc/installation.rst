@@ -61,4 +61,3 @@ To test the installation from a download of the source code, run from the `qutip
 .. code-block:: bash
 
     pytest tests
-

@@ -3,38 +3,29 @@
 
 .. automodule:: qutip_qoc.analytical_control
 
-   
-   
-   
 
-   
-   
+
+
+
+
+
    .. rubric:: Functions
 
    .. autosummary::
-   
+
       get_init_and_bounds_from_options
       optimize_pulses
-   
-   
 
-   
-   
+
+
+
+
    .. rubric:: Classes
 
    .. autosummary::
-   
+
       Callback
       Multi_GOAT
       Multi_JOAT
       OptimizeResult
       Result
-   
-   
-
-   
-   
-   
-
-
-

@@ -9,13 +9,13 @@ cdef class Pulse:
     Base class for analytically defined pulse shapes.
 
     Attributes:
-        n_sup (int): 
+        n_sup (int):
             number of superpositions i.e. summands
 
-        n_var (int): 
+        n_var (int):
             number of parameters for each summand
 
-        n_par (int): 
+        n_par (int):
             total number of parameters
     """
     cdef public int n_sup
@@ -25,7 +25,7 @@ cdef class Pulse:
     def __init__(self, n_sup, n_var):
         self.n_sup = n_sup
         self.n_var = n_var
-        self.n_par = n_sup * n_var 
+        self.n_par = n_sup * n_var
 
     def __call__(self, time, paras):
         return self.gen_pulse(time, paras)
@@ -65,7 +65,7 @@ cdef class Pulse:
         return grad
 
     cdef double pulse(self, double time, double[:] paras):
-        # to be implemented by subclass    
+        # to be implemented by subclass
         return 0.
 
     cdef double pulse_grad(self, double time, double[:] paras, int idx):
@@ -306,8 +306,8 @@ cdef class PolynomialPulse(Pulse):
 cdef class FourierPulse(Pulse):
     """
     Fourier pulse with summands of shape:
-    A0 + A1 * cos(2 * pi / period * 1 * t) + B1 * sin(2 * pi / period * 1 * t) 
-       + A2 * cos(2 * pi / period * 2 * t) + B2 * sin(2 * pi / period * 2 * t) 
+    A0 + A1 * cos(2 * pi / period * 1 * t) + B1 * sin(2 * pi / period * 1 * t)
+       + A2 * cos(2 * pi / period * 2 * t) + B2 * sin(2 * pi / period * 2 * t)
        + ...
     where the period is the first parameter.
     """
@@ -353,7 +353,7 @@ cdef class FourierPulse(Pulse):
 
         elif idx==1: # wrt A0
             result = 1.
-            
+
         elif idx % 2 == 0: # wrt A
             n = idx // 2
             result = cos(2 * (pi / period) * n * t)
@@ -437,7 +437,7 @@ cdef class PWLPulse(Pulse):
         # calculate segment index on interval
         cdef int i = int((time - self.interval[0]) / self.step)
         cdef int idx = min(i, self.max_idx)
-        
+
         # get slope and intercept
         cdef double slope = paras[idx * 2]
         cdef double inter = paras[idx * 2 + 1]
