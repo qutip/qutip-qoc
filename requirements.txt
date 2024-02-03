@@ -4,3 +4,4 @@ scipy>=1.11.4
 qutip @ git+https://github.com/qutip/qutip.git@master
 qutip-qtrl @ git+https://github.com/qutip/qutip-qtrl.git@master
 qutip-jax @ git+https://github.com/qutip/qutip-jax.git@master
+pre-commit
