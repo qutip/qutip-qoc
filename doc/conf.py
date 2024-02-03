@@ -19,8 +19,8 @@ sys.path.insert(0, os.path.abspath("."))
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "qutip_qoc"
-author = 'QuTiP developers'
-copyright = '2023 and later, ' + author
+author = "QuTiP developers"
+copyright = "2023 and later, " + author
 
 
 def qutip_qoc_version():

@@ -15,10 +15,10 @@ import collections
 from qutip_qoc.optimize import optimize_pulses
 from qutip_qoc.objective import Objective
 from qutip_qoc.time_interval import TimeInterval
-from qutip_qoc.result import Result
 
 Case = collections.namedtuple(
-    "_Case", [
+    "Case",
+    [
         "objectives",
         "pulse_options",
         "time_interval",
@@ -26,7 +26,9 @@ Case = collections.namedtuple(
         "algorithm_kwargs",
         "optimizer_kwargs",
         "minimizer_kwargs",
-        "integrator_kwargs"])
+        "integrator_kwargs",
+    ],
+)
 
 # --------------------------- System and Control ---------------------------
 
@@ -50,8 +52,10 @@ p_guess = q_guess = [0, 0, 0]
 p_bounds = q_bounds = [(-1, 1), (-1, 1), (-np.pi, np.pi)]
 
 H_d = [0 * qt.sigmaz()]  # NO drift
-H_c = [[qt.sigmax(), lambda t, p: sin(t, p), {"grad": grad_sin}],
-       [qt.sigmay(), lambda t, q: sin(t, q), {"grad": grad_sin}]]
+H_c = [
+    [qt.sigmax(), lambda t, p: sin(t, p), {"grad": grad_sin}],
+    [qt.sigmay(), lambda t, q: sin(t, q), {"grad": grad_sin}],
+]
 
 H = H_d + H_c
 
@@ -64,25 +68,23 @@ PSU_state2state = Case(
     objectives=[Objective(initial, H, (-1j) * initial)],
     pulse_options={
         "p": {"guess": p_guess, "bounds": p_bounds},
-        "q": {"guess": q_guess, "bounds": q_bounds}
+        "q": {"guess": q_guess, "bounds": q_bounds},
     },
-    time_interval=TimeInterval(evo_time=5.),
+    time_interval=TimeInterval(evo_time=5.0),
     time_options={},
-    algorithm_kwargs={
-        "alg": "GOAT",
-        "fid_type": "PSU"
-    },
+    algorithm_kwargs={"alg": "GOAT", "fid_type": "PSU"},
     optimizer_kwargs={
         "seed": 0,
     },
     minimizer_kwargs={},
-    integrator_kwargs={}
+    integrator_kwargs={},
 )
 
 # SU (must depend on global phase) state to state transfer
 SU_state2state = PSU_state2state._replace(
     objectives=[Objective(initial, H, initial)],
-    algorithm_kwargs={"alg": "GOAT", "fid_type": "SU"})
+    algorithm_kwargs={"alg": "GOAT", "fid_type": "SU"},
+)
 
 
 # unitary gate synthesis
@@ -94,23 +96,23 @@ PSU_unitary = PSU_state2state._replace(
 )
 
 # SU (must depend on global phase)
-SU_unitary = SU_state2state._replace(
-    objectives=[Objective(initial_U, H, initial_U)]
-)
+SU_unitary = SU_state2state._replace(objectives=[Objective(initial_U, H, initial_U)])
 
 
 # TRACEDIFF (must depend on global phase) map synthesis
 initial_map = qt.sprepost(qt.qeye(2), qt.qeye(2).dag())
 
 L_d = [qt.liouvillian(0 * qt.sigmaz(), c_ops=[0 * qt.destroy(2)])]  # NO drift
-L_c = [[qt.liouvillian(qt.sigmax()), lambda t, p: sin(t, p), {"grad": grad_sin}],
-       [qt.liouvillian(qt.sigmay()), lambda t, q: sin(t, q), {"grad": grad_sin}]]
+L_c = [
+    [qt.liouvillian(qt.sigmax()), lambda t, p: sin(t, p), {"grad": grad_sin}],
+    [qt.liouvillian(qt.sigmay()), lambda t, q: sin(t, q), {"grad": grad_sin}],
+]
 
 L = L_d + L_c
 
 TRCDIFF_map = PSU_unitary._replace(
     objectives=[Objective(initial_map, L, initial_map)],
-    algorithm_kwargs={"alg": "GOAT", "fid_type": "TRACEDIFF"}
+    algorithm_kwargs={"alg": "GOAT", "fid_type": "TRACEDIFF"},
 )
 
 # ----------------------- System and JAX Control ---------------------
@@ -120,8 +122,10 @@ def sin_jax(t, p):
     return p[0] * jnp.sin(p[1] * t + p[2])
 
 
-Hc_jax = [[qt.sigmax(), lambda t, p: sin_jax(t, p)],
-          [qt.sigmay(), lambda t, q: sin_jax(t, q)]]
+Hc_jax = [
+    [qt.sigmax(), lambda t, p: sin_jax(t, p)],
+    [qt.sigmay(), lambda t, q: sin_jax(t, q)],
+]
 
 H_jax = H_d + Hc_jax
 
@@ -130,34 +134,35 @@ H_jax = H_d + Hc_jax
 # state to state transfer
 PSU_state2state_jax = PSU_state2state._replace(
     objectives=[Objective(initial, H_jax, (-1j) * initial)],
-    algorithm_kwargs={"alg": "JOAT"}
+    algorithm_kwargs={"alg": "JOAT"},
 )
 
 SU_state2state_jax = SU_state2state._replace(
-    objectives=[Objective(initial, H_jax, initial)],
-    algorithm_kwargs={"alg": "JOAT"}
+    objectives=[Objective(initial, H_jax, initial)], algorithm_kwargs={"alg": "JOAT"}
 )
 
 
 # unitary gate synthesis
 PSU_unitary_jax = PSU_unitary._replace(
     objectives=[Objective(initial_U, H_jax, (-1j) * initial_U)],
-    algorithm_kwargs={"alg": "JOAT"}
+    algorithm_kwargs={"alg": "JOAT"},
 )
 
 SU_unitary_jax = SU_unitary._replace(
     objectives=[Objective(initial_U, H_jax, initial_U)],
-    algorithm_kwargs={"alg": "JOAT"}
+    algorithm_kwargs={"alg": "JOAT"},
 )
 
 # map synthesis
-Lc_jax = [[qt.liouvillian(qt.sigmax()), lambda t, p: sin_jax(t, p)],
-          [qt.liouvillian(qt.sigmay()), lambda t, q: sin_jax(t, q)]]
+Lc_jax = [
+    [qt.liouvillian(qt.sigmax()), lambda t, p: sin_jax(t, p)],
+    [qt.liouvillian(qt.sigmay()), lambda t, q: sin_jax(t, q)],
+]
 L_jax = L_d + Lc_jax
 
 TRCDIFF_map_jax = TRCDIFF_map._replace(
     objectives=[Objective(initial_map, L_jax, initial_map)],
-    algorithm_kwargs={"alg": "JOAT", "fid_type": "TRACEDIFF"}
+    algorithm_kwargs={"alg": "JOAT", "fid_type": "TRACEDIFF"},
 )
 
 
@@ -177,7 +182,8 @@ TRCDIFF_map_jax = TRCDIFF_map._replace(
         pytest.param(TRCDIFF_map_jax, id="TRACEDIFF map synthesis (JAX)"),
     ]
 )
-def tst(request): return request.param
+def tst(request):
+    return request.param
 
 
 def test_optimize_pulses(tst):
@@ -189,8 +195,9 @@ def test_optimize_pulses(tst):
         tst.algorithm_kwargs,
         tst.optimizer_kwargs,
         tst.minimizer_kwargs,
-        tst.integrator_kwargs)
+        tst.integrator_kwargs,
+    )
     # initial == target <-> infidelity = 0
-    assert np.isclose(result.infidelity, 0.)
+    assert np.isclose(result.infidelity, 0.0)
     # initial parameter guess is optimal
     assert np.allclose(result.optimized_params, result.guess_params)

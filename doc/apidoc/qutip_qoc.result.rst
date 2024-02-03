@@ -3,34 +3,25 @@
 
 .. automodule:: qutip_qoc.result
 
-   
-   
-   
 
-   
-   
+
+
+
+
+
    .. rubric:: Functions
 
    .. autosummary::
-   
-      signature
-   
-   
 
-   
-   
+      signature
+
+
+
+
+
    .. rubric:: Classes
 
    .. autosummary::
-   
+
       Objective
       Result
-   
-   
-
-   
-   
-   
-
-
-

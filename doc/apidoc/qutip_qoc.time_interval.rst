@@ -3,27 +3,18 @@
 
 .. automodule:: qutip_qoc.time_interval
 
-   
-   
-   
 
-   
-   
-   
 
-   
-   
+
+
+
+
+
+
+
+
    .. rubric:: Classes
 
    .. autosummary::
-   
+
       TimeInterval
-   
-   
-
-   
-   
-   
-
-
-

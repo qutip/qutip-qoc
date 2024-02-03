@@ -10,9 +10,16 @@ from qutip_qoc.result import Result
 __all__ = ["optimize_pulses"]
 
 
-def optimize_pulses(objectives, pulse_options, time_interval, time_options={},
-                    algorithm_kwargs={}, optimizer_kwargs={},
-                    minimizer_kwargs={}, integrator_kwargs={}):
+def optimize_pulses(
+    objectives,
+    pulse_options,
+    time_interval,
+    time_options={},
+    algorithm_kwargs={},
+    optimizer_kwargs={},
+    minimizer_kwargs={},
+    integrator_kwargs={},
+):
     """
     Wrapper to choose between GOAT/JOAT and GRAPE/CRAB optimization.
 
@@ -162,7 +169,8 @@ def optimize_pulses(objectives, pulse_options, time_interval, time_options={},
 
         # low level minimizer overrides high level algorithm kwargs
         max_iter = minimizer_kwargs.get("options", {}).get(
-            "maxiter", algorithm_kwargs.get("max_iter", 1000))
+            "maxiter", algorithm_kwargs.get("max_iter", 1000)
+        )
 
         optim_method = minimizer_kwargs.get(
             "method", algorithm_kwargs.get("optim_method", "BFGS"))

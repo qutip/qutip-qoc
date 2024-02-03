@@ -1,4 +1,4 @@
-__all__ = ['Objective']
+__all__ = ["Objective"]
 
 
 class Objective:
