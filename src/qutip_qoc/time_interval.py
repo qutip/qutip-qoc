@@ -35,6 +35,9 @@ class TimeInterval:
         self._n_tslots = n_tslots
         self._tdiffs = tdiffs
 
+    def __call__(self):
+        return self.tslots
+
     @property
     def tslots(self):
         if self._tslots is None:
