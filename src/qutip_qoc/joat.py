@@ -10,6 +10,7 @@ from diffrax import Dopri5, PIDController
 import jax
 from jax import custom_jvp
 import jax.numpy as jnp
+import qutip_jax  # noqa: F401
 
 __all__ = ["JOAT", "Multi_JOAT"]
 

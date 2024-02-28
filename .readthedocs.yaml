@@ -12,14 +12,14 @@ build:
     python: "3.10"
   apt_packages:
     - pandoc
-  jobs:
-    pre_build:
-      # Each command is executed in a new shell process
-      - cd doc; python source/tutorials-website/create_tutorials_html.py
+  #jobs:
+  #  pre_build:
+  #    # Each command is executed in a new shell process
+  #    - cd doc; python source/tutorials-website/create_tutorials_html.py
 
 # Build documentation in the docs/ directory with Sphinx
 sphinx:
-  configuration: doc/source/conf.py
+  configuration: doc/conf.py
 
 # We recommend specifying your dependencies to enable reproducible builds:
 # https://docs.readthedocs.io/en/stable/guides/reproducible-builds.html

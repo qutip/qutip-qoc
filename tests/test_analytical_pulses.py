@@ -4,6 +4,7 @@ Tests for GOAT and JOAT algorithms.
 
 import pytest
 import qutip as qt
+import qutip_jax  # noqa: F401
 import numpy as np
 import jax.numpy as jnp
 import collections

@@ -28,7 +28,7 @@ pip install qutip-qoc
 
 ## Documentation and tutorials
 
-The documentation of `qutip-qoc` updated to the latest development version is hosted at [qutip-qoc.readthedocs.io/](https://qutip-qoc.readthedocs.io/en/stable/).
+The documentation of `qutip-qoc` updated to the latest development version is hosted at [qutip-qoc.readthedocs.io](https://qutip-qoc.readthedocs.io/en/latest/).
 Tutorials related to using quantum optimal control in `qutip-qoc` can be found [_here_](https://qutip.org/qutip-tutorials/#optimal-control).
 
 ## Installation from source
@@ -45,7 +45,7 @@ which makes sure that you are up to date with the latest `pip` version. Contribu
 To build and test the documentation, additional packages need to be installed:
 
 ```
-pip install pytest matplotlib sphinx sphinxcontrib-bibtex numpydoc sphinx_rtd_theme
+pip install pytest matplotlib sphinx sphinxcontrib-bibtex numpydoc sphinx_rtd_theme sphinxcontrib-bibtex
 ```
 
 Under the `doc` directory, use
