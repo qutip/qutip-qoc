@@ -4,6 +4,7 @@ Tests for GOAT and JOAT algorithms.
 
 import pytest
 import qutip as qt
+import qutip_jax  # noqa: F401
 import numpy as np
 import jax.numpy as jnp
 import collections
@@ -11,10 +12,10 @@ import collections
 from qutip_qoc.optimize import optimize_pulses
 from qutip_qoc.objective import Objective
 from qutip_qoc.time_interval import TimeInterval
-from qutip_qoc.result import Result
 
 Case = collections.namedtuple(
-    "_Case", [
+    "Case",
+    [
         "objectives",
         "pulse_options",
         "time_interval",
@@ -22,7 +23,9 @@ Case = collections.namedtuple(
         "algorithm_kwargs",
         "optimizer_kwargs",
         "minimizer_kwargs",
-        "integrator_kwargs"])
+        "integrator_kwargs",
+    ],
+)
 
 # --------------------------- System and Control ---------------------------
 
@@ -46,8 +49,10 @@ p_guess = q_guess = [1, 1, 0]
 p_bounds = q_bounds = [(-10, 10), (-10, 10), (-np.pi, np.pi)]
 
 H_d = [qt.sigmaz()]
-H_c = [[qt.sigmax(), lambda t, p: sin(t, p), {"grad": grad_sin}],
-       [qt.sigmay(), lambda t, q: sin(t, q), {"grad": grad_sin}]]
+H_c = [
+    [qt.sigmax(), lambda t, p: sin(t, p), {"grad": grad_sin}],
+    [qt.sigmay(), lambda t, q: sin(t, q), {"grad": grad_sin}],
+]
 
 H = H_d + H_c
 
@@ -61,9 +66,9 @@ state2state = Case(
     objectives=[Objective(initial, H, target)],
     pulse_options={
         "p": {"guess": p_guess, "bounds": p_bounds},
-        "q": {"guess": q_guess, "bounds": q_bounds}
+        "q": {"guess": q_guess, "bounds": q_bounds},
     },
-    time_interval=TimeInterval(evo_time=1.),
+    time_interval=TimeInterval(evo_time=1.0),
     time_options={},
     algorithm_kwargs={
         "alg": "GOAT",
@@ -71,7 +76,7 @@ state2state = Case(
     },
     optimizer_kwargs={"seed": 0},
     minimizer_kwargs={},
-    integrator_kwargs={}
+    integrator_kwargs={},
 )
 
 
@@ -83,9 +88,9 @@ unitary = Case(
     objectives=[Objective(initial_U, H, target_U)],
     pulse_options={
         "p": {"guess": p_guess, "bounds": p_bounds},
-        "q": {"guess": q_guess, "bounds": q_bounds}
+        "q": {"guess": q_guess, "bounds": q_bounds},
     },
-    time_interval=TimeInterval(evo_time=1.),
+    time_interval=TimeInterval(evo_time=1.0),
     time_options={},
     algorithm_kwargs={
         "alg": "GOAT",
@@ -93,7 +98,7 @@ unitary = Case(
     },
     optimizer_kwargs={"seed": 0},
     minimizer_kwargs={},
-    integrator_kwargs={}
+    integrator_kwargs={},
 )
 
 
@@ -102,9 +107,9 @@ time = Case(
     objectives=[Objective(initial_U, H, target_U)],
     pulse_options={
         "p": {"guess": p_guess, "bounds": p_bounds},
-        "q": {"guess": q_guess, "bounds": q_bounds}
+        "q": {"guess": q_guess, "bounds": q_bounds},
     },
-    time_interval=TimeInterval(evo_time=1.),
+    time_interval=TimeInterval(evo_time=1.0),
     time_options={"guess": 5, "bounds": (0, 10)},
     algorithm_kwargs={
         "alg": "GOAT",
@@ -112,7 +117,7 @@ time = Case(
     },
     optimizer_kwargs={"seed": 0},
     minimizer_kwargs={},
-    integrator_kwargs={}
+    integrator_kwargs={},
 )
 
 
@@ -121,8 +126,10 @@ initial_map = qt.sprepost(qt.qeye(2), qt.qeye(2).dag())
 target_map = qt.sprepost(qt.sigmaz(), qt.sigmaz().dag())
 
 L_d = [qt.liouvillian(qt.sigmaz(), c_ops=[qt.destroy(2)])]
-L_c = [[qt.liouvillian(qt.sigmax()), lambda t, p: sin(t, p), {"grad": grad_sin}],
-       [qt.liouvillian(qt.sigmay()), lambda t, q: sin(t, q), {"grad": grad_sin}]]
+L_c = [
+    [qt.liouvillian(qt.sigmax()), lambda t, p: sin(t, p), {"grad": grad_sin}],
+    [qt.liouvillian(qt.sigmay()), lambda t, q: sin(t, q), {"grad": grad_sin}],
+]
 
 L = L_d + L_c
 
@@ -130,17 +137,17 @@ mapping = Case(
     objectives=[Objective(initial_map, L, target_map)],
     pulse_options={
         "p": {"guess": p_guess, "bounds": p_bounds},
-        "q": {"guess": q_guess, "bounds": q_bounds}
+        "q": {"guess": q_guess, "bounds": q_bounds},
     },
-    time_interval=TimeInterval(evo_time=1.),
+    time_interval=TimeInterval(evo_time=1.0),
     time_options={},
     algorithm_kwargs={
         "alg": "GOAT",
-        "fid_err_targ": 0.1  # relaxed objective
+        "fid_err_targ": 0.1,  # relaxed objective
     },
     optimizer_kwargs={"seed": 0},
     minimizer_kwargs={},
-    integrator_kwargs={}
+    integrator_kwargs={},
 )
 
 
@@ -151,8 +158,10 @@ def sin_jax(t, p):
     return p[0] * jnp.sin(p[1] * t + p[2])
 
 
-Hc_jax = [[qt.sigmax(), lambda t, p: sin_jax(t, p)],
-          [qt.sigmay(), lambda t, q: sin_jax(t, q)]]
+Hc_jax = [
+    [qt.sigmax(), lambda t, p: sin_jax(t, p)],
+    [qt.sigmay(), lambda t, q: sin_jax(t, q)],
+]
 
 H_jax = H_d + Hc_jax
 
@@ -177,8 +186,10 @@ time_jax = time._replace(
 )
 
 # map synthesis
-Lc_jax = [[qt.liouvillian(qt.sigmax()), lambda t, p: sin_jax(t, p)],
-          [qt.liouvillian(qt.sigmay()), lambda t, q: sin_jax(t, q)]]
+Lc_jax = [
+    [qt.liouvillian(qt.sigmax()), lambda t, p: sin_jax(t, p)],
+    [qt.liouvillian(qt.sigmay()), lambda t, q: sin_jax(t, q)],
+]
 L_jax = L_d + Lc_jax
 
 mapping_jax = mapping._replace(
@@ -201,7 +212,8 @@ mapping_jax = mapping._replace(
         pytest.param(mapping_jax, id="Map synthesis (JAX)"),
     ]
 )
-def tst(request): return request.param
+def tst(request):
+    return request.param
 
 
 def test_optimize_pulses(tst):
@@ -213,6 +225,6 @@ def test_optimize_pulses(tst):
         tst.algorithm_kwargs,
         tst.optimizer_kwargs,
         tst.minimizer_kwargs,
-        tst.integrator_kwargs)
-    assert result.infidelity <= tst.algorithm_kwargs.get(
-        "fid_err_targ", 0.01)
+        tst.integrator_kwargs,
+    )
+    assert result.infidelity <= tst.algorithm_kwargs.get("fid_err_targ", 0.01)

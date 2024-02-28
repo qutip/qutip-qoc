@@ -4,13 +4,13 @@ calculate optimal parameters for analytical control pulse sequences.
 """
 import qutip as qt
 from qutip import Qobj, QobjEvo
-import qutip_jax
 
 from diffrax import Dopri5, PIDController
 
 import jax
 from jax import custom_jvp
 import jax.numpy as jnp
+import qutip_jax  # noqa: F401
 
 __all__ = ["JOAT", "Multi_JOAT"]
 
@@ -24,12 +24,15 @@ def abs_jvp(primals, tangents):
     """
     Custom jvp for absolute value of complex functions
     """
-    x, = primals
-    t, = tangents
+    (x,) = primals
+    (t,) = tangents
 
     abs_x = abs(x)
-    res = jnp.where(abs_x == 0, 0., # prevent division by zero
-                    jnp.real(jnp.multiply(jnp.conj(x), t)) / abs_x)
+    res = jnp.where(
+        abs_x == 0,
+        0.0,  # prevent division by zero
+        jnp.real(jnp.multiply(jnp.conj(x), t)) / abs_x,
+    )
 
     return abs_x, res
 
@@ -45,15 +48,15 @@ class JOAT:
     """
 
     def __init__(
-            self,
-            objective,
-            time_interval,
-            time_options,
-            pulse_options,
-            alg_kwargs,
-            guess_params,
-            **integrator_kwargs):
-
+        self,
+        objective,
+        time_interval,
+        time_options,
+        pulse_options,
+        alg_kwargs,
+        guess_params,
+        **integrator_kwargs,
+    ):
         self.Hd = objective.H[0]
         self.Hc_lst = objective.H[1:]
 
@@ -78,13 +81,9 @@ class JOAT:
         self.atol = self.integrator_kwargs.get("atol", 1e-5)
 
         self.integrator_kwargs.setdefault(
-            "stepsize_controller", PIDController(
-                rtol=self.rtol, atol=self.atol
-            )
+            "stepsize_controller", PIDController(rtol=self.rtol, atol=self.atol)
         )
-        self.integrator_kwargs.setdefault(
-            "solver", Dopri5()
-        )
+        self.integrator_kwargs.setdefault("solver", Dopri5())
 
         # choose solver and fidelity type according to problem
         if self.Hd.issuper:
@@ -119,8 +118,7 @@ class JOAT:
             M = len(guess)
 
             evo = QobjEvo(
-                [hc, helper(ctrl, idx, idx + M)],
-                args={"p": self.guess_params}
+                [hc, helper(ctrl, idx, idx + M)], args={"p": self.guess_params}
             )
             H += evo
             idx += M
@@ -132,11 +130,10 @@ class JOAT:
         calculate infidelity to be minimized
         """
         # adjust integration time-interval, if time is parameter
-        evo_time = self.evo_time if self.var_t == False else params[-1]
+        evo_time = self.evo_time if self.var_t is False else params[-1]
 
         X = self.solver.run(
-            self.initial, [0., evo_time],
-            args={'p': params}
+            self.initial, [0.0, evo_time], args={"p": params}
         ).final_state
 
         if self.fid_type == "TRACEDIFF":
@@ -161,12 +158,26 @@ class Multi_JOAT:
     to optimize multiple objectives simultaneously
     """
 
-    def __init__(self, objectives, time_interval, time_options, pulse_options,
-                 alg_kwargs, guess_params, **integrator_kwargs):
-
+    def __init__(
+        self,
+        objectives,
+        time_interval,
+        time_options,
+        pulse_options,
+        alg_kwargs,
+        guess_params,
+        **integrator_kwargs,
+    ):
         self.joats = [
-            JOAT(obj, time_interval, time_options, pulse_options,
-                 alg_kwargs, guess_params, **integrator_kwargs)
+            JOAT(
+                obj,
+                time_interval,
+                time_options,
+                pulse_options,
+                alg_kwargs,
+                guess_params,
+                **integrator_kwargs,
+            )
             for obj in objectives
         ]
 

@@ -1,13 +1,12 @@
 import jax
 import jax.numpy as jnp
-import jax_cosmo as jc
-import qutip_jax
 
 
 class Pulse:
     """
     Base class for pulse generation.
     """
+
     def __init__(self, n_sup, n_var):
         self.n_sup = n_sup  # num of superpositions, 'm' in paper
         self.n_var = n_var  # num of paras for each control function
@@ -68,34 +67,16 @@ class FourierPulse(Pulse):
         """
         Compute the Fourier series for a given set of parameters at point t.
 
-        A0 + 
+        A0 +
         A1 * cos(2 * pi / period * 1 * t) + B1 * sin(2 * pi / period * 1 * t) +
         A2 * cos(2 * pi / period * 2 * t) + B2 * sin(2 * pi / period * 2 * t) +
         ...
         """
-        pulse = paras[1] +\
-            jnp.sum(
-                paras[2 * self.n] *
-                jnp.cos(2 * jnp.pi / paras[0] * self.n * time) +
-                paras[2 * self.n + 1] *
-                jnp.sin(2 * jnp.pi / paras[0] * self.n * time)
+        pulse = paras[1] + jnp.sum(
+            paras[2 * self.n] * jnp.cos(2 * jnp.pi / paras[0] * self.n * time)
+            + paras[2 * self.n + 1] * jnp.sin(2 * jnp.pi / paras[0] * self.n * time)
         )
         return pulse
-
-
-class Spline(Pulse):
-    def __init__(self, interval, paras):
-        super().__init__(n_sup=1, n_var=len(paras))
-        self.interval = interval
-
-    def pulse(self, time, paras):
-        """
-        Generate a pulse with piecewise linear shape.
-        Assumes that interval is equidistantly spaced.
-        """
-        spline = jc.scipy.interpolate.InterpolatedUnivariateSpline(
-            self.interval, paras, k=3, endpoints="not-a-knot")
-        return spline(time)
 
 
 class FluxPulse(Pulse):
@@ -120,15 +101,15 @@ class FluxPulse(Pulse):
 
     def rescale(self, paras):
         p = paras.reshape(6, 3)
-        l, b = jnp.zeros((6, 3)), jnp.zeros((6, 3))
+        L, b = jnp.zeros((6, 3)), jnp.zeros((6, 3))
         # linearly rescacle parameters
-        l = l.at[:, 0].set(self.L(p[:, 0], -1, 1, -0.3, 0.3))
-        l = l.at[:, 1].set(self.L(p[:, 1], -1, 1, -2.0944e9, 2.0944e9))
-        l = l.at[:, 2].set(self.L(p[:, 2], -1, 1, -3141.59, 3141.59))
+        L = L.at[:, 0].set(self.L(p[:, 0], -1, 1, -0.3, 0.3))
+        L = L.at[:, 1].set(self.L(p[:, 1], -1, 1, -2.0944e9, 2.0944e9))
+        L = L.at[:, 2].set(self.L(p[:, 2], -1, 1, -3141.59, 3141.59))
         # bound parameters
-        b = b.at[:, 0].set(self.C(l[:, 0], -0.3, 0.3))
-        b = b.at[:, 1].set(self.C(l[:, 1], -2.0944e9, 2.0944e9))
-        b = b.at[:, 2].set(l[:, 2])  # no bound
+        b = b.at[:, 0].set(self.C(L[:, 0], -0.3, 0.3))
+        b = b.at[:, 1].set(self.C(L[:, 1], -2.0944e9, 2.0944e9))
+        b = b.at[:, 2].set(L[:, 2])  # no bound
         return b.reshape(18)
 
     def S_down_bar(self, x, g0):
@@ -174,10 +155,10 @@ class FluxPulse(Pulse):
         return self.W(Phi, t, 4.67783e10)
 
     def omega_direct(self, paras, t):
-        f = delta = self.delta(paras, t)
+        f = self.delta(paras, t)  # = delta
         Theta = -0.108
         omega = 5.34448e9
-        Phi = G = Theta + jnp.cos(omega * t) * f
+        Phi = Theta + jnp.cos(omega * t) * f  # = G
         omega_0 = 4.67783e10
         W = omega_0 * jnp.sqrt(jnp.abs(jnp.cos(jnp.pi * Phi)))
         return W

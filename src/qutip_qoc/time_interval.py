@@ -29,21 +29,23 @@ class TimeInterval:
         Sum over all elements of tdiffs is evo_time.
     """
 
-    def __init__(self, tslots=None, evo_time=None, n_tslots=None, tdiffs=None):
+    def __init__(self, tslots=None, evo_time=None, n_tslots=100, tdiffs=None):
         self._tslots = tslots
         self._evo_time = evo_time
         self._n_tslots = n_tslots
         self._tdiffs = tdiffs
+
+    def __call__(self):
+        return self.tslots
 
     @property
     def tslots(self):
         if self._tslots is None:
             n_tslots = self.n_tslots
             if self._evo_time:  # derive from evo_time
-                self._tslots = np.linspace(0., self._evo_time, n_tslots)
+                self._tslots = np.linspace(0.0, self._evo_time, n_tslots)
             elif self._tdiffs:  # derive from tdiffs
-                self._tslots = [sum(self._tdiffs[:i])
-                                for i in range(n_tslots - 1)]
+                self._tslots = [sum(self._tdiffs[:i]) for i in range(n_tslots - 1)]
         return self._tslots
 
     @property

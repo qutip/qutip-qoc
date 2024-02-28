@@ -10,7 +10,7 @@ from qutip_qoc.objective import Objective
 __all__ = ["Result"]
 
 
-class Result():
+class Result:
     """
     Class for storing the results of a pulse control optimization run.
 
@@ -65,24 +65,24 @@ class Result():
     """
 
     def __init__(
-            self,
-            objectives=None,
-            time_interval=None,
-            start_local_time=None,
-            end_local_time=None,
-            total_seconds=None,
-            n_iters=None,
-            iter_seconds=None,
-            message=None,
-            guess_controls=None,
-            optimized_controls=None,
-            optimized_objectives=None,
-            final_states=None,
-            guess_params=None,
-            new_params=None,
-            optimized_params=None,
-            infidelity=np.inf,
-            var_time=False,
+        self,
+        objectives=None,
+        time_interval=None,
+        start_local_time=None,
+        end_local_time=None,
+        total_seconds=None,
+        n_iters=None,
+        iter_seconds=None,
+        message=None,
+        guess_controls=None,
+        optimized_controls=None,
+        optimized_objectives=None,
+        final_states=None,
+        guess_params=None,
+        new_params=None,
+        optimized_params=None,
+        infidelity=np.inf,
+        var_time=False,
     ):
         self.time_interval = time_interval
         self.objectives = objectives
@@ -105,7 +105,7 @@ class Result():
 
     def __str__(self):
         return textwrap.dedent(
-            r'''
+            r"""
         Control Optimization Result
         --------------------------
         - Started at {start_local_time}
@@ -115,7 +115,7 @@ class Result():
         - Number of iterations: {n_iters}
         - Reason for termination: {message}
         - Ended at {end_local_time} ({time_delta}s)
-        '''.format(
+        """.format(
                 start_local_time=self.start_local_time,
                 n_objectives=len(self.objectives),
                 final_infid=self.infidelity,
@@ -123,7 +123,8 @@ class Result():
                 n_iters=self.n_iters,
                 end_local_time=self.end_local_time,
                 time_delta=self.total_seconds,
-                message=self.message)
+                message=self.message,
+            )
         ).strip()
 
     def __repr__(self):
@@ -144,7 +145,7 @@ class Result():
 
             idx = 0
             for guess in self.guess_params:
-                opt = self.new_params[idx: idx + len(guess)]
+                opt = self.new_params[idx : idx + len(guess)]
 
                 if isinstance(guess, list):
                     opt = opt.tolist()
@@ -165,9 +166,8 @@ class Result():
             opt_ctrl = []
 
             for Hc, xf in zip(self.objectives[0].H[1:], self.optimized_params):
-
                 control = Hc[1]
-                if callable(control): # continuous control as in JOAT/GOAT
+                if callable(control):  # continuous control as in JOAT/GOAT
                     cf = []
                     try:
                         tslots = self.time_interval.tslots
@@ -175,13 +175,13 @@ class Result():
                         print(
                             "time_interval.tslots not specified "
                             "(probably missing n_tslots), defaulting to 100 "
-                            "collocation points for result.optimized_controls")
-                        tslots = np.linspace(
-                            0., self.time_interval.evo_time, 100)
+                            "collocation points for result.optimized_controls"
+                        )
+                        tslots = np.linspace(0.0, self.time_interval.evo_time, 100)
 
                     for t in tslots:
                         cf.append(control(t, xf))
-                else: # discrete control as in GRAPE/CRAB
+                else:  # discrete control as in GRAPE/CRAB
                     cf = xf
                 opt_ctrl.append(cf)
 
@@ -194,7 +194,6 @@ class Result():
             gss_ctrl = []
 
             for Hc, x0 in zip(self.objectives[0].H[1:], self.guess_params):
-
                 control = Hc[1]
                 if callable(control):
                     c0 = []
@@ -204,9 +203,9 @@ class Result():
                         print(
                             "time_interval.tslots not specified "
                             "(probably missing n_tslots), defaulting to 100 "
-                            "collocation points for result.optimized_controls")
-                        tslots = np.linspace(
-                            0., self.time_interval.evo_time, 100)
+                            "collocation points for result.optimized_controls"
+                        )
+                        tslots = np.linspace(0.0, self.time_interval.evo_time, 100)
 
                     for t in tslots:
                         c0.append(control(t, x0))
@@ -219,8 +218,7 @@ class Result():
 
     @property
     def optimized_objectives(self):
-        """
-        """
+        """ """
         if self._optimized_objectives is None:
             opt_obj = []
 
@@ -236,9 +234,7 @@ class Result():
                     else:
                         optimized_H.append([Hc[0], cf])
 
-                opt_obj.append(
-                    Objective(obj.initial, optimized_H, obj.target)
-                )
+                opt_obj.append(Objective(obj.initial, optimized_H, obj.target))
 
             self._optimized_objectives = opt_obj
         return self._optimized_objectives
@@ -264,34 +260,35 @@ class Result():
 
             # choose solver method based on type of control function
             if isinstance(
-                    self.optimized_objectives[0].H[1][1],
-                    jaxlib.xla_extension.PjitFunction):
+                self.optimized_objectives[0].H[1][1], jaxlib.xla_extension.PjitFunction
+            ):
                 method = "diffrax"  # for JAX defined contols
             else:
                 method = "adams"
 
             for obj in self.optimized_objectives:
-
                 H = qt.QobjEvo(obj.H, args=args_dict)
                 solver = None
 
                 if obj.H[0].issuper:  # choose solver
                     solver = qt.MESolver(
-                        H, options={
-                            'normalize_output': False,
-                            'method': method,
-                        }
+                        H,
+                        options={
+                            "normalize_output": False,
+                            "method": method,
+                        },
                     )
                 else:
                     solver = qt.SESolver(
-                        H, options={
-                            'normalize_output': False,
-                            'method': method,
-                        }
+                        H,
+                        options={
+                            "normalize_output": False,
+                            "method": method,
+                        },
                     )
 
                 states.append(  # compute evolution
-                    solver.run(obj.initial, tlist=[0., evo_time]).final_state
+                    solver.run(obj.initial, tlist=[0.0, evo_time]).final_state
                 )
 
             self._final_states = states
@@ -306,13 +303,13 @@ class Result():
         self.new_params = parameters
 
     def dump(self, filename):
-        with open(filename, 'wb') as dump_fh:
+        with open(filename, "wb") as dump_fh:
             pickler = pickle.Pickler(dump_fh)
             pickler.dump(self)
 
     @classmethod
     def load(cls, filename, objectives=None):
-        with open(filename, 'rb') as dump_fh:
+        with open(filename, "rb") as dump_fh:
             result = pickle.load(dump_fh)
         result.objectives = objectives
         return result

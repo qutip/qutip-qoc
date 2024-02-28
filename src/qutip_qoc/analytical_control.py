@@ -61,10 +61,12 @@ class Callback:
         self.end_time = time.time()
 
         self.result.start_local_time = time.strftime(
-            '%Y-%m-%d %H:%M:%S', time.localtime(self.start_time))
+            "%Y-%m-%d %H:%M:%S", time.localtime(self.start_time)
+        )
         self.result.end_local_time = time.strftime(
-            '%Y-%m-%d %H:%M:%S', time.localtime(self.end_time))
-        
+            "%Y-%m-%d %H:%M:%S", time.localtime(self.end_time)
+        )
+
         self.result.iter_seconds = self.iter_seconds
 
     def time_iter(self):
@@ -124,8 +126,9 @@ class Callback:
             if intermediate_result.fun < self.result.infidelity:
                 if intermediate_result.fun > 0:
                     if self.inside_bounds(intermediate_result.x):
-                        self.result.update(intermediate_result.fun,
-                                           intermediate_result.x)
+                        self.result.update(
+                            intermediate_result.fun, intermediate_result.x
+                        )
             raise StopIteration
 
     def opt_callback(self, x, f, accept):
@@ -145,8 +148,10 @@ class Callback:
             self.result.message = "max_wall_time reached"
 
         if self.disp:
-            message = "optimizer step, infidelity: %.5f" % f +\
-                ", took %.2f seconds" % global_step_seconds
+            message = (
+                "optimizer step, infidelity: %.5f" % f
+                + ", took %.2f seconds" % global_step_seconds
+            )
             if terminate:
                 message += "\n" + self.result.message + ", terminating optimization"
             print(message)
@@ -157,7 +162,8 @@ class Callback:
                     print(
                         "WARNING: infidelity < 0 -> inaccurate integration, "
                         "try reducing integrator tolerance (atol, rtol), "
-                        "continuing with global optimization")
+                        "continuing with global optimization"
+                    )
                     terminate = False
                 elif self.inside_bounds(x):
                     self.result.update(f, x)
@@ -166,14 +172,15 @@ class Callback:
 
 
 def optimize_pulses(
-        objectives,
-        pulse_options,
-        time_interval,
-        time_options,
-        algorithm_kwargs,
-        optimizer_kwargs,
-        minimizer_kwargs,
-        integrator_kwargs):
+    objectives,
+    pulse_options,
+    time_interval,
+    time_options,
+    algorithm_kwargs,
+    optimizer_kwargs,
+    minimizer_kwargs,
+    integrator_kwargs,
+):
     """
     Optimize a pulse sequence to implement a given target unitary by optimizing
     the parameters of the pulse functions. The algorithm is a two-layered
@@ -285,28 +292,41 @@ def optimize_pulses(
     # algorithm specific settings
     if algorithm_kwargs.get("alg") == "JOAT":
         with qt.CoreOptions(default_dtype="jax"):
-            multi_objective = Multi_JOAT(objectives, time_interval,
-                                         time_options, pulse_options,
-                                         algorithm_kwargs,
-                                         guess_params=optimizer_kwargs["x0"],
-                                         **integrator_kwargs)
+            multi_objective = Multi_JOAT(
+                objectives,
+                time_interval,
+                time_options,
+                pulse_options,
+                algorithm_kwargs,
+                guess_params=optimizer_kwargs["x0"],
+                **integrator_kwargs,
+            )
     elif algorithm_kwargs.get("alg") == "GOAT":
-        multi_objective = Multi_GOAT(objectives, time_interval, time_options,
-                                     pulse_options, algorithm_kwargs,
-                                     guess_params=optimizer_kwargs["x0"],
-                                     **integrator_kwargs)
+        multi_objective = Multi_GOAT(
+            objectives,
+            time_interval,
+            time_options,
+            pulse_options,
+            algorithm_kwargs,
+            guess_params=optimizer_kwargs["x0"],
+            **integrator_kwargs,
+        )
 
     # optimizer specific settings
     opt_method = optimizer_kwargs.get(
-        "method", algorithm_kwargs.get("method", "basinhopping"))
+        "method", algorithm_kwargs.get("method", "basinhopping")
+    )
 
     if opt_method == "basinhopping":
         optimizer = sp.optimize.basinhopping
 
         # if not specified through optimizer_kwargs "niter"
         optimizer_kwargs.setdefault(  # or "max_iter"
-            "niter", optimizer_kwargs.get(  # use algorithm_kwargs
-                "max_iter", algorithm_kwargs.get("max_iter", 1000)))
+            "niter",
+            optimizer_kwargs.get(  # use algorithm_kwargs
+                "max_iter", algorithm_kwargs.get("max_iter", 1000)
+            ),
+        )
 
         # realizes boundaries through minimizer
         minimizer_kwargs.setdefault("bounds", np.concatenate(bounds))
@@ -316,8 +336,11 @@ def optimize_pulses(
 
         # if not specified through optimizer_kwargs "maxiter"
         optimizer_kwargs.setdefault(  # or "max_iter"
-            "maxiter", optimizer_kwargs.get(  # use algorithm_kwargs
-                "max_iter", algorithm_kwargs.get("max_iter", 1000)))
+            "maxiter",
+            optimizer_kwargs.get(  # use algorithm_kwargs
+                "max_iter", algorithm_kwargs.get("max_iter", 1000)
+            ),
+        )
 
         # realizes boundaries through optimizer
         optimizer_kwargs.setdefault("bounds", np.concatenate(bounds))
@@ -330,10 +353,7 @@ def optimize_pulses(
     var_t = True if time_options.get("guess", False) else False
 
     # define the result Krotov style
-    result = Result(objectives,
-                    time_interval,
-                    guess_params=x0,
-                    var_time=var_t)
+    result = Result(objectives, time_interval, guess_params=x0, var_time=var_t)
 
     # Callback instance for termination and logging
     max_wall_time = algorithm_kwargs.get("max_wall_time", 1e10)
@@ -346,12 +366,12 @@ def optimize_pulses(
     min_res = optimizer(
         func=multi_objective.goal_fun,
         minimizer_kwargs={
-            'jac': multi_objective.grad_fun,
-            'callback': cllbck.min_callback,
-            **minimizer_kwargs
+            "jac": multi_objective.grad_fun,
+            "callback": cllbck.min_callback,
+            **minimizer_kwargs,
         },
         callback=cllbck.opt_callback,
-        **optimizer_kwargs
+        **optimizer_kwargs,
     )
 
     cllbck.stop_clock()  # stop the clock

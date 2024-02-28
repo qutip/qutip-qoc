@@ -17,7 +17,7 @@ Features
 
 - ``qutip_qoc.GOAT`` is an extension to the Gradient Optimization of Analytic conTrols (GOAT) :cite:`GOAT` algorithm.
     It encoporates an additional time parameterization to allow for optimization over the total evolution time.
-- ``qutip_qoc.JOAT`` is an JAX automatic differentiation Optimization of Analytic conTrols (JOAT) algorithm.  
+- ``qutip_qoc.JOAT`` is an JAX automatic differentiation Optimization of Analytic conTrols (JOAT) algorithm.
 - Both algorithms can be addressed by the ``qutip_qoc.optimize_pulses`` function, which consists of a two-layer approach to find global optimal values for parameterized analytical control functions.
     The global optimization layer provides ``scipy.optimize.dual_annealing`` and ``scipy.optimize.basinhopping``, while the local minimization layer supports all gradient driven ``scipy.optimize.minimize`` methods.
 

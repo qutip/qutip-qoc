@@ -3,27 +3,18 @@
 
 .. automodule:: qutip_qoc.objective
 
-   
-   
-   
 
-   
-   
-   
 
-   
-   
+
+
+
+
+
+
+
+
    .. rubric:: Classes
 
    .. autosummary::
-   
+
       Objective
-   
-   
-
-   
-   
-   
-
-
-

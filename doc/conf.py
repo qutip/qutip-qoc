@@ -19,8 +19,8 @@ sys.path.insert(0, os.path.abspath("."))
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
 project = "qutip_qoc"
-author = 'QuTiP developers'
-copyright = '2023 and later, ' + author
+copyright = "2023-2024, QuTiP Community"
+author = "QuTiP Community"
 
 
 def qutip_qoc_version():
@@ -75,7 +75,7 @@ napoleon_use_admonition_for_notes = True
 # apidoc folder. This is particularly useful for modules with lots of
 # functions/classes. However, pay attention that some api docs files are
 # adjusted manually for better illustration and should not be overwritten.
-autosummary_generate = True
+autosummary_generate = False
 autosummary_imported_members = True
 
 # -- Options for biblatex ---------------------------------------
