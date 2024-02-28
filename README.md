@@ -45,7 +45,7 @@ which makes sure that you are up to date with the latest `pip` version. Contribu
 To build and test the documentation, additional packages need to be installed:
 
 ```
-pip install pytest matplotlib sphinx sphinxcontrib-bibtex numpydoc sphinx_rtd_theme
+pip install pytest matplotlib sphinx sphinxcontrib-bibtex numpydoc sphinx_rtd_theme sphinxcontrib-bibtex
 ```
 
 Under the `doc` directory, use
