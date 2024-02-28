@@ -173,15 +173,16 @@ class Callback:
 
 
 def optimize_pulses(
-        objectives,
-        pulse_options,
-        time_interval,
-        time_options,
-        algorithm_kwargs,
-        optimizer_kwargs,
-        minimizer_kwargs,
-        integrator_kwargs,
-        crab_optimizer=None):
+    objectives,
+    pulse_options,
+    time_interval,
+    time_options,
+    algorithm_kwargs,
+    optimizer_kwargs,
+    minimizer_kwargs,
+    integrator_kwargs,
+    crab_optimizer=None,
+):
     """
     Optimize a pulse sequence to implement a given target unitary by optimizing
     the parameters of the pulse functions. The algorithm is a two-layered
@@ -304,16 +305,27 @@ def optimize_pulses(
                 **integrator_kwargs,
             )
     elif algorithm_kwargs.get("alg") == "GOAT":
-        multi_objective = Multi_GOAT(objectives, time_interval, time_options,
-                                     pulse_options, algorithm_kwargs,
-                                     guess_params=optimizer_kwargs["x0"],
-                                     **integrator_kwargs)
+        multi_objective = Multi_GOAT(
+            objectives,
+            time_interval,
+            time_options,
+            pulse_options,
+            algorithm_kwargs,
+            guess_params=optimizer_kwargs["x0"],
+            **integrator_kwargs,
+        )
     elif algorithm_kwargs.get("alg") == "CRAB":
-        multi_objective = Multi_CRAB(crab_optimizer,
-                                     objectives, time_interval, time_options,
-                                     pulse_options, algorithm_kwargs,
-                                     guess_params=optimizer_kwargs["x0"],
-                                     **integrator_kwargs)
+        multi_objective = Multi_CRAB(
+            crab_optimizer,
+            objectives,
+            time_interval,
+            time_options,
+            pulse_options,
+            algorithm_kwargs,
+            guess_params=optimizer_kwargs["x0"],
+            **integrator_kwargs,
+        )
+        minimizer_kwargs.setdefault("method", "Nelder-Mead")
 
     # optimizer specific settings
     opt_method = optimizer_kwargs.get(
@@ -331,7 +343,7 @@ def optimize_pulses(
             ),
         )
 
-        if len(bounds) != 0:# realizes boundaries through minimizer
+        if len(bounds) != 0:  # realizes boundaries through minimizer
             minimizer_kwargs.setdefault("bounds", np.concatenate(bounds))
 
     elif opt_method == "dual_annealing":
@@ -345,7 +357,7 @@ def optimize_pulses(
             ),
         )
 
-        if len(bounds) != 0:# realizes boundaries through optimizer
+        if len(bounds) != 0:  # realizes boundaries through optimizer
             optimizer_kwargs.setdefault("bounds", np.concatenate(bounds))
 
     # remove overload from optimizer_kwargs
@@ -369,9 +381,9 @@ def optimize_pulses(
     min_res = optimizer(
         func=multi_objective.goal_fun,
         minimizer_kwargs={
-            'jac': None,#multi_objective.grad_fun,
-            'callback': cllbck.min_callback,
-            **minimizer_kwargs
+            "jac": multi_objective.grad_fun,
+            "callback": cllbck.min_callback,
+            **minimizer_kwargs,
         },
         callback=cllbck.opt_callback,
         **optimizer_kwargs,

@@ -3,7 +3,9 @@ import qutip_qtrl.logging_utils as logging
 import qutip_qtrl.optimizer as opt
 import types
 import copy
+
 logger = logging.get_logger()
+
 
 class CRAB(opt.OptimizerCrab):
     def __init__(self, cfg, dyn, params, termination_conditions):
@@ -11,7 +13,6 @@ class CRAB(opt.OptimizerCrab):
         self.init_optim(termination_conditions)
 
 
-    # overwrite
 def fid_err_func_wrapper(self, *args):
     """
     Get the fidelity error achieved using the ctrl amplitudes passed
@@ -32,15 +33,12 @@ def fid_err_func_wrapper(self, *args):
         self.stats.num_fidelity_func_calls = self.num_fid_func_calls
         if self.log_level <= logging.DEBUG:
             logger.debug(
-                "fidelity error call {}".format(
-                    self.stats.num_fidelity_func_calls
-                )
+                "fidelity error call {}".format(self.stats.num_fidelity_func_calls)
             )
 
     amps = self._get_ctrl_amps(args[0].copy())
     self.dynamics.update_ctrl_amps(amps)
 
-    tc = self.termination_conditions
     err = self.dynamics.fid_computer.get_fid_err()
 
     if self.iter_summary:
@@ -54,13 +52,12 @@ def fid_err_func_wrapper(self, *args):
     """
     if err <= tc.fid_err_targ:
         raise errors.GoalAchievedTerminate(err)
-    
+
     if self.num_fid_func_calls > tc.max_fid_func_calls:
         raise errors.MaxFidFuncCallTerminate()
     """
     return err
 
-# overwrite
 
 def fid_err_grad_wrapper(self, *args):
     """
@@ -84,9 +81,7 @@ def fid_err_grad_wrapper(self, *args):
     if self.stats is not None:
         self.stats.num_grad_func_calls = self.num_grad_func_calls
         if self.log_level <= logging.DEBUG:
-            logger.debug(
-                "gradient call {}".format(self.stats.num_grad_func_calls)
-            )
+            logger.debug("gradient call {}".format(self.stats.num_grad_func_calls))
     amps = self._get_ctrl_amps(args[0].copy())
     self.dynamics.update_ctrl_amps(amps)
     fid_comp = self.dynamics.fid_computer
@@ -114,19 +109,30 @@ def fid_err_grad_wrapper(self, *args):
     return grad.flatten()
 
 
-class Multi_CRAB():
+class Multi_CRAB:
     """
     Composite class for multiple GOAT instances
     to optimize multiple objectives simultaneously
     """
 
-    def __init__(self, crab_optimizer, objectives, time_interval, time_options, pulse_options,
-                 alg_kwargs, guess_params, **integrator_kwargs):
+    crabs: list = []
+    grad_fun = None
 
-        self.crabs = []
-
-        for obj in objectives:
-            crab = copy.deepcopy(crab_optimizer)
+    def __init__(
+        self,
+        crab_optimizer,
+        objectives,
+        time_interval,
+        time_options,
+        pulse_options,
+        alg_kwargs,
+        guess_params,
+        **integrator_kwargs,
+    ):
+        if not isinstance(crab_optimizer, list):
+            crab_optimizer = [crab_optimizer]
+        for optim in crab_optimizer:
+            crab = copy.deepcopy(optim)
             crab.fid_err_func_wrapper = types.MethodType(fid_err_func_wrapper, crab)
             # Stack for each objective
             self.crabs.append(crab)
@@ -145,14 +151,3 @@ class Multi_CRAB():
 
         self.mean_infid = np.mean(infid_sum)
         return self.mean_infid
-
-    def grad_fun(self, params):
-        """
-        Calculates the sum of gradients over all objectives
-        """
-        grads = 0
-
-        for c in self.crabs:
-            grads += c.fid_err_grad_wrapper(params)
-
-        return grads

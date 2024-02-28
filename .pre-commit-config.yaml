@@ -62,8 +62,10 @@ repos:
       - id: ruff
         args: ["--fix", "--show-fixes"]
         types_or: [python, pyi, jupyter]
+        exclude: "src/qutip_qoc/examples.ipynb"
       - id: ruff-format
         types_or: [python, pyi, jupyter]
+        exclude: "src/qutip_qoc/examples.ipynb"
 
   # Also run Black on examples in the documentation
   - repo: https://github.com/adamchainz/blacken-docs
