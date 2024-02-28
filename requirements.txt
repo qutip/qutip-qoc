@@ -1,5 +1,5 @@
 cython>=1.0
-numpy>=1.20
+numpy==1.17.3
 scipy>=1.10.1
 qutip @ git+https://github.com/qutip/qutip.git@master
 qutip-qtrl @ git+https://github.com/qutip/qutip-qtrl.git@master
