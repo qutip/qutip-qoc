@@ -28,7 +28,7 @@ pip install qutip-qoc
 
 ## Documentation and tutorials
 
-The documentation of `qutip-qoc` updated to the latest development version is hosted at [qutip-qoc.readthedocs.io/](https://qutip-qoc.readthedocs.io/en/stable/).
+The documentation of `qutip-qoc` updated to the latest development version is hosted at [qutip-qoc.readthedocs.io](https://qutip-qoc.readthedocs.io/en/latest/).
 Tutorials related to using quantum optimal control in `qutip-qoc` can be found [_here_](https://qutip.org/qutip-tutorials/#optimal-control).
 
 ## Installation from source
