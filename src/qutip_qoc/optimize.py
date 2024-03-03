@@ -248,6 +248,18 @@ def optimize_pulses(
 
     crab_optimizer = []
     if alg == "CRAB":
+        # Check wether guess referes to amplitudes or parameters
+        use_as_amps = len(x0[0]) == time_interval.n_tslots
+        num_coeffs = algorithm_kwargs.get("num_coeffs", None)
+        fix_frequency = algorithm_kwargs.get("fix_frequency", False)
+
+        if num_coeffs is None:
+            # default only two sets of fourier expansion coefficients
+            if use_as_amps:
+                num_coeffs = 2
+            else:  # depending on the number of parameters given
+                num_coeffs = len(x0[0]) // 2 if fix_frequency else len(x0[0]) // 3
+
         for i, objective in enumerate(objectives):
             alg_params = {
                 "drift": Hd_lst[i],
@@ -270,9 +282,10 @@ def optimize_pulses(
                 "max_metric_corr": None,  # deprecated
                 "accuracy_factor": None,  # deprecated
                 "alg_params": {
-                    "num_coeffs": algorithm_kwargs.get("num_coeffs"),
+                    "num_coeffs": num_coeffs,
                     "init_coeff_scaling": algorithm_kwargs.get("init_coeff_scaling"),
                     "crab_pulse_params": algorithm_kwargs.get("crab_pulse_params"),
+                    "fix_frequency": fix_frequency,
                 },
                 "optim_params": algorithm_kwargs.get("optim_params", None),
                 "dyn_type": algorithm_kwargs.get("dyn_type", "GEN_MAT"),
@@ -353,9 +366,6 @@ def optimize_pulses(
             # Generate initial pulses for each control through generator
             init_amps = np.zeros([dyn.num_tslots, dyn.num_ctrls])
 
-            # Check wether guess referes to amplitudes or parameters
-            use_as_amps = len(x0[0]) == time_interval.n_tslots
-
             for j in range(dyn.num_ctrls):
                 # Create the pulse generator for each control
                 pgen = crab_optim.pulse_generator[j]
@@ -378,6 +388,7 @@ def optimize_pulses(
                     pulse_options[key]["guess"] = init_params[
                         i * num_params : (i + 1) * num_params
                     ]  # amplitude bounds are taken care of by pulse generator
+                    pulse_options[key]["bounds"] = None
 
             crab_optimizer.append(crab_optim)
 
