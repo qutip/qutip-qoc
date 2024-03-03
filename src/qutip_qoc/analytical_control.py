@@ -364,10 +364,10 @@ def optimize_pulses(
     optimizer_kwargs.pop("max_iter", None)
     optimizer_kwargs.pop("method", None)
 
-    # should optimization include time
+    # should optimization include time (only for GOAT and JOAT)
     var_t = True if time_options.get("guess", False) else False
 
-    # define the result Krotov style
+    # define the result object
     result = Result(objectives, time_interval, guess_params=x0, var_time=var_t)
 
     # Callback instance for termination and logging

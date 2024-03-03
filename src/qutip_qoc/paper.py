@@ -53,27 +53,28 @@ initial_x = np.sin(interval())
 initial_y = np.cos(interval())
 initial_z = np.tan(interval())
 
+n_coeffs = 4
 res_grape = qoc.optimize_pulses(
     objectives=qoc.Objective(initial, H, target),
     pulse_options={
         "ctrl_x": {
-            "guess": [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5],
-            "bounds": [(-1, 1) for _ in range(8)],
+            "guess": initial_x,  # [0.5 for _ in range(2*n_coeffs)],
+            "bounds": [(-1, 1)],  # for _ in range(2*n_coeffs)],
         },
         "ctrl_y": {
-            "guess": [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5],
-            "bounds": [(-1, 1) for _ in range(8)],
+            "guess": initial_x,  # [0.5 for _ in range(2*n_coeffs)],
+            "bounds": [(-1, 1)],  # for _ in range(2*n_coeffs)],
         },
         "ctrl_z": {
-            "guess": [0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5],
-            "bounds": [(-1, 1) for _ in range(8)],
+            "guess": initial_x,  # [0.5 for _ in range(2*n_coeffs)],
+            "bounds": [(-1, 1)],  # for _ in range(2*n_coeffs)],
         },
     },
     time_interval=interval,
     algorithm_kwargs={
         "alg": "CRAB",
         "fid_err_targ": 0.5,
-        "num_coeffs": 4,
+        "num_coeffs": n_coeffs,
     },
 )
 

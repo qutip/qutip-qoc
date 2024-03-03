@@ -95,7 +95,6 @@ class Result:
         self._guess_controls = guess_controls
         self._optimized_controls = optimized_controls
         self._optimized_objectives = optimized_objectives
-        # not present in Krotov
         self.guess_params = guess_params
         self.new_params = new_params
         self._optimized_params = optimized_params

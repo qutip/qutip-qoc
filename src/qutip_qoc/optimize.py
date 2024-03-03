@@ -357,10 +357,11 @@ def optimize_pulses(
             use_as_amps = len(x0[0]) == time_interval.n_tslots
 
             for j in range(dyn.num_ctrls):
+                # Create the pulse generator for each control
                 pgen = crab_optim.pulse_generator[j]
-                pgen.init_pulse()  # generator for each control
 
                 if use_as_amps:
+                    pgen.init_pulse()
                     init_amps[:, j] = x0[j]
                 else:
                     pgen.set_optim_var_vals(np.array(x0[j]))
