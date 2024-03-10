@@ -58,24 +58,24 @@ res_grape = qoc.optimize_pulses(
     objectives=qoc.Objective(initial, H, target),
     pulse_options={
         "ctrl_x": {
-            "guess": initial_x,  # [0.5 for _ in range(2*n_coeffs)],
-            "bounds": [(-1, 1)],  # for _ in range(2*n_coeffs)],
+            "guess": [0.5 for _ in range(3 * n_coeffs)],
+            "bounds": [(-1, 1) for _ in range(3 * n_coeffs)],
         },
         "ctrl_y": {
-            "guess": initial_x,  # [0.5 for _ in range(2*n_coeffs)],
-            "bounds": [(-1, 1)],  # for _ in range(2*n_coeffs)],
+            "guess": [0.5 for _ in range(3 * n_coeffs)],
+            "bounds": [(-1, 1) for _ in range(3 * n_coeffs)],
         },
         "ctrl_z": {
-            "guess": initial_x,  # [0.5 for _ in range(2*n_coeffs)],
-            "bounds": [(-1, 1)],  # for _ in range(2*n_coeffs)],
+            "guess": [0.5 for _ in range(3 * n_coeffs)],
+            "bounds": [(-1, 1) for _ in range(3 * n_coeffs)],
         },
     },
     time_interval=interval,
     algorithm_kwargs={
         "alg": "CRAB",
         "fid_err_targ": 0.5,
-        "num_coeffs": n_coeffs,
+        "fix_frequency": False,
     },
 )
 
-print(res_grape)
+print(res_grape.final_states[-1])

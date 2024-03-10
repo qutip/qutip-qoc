@@ -83,6 +83,7 @@ class Result:
         optimized_params=None,
         infidelity=np.inf,
         var_time=False,
+        crab_optimizer=None,
     ):
         self.time_interval = time_interval
         self.objectives = objectives
@@ -101,6 +102,7 @@ class Result:
         self.final_states = final_states
         self.infidelity = infidelity
         self.var_time = var_time
+        self.crab_optimizer = crab_optimizer
 
     def __str__(self):
         return textwrap.dedent(
@@ -164,10 +166,10 @@ class Result:
         if self._optimized_controls is None:
             opt_ctrl = []
 
-            for Hc, xf in zip(self.objectives[0].H[1:], self.optimized_params):
-                control = Hc[1]
+            for j, H in enumerate(zip(self.objectives[0].H[1:], self.optimized_params)):
+                Hc, xf = H
+                control, cf = Hc[1], []
                 if callable(control):  # continuous control as in JOAT/GOAT
-                    cf = []
                     try:
                         tslots = self.time_interval.tslots
                     except Exception:
@@ -177,11 +179,15 @@ class Result:
                             "collocation points for result.optimized_controls"
                         )
                         tslots = np.linspace(0.0, self.time_interval.evo_time, 100)
-
                     for t in tslots:
                         cf.append(control(t, xf))
                 else:  # discrete control as in GRAPE/CRAB
-                    cf = xf
+                    if len(xf) == len(self.time_interval.tslots):
+                        cf = xf
+                    else:  # parameterized CRAB
+                        pgen = self.crab_optimizer[0].pulse_generator[j]
+                        pgen.set_optim_var_vals(np.array(self.optimized_params[j]))
+                        cf = pgen.gen_pulse()
                 opt_ctrl.append(cf)
 
             self._optimized_controls = opt_ctrl
@@ -222,16 +228,15 @@ class Result:
             opt_obj = []
 
             for obj in self.objectives:
-                optimized_H = [obj.H[0]]
-
-                for Hc, cf in zip(obj.H[1:], self.optimized_controls):
-                    control = Hc[1]
-
-                    if callable(control):
-                        optimized_H = obj.H
-                        break
-                    else:
-                        optimized_H.append([Hc[0], cf])
+                if callable(obj.H[1][1]):  # GOAT/JOAT
+                    optimized_H = obj.H
+                else:
+                    optimized_H = [obj.H[0]]  # drift
+                    for Hc, cf in zip(obj.H[1:], self.optimized_controls):
+                        if isinstance(Hc, qt.Qobj):  # parameterized CRAB
+                            optimized_H.append([Hc, cf])
+                        else:  # discrete control as in GRAPE/CRAB
+                            optimized_H.append([Hc[0], cf])
 
                 opt_obj.append(Objective(obj.initial, optimized_H, obj.target))
 
@@ -248,10 +253,12 @@ class Result:
             else:
                 evo_time = self.time_interval.evo_time
 
-            # extract parameter names from control functions f(t, para_key)
-            c_sigs = [signature(Hc[1]) for Hc in self.objectives[0].H[1:]]
-            c_keys = [sig.parameters.keys() for sig in c_sigs]
-            para_keys = [list(keys)[1] for keys in c_keys]
+            para_keys = []
+            if self.crab_optimizer is None:  # GOAT/JOAT
+                # extract parameter names from control functions f(t, para_key)
+                c_sigs = [signature(Hc[1]) for Hc in self.objectives[0].H[1:]]
+                c_keys = [sig.parameters.keys() for sig in c_sigs]
+                para_keys = [list(keys)[1] for keys in c_keys]
 
             args_dict = {}
             for key, val in zip(para_keys, self.optimized_params):
@@ -266,7 +273,11 @@ class Result:
                 method = "adams"
 
             for obj in self.optimized_objectives:
-                H = qt.QobjEvo(obj.H, args=args_dict)
+                H = (
+                    qt.QobjEvo(obj.H, args=args_dict)
+                    if args_dict
+                    else qt.QobjEvo(obj.H, tlist=self.time_interval.tslots)
+                )
                 solver = None
 
                 if obj.H[0].issuper:  # choose solver

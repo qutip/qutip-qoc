@@ -368,7 +368,13 @@ def optimize_pulses(
     var_t = True if time_options.get("guess", False) else False
 
     # define the result object
-    result = Result(objectives, time_interval, guess_params=x0, var_time=var_t)
+    result = Result(
+        objectives,
+        time_interval,
+        guess_params=x0,
+        var_time=var_t,
+        crab_optimizer=crab_optimizer,
+    )
 
     # Callback instance for termination and logging
     max_wall_time = algorithm_kwargs.get("max_wall_time", 1e10)
