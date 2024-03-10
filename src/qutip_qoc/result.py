@@ -254,7 +254,7 @@ class Result:
                 evo_time = self.time_interval.evo_time
 
             para_keys = []
-            if self.crab_optimizer is None:  # GOAT/JOAT
+            if not self.crab_optimizer:  # GOAT/JOAT
                 # extract parameter names from control functions f(t, para_key)
                 c_sigs = [signature(Hc[1]) for Hc in self.objectives[0].H[1:]]
                 c_keys = [sig.parameters.keys() for sig in c_sigs]
