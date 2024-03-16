@@ -1,5 +1,5 @@
 """
-Tests GOAT/JOAT and  algorithms to return a proper Result object.
+Tests GOAT/JOPT and  algorithms to return a proper Result object.
 """
 
 import pytest
@@ -106,7 +106,7 @@ H_jax = H_d + Hc_jax
 # state to state transfer
 state2state_jax = state2state_goat._replace(
     objectives=[Objective(initial, H_jax, target)],
-    algorithm_kwargs={"alg": "JOAT", "fid_err_targ": 0.01},
+    algorithm_kwargs={"alg": "JOPT", "fid_err_targ": 0.01},
 )
 
 # ------------------- discrete CRAB / GRAPE  control ------------------------
@@ -114,8 +114,8 @@ state2state_jax = state2state_goat._replace(
 n_tslots, evo_time = 100, 10
 disc_interval = TimeInterval(n_tslots=n_tslots, evo_time=evo_time)
 
-p_disc = q_disc = np.ones(n_tslots)
-p_bound = q_bound = (-10, 10)
+p_disc = q_disc = np.zeros(n_tslots)
+p_bound = q_bound = (-1, 1)
 
 Hc_disc = [[qt.sigmax(), p_guess], [qt.sigmay(), q_guess]]
 
@@ -132,13 +132,25 @@ state2state_grape = state2state_goat._replace(
     algorithm_kwargs={"alg": "GRAPE", "fid_err_targ": 0.01},
 )
 
+state2state_crab = state2state_goat._replace(
+    objectives=[Objective(initial, H_disc, target)],
+    pulse_options={
+        "p": {"guess": p_disc, "bounds": p_bound},
+        "q": {"guess": q_disc, "bounds": q_bound},
+    },
+    time_interval=disc_interval,
+    algorithm_kwargs={"alg": "CRAB", "fid_err_targ": 0.01},
+)
+
 
 @pytest.fixture(
     params=[
-        # GOAT
+        pytest.param(state2state_grape, id="State to state (GRAPE)"),
+        pytest.param(
+            state2state_crab, id="State to state (CRAB)"
+        ),  # TODO check boundaries!
         pytest.param(state2state_goat, id="State to state (GOAT)"),
         pytest.param(state2state_jax, id="State to state (JAX)"),
-        pytest.param(state2state_grape, id="State to state (GRAPE)"),
     ]
 )
 def tst(request):

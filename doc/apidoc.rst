@@ -41,4 +41,4 @@ Internal interfaces to the optimal control features.
 
    qutip_qoc.analytical_control
    qutip_qoc.goat
-   qutip_qoc.joat
+   qutip_qoc.jopt

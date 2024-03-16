@@ -134,23 +134,23 @@ H_jax = H_d + Hc_jax
 # state to state transfer
 PSU_state2state_jax = PSU_state2state._replace(
     objectives=[Objective(initial, H_jax, (-1j) * initial)],
-    algorithm_kwargs={"alg": "JOAT"},
+    algorithm_kwargs={"alg": "JOPT"},
 )
 
 SU_state2state_jax = SU_state2state._replace(
-    objectives=[Objective(initial, H_jax, initial)], algorithm_kwargs={"alg": "JOAT"}
+    objectives=[Objective(initial, H_jax, initial)], algorithm_kwargs={"alg": "JOPT"}
 )
 
 
 # unitary gate synthesis
 PSU_unitary_jax = PSU_unitary._replace(
     objectives=[Objective(initial_U, H_jax, (-1j) * initial_U)],
-    algorithm_kwargs={"alg": "JOAT"},
+    algorithm_kwargs={"alg": "JOPT"},
 )
 
 SU_unitary_jax = SU_unitary._replace(
     objectives=[Objective(initial_U, H_jax, initial_U)],
-    algorithm_kwargs={"alg": "JOAT"},
+    algorithm_kwargs={"alg": "JOPT"},
 )
 
 # map synthesis
@@ -162,7 +162,7 @@ L_jax = L_d + Lc_jax
 
 TRCDIFF_map_jax = TRCDIFF_map._replace(
     objectives=[Objective(initial_map, L_jax, initial_map)],
-    algorithm_kwargs={"alg": "JOAT", "fid_type": "TRACEDIFF"},
+    algorithm_kwargs={"alg": "JOPT", "fid_type": "TRACEDIFF"},
 )
 
 
@@ -174,7 +174,7 @@ TRCDIFF_map_jax = TRCDIFF_map._replace(
         pytest.param(PSU_unitary, id="PSU unitary gate (GOAT)"),
         pytest.param(SU_unitary, id="SU unitary gate (GOAT)"),
         pytest.param(TRCDIFF_map, id="TRACEDIFF map synthesis (GOAT)"),
-        # JOAT
+        # JOPT
         pytest.param(PSU_state2state_jax, id="PSU state to state (JAX)"),
         pytest.param(SU_state2state_jax, id="SU state to state (JAX)"),
         pytest.param(PSU_unitary_jax, id="PSU unitary gate (JAX)"),

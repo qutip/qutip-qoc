@@ -1,7 +1,7 @@
-﻿qutip\_qoc.joat
+﻿qutip\_qoc.jopt
 ===============
 
-.. automodule:: qutip_qoc.joat
+.. automodule:: qutip_qoc.jopt
 
 
 
@@ -24,8 +24,8 @@
    .. autosummary::
 
       Dopri5
-      JOAT
-      Multi_JOAT
+      JOPT
+      Multi_JOPT
       PIDController
       Qobj
       QobjEvo

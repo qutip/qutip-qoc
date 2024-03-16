@@ -26,6 +26,6 @@
 
       Callback
       Multi_GOAT
-      Multi_JOAT
+      Multi_JOPT
       OptimizeResult
       Result

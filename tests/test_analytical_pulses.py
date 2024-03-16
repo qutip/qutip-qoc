@@ -1,5 +1,5 @@
 """
-Tests for GOAT and JOAT algorithms.
+Tests for GOAT and JOPT algorithms.
 """
 
 import pytest
@@ -170,19 +170,19 @@ H_jax = H_d + Hc_jax
 # state to state transfer
 state2state_jax = state2state._replace(
     objectives=[Objective(initial, H_jax, target)],
-    algorithm_kwargs={"alg": "JOAT", "fid_err_targ": 0.01},
+    algorithm_kwargs={"alg": "JOPT", "fid_err_targ": 0.01},
 )
 
 # unitary gate synthesis
 unitary_jax = unitary._replace(
     objectives=[Objective(initial_U, H_jax, target_U)],
-    algorithm_kwargs={"alg": "JOAT", "fid_err_targ": 0.01},
+    algorithm_kwargs={"alg": "JOPT", "fid_err_targ": 0.01},
 )
 
 # unitary gate synthesis - time optimization
 time_jax = time._replace(
     objectives=[Objective(initial_U, H_jax, target_U)],
-    algorithm_kwargs={"alg": "JOAT", "fid_err_targ": 0.01},
+    algorithm_kwargs={"alg": "JOPT", "fid_err_targ": 0.01},
 )
 
 # map synthesis
@@ -194,7 +194,7 @@ L_jax = L_d + Lc_jax
 
 mapping_jax = mapping._replace(
     objectives=[Objective(initial_map, L_jax, target_map)],
-    algorithm_kwargs={"alg": "JOAT", "fid_err_targ": 0.1},  # relaxed objective
+    algorithm_kwargs={"alg": "JOPT", "fid_err_targ": 0.1},  # relaxed objective
 )
 
 
@@ -205,7 +205,7 @@ mapping_jax = mapping._replace(
         pytest.param(unitary, id="Unitary gate (GOAT)"),
         pytest.param(time, id="Time optimization (GOAT)"),
         pytest.param(mapping, id="Map synthesis (GOAT)"),
-        # JOAT
+        # JOPT
         pytest.param(state2state_jax, id="State to state (JAX)"),
         pytest.param(unitary_jax, id="Unitary gate (JAX)"),
         pytest.param(time_jax, id="Time optimization (JAX)"),

@@ -21,7 +21,7 @@ def optimize_pulses(
     integrator_kwargs={},
 ):
     """
-    Wrapper to choose between GOAT/JOAT and GRAPE/CRAB optimization.
+    Wrapper to choose between GOAT/JOPT and GRAPE/CRAB optimization.
 
     Parameters
     ----------
@@ -50,7 +50,7 @@ def optimize_pulses(
         GRAPE and CRAB require n_tslots attribute.
 
     time_options : dict, optional
-        Only supported by GOAT and JOAT.
+        Only supported by GOAT and JOPT.
         Dictionary of options for the time interval optimization.
         It must specify both:
 
@@ -67,14 +67,14 @@ def optimize_pulses(
 
             - alg : str
                 Algorithm to use for the optimization.
-                Supported are: "GRAPE", "CRAB", "GOAT", "JOAT".
+                Supported are: "GRAPE", "CRAB", "GOAT", "JOPT".
 
             - fid_err_targ : float, optional
                 Fidelity error target for the optimization.
 
             - max_iter : int, optional
                 Maximum number of iterations to perform.
-                Referes to global steps for GOAT/JOAT and
+                Referes to global steps for GOAT/JOPT and
                 local minimizer steps for GRAPE/CRAB.
                 Can be overridden by specifying in
                 optimizer_kwargs/minimizer_kwargs.
@@ -84,7 +84,7 @@ def optimize_pulses(
 
     optimizer_kwargs : dict, optional
         Dictionary of options for the global optimizer.
-        Only supported by GOAT and JOAT.
+        Only supported by GOAT and JOPT.
 
             - method : str, optional
                 Algorithm to use for the global optimization.
@@ -109,7 +109,7 @@ def optimize_pulses(
 
     integrator_kwargs : dict, optional
         Dictionary of options for the integrator.
-        Only supported by GOAT and JOAT.
+        Only supported by GOAT and JOPT.
         Options for the solver, see :obj:`MESolver.options` and
         `Integrator <./classes.html#classes-ode>`_ for a list of all options.
 
@@ -123,7 +123,7 @@ def optimize_pulses(
     if isinstance(objectives, list):
         if alg == "GRAPE" and len(objectives) != 1:
             raise TypeError(
-                "GRAPE optimization only supports one objective at a time. Please use CRAB, GOAT or JOAT for multiple objectives."
+                "GRAPE optimization only supports one objective at a time. Please use CRAB, GOAT or JOPT for multiple objectives."
             )
     else:
         objectives = [objectives]
@@ -290,7 +290,9 @@ def optimize_pulses(
                 "optim_params": algorithm_kwargs.get("optim_params", None),
                 "dyn_type": algorithm_kwargs.get("dyn_type", "GEN_MAT"),
                 "dyn_params": algorithm_kwargs.get("dyn_params", None),
-                "prop_type": algorithm_kwargs.get("prop_type", "FRECHET"),
+                "prop_type": algorithm_kwargs.get(
+                    "prop_type", "DEF"
+                ),  # check other defaults
                 "prop_params": algorithm_kwargs.get("prop_params", None),
                 "fid_type": algorithm_kwargs.get("fid_type", "DEF"),
                 "fid_params": algorithm_kwargs.get("fid_params", None),
@@ -374,12 +376,15 @@ def optimize_pulses(
                     pgen.init_pulse()
                     init_amps[:, j] = x0[j]
                 else:
+                    # Set the initial parameters
                     pgen.set_optim_var_vals(np.array(x0[j]))
+                    # pgen._pulse_initialised = True
                     init_amps[:, j] = pgen.gen_pulse()
+                    # dyn.prop_computer.grad_exact = False
 
             # Initialise the starting amplitudes
             dyn.initialize_controls(init_amps)
-            # And store the corresponding parameters
+            # And store the (random) initial parameters
             init_params = crab_optim._get_optim_var_vals()
 
             if use_as_amps:  # For the global optimizer

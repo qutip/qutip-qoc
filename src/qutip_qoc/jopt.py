@@ -1,5 +1,5 @@
 """
-This module contains functions that implement the JOAT algorithm to
+This module contains functions that implement the JOPT algorithm to
 calculate optimal parameters for analytical control pulse sequences.
 """
 import qutip as qt
@@ -12,7 +12,7 @@ from jax import custom_jvp
 import jax.numpy as jnp
 import qutip_jax  # noqa: F401
 
-__all__ = ["JOAT", "Multi_JOAT"]
+__all__ = ["JOPT", "Multi_JOPT"]
 
 
 @custom_jvp
@@ -41,7 +41,7 @@ def abs_jvp(primals, tangents):
 abs.defjvp(abs_jvp)
 
 
-class JOAT:
+class JOPT:
     """
     Class for storing a control problem and calculating
     the fidelity error function and its gradient wrt the control parameters.
@@ -152,9 +152,9 @@ class JOAT:
         return infid
 
 
-class Multi_JOAT:
+class Multi_JOPT:
     """
-    Composite class for multiple JOAT instances
+    Composite class for multiple JOPT instances
     to optimize multiple objectives simultaneously
     """
 
@@ -168,8 +168,8 @@ class Multi_JOAT:
         guess_params,
         **integrator_kwargs,
     ):
-        self.joats = [
-            JOAT(
+        self.jopts = [
+            JOPT(
                 obj,
                 time_interval,
                 time_options,
@@ -189,7 +189,7 @@ class Multi_JOAT:
         """
         infid_sum = 0
 
-        for j in self.joats:  # TODO: parallelize
+        for j in self.jopts:  # TODO: parallelize
             infid = j.infidelity(params)
             infid_sum += infid
 
@@ -202,7 +202,7 @@ class Multi_JOAT:
         """
         grads = 0
 
-        for j in self.joats:
+        for j in self.jopts:
             grad = j.gradient(params)
             grads += grad
 

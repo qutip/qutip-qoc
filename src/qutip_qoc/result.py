@@ -169,7 +169,7 @@ class Result:
             for j, H in enumerate(zip(self.objectives[0].H[1:], self.optimized_params)):
                 Hc, xf = H
                 control, cf = Hc[1], []
-                if callable(control):  # continuous control as in JOAT/GOAT
+                if callable(control):  # continuous control as in JOPT/GOAT
                     try:
                         tslots = self.time_interval.tslots
                     except Exception:
@@ -228,7 +228,7 @@ class Result:
             opt_obj = []
 
             for obj in self.objectives:
-                if callable(obj.H[1][1]):  # GOAT/JOAT
+                if callable(obj.H[1][1]):  # GOAT/JOPT
                     optimized_H = obj.H
                 else:
                     optimized_H = [obj.H[0]]  # drift
@@ -254,7 +254,7 @@ class Result:
                 evo_time = self.time_interval.evo_time
 
             para_keys = []
-            if not self.crab_optimizer:  # GOAT/JOAT
+            if not self.crab_optimizer:  # GOAT/JOPT
                 # extract parameter names from control functions f(t, para_key)
                 c_sigs = [signature(Hc[1]) for Hc in self.objectives[0].H[1:]]
                 c_keys = [sig.parameters.keys() for sig in c_sigs]
