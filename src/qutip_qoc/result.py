@@ -198,10 +198,10 @@ class Result:
         if self._guess_controls is None:
             gss_ctrl = []
 
-            for Hc, x0 in zip(self.objectives[0].H[1:], self.guess_params):
-                control = Hc[1]
-                if callable(control):
-                    c0 = []
+            for j, H in enumerate(zip(self.objectives[0].H[1:], self.guess_params)):
+                Hc, xi = H
+                control, c0 = Hc[1], []
+                if callable(control):  # continuous control as in JOPT/GOAT
                     try:
                         tslots = self.time_interval.tslots
                     except Exception:
@@ -211,11 +211,15 @@ class Result:
                             "collocation points for result.optimized_controls"
                         )
                         tslots = np.linspace(0.0, self.time_interval.evo_time, 100)
-
                     for t in tslots:
-                        c0.append(control(t, x0))
-                else:
-                    c0 = x0
+                        c0.append(control(t, xi))
+                else:  # discrete control as in GRAPE/CRAB
+                    if len(xi) == len(self.time_interval.tslots):
+                        c0 = xi
+                    else:  # parameterized CRAB
+                        pgen = self.crab_optimizer[0].pulse_generator[j]
+                        pgen.set_optim_var_vals(np.array(self.guess_params[j]))
+                        c0 = pgen.gen_pulse()
                 gss_ctrl.append(c0)
 
             self._guess_controls = gss_ctrl
