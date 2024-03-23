@@ -83,7 +83,7 @@ class Result:
         optimized_params=None,
         infidelity=np.inf,
         var_time=False,
-        crab_optimizer=None,
+        qtrl_optimizer=None,
     ):
         self.time_interval = time_interval
         self.objectives = objectives
@@ -102,7 +102,7 @@ class Result:
         self.final_states = final_states
         self.infidelity = infidelity
         self.var_time = var_time
-        self.crab_optimizer = crab_optimizer
+        self.qtrl_optimizer = qtrl_optimizer
 
     def __str__(self):
         return textwrap.dedent(
@@ -185,7 +185,7 @@ class Result:
                     if len(xf) == len(self.time_interval.tslots):
                         cf = xf
                     else:  # parameterized CRAB
-                        pgen = self.crab_optimizer[0].pulse_generator[j]
+                        pgen = self.qtrl_optimizer[0].pulse_generator[j]
                         pgen.set_optim_var_vals(np.array(self.optimized_params[j]))
                         cf = pgen.gen_pulse()
                 opt_ctrl.append(cf)
@@ -196,31 +196,34 @@ class Result:
     @property
     def guess_controls(self):
         if self._guess_controls is None:
-            gss_ctrl = []
-
-            for j, H in enumerate(zip(self.objectives[0].H[1:], self.guess_params)):
-                Hc, xi = H
-                control, c0 = Hc[1], []
-                if callable(control):  # continuous control as in JOPT/GOAT
-                    try:
-                        tslots = self.time_interval.tslots
-                    except Exception:
-                        print(
-                            "time_interval.tslots not specified "
-                            "(probably missing n_tslots), defaulting to 100 "
-                            "collocation points for result.optimized_controls"
-                        )
-                        tslots = np.linspace(0.0, self.time_interval.evo_time, 100)
-                    for t in tslots:
-                        c0.append(control(t, xi))
-                else:  # discrete control as in GRAPE/CRAB
-                    if len(xi) == len(self.time_interval.tslots):
-                        c0 = xi
-                    else:  # parameterized CRAB
-                        pgen = self.crab_optimizer[0].pulse_generator[j]
-                        pgen.set_optim_var_vals(np.array(self.guess_params[j]))
-                        c0 = pgen.gen_pulse()
-                gss_ctrl.append(c0)
+            if self.qtrl_optimizer:
+                qtrl_res = self.qtrl_optimizer[0]._create_result()
+                gss_ctrl = qtrl_res.initial_amps.T
+            else:
+                gss_ctrl = []
+                for j, H in enumerate(zip(self.objectives[0].H[1:], self.guess_params)):
+                    Hc, xi = H
+                    control, c0 = Hc[1], []
+                    if callable(control):  # continuous control as in JOPT/GOAT
+                        try:
+                            tslots = self.time_interval.tslots
+                        except Exception:
+                            print(
+                                "time_interval.tslots not specified "
+                                "(probably missing n_tslots), defaulting to 100 "
+                                "collocation points for result.optimized_controls"
+                            )
+                            tslots = np.linspace(0.0, self.time_interval.evo_time, 100)
+                        for t in tslots:
+                            c0.append(control(t, xi))
+                    else:  # discrete control as in GRAPE/CRAB
+                        if len(xi) == len(self.time_interval.tslots):
+                            c0 = xi
+                        else:  # parameterized CRAB
+                            pgen = self.qtrl_optimizer[0].pulse_generator[j]
+                            pgen.set_optim_var_vals(np.array(self.guess_params[j]))
+                            c0 = pgen.gen_pulse()
+                    gss_ctrl.append(c0)
 
             self._guess_controls = gss_ctrl
         return self._guess_controls
@@ -258,7 +261,7 @@ class Result:
                 evo_time = self.time_interval.evo_time
 
             para_keys = []
-            if not self.crab_optimizer:  # GOAT/JOPT
+            if not self.qtrl_optimizer:  # GOAT/JOPT
                 # extract parameter names from control functions f(t, para_key)
                 c_sigs = [signature(Hc[1]) for Hc in self.objectives[0].H[1:]]
                 c_keys = [sig.parameters.keys() for sig in c_sigs]

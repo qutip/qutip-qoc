@@ -2,7 +2,8 @@ import time
 import numpy as np
 
 import qutip_qtrl.logging_utils as logging
-from qutip_qtrl.pulseoptim import optimize_pulse, create_pulse_optimizer
+from qutip_qtrl.pulseoptim import optimize_pulse
+import qutip_qtrl.pulseoptim as cpo
 
 from qutip_qoc.analytical_control import optimize_pulses as opt_pulses
 from qutip_qoc.result import Result
@@ -170,7 +171,7 @@ def optimize_pulses(
 
     start_time = time.time()
 
-    if alg == "GRAPE":
+    if alg == "DEPRECATED":
         # only allow for scalar bound
         lbound = lbound[0]
         ubound = ubound[0]
@@ -240,18 +241,29 @@ def optimize_pulses(
         result.final_states = [res.evo_full_final]
         result.infidelity = res.fid_err
         result.guess_params = res.initial_amps.T
+        result._guess_controls = res.initial_amps.T
         result.optimized_params = res.final_amps.T
+        result._optimized_controls = res.final_amps.T
 
         # not present in analytical results
         result.stats = res.stats
         return result  # GRAPE result
 
-    crab_optimizer = []
-    if alg == "CRAB":
+    qtrl_optimizers = []
+    if alg == "CRAB" or alg == "GRAPE":
         # Check wether guess referes to amplitudes or parameters
         use_as_amps = len(x0[0]) == time_interval.n_tslots
         num_coeffs = algorithm_kwargs.get("num_coeffs", None)
         fix_frequency = algorithm_kwargs.get("fix_frequency", False)
+
+        # use crab algorithm: max_iter for local minimizer
+        # TODO: wifi: nelder-mead is called maxiter
+        minimizer_kwargs.setdefault(
+            "options",
+            minimizer_kwargs.get(
+                "options", {"maxiter": algorithm_kwargs.get("max_iter", 1000)}
+            ),
+        )
 
         if num_coeffs is None:
             # default only two sets of fourier expansion coefficients
@@ -319,7 +331,7 @@ def optimize_pulses(
 
             ###### code from qutip_qtrl.pulseoptim.optimize_pulse ######
 
-            crab_optim = create_pulse_optimizer(
+            qtrl_optimizer = cpo.create_pulse_optimizer(
                 drift=alg_params["drift"],
                 ctrls=alg_params["ctrls"],
                 initial=alg_params["initial"],
@@ -361,20 +373,25 @@ def optimize_pulses(
                 log_level=alg_params["log_level"],
                 gen_stats=alg_params["gen_stats"],
             )
-
-            dyn = crab_optim.dynamics
+            dyn = qtrl_optimizer.dynamics
             dyn.init_timeslots()
 
             # Generate initial pulses for each control through generator
             init_amps = np.zeros([dyn.num_tslots, dyn.num_ctrls])
 
             for j in range(dyn.num_ctrls):
-                # Create the pulse generator for each control
-                pgen = crab_optim.pulse_generator[j]
+                if isinstance(qtrl_optimizer.pulse_generator, list):
+                    # pulse generator for each control
+                    pgen = qtrl_optimizer.pulse_generator[j]
+                else:
+                    pgen = qtrl_optimizer.pulse_generator
 
                 if use_as_amps:
-                    pgen.init_pulse()
+                    if alg == "CRAB":
+                        pgen.guess_pulse = x0[j]
+                        pgen.init_pulse()
                     init_amps[:, j] = x0[j]
+
                 else:
                     # Set the initial parameters
                     pgen.set_optim_var_vals(np.array(x0[j]))
@@ -383,9 +400,12 @@ def optimize_pulses(
                     # dyn.prop_computer.grad_exact = False
 
             # Initialise the starting amplitudes
+            # NOTE: any initial CRAB guess pulse is only used
+            # to modulate or offset the initial amplitudes
+            # depending on init_pulse_params: pulse_action
             dyn.initialize_controls(init_amps)
             # And store the (random) initial parameters
-            init_params = crab_optim._get_optim_var_vals()
+            init_params = qtrl_optimizer._get_optim_var_vals()
 
             if use_as_amps:  # For the global optimizer
                 num_params = len(init_params) // len(pulse_options)
@@ -395,7 +415,7 @@ def optimize_pulses(
                     ]  # amplitude bounds are taken care of by pulse generator
                     pulse_options[key]["bounds"] = None
 
-            crab_optimizer.append(crab_optim)
+            qtrl_optimizers.append(qtrl_optimizer)
 
     return opt_pulses(
         objectives,
@@ -406,5 +426,5 @@ def optimize_pulses(
         optimizer_kwargs,
         minimizer_kwargs,
         integrator_kwargs,
-        crab_optimizer,
+        qtrl_optimizers,
     )

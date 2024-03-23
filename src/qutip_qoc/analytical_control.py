@@ -14,6 +14,7 @@ from qutip_qoc.result import Result
 from qutip_qoc.jopt import Multi_JOPT
 from qutip_qoc.goat import Multi_GOAT
 from qutip_qoc.crab import Multi_CRAB
+from qutip_qoc.grape import Multi_GRAPE
 
 __all__ = ["optimize_pulses"]
 
@@ -181,7 +182,7 @@ def optimize_pulses(
     optimizer_kwargs,
     minimizer_kwargs,
     integrator_kwargs,
-    crab_optimizer=None,
+    qtrl_optimizer=None,
 ):
     """
     Optimize a pulse sequence to implement a given target unitary by optimizing
@@ -316,7 +317,7 @@ def optimize_pulses(
         )
     elif algorithm_kwargs.get("alg") == "CRAB":
         multi_objective = Multi_CRAB(
-            crab_optimizer,
+            qtrl_optimizer,
             objectives,
             time_interval,
             time_options,
@@ -326,6 +327,18 @@ def optimize_pulses(
             **integrator_kwargs,
         )
         minimizer_kwargs.setdefault("method", "Nelder-Mead")
+
+    elif algorithm_kwargs.get("alg") == "GRAPE":
+        multi_objective = Multi_GRAPE(
+            qtrl_optimizer,
+            objectives,
+            time_interval,
+            time_options,
+            pulse_options,
+            algorithm_kwargs,
+            guess_params=optimizer_kwargs["x0"],
+            **integrator_kwargs,
+        )
 
     # optimizer specific settings
     opt_method = optimizer_kwargs.get(
@@ -373,7 +386,7 @@ def optimize_pulses(
         time_interval,
         guess_params=x0,
         var_time=var_t,
-        crab_optimizer=crab_optimizer,
+        qtrl_optimizer=qtrl_optimizer,
     )
 
     # Callback instance for termination and logging
