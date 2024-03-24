@@ -16,7 +16,7 @@ from qutip_qoc.goat import Multi_GOAT
 from qutip_qoc.crab import Multi_CRAB
 from qutip_qoc.grape import Multi_GRAPE
 
-__all__ = ["optimize_pulses"]
+__all__ = ["global_local_optimization"]
 
 
 def get_init_and_bounds_from_options(lst, input):
@@ -173,7 +173,7 @@ class Callback:
         return terminate
 
 
-def optimize_pulses(
+def global_local_optimization(
     objectives,
     pulse_options,
     time_interval,
@@ -182,7 +182,7 @@ def optimize_pulses(
     optimizer_kwargs,
     minimizer_kwargs,
     integrator_kwargs,
-    qtrl_optimizer=None,
+    qtrl_optimizers=None,
 ):
     """
     Optimize a pulse sequence to implement a given target unitary by optimizing
@@ -281,7 +281,7 @@ def optimize_pulses(
     integrator_kwargs["normalize_output"] = False
     integrator_kwargs.setdefault("progress_bar", False)
 
-    # extract initial and boundary values
+    # extract initial and boundary values for global and local optimizer
     x0, bounds = [], []
     for key in pulse_options.keys():
         get_init_and_bounds_from_options(x0, pulse_options[key].get("guess"))
@@ -290,8 +290,7 @@ def optimize_pulses(
     get_init_and_bounds_from_options(x0, time_options.get("guess", None))
     get_init_and_bounds_from_options(bounds, time_options.get("bounds", None))
 
-    if len(x0) != 0:
-        optimizer_kwargs.setdefault("x0", np.concatenate(x0))
+    optimizer_kwargs["x0"] = np.concatenate(x0)
 
     # algorithm specific settings
     if algorithm_kwargs.get("alg") == "JOPT":
@@ -316,29 +315,10 @@ def optimize_pulses(
             **integrator_kwargs,
         )
     elif algorithm_kwargs.get("alg") == "CRAB":
-        multi_objective = Multi_CRAB(
-            qtrl_optimizer,
-            objectives,
-            time_interval,
-            time_options,
-            pulse_options,
-            algorithm_kwargs,
-            guess_params=optimizer_kwargs["x0"],
-            **integrator_kwargs,
-        )
-        minimizer_kwargs.setdefault("method", "Nelder-Mead")
+        multi_objective = Multi_CRAB(qtrl_optimizers)
 
     elif algorithm_kwargs.get("alg") == "GRAPE":
-        multi_objective = Multi_GRAPE(
-            qtrl_optimizer,
-            objectives,
-            time_interval,
-            time_options,
-            pulse_options,
-            algorithm_kwargs,
-            guess_params=optimizer_kwargs["x0"],
-            **integrator_kwargs,
-        )
+        multi_objective = Multi_GRAPE(qtrl_optimizers)
 
     # optimizer specific settings
     opt_method = optimizer_kwargs.get(
@@ -352,7 +332,7 @@ def optimize_pulses(
         optimizer_kwargs.setdefault(  # or "max_iter"
             "niter",
             optimizer_kwargs.get(  # use algorithm_kwargs
-                "max_iter", algorithm_kwargs.get("max_iter", 1000)
+                "max_iter", algorithm_kwargs.get("max_iter", 1)
             ),
         )
 
@@ -386,7 +366,7 @@ def optimize_pulses(
         time_interval,
         guess_params=x0,
         var_time=var_t,
-        qtrl_optimizer=qtrl_optimizer,
+        qtrl_optimizers=qtrl_optimizers,
     )
 
     # Callback instance for termination and logging

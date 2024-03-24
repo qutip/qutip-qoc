@@ -70,16 +70,11 @@ class Multi_CRAB:
 
     def __init__(
         self,
-        qtrl_optimizer,
-        objectives,
-        time_interval,
-        time_options,
-        pulse_options,
-        alg_kwargs,
-        guess_params,
-        **integrator_kwargs,
+        qtrl_optimizers,
     ):
-        for optim in list(qtrl_optimizer):
+        if not isinstance(qtrl_optimizers, list):
+            qtrl_optimizers = [qtrl_optimizers]
+        for optim in qtrl_optimizers:
             crab = copy.deepcopy(optim)
             crab.fid_err_func_wrapper = types.MethodType(fid_err_func_wrapper, crab)
             # Stack for each objective

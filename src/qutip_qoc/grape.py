@@ -119,18 +119,11 @@ class Multi_GRAPE:
 
     def __init__(
         self,
-        qtrl_optimizer,
-        objectives,
-        time_interval,
-        time_options,
-        pulse_options,
-        alg_kwargs,
-        guess_params,
-        **integrator_kwargs,
+        qtrl_optimizers,
     ):
-        if not isinstance(qtrl_optimizer, list):
-            qtrl_optimizer = [qtrl_optimizer]
-        for optim in qtrl_optimizer:
+        if not isinstance(qtrl_optimizers, list):
+            qtrl_optimizers = [qtrl_optimizers]
+        for optim in qtrl_optimizers:
             grape = copy.deepcopy(optim)
             grape.fid_err_func_wrapper = types.MethodType(fid_err_func_wrapper, grape)
             # Stack for each objective

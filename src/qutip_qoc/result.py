@@ -83,7 +83,7 @@ class Result:
         optimized_params=None,
         infidelity=np.inf,
         var_time=False,
-        qtrl_optimizer=None,
+        qtrl_optimizers=None,
     ):
         self.time_interval = time_interval
         self.objectives = objectives
@@ -102,7 +102,7 @@ class Result:
         self.final_states = final_states
         self.infidelity = infidelity
         self.var_time = var_time
-        self.qtrl_optimizer = qtrl_optimizer
+        self.qtrl_optimizers = qtrl_optimizers
 
     def __str__(self):
         return textwrap.dedent(
@@ -185,7 +185,7 @@ class Result:
                     if len(xf) == len(self.time_interval.tslots):
                         cf = xf
                     else:  # parameterized CRAB
-                        pgen = self.qtrl_optimizer[0].pulse_generator[j]
+                        pgen = self.qtrl_optimizers[0].pulse_generator[j]
                         pgen.set_optim_var_vals(np.array(self.optimized_params[j]))
                         cf = pgen.gen_pulse()
                 opt_ctrl.append(cf)
@@ -196,8 +196,8 @@ class Result:
     @property
     def guess_controls(self):
         if self._guess_controls is None:
-            if self.qtrl_optimizer:
-                qtrl_res = self.qtrl_optimizer[0]._create_result()
+            if self.qtrl_optimizers:
+                qtrl_res = self.qtrl_optimizers[0]._create_result()
                 gss_ctrl = qtrl_res.initial_amps.T
             else:
                 gss_ctrl = []
@@ -220,7 +220,7 @@ class Result:
                         if len(xi) == len(self.time_interval.tslots):
                             c0 = xi
                         else:  # parameterized CRAB
-                            pgen = self.qtrl_optimizer[0].pulse_generator[j]
+                            pgen = self.qtrl_optimizers[0].pulse_generator[j]
                             pgen.set_optim_var_vals(np.array(self.guess_params[j]))
                             c0 = pgen.gen_pulse()
                     gss_ctrl.append(c0)
@@ -261,7 +261,7 @@ class Result:
                 evo_time = self.time_interval.evo_time
 
             para_keys = []
-            if not self.qtrl_optimizer:  # GOAT/JOPT
+            if not self.qtrl_optimizers:  # GOAT/JOPT
                 # extract parameter names from control functions f(t, para_key)
                 c_sigs = [signature(Hc[1]) for Hc in self.objectives[0].H[1:]]
                 c_keys = [sig.parameters.keys() for sig in c_sigs]
