@@ -1,6 +1,7 @@
 import numpy as np
 import qutip_qtrl.logging_utils as logging
 import qutip_qtrl.optimizer as opt
+from qutip_qtrl.errors import GoalAchievedTerminate, MaxFidFuncCallTerminate
 import types
 import copy
 
@@ -65,15 +66,13 @@ class Multi_CRAB:
     to optimize multiple objectives simultaneously
     """
 
-    crabs: list = []
     grad_fun = None
 
     def __init__(
         self,
         qtrl_optimizers,
     ):
-        if not isinstance(qtrl_optimizers, list):
-            qtrl_optimizers = [qtrl_optimizers]
+        self.crabs = []
         for optim in qtrl_optimizers:
             crab = copy.deepcopy(optim)
             crab.fid_err_func_wrapper = types.MethodType(fid_err_func_wrapper, crab)
@@ -89,7 +88,12 @@ class Multi_CRAB:
         infid_sum = 0
 
         for crab in self.crabs:  # TODO: parallelize
-            infid = crab.fid_err_func_wrapper(params)
+            try:
+                infid = crab.fid_err_func_wrapper(params)
+            except (GoalAchievedTerminate, MaxFidFuncCallTerminate):
+                pass
+            except Exception as ex:
+                raise ex
             infid_sum += infid
 
         self.mean_infid = np.mean(infid_sum)

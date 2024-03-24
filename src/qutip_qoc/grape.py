@@ -1,6 +1,11 @@
 import numpy as np
 import qutip_qtrl.logging_utils as logging
 import qutip_qtrl.optimizer as opt
+from qutip_qtrl.errors import (
+    GoalAchievedTerminate,
+    GradMinReachedTerminate,
+    MaxFidFuncCallTerminate,
+)
 import types
 import copy
 
@@ -115,14 +120,11 @@ class Multi_GRAPE:
     to optimize multiple objectives simultaneously
     """
 
-    grapes: list = []
-
     def __init__(
         self,
         qtrl_optimizers,
     ):
-        if not isinstance(qtrl_optimizers, list):
-            qtrl_optimizers = [qtrl_optimizers]
+        self.grapes = []
         for optim in qtrl_optimizers:
             grape = copy.deepcopy(optim)
             grape.fid_err_func_wrapper = types.MethodType(fid_err_func_wrapper, grape)
@@ -138,7 +140,12 @@ class Multi_GRAPE:
         infid_sum = 0
 
         for grape in self.grapes:  # TODO: parallelize
-            infid = grape.fid_err_func_wrapper(params)
+            try:
+                infid = grape.fid_err_func_wrapper(params)
+            except (GoalAchievedTerminate, MaxFidFuncCallTerminate):
+                pass
+            except Exception as ex:
+                raise ex
             infid_sum += infid
 
         self.mean_infid = np.mean(infid_sum)
@@ -151,7 +158,12 @@ class Multi_GRAPE:
         grads = 0
 
         for g in self.grapes:
-            grad = g.fid_err_grad_wrapper(params)
+            try:
+                grad = g.fid_err_grad_wrapper(params)
+            except GradMinReachedTerminate:
+                pass
+            except Exception as ex:
+                raise ex
             grads += grad
 
         return grads

@@ -329,11 +329,9 @@ def global_local_optimization(
         optimizer = sp.optimize.basinhopping
 
         # if not specified through optimizer_kwargs "niter"
-        optimizer_kwargs.setdefault(  # or "max_iter"
+        optimizer_kwargs.setdefault(
             "niter",
-            optimizer_kwargs.get(  # use algorithm_kwargs
-                "max_iter", algorithm_kwargs.get("max_iter", 1)
-            ),
+            optimizer_kwargs.get("max_iter", algorithm_kwargs.get("glob_max_iter", 1)),
         )
 
         if len(bounds) != 0:  # realizes boundaries through minimizer
@@ -343,11 +341,9 @@ def global_local_optimization(
         optimizer = sp.optimize.dual_annealing
 
         # if not specified through optimizer_kwargs "maxiter"
-        optimizer_kwargs.setdefault(  # or "max_iter"
+        optimizer_kwargs.setdefault(
             "maxiter",
-            optimizer_kwargs.get(  # use algorithm_kwargs
-                "max_iter", algorithm_kwargs.get("max_iter", 1000)
-            ),
+            optimizer_kwargs.get("max_iter", algorithm_kwargs.get("glob_max_iter", 1)),
         )
 
         if len(bounds) != 0:  # realizes boundaries through optimizer
@@ -399,6 +395,11 @@ def global_local_optimization(
     # save runtime information in result
     result.n_iters = min_res.nit
     if result.message is None:
-        result.message = min_res.message
+        result.message = (
+            "Local minimizer: "
+            + min_res["lowest_optimization_result"].message
+            + " Global optimizer: "
+            + min_res.message[0]
+        )
 
     return result

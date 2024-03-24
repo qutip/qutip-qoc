@@ -10,6 +10,18 @@ from qutip_qoc.objective import Objective
 __all__ = ["Result"]
 
 
+class Stats:
+    """
+    Only for backward compatibility with qtrl.
+    """
+
+    def __init__(self, result):
+        self.result = result
+
+    def report(self):
+        print(self.result)
+
+
 class Result:
     """
     Class for storing the results of a pulse control optimization run.
@@ -99,10 +111,13 @@ class Result:
         self.guess_params = guess_params
         self.new_params = new_params
         self._optimized_params = optimized_params
-        self.final_states = final_states
+        self._final_states = final_states
         self.infidelity = infidelity
         self.var_time = var_time
         self.qtrl_optimizers = qtrl_optimizers
+
+        # qtrl result backward compatibility
+        self.stats = Stats(self)
 
     def __str__(self):
         return textwrap.dedent(
@@ -235,14 +250,14 @@ class Result:
             opt_obj = []
 
             for obj in self.objectives:
-                if callable(obj.H[1][1]):  # GOAT/JOPT
+                if callable(obj.H[1][1]):  # GOAT, JOPT
                     optimized_H = obj.H
                 else:
                     optimized_H = [obj.H[0]]  # drift
                     for Hc, cf in zip(obj.H[1:], self.optimized_controls):
                         if isinstance(Hc, qt.Qobj):  # parameterized CRAB
                             optimized_H.append([Hc, cf])
-                        else:  # discrete control as in GRAPE/CRAB
+                        else:  # discrete control as in GRAPE, CRAB
                             optimized_H.append([Hc[0], cf])
 
                 opt_obj.append(Objective(obj.initial, optimized_H, obj.target))
@@ -261,15 +276,14 @@ class Result:
                 evo_time = self.time_interval.evo_time
 
             para_keys = []
-            if not self.qtrl_optimizers:  # GOAT/JOPT
+            args_dict = {}
+            if not self.qtrl_optimizers:  # GOAT, JOPT
                 # extract parameter names from control functions f(t, para_key)
                 c_sigs = [signature(Hc[1]) for Hc in self.objectives[0].H[1:]]
                 c_keys = [sig.parameters.keys() for sig in c_sigs]
                 para_keys = [list(keys)[1] for keys in c_keys]
-
-            args_dict = {}
-            for key, val in zip(para_keys, self.optimized_params):
-                args_dict[key] = val
+                for key, val in zip(para_keys, self.optimized_params):
+                    args_dict[key] = val
 
             # choose solver method based on type of control function
             if isinstance(
@@ -285,7 +299,7 @@ class Result:
                     if args_dict
                     else qt.QobjEvo(obj.H, tlist=self.time_interval.tslots)
                 )
-                solver = None
+                # solver = None
 
                 if obj.H[0].issuper:  # choose solver
                     solver = qt.MESolver(
@@ -307,13 +321,24 @@ class Result:
                 states.append(  # compute evolution
                     solver.run(obj.initial, tlist=[0.0, evo_time]).final_state
                 )
+            if (
+                self.qtrl_optimizers
+            ):  # GRAPE HACK: this should be the same result through evolution
+                if not isinstance(
+                    self.qtrl_optimizers[0].pulse_generator, list
+                ):  # only for GRAPE
+                    dyn = self.qtrl_optimizers[0].dynamics
+                    a = np.hstack([c for c in self.optimized_controls])
+                    amps = self.qtrl_optimizers[0]._get_ctrl_amps(a)
+                    dyn.update_ctrl_amps(amps)
+                    # fid_err = dyn.fid_computer.get_fid_err()
+                    # grad_norm_final = dyn.fid_computer.grad_norm
+                    # final_amps = dyn.ctrl_amps
+                    final_evo = dyn.full_evo
+                    states = [final_evo]
 
             self._final_states = states
         return self._final_states
-
-    @final_states.setter
-    def final_states(self, states):
-        self._final_states = states
 
     def update(self, infidelity, parameters):
         self.infidelity = infidelity
@@ -330,3 +355,33 @@ class Result:
             result = pickle.load(dump_fh)
         result.objectives = objectives
         return result
+
+    @property
+    def evo_full_final(self):
+        # qtrl result backward compatibility # TODO: deprecated warning
+        return self.final_states[0]
+
+    @property
+    def fid_err(self):
+        # qtrl result backward compatibility # TODO: deprecated warning
+        return self.infidelity
+
+    @property
+    def grad_norm_final(self):
+        # qtrl result backward compatibility # TODO: deprecated warning
+        return None  # not supported
+
+    @property
+    def termination_reason(self):
+        # qtrl result backward compatibility # TODO: deprecated warning
+        return self.message
+
+    @property
+    def num_iter(self):
+        # qtrl result backward compatibility # TODO: deprecated warning
+        return self.n_iters
+
+    @property
+    def wall_time(self):
+        # qtrl result backward compatibility # TODO: deprecated warning
+        return self.total_seconds
