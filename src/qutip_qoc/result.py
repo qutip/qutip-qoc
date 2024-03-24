@@ -324,14 +324,14 @@ class Result:
             if (
                 self.qtrl_optimizers
             ):  # GRAPE HACK: this should be the same result through evolution
-                if not isinstance(
+                if not isinstance(  # only for GRAPE
                     self.qtrl_optimizers[0].pulse_generator, list
-                ):  # only for GRAPE
+                ):
                     dyn = self.qtrl_optimizers[0].dynamics
                     a = np.hstack([c for c in self.optimized_controls])
                     amps = self.qtrl_optimizers[0]._get_ctrl_amps(a)
                     dyn.update_ctrl_amps(amps)
-                    # fid_err = dyn.fid_computer.get_fid_err()
+                    dyn.fid_computer.get_fid_err()
                     # grad_norm_final = dyn.fid_computer.grad_norm
                     # final_amps = dyn.ctrl_amps
                     final_evo = dyn.full_evo
