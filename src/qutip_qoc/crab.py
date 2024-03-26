@@ -5,6 +5,8 @@ from qutip_qtrl.errors import GoalAchievedTerminate, MaxFidFuncCallTerminate
 import types
 import copy
 
+__all__ = ["CRAB", "Multi_CRAB"]
+
 logger = logging.get_logger()
 
 

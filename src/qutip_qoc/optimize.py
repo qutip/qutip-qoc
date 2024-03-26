@@ -19,7 +19,7 @@ def optimize_pulses(
     integrator_kwargs=None,
 ):
     """
-    Wrapper to choose between GOAT/JOPT and GRAPE/CRAB optimization.
+    Run GOAT, JOPT, GRAPE or CRAB optimization.
 
     Parameters
     ----------
@@ -40,12 +40,11 @@ def optimize_pulses(
                     `guess`. None is used to specify no bound.
 
         GRAPE and CRAB have only one control function with n_tslots parameters.
-        The bounds are only one pair of ``(min, max)`` limiting all tslots
-        equally.
+        The bounds are only one pair of ``(min, max)`` limiting the amplitude of all tslots equally.
 
     time_interval : :class:`qutip_qoc.TimeInterval`
-        Time interval for the optimization.
-        GRAPE and CRAB require n_tslots attribute.
+        Pulse duration time interval.
+        GRAPE and CRAB require n_tslots attribute for discretization.
 
     time_options : dict, optional
         Only supported by GOAT and JOPT.
@@ -72,12 +71,11 @@ def optimize_pulses(
 
             - max_iter : int, optional
                 Maximum number of iterations to perform.
-                Referes to global steps for GOAT/JOPT and
-                local minimizer steps for GRAPE/CRAB.
-                Can be overridden by specifying in
-                optimizer_kwargs/minimizer_kwargs.
+                Referes to local minimizer steps.
+                Global steps default to 0 (no global optimization).
+                Can be overridden by specifying in minimizer_kwargs.
 
-        Algorithm specific keywords for GRAPE/CRAB can be found in
+        Algorithm specific keywords for GRAPE,CRAB can be found in
         :func:`qutip_qtrl.pulseoptim.optimize_pulse`.
 
     optimizer_kwargs : dict, optional

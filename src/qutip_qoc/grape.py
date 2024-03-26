@@ -9,6 +9,8 @@ from qutip_qtrl.errors import (
 import types
 import copy
 
+__all__ = ["GRAPE", "Multi_GRAPE"]
+
 logger = logging.get_logger()
 
 
