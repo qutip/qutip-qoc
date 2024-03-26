@@ -141,7 +141,7 @@ class Multi_GRAPE:
         """
         infid_sum = 0
 
-        for grape in self.grapes:  # TODO: parallelize
+        for grape in self.grapes:
             try:
                 infid = grape.fid_err_func_wrapper(params)
             except (GoalAchievedTerminate, MaxFidFuncCallTerminate):

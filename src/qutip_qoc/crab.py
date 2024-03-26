@@ -89,7 +89,7 @@ class Multi_CRAB:
         """
         infid_sum = 0
 
-        for crab in self.crabs:  # TODO: parallelize
+        for crab in self.crabs:
             try:
                 infid = crab.fid_err_func_wrapper(params)
             except (GoalAchievedTerminate, MaxFidFuncCallTerminate):

@@ -189,7 +189,7 @@ class Multi_JOPT:
         """
         infid_sum = 0
 
-        for j in self.jopts:  # TODO: parallelize
+        for j in self.jopts:
             infid = j.infidelity(params)
             infid_sum += infid
 

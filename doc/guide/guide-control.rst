@@ -6,7 +6,7 @@ Quantum Optimal Control
 
 
 Introduction
-=============
+============
 
 In quantum control we look to prepare some specific state, effect some state-to-state transfer, or effect some transformation (or gate) on a quantum system. For a given quantum system there will always be factors that effect the dynamics that are outside of our control. As examples, the interactions between elements of the system or a magnetic field required to trap the system. However, there may be methods of affecting the dynamics in a controlled way, such as the time varying amplitude of the electric component of an interacting laser field. And so this leads to some questions; given a specific quantum system with known time-independent dynamics generator (referred to as the *drift* dynamics generators) and set of externally controllable fields for which the interaction can be described by *control* dynamics generators:
 
@@ -238,10 +238,10 @@ to construct the objective (similar to initializing ``QobjEvo``).
 The control problem is then fully defined by the ``qutip_qoc.Objective`` class.
 
 
-Using the optimize function
-===========================
+Running the optimization
+========================
 
-After having defined the control problem, the ``qutip_qoc.optimize`` function can be used to find an optimal control pulse.
+After having defined the control problem, the ``qutip_qoc.optimize_pulses`` function can be used to find an optimal control pulse.
 It requires some extra arguments to prepare the optimization.
 
 .. code-block:: bash

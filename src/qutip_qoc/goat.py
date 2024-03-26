@@ -230,7 +230,6 @@ class GOAT:
             dX_lst.append(Qobj(dx))
 
         if self.var_t:
-            # args={'p': params} TODO: report bug
             H_T = self.H_evo(params[-1], p=params)
             dX_dT = -1j * H_T * X
             if self.is_super:

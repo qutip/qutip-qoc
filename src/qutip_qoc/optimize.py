@@ -249,9 +249,7 @@ def optimize_pulses(
                 "ramping_pulse_params": algorithm_kwargs.get(
                     "ramping_pulse_params", None
                 ),
-                "log_level": algorithm_kwargs.get(
-                    "log_level", log_level
-                ),  # TODO: deprecate
+                "log_level": algorithm_kwargs.get("log_level", log_level),
                 "gen_stats": algorithm_kwargs.get("gen_stats", False),
             }
 
