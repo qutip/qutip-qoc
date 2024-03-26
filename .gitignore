@@ -134,3 +134,6 @@ dmypy.json
 
 # Visual Studio Code
 .vscode/
+
+# Cython generated files
+src/qutip_qoc/*.c
