@@ -120,6 +120,11 @@ class Result:
         self.stats = Stats(self)
 
     def __str__(self):
+        time_optim_summary = (
+            "- Optimized time parameter: " + str(self.optimized_params[-1])
+            if self.var_time
+            else ""
+        )
         return textwrap.dedent(
             r"""
         Control Optimization Result
@@ -130,6 +135,7 @@ class Result:
         - Final parameters: {final_params}
         - Number of iterations: {n_iters}
         - Reason for termination: {message}
+        {time_optim_summary}
         - Ended at {end_local_time} ({time_delta}s)
         """.format(
                 start_local_time=self.start_local_time,
@@ -139,6 +145,7 @@ class Result:
                 n_iters=self.n_iters,
                 end_local_time=self.end_local_time,
                 time_delta=self.total_seconds,
+                time_optim_summary=time_optim_summary,
                 message=self.message,
             )
         ).strip()
@@ -157,17 +164,22 @@ class Result:
         if self._optimized_params is None:
             # reshape (optimized) new_parameters array to match
             # shape and type of the guess_parameters list
-            opt_params = []
 
-            idx = 0
-            for guess in self.guess_params:
-                opt = self.new_params[idx : idx + len(guess)]
+            if self.qtrl_optimizers and len(self.guess_params[0]) == len(
+                self.time_interval.tslots
+            ):  # GRAPE
+                amps = self.qtrl_optimizers[0]._get_ctrl_amps(self.new_params)
+                opt_params = amps.T
+            else:  # GOAT, JOPT, CRAB
+                opt_params, idx = [], 0
+                for guess in self.guess_params:
+                    opt = self.new_params[idx : idx + len(guess)]
 
-                if isinstance(guess, list):
-                    opt = opt.tolist()
+                    if isinstance(guess, list):
+                        opt = opt.tolist()
 
-                opt_params.append(opt)
-                idx += len(guess)
+                    opt_params.append(opt)
+                    idx += len(guess)
 
             self._optimized_params = opt_params
         return self._optimized_params
@@ -184,7 +196,7 @@ class Result:
             for j, H in enumerate(zip(self.objectives[0].H[1:], self.optimized_params)):
                 Hc, xf = H
                 control, cf = Hc[1], []
-                if callable(control):  # continuous control as in JOPT/GOAT
+                if not self.qtrl_optimizers:  # continuous control as in JOPT/GOAT
                     try:
                         tslots = self.time_interval.tslots
                     except Exception:
@@ -198,11 +210,11 @@ class Result:
                         cf.append(control(t, xf))
                 else:  # discrete control as in GRAPE/CRAB
                     if len(xf) == len(self.time_interval.tslots):
-                        cf = xf
+                        cf = np.array(xf)
                     else:  # parameterized CRAB
                         pgen = self.qtrl_optimizers[0].pulse_generator[j]
                         pgen.set_optim_var_vals(np.array(self.optimized_params[j]))
-                        cf = pgen.gen_pulse()
+                        cf = np.array(pgen.gen_pulse())
                 opt_ctrl.append(cf)
 
             self._optimized_controls = opt_ctrl
@@ -245,12 +257,11 @@ class Result:
 
     @property
     def optimized_objectives(self):
-        """ """
         if self._optimized_objectives is None:
             opt_obj = []
 
             for obj in self.objectives:
-                if callable(obj.H[1][1]):  # GOAT, JOPT
+                if not self.qtrl_optimizers:  # GOAT, JOPT
                     optimized_H = obj.H
                 else:
                     optimized_H = [obj.H[0]]  # drift
@@ -321,21 +332,6 @@ class Result:
                 states.append(  # compute evolution
                     solver.run(obj.initial, tlist=[0.0, evo_time]).final_state
                 )
-            if (
-                self.qtrl_optimizers
-            ):  # GRAPE HACK: this should be the same result through evolution
-                if not isinstance(  # only for GRAPE
-                    self.qtrl_optimizers[0].pulse_generator, list
-                ):
-                    dyn = self.qtrl_optimizers[0].dynamics
-                    a = np.hstack([c for c in self.optimized_controls])
-                    amps = self.qtrl_optimizers[0]._get_ctrl_amps(a)
-                    dyn.update_ctrl_amps(amps)
-                    dyn.fid_computer.get_fid_err()
-                    # grad_norm_final = dyn.fid_computer.grad_norm
-                    # final_amps = dyn.ctrl_amps
-                    final_evo = dyn.full_evo
-                    states = [final_evo]
 
             self._final_states = states
         return self._final_states

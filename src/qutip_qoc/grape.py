@@ -160,7 +160,7 @@ class Multi_GRAPE:
         for g in self.grapes:
             try:
                 grad = g.fid_err_grad_wrapper(params)
-            except GradMinReachedTerminate:
+            except GradMinReachedTerminate:  # TODO: handle
                 pass
             except Exception as ex:
                 raise ex
