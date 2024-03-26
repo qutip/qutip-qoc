@@ -28,6 +28,8 @@ share/python-wheels/
 MANIFEST
 src/qutip_qoc/version.py
 
+# Documentation
+doc/apidoc/*.rst
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

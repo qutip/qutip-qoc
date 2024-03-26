@@ -1,7 +1,7 @@
 """
 This module contains the optimization routine
 for optimizing analytical control functions
-with GOAT and JOAT.
+with GOAT and JOPT.
 """
 import time
 import numpy as np
@@ -11,10 +11,12 @@ import qutip as qt
 from scipy.optimize import OptimizeResult
 
 from qutip_qoc.result import Result
-from qutip_qoc.joat import Multi_JOAT
+from qutip_qoc.jopt import Multi_JOPT
 from qutip_qoc.goat import Multi_GOAT
+from qutip_qoc.crab import Multi_CRAB
+from qutip_qoc.grape import Multi_GRAPE
 
-__all__ = ["optimize_pulses"]
+__all__ = ["global_local_optimization"]
 
 
 def get_init_and_bounds_from_options(lst, input):
@@ -171,7 +173,7 @@ class Callback:
         return terminate
 
 
-def optimize_pulses(
+def global_local_optimization(
     objectives,
     pulse_options,
     time_interval,
@@ -180,13 +182,14 @@ def optimize_pulses(
     optimizer_kwargs,
     minimizer_kwargs,
     integrator_kwargs,
+    qtrl_optimizers=None,
 ):
     """
     Optimize a pulse sequence to implement a given target unitary by optimizing
     the parameters of the pulse functions. The algorithm is a two-layered
     approach. The outer layer does a global optimization using basin-hopping or
     dual annealing. The inner layer does a local optimization using a gradient-
-    based method. Gradients and error values are calculated in the GOAT/JOAT
+    based method. Gradients and error values are calculated in the GOAT/JOPT
     module.
 
     Parameters
@@ -211,7 +214,7 @@ def optimize_pulses(
         Time interval for the optimization.
 
     time_options : dict, optional
-        Only supported by GOAT and JOAT.
+        Only supported by GOAT and JOPT.
         Dictionary of options for the time interval optimization.
         It must specify both:
 
@@ -228,7 +231,7 @@ def optimize_pulses(
 
             - alg : str
                 Algorithm to use for the optimization.
-                Supported are: "GOAT", "JOAT".
+                Supported are: "GOAT", "JOPT".
 
             - fid_err_targ : float, optional
                 Fidelity error target for the optimization.
@@ -240,7 +243,7 @@ def optimize_pulses(
 
     optimizer_kwargs : dict, optional
         Dictionary of options for the global optimizer.
-        Only supported by GOAT and JOAT.
+        Only supported by GOAT and JOPT.
 
             - method : str, optional
                 Algorithm to use for the global optimization.
@@ -265,7 +268,7 @@ def optimize_pulses(
 
     integrator_kwargs : dict, optional
         Dictionary of options for the integrator.
-        Only supported by GOAT and JOAT.
+        Only supported by GOAT and JOPT.
         Options for the solver, see :obj:`MESolver.options` and
         `Integrator <./classes.html#classes-ode>`_ for a list of all options.
 
@@ -278,7 +281,7 @@ def optimize_pulses(
     integrator_kwargs["normalize_output"] = False
     integrator_kwargs.setdefault("progress_bar", False)
 
-    # extract initial and boundary values
+    # extract initial and boundary values for global and local optimizer
     x0, bounds = [], []
     for key in pulse_options.keys():
         get_init_and_bounds_from_options(x0, pulse_options[key].get("guess"))
@@ -287,12 +290,12 @@ def optimize_pulses(
     get_init_and_bounds_from_options(x0, time_options.get("guess", None))
     get_init_and_bounds_from_options(bounds, time_options.get("bounds", None))
 
-    optimizer_kwargs.setdefault("x0", np.concatenate(x0))
+    optimizer_kwargs["x0"] = np.concatenate(x0)
 
     # algorithm specific settings
-    if algorithm_kwargs.get("alg") == "JOAT":
+    if algorithm_kwargs.get("alg") == "JOPT":
         with qt.CoreOptions(default_dtype="jax"):
-            multi_objective = Multi_JOAT(
+            multi_objective = Multi_JOPT(
                 objectives,
                 time_interval,
                 time_options,
@@ -311,6 +314,11 @@ def optimize_pulses(
             guess_params=optimizer_kwargs["x0"],
             **integrator_kwargs,
         )
+    elif algorithm_kwargs.get("alg") == "CRAB":
+        multi_objective = Multi_CRAB(qtrl_optimizers)
+
+    elif algorithm_kwargs.get("alg") == "GRAPE":
+        multi_objective = Multi_GRAPE(qtrl_optimizers)
 
     # optimizer specific settings
     opt_method = optimizer_kwargs.get(
@@ -321,39 +329,41 @@ def optimize_pulses(
         optimizer = sp.optimize.basinhopping
 
         # if not specified through optimizer_kwargs "niter"
-        optimizer_kwargs.setdefault(  # or "max_iter"
+        optimizer_kwargs.setdefault(
             "niter",
-            optimizer_kwargs.get(  # use algorithm_kwargs
-                "max_iter", algorithm_kwargs.get("max_iter", 1000)
-            ),
+            optimizer_kwargs.get("max_iter", algorithm_kwargs.get("glob_max_iter", 1)),
         )
 
-        # realizes boundaries through minimizer
-        minimizer_kwargs.setdefault("bounds", np.concatenate(bounds))
+        if len(bounds) != 0:  # realizes boundaries through minimizer
+            minimizer_kwargs.setdefault("bounds", np.concatenate(bounds))
 
     elif opt_method == "dual_annealing":
         optimizer = sp.optimize.dual_annealing
 
         # if not specified through optimizer_kwargs "maxiter"
-        optimizer_kwargs.setdefault(  # or "max_iter"
+        optimizer_kwargs.setdefault(
             "maxiter",
-            optimizer_kwargs.get(  # use algorithm_kwargs
-                "max_iter", algorithm_kwargs.get("max_iter", 1000)
-            ),
+            optimizer_kwargs.get("max_iter", algorithm_kwargs.get("glob_max_iter", 1)),
         )
 
-        # realizes boundaries through optimizer
-        optimizer_kwargs.setdefault("bounds", np.concatenate(bounds))
+        if len(bounds) != 0:  # realizes boundaries through optimizer
+            optimizer_kwargs.setdefault("bounds", np.concatenate(bounds))
 
     # remove overload from optimizer_kwargs
     optimizer_kwargs.pop("max_iter", None)
     optimizer_kwargs.pop("method", None)
 
-    # should optimization include time
+    # should optimization include time (only for GOAT and JOPT)
     var_t = True if time_options.get("guess", False) else False
 
-    # define the result Krotov style
-    result = Result(objectives, time_interval, guess_params=x0, var_time=var_t)
+    # define the result object
+    result = Result(
+        objectives,
+        time_interval,
+        guess_params=x0,
+        var_time=var_t,
+        qtrl_optimizers=qtrl_optimizers,
+    )
 
     # Callback instance for termination and logging
     max_wall_time = algorithm_kwargs.get("max_wall_time", 1e10)
@@ -385,6 +395,11 @@ def optimize_pulses(
     # save runtime information in result
     result.n_iters = min_res.nit
     if result.message is None:
-        result.message = min_res.message
+        result.message = (
+            "Local minimizer: "
+            + min_res["lowest_optimization_result"].message
+            + " Global optimizer: "
+            + min_res.message[0]
+        )
 
     return result

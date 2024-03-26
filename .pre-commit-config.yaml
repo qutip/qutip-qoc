@@ -62,8 +62,10 @@ repos:
       - id: ruff
         args: ["--fix", "--show-fixes"]
         types_or: [python, pyi, jupyter]
+        exclude: "^src/qutip_qoc/*\\.ipynb$|^src/qutip_qoc/paper\\.py$"
       - id: ruff-format
         types_or: [python, pyi, jupyter]
+        exclude: "^src/qutip_qoc/*\\.ipynb$|^src/qutip_qoc/paper\\.py$"
 
   # Also run Black on examples in the documentation
   - repo: https://github.com/adamchainz/blacken-docs
@@ -77,6 +79,7 @@ repos:
     hooks:
       - id: mypy
         files: ^(src|tests)
+        exclude: "^src/qutip_qoc/*\\.ipynb$|^src/qutip_qoc/paper\\.py$"
         args: []
         additional_dependencies:
           - qutip

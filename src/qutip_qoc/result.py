@@ -10,6 +10,18 @@ from qutip_qoc.objective import Objective
 __all__ = ["Result"]
 
 
+class Stats:
+    """
+    Only for backward compatibility with qtrl.
+    """
+
+    def __init__(self, result):
+        self.result = result
+
+    def report(self):
+        print(self.result)
+
+
 class Result:
     """
     Class for storing the results of a pulse control optimization run.
@@ -83,6 +95,7 @@ class Result:
         optimized_params=None,
         infidelity=np.inf,
         var_time=False,
+        qtrl_optimizers=None,
     ):
         self.time_interval = time_interval
         self.objectives = objectives
@@ -95,15 +108,23 @@ class Result:
         self._guess_controls = guess_controls
         self._optimized_controls = optimized_controls
         self._optimized_objectives = optimized_objectives
-        # not present in Krotov
         self.guess_params = guess_params
         self.new_params = new_params
         self._optimized_params = optimized_params
-        self.final_states = final_states
+        self._final_states = final_states
         self.infidelity = infidelity
         self.var_time = var_time
+        self.qtrl_optimizers = qtrl_optimizers
+
+        # qtrl result backward compatibility
+        self.stats = Stats(self)
 
     def __str__(self):
+        time_optim_summary = (
+            "- Optimized time parameter: " + str(self.optimized_params[-1])
+            if self.var_time
+            else ""
+        )
         return textwrap.dedent(
             r"""
         Control Optimization Result
@@ -114,6 +135,7 @@ class Result:
         - Final parameters: {final_params}
         - Number of iterations: {n_iters}
         - Reason for termination: {message}
+        {time_optim_summary}
         - Ended at {end_local_time} ({time_delta}s)
         """.format(
                 start_local_time=self.start_local_time,
@@ -123,6 +145,7 @@ class Result:
                 n_iters=self.n_iters,
                 end_local_time=self.end_local_time,
                 time_delta=self.total_seconds,
+                time_optim_summary=time_optim_summary,
                 message=self.message,
             )
         ).strip()
@@ -141,17 +164,22 @@ class Result:
         if self._optimized_params is None:
             # reshape (optimized) new_parameters array to match
             # shape and type of the guess_parameters list
-            opt_params = []
 
-            idx = 0
-            for guess in self.guess_params:
-                opt = self.new_params[idx : idx + len(guess)]
+            if self.qtrl_optimizers and len(self.guess_params[0]) == len(
+                self.time_interval.tslots
+            ):  # GRAPE
+                amps = self.qtrl_optimizers[0]._get_ctrl_amps(self.new_params)
+                opt_params = amps.T
+            else:  # GOAT, JOPT, CRAB
+                opt_params, idx = [], 0
+                for guess in self.guess_params:
+                    opt = self.new_params[idx : idx + len(guess)]
 
-                if isinstance(guess, list):
-                    opt = opt.tolist()
+                    if isinstance(guess, list):
+                        opt = opt.tolist()
 
-                opt_params.append(opt)
-                idx += len(guess)
+                    opt_params.append(opt)
+                    idx += len(guess)
 
             self._optimized_params = opt_params
         return self._optimized_params
@@ -165,10 +193,10 @@ class Result:
         if self._optimized_controls is None:
             opt_ctrl = []
 
-            for Hc, xf in zip(self.objectives[0].H[1:], self.optimized_params):
-                control = Hc[1]
-                if callable(control):  # continuous control as in JOAT/GOAT
-                    cf = []
+            for j, H in enumerate(zip(self.objectives[0].H[1:], self.optimized_params)):
+                Hc, xf = H
+                control, cf = Hc[1], []
+                if not self.qtrl_optimizers:  # continuous control as in JOPT/GOAT
                     try:
                         tslots = self.time_interval.tslots
                     except Exception:
@@ -178,11 +206,15 @@ class Result:
                             "collocation points for result.optimized_controls"
                         )
                         tslots = np.linspace(0.0, self.time_interval.evo_time, 100)
-
                     for t in tslots:
                         cf.append(control(t, xf))
                 else:  # discrete control as in GRAPE/CRAB
-                    cf = xf
+                    if len(xf) == len(self.time_interval.tslots):
+                        cf = np.array(xf)
+                    else:  # parameterized CRAB
+                        pgen = self.qtrl_optimizers[0].pulse_generator[j]
+                        pgen.set_optim_var_vals(np.array(self.optimized_params[j]))
+                        cf = np.array(pgen.gen_pulse())
                 opt_ctrl.append(cf)
 
             self._optimized_controls = opt_ctrl
@@ -191,48 +223,53 @@ class Result:
     @property
     def guess_controls(self):
         if self._guess_controls is None:
-            gss_ctrl = []
-
-            for Hc, x0 in zip(self.objectives[0].H[1:], self.guess_params):
-                control = Hc[1]
-                if callable(control):
-                    c0 = []
-                    try:
-                        tslots = self.time_interval.tslots
-                    except Exception:
-                        print(
-                            "time_interval.tslots not specified "
-                            "(probably missing n_tslots), defaulting to 100 "
-                            "collocation points for result.optimized_controls"
-                        )
-                        tslots = np.linspace(0.0, self.time_interval.evo_time, 100)
-
-                    for t in tslots:
-                        c0.append(control(t, x0))
-                else:
-                    c0 = x0
-                gss_ctrl.append(c0)
+            if self.qtrl_optimizers:
+                qtrl_res = self.qtrl_optimizers[0]._create_result()
+                gss_ctrl = qtrl_res.initial_amps.T
+            else:
+                gss_ctrl = []
+                for j, H in enumerate(zip(self.objectives[0].H[1:], self.guess_params)):
+                    Hc, xi = H
+                    control, c0 = Hc[1], []
+                    if callable(control):  # continuous control as in JOPT/GOAT
+                        try:
+                            tslots = self.time_interval.tslots
+                        except Exception:
+                            print(
+                                "time_interval.tslots not specified "
+                                "(probably missing n_tslots), defaulting to 100 "
+                                "collocation points for result.optimized_controls"
+                            )
+                            tslots = np.linspace(0.0, self.time_interval.evo_time, 100)
+                        for t in tslots:
+                            c0.append(control(t, xi))
+                    else:  # discrete control as in GRAPE/CRAB
+                        if len(xi) == len(self.time_interval.tslots):
+                            c0 = xi
+                        else:  # parameterized CRAB
+                            pgen = self.qtrl_optimizers[0].pulse_generator[j]
+                            pgen.set_optim_var_vals(np.array(self.guess_params[j]))
+                            c0 = pgen.gen_pulse()
+                    gss_ctrl.append(c0)
 
             self._guess_controls = gss_ctrl
         return self._guess_controls
 
     @property
     def optimized_objectives(self):
-        """ """
         if self._optimized_objectives is None:
             opt_obj = []
 
             for obj in self.objectives:
-                optimized_H = [obj.H[0]]
-
-                for Hc, cf in zip(obj.H[1:], self.optimized_controls):
-                    control = Hc[1]
-
-                    if callable(control):
-                        optimized_H = obj.H
-                        break
-                    else:
-                        optimized_H.append([Hc[0], cf])
+                if not self.qtrl_optimizers:  # GOAT, JOPT
+                    optimized_H = obj.H
+                else:
+                    optimized_H = [obj.H[0]]  # drift
+                    for Hc, cf in zip(obj.H[1:], self.optimized_controls):
+                        if isinstance(Hc, qt.Qobj):  # parameterized CRAB
+                            optimized_H.append([Hc, cf])
+                        else:  # discrete control as in GRAPE, CRAB
+                            optimized_H.append([Hc[0], cf])
 
                 opt_obj.append(Objective(obj.initial, optimized_H, obj.target))
 
@@ -249,14 +286,15 @@ class Result:
             else:
                 evo_time = self.time_interval.evo_time
 
-            # extract parameter names from control functions f(t, para_key)
-            c_sigs = [signature(Hc[1]) for Hc in self.objectives[0].H[1:]]
-            c_keys = [sig.parameters.keys() for sig in c_sigs]
-            para_keys = [list(keys)[1] for keys in c_keys]
-
+            para_keys = []
             args_dict = {}
-            for key, val in zip(para_keys, self.optimized_params):
-                args_dict[key] = val
+            if not self.qtrl_optimizers:  # GOAT, JOPT
+                # extract parameter names from control functions f(t, para_key)
+                c_sigs = [signature(Hc[1]) for Hc in self.objectives[0].H[1:]]
+                c_keys = [sig.parameters.keys() for sig in c_sigs]
+                para_keys = [list(keys)[1] for keys in c_keys]
+                for key, val in zip(para_keys, self.optimized_params):
+                    args_dict[key] = val
 
             # choose solver method based on type of control function
             if isinstance(
@@ -267,8 +305,12 @@ class Result:
                 method = "adams"
 
             for obj in self.optimized_objectives:
-                H = qt.QobjEvo(obj.H, args=args_dict)
-                solver = None
+                H = (
+                    qt.QobjEvo(obj.H, args=args_dict)
+                    if args_dict
+                    else qt.QobjEvo(obj.H, tlist=self.time_interval.tslots)
+                )
+                # solver = None
 
                 if obj.H[0].issuper:  # choose solver
                     solver = qt.MESolver(
@@ -294,10 +336,6 @@ class Result:
             self._final_states = states
         return self._final_states
 
-    @final_states.setter
-    def final_states(self, states):
-        self._final_states = states
-
     def update(self, infidelity, parameters):
         self.infidelity = infidelity
         self.new_params = parameters
@@ -313,3 +351,33 @@ class Result:
             result = pickle.load(dump_fh)
         result.objectives = objectives
         return result
+
+    @property
+    def evo_full_final(self):
+        # qtrl result backward compatibility # TODO: deprecated warning
+        return self.final_states[0]
+
+    @property
+    def fid_err(self):
+        # qtrl result backward compatibility # TODO: deprecated warning
+        return self.infidelity
+
+    @property
+    def grad_norm_final(self):
+        # qtrl result backward compatibility # TODO: deprecated warning
+        return None  # not supported
+
+    @property
+    def termination_reason(self):
+        # qtrl result backward compatibility # TODO: deprecated warning
+        return self.message
+
+    @property
+    def num_iter(self):
+        # qtrl result backward compatibility # TODO: deprecated warning
+        return self.n_iters
+
+    @property
+    def wall_time(self):
+        # qtrl result backward compatibility # TODO: deprecated warning
+        return self.total_seconds

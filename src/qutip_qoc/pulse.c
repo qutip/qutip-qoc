@@ -31597,7 +31597,7 @@ static struct PyGetSetDef __pyx_getsets_9qutip_qoc_5pulse_Pulse[] = {
 static PyType_Slot __pyx_type_9qutip_qoc_5pulse_Pulse_slots[] = {
   {Py_tp_dealloc, (void *)__pyx_tp_dealloc_9qutip_qoc_5pulse_Pulse},
   {Py_tp_call, (void *)__pyx_pw_9qutip_qoc_5pulse_5Pulse_3__call__},
-  {Py_tp_doc, (void *)PyDoc_STR("\n    Base class for analytically defined pulse shapes.\n\n    Attributes:\n        n_sup (int): \n            number of superpositions i.e. summands\n\n        n_var (int): \n            number of parameters for each summand\n\n        n_par (int): \n            total number of parameters\n    ")},
+  {Py_tp_doc, (void *)PyDoc_STR("\n    Base class for analytically defined pulse shapes.\n\n    Attributes:\n        n_sup (int):\n            number of superpositions i.e. summands\n\n        n_var (int):\n            number of parameters for each summand\n\n        n_par (int):\n            total number of parameters\n    ")},
   {Py_tp_methods, (void *)__pyx_methods_9qutip_qoc_5pulse_Pulse},
   {Py_tp_getset, (void *)__pyx_getsets_9qutip_qoc_5pulse_Pulse},
   {Py_tp_init, (void *)__pyx_pw_9qutip_qoc_5pulse_5Pulse_1__init__},
@@ -31644,7 +31644,7 @@ static PyTypeObject __pyx_type_9qutip_qoc_5pulse_Pulse = {
   0, /*tp_setattro*/
   0, /*tp_as_buffer*/
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE, /*tp_flags*/
-  PyDoc_STR("\n    Base class for analytically defined pulse shapes.\n\n    Attributes:\n        n_sup (int): \n            number of superpositions i.e. summands\n\n        n_var (int): \n            number of parameters for each summand\n\n        n_par (int): \n            total number of parameters\n    "), /*tp_doc*/
+  PyDoc_STR("\n    Base class for analytically defined pulse shapes.\n\n    Attributes:\n        n_sup (int):\n            number of superpositions i.e. summands\n\n        n_var (int):\n            number of parameters for each summand\n\n        n_par (int):\n            total number of parameters\n    "), /*tp_doc*/
   0, /*tp_traverse*/
   0, /*tp_clear*/
   0, /*tp_richcompare*/
@@ -32302,7 +32302,7 @@ static PyMethodDef __pyx_methods_9qutip_qoc_5pulse_FourierPulse[] = {
 };
 #if CYTHON_USE_TYPE_SPECS
 static PyType_Slot __pyx_type_9qutip_qoc_5pulse_FourierPulse_slots[] = {
-  {Py_tp_doc, (void *)PyDoc_STR("\n    Fourier pulse with summands of shape:\n    A0 + A1 * cos(2 * pi / period * 1 * t) + B1 * sin(2 * pi / period * 1 * t) \n       + A2 * cos(2 * pi / period * 2 * t) + B2 * sin(2 * pi / period * 2 * t) \n       + ...\n    where the period is the first parameter.\n    ")},
+  {Py_tp_doc, (void *)PyDoc_STR("\n    Fourier pulse with summands of shape:\n    A0 + A1 * cos(2 * pi / period * 1 * t) + B1 * sin(2 * pi / period * 1 * t)\n       + A2 * cos(2 * pi / period * 2 * t) + B2 * sin(2 * pi / period * 2 * t)\n       + ...\n    where the period is the first parameter.\n    ")},
   {Py_tp_methods, (void *)__pyx_methods_9qutip_qoc_5pulse_FourierPulse},
   {Py_tp_init, (void *)__pyx_pw_9qutip_qoc_5pulse_12FourierPulse_1__init__},
   {Py_tp_new, (void *)__pyx_tp_new_9qutip_qoc_5pulse_FourierPulse},
@@ -32352,7 +32352,7 @@ static PyTypeObject __pyx_type_9qutip_qoc_5pulse_FourierPulse = {
   0, /*tp_setattro*/
   0, /*tp_as_buffer*/
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE, /*tp_flags*/
-  PyDoc_STR("\n    Fourier pulse with summands of shape:\n    A0 + A1 * cos(2 * pi / period * 1 * t) + B1 * sin(2 * pi / period * 1 * t) \n       + A2 * cos(2 * pi / period * 2 * t) + B2 * sin(2 * pi / period * 2 * t) \n       + ...\n    where the period is the first parameter.\n    "), /*tp_doc*/
+  PyDoc_STR("\n    Fourier pulse with summands of shape:\n    A0 + A1 * cos(2 * pi / period * 1 * t) + B1 * sin(2 * pi / period * 1 * t)\n       + A2 * cos(2 * pi / period * 2 * t) + B2 * sin(2 * pi / period * 2 * t)\n       + ...\n    where the period is the first parameter.\n    "), /*tp_doc*/
   0, /*tp_traverse*/
   0, /*tp_clear*/
   0, /*tp_richcompare*/
