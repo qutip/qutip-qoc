@@ -22,18 +22,12 @@ class TimeInterval:
     n_tslots : int, optional
         Number of time slots. Length of tslots is n_tslots.
 
-    tdiffs : array_like, optional
-        List of time intervals between time slots.
-        Can be unevenly spaced.
-        Length of tdiffs is n_tslots - 1.
-        Sum over all elements of tdiffs is evo_time.
     """
 
-    def __init__(self, tslots=None, evo_time=None, n_tslots=100, tdiffs=None):
+    def __init__(self, tslots=None, evo_time=None, n_tslots=100):
         self._tslots = tslots
         self._evo_time = evo_time
         self._n_tslots = n_tslots
-        self._tdiffs = tdiffs
 
     def __call__(self):
         return self.tslots
@@ -44,16 +38,7 @@ class TimeInterval:
             n_tslots = self.n_tslots
             if self._evo_time:  # derive from evo_time
                 self._tslots = np.linspace(0.0, self._evo_time, n_tslots)
-            elif self._tdiffs:  # derive from tdiffs
-                self._tslots = [sum(self._tdiffs[:i]) for i in range(n_tslots - 1)]
         return self._tslots
-
-    @property
-    def tdiffs(self):
-        if self._tdiffs is None:
-            tslots = self.tslots
-            self._tdiffs = np.diff(tslots)
-        return self._tdiffs
 
     @property
     def evo_time(self):
@@ -67,10 +52,8 @@ class TimeInterval:
         if self._n_tslots is None:
             if self._tslots:
                 self._n_tslots = len(self._tslots)
-            elif self._tdiffs:
-                self._n_tslots = len(self._tdiffs) - 1
             else:
                 raise ValueError(
-                    "Either tslots, tdiffs, or evo_time + n_tslots must be specified."
+                    "Either tslots or evo_time + n_tslots must be specified."
                 )
         return self._n_tslots
