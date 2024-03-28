@@ -3,7 +3,6 @@ This module contains functions that implement the GOAT algorithm to
 calculate optimal parameters for analytical control pulse sequences.
 """
 import numpy as np
-import scipy as sp
 
 import qutip as qt
 from qutip import Qobj, QobjEvo
@@ -109,8 +108,7 @@ class GOAT:
          [d2X(0)], ->  [0],
          [  ... ]] ->  [0]]
         """
-        # TODO: use qutip CSR
-        scale = sp.sparse.csr_matrix(([1], ([0], [0])), shape=(1 + self.tot_n_para, 1))
+        scale = qt.data.one_element_csr(position=(0, 0), shape=(1 + self.tot_n_para, 1))
         psi0 = Qobj(scale) & self.initial
         return psi0
 
@@ -171,7 +169,7 @@ class GOAT:
         for grad, M, Hc in zip(self.grads, self.para_counts, self.Hc_lst):
             for grad_idx in range(M):
                 i = 1 + idx + grad_idx
-                csr = sp.sparse.csr_matrix(([1], ([i], [0])), csr_shape)
+                csr = qt.data.one_element_csr(position=(i, 0), shape=csr_shape)
                 hc = Qobj(csr) & Hc
                 dH.append([hc, helper(grad, idx, idx + M, grad_idx)])
 
