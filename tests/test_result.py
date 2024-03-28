@@ -46,12 +46,13 @@ def grad_sin(t, p, idx):
         return p[0] * np.cos(p[1] * t + p[2]) * p[1]  # w.r.t. time
 
 
-p_guess = q_guess = [1, 1, 0]
-p_bounds = q_bounds = [(-1, 1), (-1, 1), (-np.pi, np.pi)]
+p_guess = q_guess = r_guess = [1, 1, 0]
+p_bounds = q_bounds = r_bounds = [(-1, 1), (-1, 1), (-np.pi, np.pi)]
 
 H_d = [qt.sigmaz()]
 H_c = [
     [qt.sigmax(), lambda t, p: sin(t, p), {"grad": grad_sin}],
+    [qt.sigmay(), lambda t, q: sin(t, q), {"grad": grad_sin}],
     [qt.sigmay(), lambda t, q: sin(t, q), {"grad": grad_sin}],
 ]
 
@@ -68,6 +69,7 @@ state2state_goat = Case(
     pulse_options={
         "p": {"guess": p_guess, "bounds": p_bounds},
         "q": {"guess": q_guess, "bounds": q_bounds},
+        "r": {"guess": r_guess, "bounds": r_bounds},
     },
     time_interval=TimeInterval(evo_time=10),
     time_options={},
@@ -99,7 +101,12 @@ def sin_y_jax(t, q, **kwargs):
     return sin_jax(t, q)
 
 
-Hc_jax = [[qt.sigmax(), sin_x_jax], [qt.sigmay(), sin_y_jax]]
+@jax.jit
+def sin_z_jax(t, r, **kwargs):
+    return sin_jax(t, r)
+
+
+Hc_jax = [[qt.sigmax(), sin_x_jax], [qt.sigmay(), sin_y_jax], [qt.sigmaz(), sin_z_jax]]
 
 H_jax = H_d + Hc_jax
 
@@ -109,8 +116,9 @@ state2state_jax = state2state_goat._replace(
     algorithm_kwargs={"alg": "JOPT", "fid_err_targ": 0.01},
 )
 
-# state to state transfer
-state2state_init_crab = state2state_goat._replace(
+# state to state transfer with initial parameters
+# instead of initial amplitudes
+state2state_param_crab = state2state_goat._replace(
     objectives=[Objective(initial, H, target)],
     algorithm_kwargs={"alg": "CRAB", "fid_err_targ": 0.01},
 )
@@ -120,10 +128,10 @@ state2state_init_crab = state2state_goat._replace(
 n_tslots, evo_time = 100, 10
 disc_interval = TimeInterval(n_tslots=n_tslots, evo_time=evo_time)
 
-p_disc = q_disc = np.zeros(n_tslots)
-p_bound = q_bound = (-1, 1)
+p_disc = q_disc = r_disc = np.zeros(n_tslots)
+p_bound = q_bound = r_bound = (-1, 1)
 
-Hc_disc = [[qt.sigmax(), p_guess], [qt.sigmay(), q_guess]]
+Hc_disc = [[qt.sigmax(), p_guess], [qt.sigmay(), q_guess], [qt.sigmaz(), r_guess]]
 
 H_disc = H_d + Hc_disc
 
@@ -133,6 +141,7 @@ state2state_grape = state2state_goat._replace(
     pulse_options={
         "p": {"guess": p_disc, "bounds": p_bound},
         "q": {"guess": q_disc, "bounds": q_bound},
+        "r": {"guess": r_guess, "bounds": r_bounds},
     },
     time_interval=disc_interval,
     algorithm_kwargs={"alg": "GRAPE", "fid_err_targ": 0.01},
@@ -143,6 +152,7 @@ state2state_crab = state2state_goat._replace(
     pulse_options={
         "p": {"guess": p_disc, "bounds": p_bound},
         "q": {"guess": q_disc, "bounds": q_bound},
+        "r": {"guess": r_disc, "bounds": r_bound},
     },
     time_interval=disc_interval,
     algorithm_kwargs={"alg": "CRAB", "fid_err_targ": 0.01, "fix_frequency": False},
@@ -153,7 +163,7 @@ state2state_crab = state2state_goat._replace(
     params=[
         pytest.param(state2state_grape, id="State to state (GRAPE)"),
         pytest.param(state2state_crab, id="State to state (CRAB)"),
-        pytest.param(state2state_init_crab, id="State to state (parameterized CRAB)"),
+        pytest.param(state2state_param_crab, id="State to state (param. CRAB)"),
         pytest.param(state2state_goat, id="State to state (GOAT)"),
         pytest.param(state2state_jax, id="State to state (JAX)"),
     ]
