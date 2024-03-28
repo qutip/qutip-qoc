@@ -62,12 +62,12 @@ class MultiObjective:
     def __init__(
         self,
         objectives,
-        qtrl_optimizers,
         time_interval,
-        time_options,
-        pulse_options,
         alg_kwargs,
         guess_params,
+        qtrl_optimizers=None,
+        time_options=None,
+        control_parameters=None,
         **integrator_kwargs,
     ):
         alg = alg_kwargs.get("alg")
@@ -76,7 +76,7 @@ class MultiObjective:
             kwargs = {
                 "time_interval": time_interval,
                 "time_options": time_options,
-                "pulse_options": pulse_options,
+                "control_parameters": control_parameters,
                 "alg_kwargs": alg_kwargs,
                 "guess_params": guess_params,
                 **integrator_kwargs,
@@ -102,11 +102,11 @@ class MultiObjective:
         """
         infid_sum = 0
 
-        for alg in self.alg_list:  # TODO: parallelize
+        for alg in self.alg_list:
             infid = alg.infidelity(
                 params
-            )  # TODO: multiple objective creation method (ensemble)
-            infid_sum += infid  # TODO: add weights- good first issue
+            )  # TODO: create issue "add ensamble objective method"
+            infid_sum += infid  # TODO: add weights
 
         self.mean_infid = np.mean(infid_sum)
         return self.mean_infid

@@ -52,7 +52,7 @@ class JOPT:
         objective,
         time_interval,
         time_options,
-        pulse_options,
+        control_parameters,
         alg_kwargs,
         guess_params,
         **integrator_kwargs,
@@ -60,7 +60,7 @@ class JOPT:
         self.Hd = objective.H[0]
         self.Hc_lst = objective.H[1:]
 
-        self.pulse_options = pulse_options
+        self.control_parameters = control_parameters
         self.guess_params = guess_params
         self.H = self._prepare_generator()
 
@@ -111,7 +111,7 @@ class JOPT:
         H = QobjEvo(self.Hd)
         idx = 0
 
-        for Hc, p_opt in zip(self.Hc_lst, self.pulse_options.values()):
+        for Hc, p_opt in zip(self.Hc_lst, self.control_parameters.values()):
             hc, ctrl = Hc[0], Hc[1]
 
             guess = p_opt.get("guess")
@@ -136,7 +136,7 @@ class JOPT:
             self.initial, [0.0, evo_time], args={"p": params}
         ).final_state
 
-        # TODO: FidelityComputer class should work with JAX
+        # TODO: create issue "FidelityComputer class for custom fidelity types"
         if self.fid_type == "TRACEDIFF":
             diff = X - self.target
             # to prevent if/else in qobj.dag() and qobj.tr()

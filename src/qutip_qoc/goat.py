@@ -37,7 +37,7 @@ class GOAT:
         objective,
         time_interval,
         time_options,
-        pulse_options,
+        control_parameters,
         alg_kwargs,
         guess_params,
         **integrator_kwargs,
@@ -77,7 +77,7 @@ class GOAT:
         self.var_t = "guess" in time_options
 
         # num of params for each control function
-        self.para_counts = [len(v["guess"]) for v in pulse_options.values()]
+        self.para_counts = [len(v["guess"]) for v in control_parameters.values()]
 
         # inferred attributes
         self.tot_n_para = sum(self.para_counts)  # excl. time
@@ -97,7 +97,8 @@ class GOAT:
         if self.var_t:  # for time derivative
             self.H_evo = QobjEvo(self.H, {"p": guess_params})
 
-        # initialize the solver TODO: usage of other solvers
+        # initialize the solver
+        # TODO: create issue "usage of other solvers"
         self.solver = qt.SESolver(H=self.evo, options=integrator_kwargs)
 
     def _prepare_state(self):

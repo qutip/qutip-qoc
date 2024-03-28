@@ -262,7 +262,7 @@ Eventually, the optimization for a desired `fid_err_targ` can be started by call
 
   result = qoc.optimize_pulses(
     objectives=[objective], # list of objectives
-    pulse_options={
+    control_parameters={
         "p": {"guess": p_guess, "bounds": p_bounds},
         "q": {"guess": q_guess, "bounds": q_bounds}
     },

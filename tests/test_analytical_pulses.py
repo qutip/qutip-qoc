@@ -17,13 +17,10 @@ Case = collections.namedtuple(
     "Case",
     [
         "objectives",
-        "pulse_options",
+        "control_parameters",
         "time_interval",
-        "time_options",
         "algorithm_kwargs",
         "optimizer_kwargs",
-        "minimizer_kwargs",
-        "integrator_kwargs",
     ],
 )
 
@@ -64,19 +61,16 @@ target = qt.basis(2, 1)
 
 state2state = Case(
     objectives=[Objective(initial, H, target)],
-    pulse_options={
+    control_parameters={
         "p": {"guess": p_guess, "bounds": p_bounds},
         "q": {"guess": q_guess, "bounds": q_bounds},
     },
     time_interval=TimeInterval(evo_time=1.0),
-    time_options={},
     algorithm_kwargs={
         "alg": "GOAT",
         "fid_err_targ": 0.01,
     },
     optimizer_kwargs={"seed": 0},
-    minimizer_kwargs={},
-    integrator_kwargs={},
 )
 
 
@@ -86,38 +80,36 @@ target_U = qt.sigmaz()
 
 unitary = Case(
     objectives=[Objective(initial_U, H, target_U)],
-    pulse_options={
+    control_parameters={
         "p": {"guess": p_guess, "bounds": p_bounds},
         "q": {"guess": q_guess, "bounds": q_bounds},
     },
     time_interval=TimeInterval(evo_time=1.0),
-    time_options={},
     algorithm_kwargs={
         "alg": "GOAT",
         "fid_err_targ": 0.01,
     },
     optimizer_kwargs={"seed": 0},
-    minimizer_kwargs={},
-    integrator_kwargs={},
 )
 
 
 # unitary gate synthesis - time optimization
 time = Case(
     objectives=[Objective(initial_U, H, target_U)],
-    pulse_options={
+    control_parameters={
         "p": {"guess": p_guess, "bounds": p_bounds},
         "q": {"guess": q_guess, "bounds": q_bounds},
+        "__time__": {
+            "guess": 5,
+            "bounds": (0, 10),
+        },
     },
     time_interval=TimeInterval(evo_time=1.0),
-    time_options={"guess": 5, "bounds": (0, 10)},
     algorithm_kwargs={
         "alg": "GOAT",
         "fid_err_targ": 0.01,
     },
     optimizer_kwargs={"seed": 0},
-    minimizer_kwargs={},
-    integrator_kwargs={},
 )
 
 
@@ -135,19 +127,16 @@ L = L_d + L_c
 
 mapping = Case(
     objectives=[Objective(initial_map, L, target_map)],
-    pulse_options={
+    control_parameters={
         "p": {"guess": p_guess, "bounds": p_bounds},
         "q": {"guess": q_guess, "bounds": q_bounds},
     },
     time_interval=TimeInterval(evo_time=1.0),
-    time_options={},
     algorithm_kwargs={
         "alg": "GOAT",
         "fid_err_targ": 0.1,  # relaxed objective
     },
     optimizer_kwargs={"seed": 0},
-    minimizer_kwargs={},
-    integrator_kwargs={},
 )
 
 
@@ -219,12 +208,9 @@ def tst(request):
 def test_optimize_pulses(tst):
     result = optimize_pulses(
         tst.objectives,
-        tst.pulse_options,
+        tst.control_parameters,
         tst.time_interval,
-        tst.time_options,
         tst.algorithm_kwargs,
         tst.optimizer_kwargs,
-        tst.minimizer_kwargs,
-        tst.integrator_kwargs,
     )
     assert result.infidelity <= tst.algorithm_kwargs.get("fid_err_targ", 0.01)

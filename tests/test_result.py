@@ -18,13 +18,10 @@ Case = collections.namedtuple(
     "Case",
     [
         "objectives",
-        "pulse_options",
+        "control_parameters",
         "time_interval",
-        "time_options",
         "algorithm_kwargs",
         "optimizer_kwargs",
-        "minimizer_kwargs",
-        "integrator_kwargs",
     ],
 )
 
@@ -66,13 +63,12 @@ target = qt.basis(2, 1)
 
 state2state_goat = Case(
     objectives=[Objective(initial, H, target)],
-    pulse_options={
+    control_parameters={
         "p": {"guess": p_guess, "bounds": p_bounds},
         "q": {"guess": q_guess, "bounds": q_bounds},
         "r": {"guess": r_guess, "bounds": r_bounds},
     },
     time_interval=TimeInterval(evo_time=10),
-    time_options={},
     algorithm_kwargs={
         "alg": "GOAT",
         "fid_err_targ": 0.01,
@@ -80,8 +76,6 @@ state2state_goat = Case(
     optimizer_kwargs={
         "seed": 0,
     },
-    minimizer_kwargs={},
-    integrator_kwargs={},
 )
 
 # ----------------------- JAX ---------------------
@@ -138,7 +132,7 @@ H_disc = H_d + Hc_disc
 
 state2state_grape = state2state_goat._replace(
     objectives=[Objective(initial, H_disc, target)],
-    pulse_options={
+    control_parameters={
         "p": {"guess": p_disc, "bounds": p_bound},
         "q": {"guess": q_disc, "bounds": q_bound},
         "r": {"guess": r_disc, "bounds": r_bound},
@@ -149,7 +143,7 @@ state2state_grape = state2state_goat._replace(
 
 state2state_crab = state2state_goat._replace(
     objectives=[Objective(initial, H_disc, target)],
-    pulse_options={
+    control_parameters={
         "p": {"guess": p_disc, "bounds": p_bound},
         "q": {"guess": q_disc, "bounds": q_bound},
         "r": {"guess": r_disc, "bounds": r_bound},
@@ -175,13 +169,10 @@ def tst(request):
 def test_optimize_pulses(tst):
     result = optimize_pulses(
         tst.objectives,
-        tst.pulse_options,
+        tst.control_parameters,
         tst.time_interval,
-        tst.time_options,
         tst.algorithm_kwargs,
         tst.optimizer_kwargs,
-        tst.minimizer_kwargs,
-        tst.integrator_kwargs,
     )
 
     assert isinstance(result, Result)

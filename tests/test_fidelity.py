@@ -20,13 +20,10 @@ Case = collections.namedtuple(
     "Case",
     [
         "objectives",
-        "pulse_options",
+        "control_parameters",
         "time_interval",
-        "time_options",
         "algorithm_kwargs",
         "optimizer_kwargs",
-        "minimizer_kwargs",
-        "integrator_kwargs",
     ],
 )
 
@@ -66,18 +63,15 @@ initial = qt.basis(2, 0)
 
 PSU_state2state = Case(
     objectives=[Objective(initial, H, (-1j) * initial)],
-    pulse_options={
+    control_parameters={
         "p": {"guess": p_guess, "bounds": p_bounds},
         "q": {"guess": q_guess, "bounds": q_bounds},
     },
     time_interval=TimeInterval(evo_time=5.0),
-    time_options={},
     algorithm_kwargs={"alg": "GOAT", "fid_type": "PSU"},
     optimizer_kwargs={
         "seed": 0,
     },
-    minimizer_kwargs={},
-    integrator_kwargs={},
 )
 
 # SU (must depend on global phase) state to state transfer
@@ -189,13 +183,10 @@ def tst(request):
 def test_optimize_pulses(tst):
     result = optimize_pulses(
         tst.objectives,
-        tst.pulse_options,
+        tst.control_parameters,
         tst.time_interval,
-        tst.time_options,
         tst.algorithm_kwargs,
         tst.optimizer_kwargs,
-        tst.minimizer_kwargs,
-        tst.integrator_kwargs,
     )
     # initial == target <-> infidelity = 0
     assert np.isclose(result.infidelity, 0.0)

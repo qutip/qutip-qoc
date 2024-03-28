@@ -18,7 +18,7 @@ __all__ = ["global_local_optimization"]
 def get_init_and_bounds_from_options(lst, input):
     """
     Extract initial and boundary values of any kind and shape
-    from the pulse_options and time_options dictionary.
+    from the control_parameters and time_options dictionary.
     """
     if input is None:
         return lst
@@ -171,7 +171,7 @@ class Callback:
 
 def global_local_optimization(
     objectives,
-    pulse_options,
+    control_parameters,
     time_interval,
     time_options,
     algorithm_kwargs,
@@ -193,7 +193,7 @@ def global_local_optimization(
     objectives : list of :class:`qutip_qoc.Objective`
         List of objectives to be optimized.
 
-    pulse_options : dict
+    control_parameters : dict
         Dictionary of options for the control pulse optimization.
         For each control function it must specify:
 
@@ -279,9 +279,9 @@ def global_local_optimization(
 
     # extract initial and boundary values for global and local optimizer
     x0, bounds = [], []
-    for key in pulse_options.keys():
-        get_init_and_bounds_from_options(x0, pulse_options[key].get("guess"))
-        get_init_and_bounds_from_options(bounds, pulse_options[key].get("bounds"))
+    for key in control_parameters.keys():
+        get_init_and_bounds_from_options(x0, control_parameters[key].get("guess"))
+        get_init_and_bounds_from_options(bounds, control_parameters[key].get("bounds"))
 
     get_init_and_bounds_from_options(x0, time_options.get("guess", None))
     get_init_and_bounds_from_options(bounds, time_options.get("bounds", None))
@@ -293,7 +293,7 @@ def global_local_optimization(
         qtrl_optimizers=qtrl_optimizers,
         time_interval=time_interval,
         time_options=time_options,
-        pulse_options=pulse_options,
+        control_parameters=control_parameters,
         alg_kwargs=algorithm_kwargs,
         guess_params=optimizer_kwargs["x0"],
         **integrator_kwargs,
