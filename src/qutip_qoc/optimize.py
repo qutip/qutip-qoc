@@ -3,7 +3,7 @@ import numpy as np
 import qutip_qtrl.logging_utils as logging
 import qutip_qtrl.pulseoptim as cpo
 
-from qutip_qoc.analytical_control import global_local_optimization
+from qutip_qoc.global_local_opt import global_local_optimization
 
 __all__ = ["optimize_pulses"]
 
