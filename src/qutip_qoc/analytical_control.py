@@ -6,15 +6,11 @@ with GOAT and JOPT.
 import time
 import numpy as np
 import scipy as sp
-import qutip as qt
 
 from scipy.optimize import OptimizeResult
-
 from qutip_qoc.result import Result
-from qutip_qoc.jopt import Multi_JOPT
-from qutip_qoc.goat import Multi_GOAT
-from qutip_qoc.crab import Multi_CRAB
-from qutip_qoc.grape import Multi_GRAPE
+from qutip_qoc.objective import MultiObjective
+
 
 __all__ = ["global_local_optimization"]
 
@@ -189,8 +185,8 @@ def global_local_optimization(
     the parameters of the pulse functions. The algorithm is a two-layered
     approach. The outer layer does a global optimization using basin-hopping or
     dual annealing. The inner layer does a local optimization using a gradient-
-    based method. Gradients and error values are calculated in the GOAT/JOPT
-    module.
+    based method (no gradient for CRAB).
+    Gradients and error values are calculated in the MultiObjective module.
 
     Parameters
     ----------
@@ -292,33 +288,16 @@ def global_local_optimization(
 
     optimizer_kwargs["x0"] = np.concatenate(x0)
 
-    # algorithm specific settings
-    if algorithm_kwargs.get("alg") == "JOPT":
-        with qt.CoreOptions(default_dtype="jax"):
-            multi_objective = Multi_JOPT(
-                objectives,
-                time_interval,
-                time_options,
-                pulse_options,
-                algorithm_kwargs,
-                guess_params=optimizer_kwargs["x0"],
-                **integrator_kwargs,
-            )
-    elif algorithm_kwargs.get("alg") == "GOAT":
-        multi_objective = Multi_GOAT(
-            objectives,
-            time_interval,
-            time_options,
-            pulse_options,
-            algorithm_kwargs,
-            guess_params=optimizer_kwargs["x0"],
-            **integrator_kwargs,
-        )
-    elif algorithm_kwargs.get("alg") == "CRAB":
-        multi_objective = Multi_CRAB(qtrl_optimizers)
-
-    elif algorithm_kwargs.get("alg") == "GRAPE":
-        multi_objective = Multi_GRAPE(qtrl_optimizers)
+    multi_objective = MultiObjective(
+        objectives=objectives,
+        qtrl_optimizers=qtrl_optimizers,
+        time_interval=time_interval,
+        time_options=time_options,
+        pulse_options=pulse_options,
+        alg_kwargs=algorithm_kwargs,
+        guess_params=optimizer_kwargs["x0"],
+        **integrator_kwargs,
+    )
 
     # optimizer specific settings
     opt_method = optimizer_kwargs.get(
@@ -331,7 +310,7 @@ def global_local_optimization(
         # if not specified through optimizer_kwargs "niter"
         optimizer_kwargs.setdefault(
             "niter",
-            optimizer_kwargs.get("max_iter", algorithm_kwargs.get("glob_max_iter", 1)),
+            optimizer_kwargs.get("max_iter", algorithm_kwargs.get("glob_max_iter", 0)),
         )
 
         if len(bounds) != 0:  # realizes boundaries through minimizer
@@ -343,7 +322,7 @@ def global_local_optimization(
         # if not specified through optimizer_kwargs "maxiter"
         optimizer_kwargs.setdefault(
             "maxiter",
-            optimizer_kwargs.get("max_iter", algorithm_kwargs.get("glob_max_iter", 1)),
+            optimizer_kwargs.get("max_iter", algorithm_kwargs.get("glob_max_iter", 0)),
         )
 
         if len(bounds) != 0:  # realizes boundaries through optimizer

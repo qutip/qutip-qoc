@@ -8,7 +8,7 @@ import scipy as sp
 import qutip as qt
 from qutip import Qobj, QobjEvo
 
-__all__ = ["GOAT", "Multi_GOAT"]
+__all__ = ["GOAT"]
 
 
 class GOAT:
@@ -86,9 +86,9 @@ class GOAT:
 
         # Scale the system Hamiltonian and initial state
         # for coupled system (X, dX)
-        self.H_dia, self.H = self.prepare_H_dia()
-        self.H_off_dia = self.prepare_H_off_dia()
-        self.psi0 = self.prepare_psi0()
+        self.H_dia, self.H = self._prepare_generator_dia()
+        self.H_off_dia = self._prepare_generator_off_dia()
+        self.psi0 = self._prepare_state()
 
         self.evo = QobjEvo(self.H_dia + self.H_off_dia, {"p": guess_params})
         if self.is_super:  # for SESolver
@@ -97,10 +97,10 @@ class GOAT:
         if self.var_t:  # for time derivative
             self.H_evo = QobjEvo(self.H, {"p": guess_params})
 
-        # initialize the solver
+        # initialize the solver TODO: usage of other solvers
         self.solver = qt.SESolver(H=self.evo, options=integrator_kwargs)
 
-    def prepare_psi0(self):
+    def _prepare_state(self):
         """
         inital state (t=0) for coupled system (X, dX):
         [[  X(0)], -> [[1],
@@ -108,11 +108,12 @@ class GOAT:
          [d2X(0)], ->  [0],
          [  ... ]] ->  [0]]
         """
+        # TODO: use qutip CSR
         scale = sp.sparse.csr_matrix(([1], ([0], [0])), shape=(1 + self.tot_n_para, 1))
         psi0 = Qobj(scale) & self.initial
         return psi0
 
-    def prepare_H_dia(self):
+    def _prepare_generator_dia(self):
         """
         Combines the scaled and parameterized Hamiltonian elements on the diagonal
         of the coupled system (X, dX) Hamiltonian, with associated pulses:
@@ -145,7 +146,7 @@ class GOAT:
 
         return H_dia, H  # lists to construct QobjEvo
 
-    def prepare_H_off_dia(self):
+    def _prepare_generator_off_dia(self):
         """
         Combines the scaled and parameterized Hamiltonian off-diagonal elements
         for the coupled system (X, dX) with associated pulses:
@@ -177,7 +178,7 @@ class GOAT:
 
         return dH  # list to construct QobjEvo
 
-    def solve_EOM(self, evo_time, params):
+    def _solve_EOM(self, evo_time, params):
         """
         Calculates X, and dX i.e. the derivative of the evolution operator X
         wrt the control parameters by solving the Schroedinger operator equation
@@ -199,7 +200,7 @@ class GOAT:
         # adjust integration time-interval, if time is parameter
         evo_time = self.evo_time if self.var_t is False else params[-1]
 
-        X, self.dX = self.solve_EOM(evo_time, params)
+        X, self.dX = self._solve_EOM(evo_time, params)
 
         self.X = Qobj(X, dims=self.target.dims)
 
@@ -255,59 +256,3 @@ class GOAT:
             grad = -(self.norm_fac * phase_fac * np.array(trc)).real
 
         return grad
-
-
-class Multi_GOAT:
-    """
-    Composite class for multiple GOAT instances
-    to optimize multiple objectives simultaneously
-    """
-
-    def __init__(
-        self,
-        objectives,
-        time_interval,
-        time_options,
-        pulse_options,
-        alg_kwargs,
-        guess_params,
-        **integrator_kwargs,
-    ):
-        self.goats = [
-            GOAT(
-                obj,
-                time_interval,
-                time_options,
-                pulse_options,
-                alg_kwargs,
-                guess_params,
-                **integrator_kwargs,
-            )
-            for obj in objectives
-        ]
-
-        self.mean_infid = None
-
-    def goal_fun(self, params):
-        """
-        Calculates the mean infidelity over all objectives
-        """
-        infid_sum = 0
-
-        for goat in self.goats:  # TODO: parallelize
-            infid = goat.infidelity(params)
-            infid_sum += infid
-
-        self.mean_infid = np.mean(infid_sum)
-        return self.mean_infid
-
-    def grad_fun(self, params):
-        """
-        Calculates the sum of gradients over all objectives
-        """
-        grads = 0
-
-        for g in self.goats:
-            grads += g.gradient(params)
-
-        return grads

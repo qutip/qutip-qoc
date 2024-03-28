@@ -10,7 +10,7 @@ __all__ = ["optimize_pulses"]
 
 def optimize_pulses(
     objectives,
-    pulse_options,
+    pulse_options,  # TODO: control_parameters
     time_interval,
     time_options=None,
     algorithm_kwargs=None,
@@ -162,12 +162,12 @@ def optimize_pulses(
             "maxiter", algorithm_kwargs.get("max_iter", 1000)
         )
         minimizer_kwargs["options"].setdefault(
-            "gtol", algorithm_kwargs.get("min_grad", 0.0 if alg == "CRAB" else 1e-10)
+            "gtol", algorithm_kwargs.get("min_grad", 0.0 if alg == "CRAB" else 1e-8)
         )
     else:
         minimizer_kwargs["options"] = {
             "maxiter": algorithm_kwargs.get("max_iter", 1000),
-            "gtol": algorithm_kwargs.get("min_grad", 0.0 if alg == "CRAB" else 1e-10),
+            "gtol": algorithm_kwargs.get("min_grad", 0.0 if alg == "CRAB" else 1e-8),
         }
 
     # prepare qtrl optimizers
@@ -317,9 +317,7 @@ def optimize_pulses(
                 else:
                     # Set the initial parameters
                     pgen.set_optim_var_vals(np.array(x0[j]))
-                    # pgen._pulse_initialised = True
                     init_amps[:, j] = pgen.gen_pulse()
-                    # dyn.prop_computer.grad_exact = False
 
             # Initialise the starting amplitudes
             # NOTE: any initial CRAB guess pulse is only used

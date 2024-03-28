@@ -1,3 +1,11 @@
+import numpy as np
+import qutip as qt
+
+from qutip_qoc.jopt import JOPT
+from qutip_qoc.goat import GOAT
+from qutip_qoc.crab import CRAB
+from qutip_qoc.grape import GRAPE
+
 __all__ = ["Objective"]
 
 
@@ -44,3 +52,72 @@ class Objective:
         """
         only_H = [self.H[0]] + [H[0] for H in self.H[1:]]
         return (self.initial, only_H, self.target)
+
+
+class MultiObjective:
+    """
+    Composite class for multiple GOAT, CRAB, GRAP, JOPT instances to optimize multiple objectives simultaneously. Each instance is associated with one objective.
+    """
+
+    def __init__(
+        self,
+        objectives,
+        qtrl_optimizers,
+        time_interval,
+        time_options,
+        pulse_options,
+        alg_kwargs,
+        guess_params,
+        **integrator_kwargs,
+    ):
+        alg = alg_kwargs.get("alg")
+
+        if alg == "GOAT" or alg == "JOPT":
+            kwargs = {
+                "time_interval": time_interval,
+                "time_options": time_options,
+                "pulse_options": pulse_options,
+                "alg_kwargs": alg_kwargs,
+                "guess_params": guess_params,
+                **integrator_kwargs,
+            }
+            if alg == "GOAT":
+                self.alg_list = [GOAT(objective=obj, **kwargs) for obj in objectives]
+            elif alg == "JOPT":
+                with qt.CoreOptions(default_dtype="jax"):
+                    self.alg_list = [
+                        JOPT(objective=obj, **kwargs) for obj in objectives
+                    ]
+
+        elif alg == "CRAB":
+            self.alg_list = [CRAB(optimizer) for optimizer in qtrl_optimizers]
+        elif alg == "GRAPE":
+            self.alg_list = [GRAPE(optimizer) for optimizer in qtrl_optimizers]
+
+        self.mean_infid = None
+
+    def goal_fun(self, params):
+        """
+        Calculates the mean infidelity over all objectives
+        """
+        infid_sum = 0
+
+        for alg in self.alg_list:  # TODO: parallelize
+            infid = alg.infidelity(
+                params
+            )  # TODO: multiple objective creation method (ensemble)
+            infid_sum += infid  # TODO: add weights- good first issue
+
+        self.mean_infid = np.mean(infid_sum)
+        return self.mean_infid
+
+    def grad_fun(self, params):
+        """
+        Calculates the sum of gradients over all objectives
+        """
+        grads = 0
+
+        for alg in self.alg_list:
+            grads += alg.gradient(params)
+
+        return grads
