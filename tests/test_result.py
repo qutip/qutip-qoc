@@ -141,7 +141,7 @@ state2state_grape = state2state_goat._replace(
     pulse_options={
         "p": {"guess": p_disc, "bounds": p_bound},
         "q": {"guess": q_disc, "bounds": q_bound},
-        "r": {"guess": r_guess, "bounds": r_bounds},
+        "r": {"guess": r_disc, "bounds": r_bound},
     },
     time_interval=disc_interval,
     algorithm_kwargs={"alg": "GRAPE", "fid_err_targ": 0.01},
