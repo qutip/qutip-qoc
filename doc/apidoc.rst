@@ -14,7 +14,7 @@ High-level interfaces to the optimal control features.
    :toctree: apidoc/
    :template: autosummary/module.rst
 
-   qutip_qoc.optimize
+   qutip_qoc.pulse_optim
 
 
 Utilities
@@ -26,7 +26,7 @@ Optimal control utility functions.
    :template: autosummary/module.rst
 
    qutip_qoc.result
-   qutip_qoc.time_interval
+   qutip_qoc.time
    qutip_qoc.objective
 
 Low-level interfaces
@@ -39,6 +39,8 @@ Internal interfaces to the optimal control features.
 
    qutip_qtrl.pulseoptim
 
-   qutip_qoc.analytical_control
+   qutip_qoc.optimizer
    qutip_qoc.goat
    qutip_qoc.jopt
+   qutip_qoc.grape
+   qutip_qoc.crab

@@ -12,9 +12,9 @@ import numpy as np
 import jax.numpy as jnp
 import collections
 
-from qutip_qoc.optimize import optimize_pulses
+from qutip_qoc.pulse_optim import optimize_pulses
 from qutip_qoc.objective import Objective
-from qutip_qoc.time_interval import TimeInterval
+from qutip_qoc.time import TimeInterval
 
 Case = collections.namedtuple(
     "Case",
