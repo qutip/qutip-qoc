@@ -3,16 +3,15 @@ import numpy as np
 import qutip_qtrl.logging_utils as logging
 import qutip_qtrl.pulseoptim as cpo
 
-from qutip_qoc.analytical_control import global_local_optimization
+from qutip_qoc.optimizer import global_local_optimization
 
 __all__ = ["optimize_pulses"]
 
 
 def optimize_pulses(
     objectives,
-    pulse_options,
+    control_parameters,
     time_interval,
-    time_options=None,
     algorithm_kwargs=None,
     optimizer_kwargs=None,
     minimizer_kwargs=None,
@@ -26,7 +25,7 @@ def optimize_pulses(
     objectives : list of :class:`qutip_qoc.Objective`
         List of objectives to be optimized.
 
-    pulse_options : dict
+    control_parameters : dict
         Dictionary of options for the control pulse optimization.
         For each control function it must specify:
 
@@ -39,25 +38,24 @@ def optimize_pulses(
                     Sequence of ``(min, max)`` pairs for each element in
                     `guess`. None is used to specify no bound.
 
-        GRAPE and CRAB have only one control function with n_tslots parameters.
-        The bounds are only one pair of ``(min, max)`` limiting the amplitude of all tslots equally.
+            __time__ : dict, optional
+                Only supported by GOAT and JOPT.
+                Dictionary of options for the time interval optimization.
+                It must specify both:
+
+                    - guess: ndarray, shape (n,)
+                        Initial guess. Array of real elements of size (n,),
+                        where ``n`` is the number of independent variables.
+
+                    - bounds : sequence, optional
+                        Sequence of ``(min, max)`` pairs for each element in `guess`.
+                        None is used to specify no bound.
+
+        GRAPE and CRAB bounds are only one pair of ``(min, max)`` limiting the amplitude of all tslots equally.
 
     time_interval : :class:`qutip_qoc.TimeInterval`
         Pulse duration time interval.
         GRAPE and CRAB require n_tslots attribute for discretization.
-
-    time_options : dict, optional
-        Only supported by GOAT and JOPT.
-        Dictionary of options for the time interval optimization.
-        It must specify both:
-
-            - guess: ndarray, shape (n,)
-                Initial guess. Array of real elements of size (n,),
-                where ``n`` is the number of independent variables.
-
-            - bounds : sequence, optional
-                Sequence of ``(min, max)`` pairs for each element in `guess`.
-                None is used to specify no bound.
 
     algorithm_kwargs : dict, optional
         Dictionary of options for the optimization algorithm.
@@ -114,8 +112,6 @@ def optimize_pulses(
     result : :class:`qutip_qoc.Result`
         Optimization result.
     """
-    if time_options is None:
-        time_options = {}
     if algorithm_kwargs is None:
         algorithm_kwargs = {}
     if optimizer_kwargs is None:
@@ -125,6 +121,7 @@ def optimize_pulses(
     if integrator_kwargs is None:
         integrator_kwargs = {}
 
+    time_options = control_parameters.pop("__time__", {})
     alg = algorithm_kwargs.get("alg", "GRAPE")  # works with most input types
 
     Hd_lst, Hc_lst = [], []
@@ -141,9 +138,9 @@ def optimize_pulses(
 
     # extract guess and bounds for the control pulses
     x0, bounds = [], []
-    for key in pulse_options.keys():
-        x0.append(pulse_options[key].get("guess"))
-        bounds.append(pulse_options[key].get("bounds"))
+    for key in control_parameters.keys():
+        x0.append(control_parameters[key].get("guess"))
+        bounds.append(control_parameters[key].get("bounds"))
     try:  # GRAPE, CRAB format
         lbound = [b[0][0] for b in bounds]
         ubound = [b[0][1] for b in bounds]
@@ -162,12 +159,12 @@ def optimize_pulses(
             "maxiter", algorithm_kwargs.get("max_iter", 1000)
         )
         minimizer_kwargs["options"].setdefault(
-            "gtol", algorithm_kwargs.get("min_grad", 0.0 if alg == "CRAB" else 1e-10)
+            "gtol", algorithm_kwargs.get("min_grad", 0.0 if alg == "CRAB" else 1e-8)
         )
     else:
         minimizer_kwargs["options"] = {
             "maxiter": algorithm_kwargs.get("max_iter", 1000),
-            "gtol": algorithm_kwargs.get("min_grad", 0.0 if alg == "CRAB" else 1e-10),
+            "gtol": algorithm_kwargs.get("min_grad", 0.0 if alg == "CRAB" else 1e-8),
         }
 
     # prepare qtrl optimizers
@@ -249,9 +246,7 @@ def optimize_pulses(
                 "ramping_pulse_params": algorithm_kwargs.get(
                     "ramping_pulse_params", None
                 ),
-                "log_level": algorithm_kwargs.get(
-                    "log_level", log_level
-                ),  # TODO: deprecate
+                "log_level": algorithm_kwargs.get("log_level", log_level),
                 "gen_stats": algorithm_kwargs.get("gen_stats", False),
             }
 
@@ -319,9 +314,7 @@ def optimize_pulses(
                 else:
                     # Set the initial parameters
                     pgen.set_optim_var_vals(np.array(x0[j]))
-                    # pgen._pulse_initialised = True
                     init_amps[:, j] = pgen.gen_pulse()
-                    # dyn.prop_computer.grad_exact = False
 
             # Initialise the starting amplitudes
             # NOTE: any initial CRAB guess pulse is only used
@@ -332,18 +325,18 @@ def optimize_pulses(
             init_params = qtrl_optimizer._get_optim_var_vals()
 
             if use_as_amps:  # For the global optimizer
-                num_params = len(init_params) // len(pulse_options)
-                for i, key in enumerate(pulse_options.keys()):
-                    pulse_options[key]["guess"] = init_params[
+                num_params = len(init_params) // len(control_parameters)
+                for i, key in enumerate(control_parameters.keys()):
+                    control_parameters[key]["guess"] = init_params[
                         i * num_params : (i + 1) * num_params
                     ]  # amplitude bounds are taken care of by pulse generator
-                    pulse_options[key]["bounds"] = None
+                    control_parameters[key]["bounds"] = None
 
             qtrl_optimizers.append(qtrl_optimizer)
 
     return global_local_optimization(
         objectives,
-        pulse_options,
+        control_parameters,
         time_interval,
         time_options,
         algorithm_kwargs,

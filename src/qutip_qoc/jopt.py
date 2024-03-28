@@ -12,7 +12,7 @@ from jax import custom_jvp
 import jax.numpy as jnp
 import qutip_jax  # noqa: F401
 
-__all__ = ["JOPT", "Multi_JOPT"]
+__all__ = ["JOPT"]
 
 
 @custom_jvp
@@ -52,7 +52,7 @@ class JOPT:
         objective,
         time_interval,
         time_options,
-        pulse_options,
+        control_parameters,
         alg_kwargs,
         guess_params,
         **integrator_kwargs,
@@ -60,9 +60,9 @@ class JOPT:
         self.Hd = objective.H[0]
         self.Hc_lst = objective.H[1:]
 
-        self.pulse_options = pulse_options
+        self.control_parameters = control_parameters
         self.guess_params = guess_params
-        self.H = self.prepare_H()
+        self.H = self._prepare_generator()
 
         self.initial = objective.initial.to("jax")
         self.target = objective.target.to("jax")
@@ -94,10 +94,10 @@ class JOPT:
             self.fid_type = alg_kwargs.get("fid_type", "PSU")
             self.solver = qt.SESolver(H=self.H, options=self.integrator_kwargs)
 
-        self.infidelity = jax.jit(self.infid)
+        self.infidelity = jax.jit(self._infid)
         self.gradient = jax.jit(jax.grad(self.infidelity))
 
-    def prepare_H(self):
+    def _prepare_generator(self):
         """
         prepare Hamiltonian call signature
         to only take one parameter vector 'p' for mesolve like:
@@ -111,7 +111,7 @@ class JOPT:
         H = QobjEvo(self.Hd)
         idx = 0
 
-        for Hc, p_opt in zip(self.Hc_lst, self.pulse_options.values()):
+        for Hc, p_opt in zip(self.Hc_lst, self.control_parameters.values()):
             hc, ctrl = Hc[0], Hc[1]
 
             guess = p_opt.get("guess")
@@ -125,7 +125,7 @@ class JOPT:
 
         return H.to("jax")
 
-    def infid(self, params):
+    def _infid(self, params):
         """
         calculate infidelity to be minimized
         """
@@ -136,6 +136,7 @@ class JOPT:
             self.initial, [0.0, evo_time], args={"p": params}
         ).final_state
 
+        # TODO: create issue "FidelityComputer class for custom fidelity types"
         if self.fid_type == "TRACEDIFF":
             diff = X - self.target
             # to prevent if/else in qobj.dag() and qobj.tr()
@@ -150,60 +151,3 @@ class JOPT:
                 infid = 1 - jnp.real(g)
 
         return infid
-
-
-class Multi_JOPT:
-    """
-    Composite class for multiple JOPT instances
-    to optimize multiple objectives simultaneously
-    """
-
-    def __init__(
-        self,
-        objectives,
-        time_interval,
-        time_options,
-        pulse_options,
-        alg_kwargs,
-        guess_params,
-        **integrator_kwargs,
-    ):
-        self.jopts = [
-            JOPT(
-                obj,
-                time_interval,
-                time_options,
-                pulse_options,
-                alg_kwargs,
-                guess_params,
-                **integrator_kwargs,
-            )
-            for obj in objectives
-        ]
-
-        self.mean_infid = None
-
-    def goal_fun(self, params):
-        """
-        Calculates the mean infidelity over all objectives
-        """
-        infid_sum = 0
-
-        for j in self.jopts:  # TODO: parallelize
-            infid = j.infidelity(params)
-            infid_sum += infid
-
-        self.mean_infid = jnp.mean(infid_sum)
-        return self.mean_infid
-
-    def grad_fun(self, params):
-        """
-        Calculates the sum of gradients over all objectives
-        """
-        grads = 0
-
-        for j in self.jopts:
-            grad = j.gradient(params)
-            grads += grad
-
-        return grads

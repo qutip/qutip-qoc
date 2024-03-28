@@ -3,6 +3,7 @@ import pickle
 import textwrap
 import numpy as np
 from inspect import signature
+import warnings
 
 import qutip as qt
 from qutip_qoc.objective import Objective
@@ -354,30 +355,41 @@ class Result:
 
     @property
     def evo_full_final(self):
-        # qtrl result backward compatibility # TODO: deprecated warning
+        warnings.warn(
+            "evo_full_final is deprecated, use final_states[0] instead",
+            DeprecationWarning,
+        )
         return self.final_states[0]
 
     @property
     def fid_err(self):
-        # qtrl result backward compatibility # TODO: deprecated warning
+        warnings.warn(
+            "fid_err is deprecated, use infidelity instead", DeprecationWarning
+        )
         return self.infidelity
 
     @property
     def grad_norm_final(self):
-        # qtrl result backward compatibility # TODO: deprecated warning
+        warnings.warn(
+            "grad_norm_final is deprecated, it is not supported", DeprecationWarning
+        )
         return None  # not supported
 
     @property
     def termination_reason(self):
-        # qtrl result backward compatibility # TODO: deprecated warning
+        warnings.warn(
+            "termination_reason is deprecated, use message instead", DeprecationWarning
+        )
         return self.message
 
     @property
     def num_iter(self):
-        # qtrl result backward compatibility # TODO: deprecated warning
+        warnings.warn("num_iter is deprecated, use n_iters instead", DeprecationWarning)
         return self.n_iters
 
     @property
     def wall_time(self):
-        # qtrl result backward compatibility # TODO: deprecated warning
+        warnings.warn(
+            "wall_time is deprecated, use total_seconds instead", DeprecationWarning
+        )
         return self.total_seconds

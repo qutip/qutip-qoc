@@ -32,9 +32,9 @@ initial_x = np.sin(interval())
 initial_y = np.cos(interval())
 initial_z = np.tan(interval())
 
-# res_grape = qoc.optimize_pulses(
-# objectives=qoc.Objective(initial, H, target),
-# pulse_options={
+#res_grape = qoc.optimize_pulses(
+#    objectives=qoc.Objective(initial, H, target),
+#    control_parameters={
 #        "ctrl_x": {
 #            "guess": initial_x,
 #            "bounds": [-1, 1]},
@@ -48,36 +48,36 @@ initial_z = np.tan(interval())
 #    time_interval=interval,
 #    algorithm_kwargs={
 #        "alg": "CRAB",
-#        "fid_err_targ": 0.01,
-#    })
+#        "fid_err_targ": 0.05,
+#   })
 
 
 # number of control parameters (multiple of 3)
 n_coeffs = 3  # c0 * sin(c2*t) + c1 * cos(c2*t)
 
-# res_crab = qoc.optimize_pulses(
-# objectives=qoc.Objective(initial, H, target),
-# pulse_options={
-#  "ctrl_x": {
-#   "guess":  [0 for _ in range(n_coeffs)],
-#   "bounds": [(-1, 1) for _ in range(n_coeffs)],
-#  },
-#  "ctrl_y": {
-#   "guess":  [0 for _ in range(n_coeffs)],
-#   "bounds": [(-1, 1) for _ in range(n_coeffs)],
-#  },
-#  "ctrl_z": {
-#   "guess":  [0 for _ in range(n_coeffs)],
-#   "bounds": [(-1, 1) for _ in range(n_coeffs)],
-#  },
-# },
-# time_interval=interval,
-# algorithm_kwargs={
-#  "alg": "CRAB",
-#  "fid_err_targ": 0.1,
-#  "fix_frequency": False,
-# },
-# )
+res_crab = qoc.optimize_pulses(
+objectives=qoc.Objective(initial, H, target),
+control_parameters={
+ "ctrl_x": {
+  "guess":  [0 for _ in range(n_coeffs)],
+  "bounds": [(-1, 1) for _ in range(n_coeffs)],
+ },
+ "ctrl_y": {
+  "guess":  [0 for _ in range(n_coeffs)],
+  "bounds": [(-1, 1) for _ in range(n_coeffs)],
+ },
+ "ctrl_z": {
+  "guess":  [0 for _ in range(n_coeffs)],
+  "bounds": [(-1, 1) for _ in range(n_coeffs)],
+ },
+},
+time_interval=interval,
+algorithm_kwargs={
+ "alg": "CRAB",
+ "fid_err_targ": 0.1,
+ "fix_frequency": False,
+},
+)
 
 
 def sin(t, c):
@@ -105,17 +105,16 @@ H = [Hd] + [
 
 # ‚res_goat = qoc.optimize_pulses(
 # ‚ objectives=qoc.Objective(initial, H, target),
-# ‚ pulse_options={
+# ‚ control_parameters={**{
 # ‚     id: {
 # ‚         "guess":  [0 , 0],
 # ‚         "bounds": [(-1, 1),(0, 2*pi)],
-# ‚     } for id in range(len(Hc))
-# ‚ },
-# ‚ time_interval=interval,
-# ‚ time_options={
+# ‚     } for id in range(len(Hc))}
+# ‚  "__time__":{
 # ‚     "guess": 1 / 2 * interval.evo_time,
 # ‚     "bounds": (0, interval.evo_time),
-# ‚ },
+# ‚ },},
+# ‚ time_interval=interval,
 # ‚ algorithm_kwargs={
 # ‚     "alg": "GOAT",
 # ‚     "fid_err_targ": 0.1,
@@ -144,17 +143,18 @@ H = [Hd] + [[Hc[0], sin_x], [Hc[1], sin_y], [Hc[2], sin_z]]
 
 res_jopt = qoc.optimize_pulses(
     objectives=qoc.Objective(initial, H, target),
-    pulse_options={
+    time_interval=interval,
+    control_parameters={**{
         id: {
             "guess": [0, 0],
             "bounds": [(-1, 1), (0, 2 * pi)],
         }
         for id in range(len(Hc))
-    },
-    time_interval=interval,
-    time_options={
-        "guess": 1 / 2 * interval.evo_time,
-        "bounds": (0, interval.evo_time),
+        },
+        "__time__": {
+            "guess": 1 / 2 * interval.evo_time,
+            "bounds": (0, interval.evo_time),
+        }
     },
     algorithm_kwargs={
         "alg": "JOPT",
