@@ -38,12 +38,17 @@ class Objective:
 
     target : :class:`qutip.Qobj`
         The target state or operator.
+
+    weight : float
+        The weight of this objective in the optimization.
+        All weights are normalized to sum to 1.
     """
 
-    def __init__(self, initial, H, target):
+    def __init__(self, initial, H, target, weight=1):
         self.initial = initial
         self.H = H
         self.target = target
+        self.weight = weight
 
     def __getstate__(self):
         """
@@ -54,6 +59,7 @@ class Objective:
         return (self.initial, only_H, self.target)
 
 
+# TODO: create issue "add ensamble objective method"
 class MultiObjective:
     """
     Composite class for multiple GOAT, CRAB, GRAP, JOPT instances to optimize multiple objectives simultaneously. Each instance is associated with one objective.
@@ -72,6 +78,10 @@ class MultiObjective:
     ):
         alg = alg_kwargs.get("alg")
 
+        # normalized weights
+        weights = [obj.weight for obj in objectives]
+        self.weights = np.array(weights) / np.sum(weights)
+
         if alg == "GOAT" or alg == "JOPT":
             kwargs = {
                 "time_interval": time_interval,
@@ -88,36 +98,25 @@ class MultiObjective:
                     self.alg_list = [
                         JOPT(objective=obj, **kwargs) for obj in objectives
                     ]
-
         elif alg == "CRAB":
             self.alg_list = [CRAB(optimizer) for optimizer in qtrl_optimizers]
         elif alg == "GRAPE":
             self.alg_list = [GRAPE(optimizer) for optimizer in qtrl_optimizers]
 
-        self.mean_infid = None
-
     def goal_fun(self, params):
         """
-        Calculates the mean infidelity over all objectives
+        Calculates the weighted infidelity over all objectives
         """
-        infid_sum = 0
-
-        for alg in self.alg_list:
-            infid = alg.infidelity(
-                params
-            )  # TODO: create issue "add ensamble objective method"
-            infid_sum += infid  # TODO: add weights
-
-        self.mean_infid = np.mean(infid_sum)
-        return self.mean_infid
+        infid = 0
+        for i, alg in enumerate(self.alg_list):
+            infid += self.weights[i] * alg.infidelity(params)
+        return infid
 
     def grad_fun(self, params):
         """
-        Calculates the sum of gradients over all objectives
+        Calculates the weighted sum of gradients over all objectives
         """
         grads = 0
-
-        for alg in self.alg_list:
-            grads += alg.gradient(params)
-
+        for i, alg in enumerate(self.alg_list):
+            grads += self.weights[i] * alg.gradient(params)
         return grads
