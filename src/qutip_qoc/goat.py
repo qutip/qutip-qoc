@@ -97,7 +97,6 @@ class GOAT:
             self.H_evo = QobjEvo(self.H, {"p": guess_params})
 
         # initialize the solver
-        # TODO: create issue "usage of other solvers"
         self.solver = qt.SESolver(H=self.evo, options=integrator_kwargs)
 
     def _prepare_state(self):

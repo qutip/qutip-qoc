@@ -59,7 +59,6 @@ class Objective:
         return (self.initial, only_H, self.target)
 
 
-# TODO: create issue "add ensamble objective method"
 class MultiObjective:
     """
     Composite class for multiple GOAT, CRAB, GRAP, JOPT instances to optimize multiple objectives simultaneously. Each instance is associated with one objective.

@@ -136,7 +136,6 @@ class JOPT:
             self.initial, [0.0, evo_time], args={"p": params}
         ).final_state
 
-        # TODO: create issue "FidelityComputer class for custom fidelity types"
         if self.fid_type == "TRACEDIFF":
             diff = X - self.target
             # to prevent if/else in qobj.dag() and qobj.tr()
