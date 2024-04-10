@@ -58,8 +58,10 @@ We can use optimal control algorithms to determine a set of :math:`u_j` that wil
 
 The GOAT Algorithm
 ===================
-To be described in detail.
-
+The GOAT method, like CRAB, operates with analytical control functions :cite:`GOAT`.
+It constructs a system of coupled equations of motion, enabling the calculation of the derivative of the evolution operator (time-ordered) with respect to the control parameters, following numerical forward integration.
+This implementation supports arbitrary control functions along with their corresponding derivatives.
+To further accelerate convergence, our implementation enhances the original algorithm by providing the option to optimize controls with respect to the overall pulse duration.
 
 The GRAPE algorithm
 ===================
@@ -86,7 +88,7 @@ If the objective is state-to-state transfer then :math:`X_0=\ket{\psi_0}` and th
 A *figure of merit* or *fidelity* is some measure of how close the evolution is to the target, based on the  control amplitudes in the timeslots. The typical figure of merit for unitary systems is the normalised overlap of the evolution and the target.
 
 .. math::
-
+    \DeclareMathOperator{\tr}{tr}
     f_{PSU} = \tfrac{1}{d} \big| \tr \{X_{targ}^{\dagger} X(T)\} \big|
 
 where :math:`d` is the system dimension. In this figure of merit the absolute value is taken to ignore any differences in global phase, and :math:`0 \le f \le 1`. Typically the fidelity error (or *infidelity*) is more useful, in this case defined as :math:`\varepsilon = 1 - f_{PSU}`.  There are many other possible objectives, and hence figures of merit.
