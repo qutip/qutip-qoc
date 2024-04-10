@@ -3,6 +3,12 @@ Changelog
 *********
 
 
+Version 0.1.0 (April xx, 2024)
++++++++++++++++++++++++++++++++++
+
+TODO: Add release notes
+
+
 Version 0.0.0 (December 26, 2023)
 +++++++++++++++++++++++++++++++++
 
