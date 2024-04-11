@@ -1,3 +1,10 @@
+"""
+This module provides an interface to the CRAB optimization algorithm in qutip-qtrl.
+It defines the _CRAB class, which uses a qutip_qtrl.optimizer.Optimizer object
+to store the control problem and calculate the fidelity error function and its gradient
+with respect to the control parameters, according to the CRAB algorithm.
+"""
+
 import qutip_qtrl.logging_utils as logging
 import copy
 
@@ -10,6 +17,8 @@ class _CRAB:
     It has an attribute `qtrl` that is a `qutip_qtrl.optimizer.Optimizer` object
     for storing the control problem and calculating the fidelity error function
     and its gradient wrt the control parameters, according to the CRAB algorithm.
+    The class does only provide the infidelity method, as the CRAB algorithm is
+    not a gradient-based optimization.
     """
 
     def __init__(self, qtrl_optimizer):

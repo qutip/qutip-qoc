@@ -1,3 +1,10 @@
+"""
+This module provides an interface to the GRAPE optimization algorithm in qutip-qtrl.
+It defines the _GRAPE class, which uses a qutip_qtrl.optimizer.Optimizer object
+to store the control problem and calculate the fidelity error function and its gradient
+with respect to the control parameters, according to the CRAB algorithm.
+"""
+
 import qutip_qtrl.logging_utils as logging
 import copy
 
@@ -11,6 +18,7 @@ class _GRAPE:
     It has an attribute `qtrl` that is a `qutip_qtrl.optimizer.Optimizer` object
     for storing the control problem and calculating the fidelity error function
     and its gradient wrt the control parameters, according to the GRAPE algorithm.
+    The class does provide both infidelity and gradient methods.
     """
 
     def __init__(self, qtrl_optimizer):

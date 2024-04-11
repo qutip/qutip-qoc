@@ -1,3 +1,7 @@
+"""
+This module contains the Result class for storing and
+reporting the results of a full pulse control optimization run.
+"""
 import jaxlib
 import pickle
 import textwrap

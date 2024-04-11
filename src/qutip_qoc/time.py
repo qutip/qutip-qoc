@@ -1,3 +1,7 @@
+"""
+This module contains the TimeInterval class for storing a time interval
+and deriving its attributes. It provides an easy way to specify the pulse duration.
+"""
 import numpy as np
 
 __all__ = ["TimeInterval"]

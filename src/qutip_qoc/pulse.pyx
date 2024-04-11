@@ -1,3 +1,8 @@
+"""
+This module contains classes for analytically defined pulse shapes.
+It is intended to provide common pulse functions implemented in Cython.
+"""
+
 from libc.math cimport sin, cos, exp, pi
 cimport cython
 

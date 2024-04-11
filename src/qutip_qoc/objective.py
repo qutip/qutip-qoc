@@ -1,3 +1,9 @@
+"""
+This module contains the Objective class for storing information about an
+optimization objective, and the _MultiObjective class for optimizing multiple
+objectives simultaneously.
+"""
+
 import numpy as np
 import qutip as qt
 

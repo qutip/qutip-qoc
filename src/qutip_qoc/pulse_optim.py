@@ -1,3 +1,8 @@
+"""
+This module is the entry point for the optimization of control pulses.
+It provides the function `optimize_pulses` which prepares and runs the
+GOAT, JOPT, GRAPE or CRAB optimization.
+"""
 import numpy as np
 
 import qutip_qtrl.logging_utils as logging

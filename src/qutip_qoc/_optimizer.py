@@ -1,7 +1,7 @@
 """
 This module contains the optimization routine
-for optimizing analytical control functions
-with GOAT and JOPT.
+to find the control parameters in a local and global search.
+It also contains the callback class to keep track of the optimization process.
 """
 import time
 import numpy as np
