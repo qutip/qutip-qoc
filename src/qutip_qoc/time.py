@@ -53,7 +53,7 @@ class TimeInterval:
     @property
     def n_tslots(self):
         if self._n_tslots is None:
-            if self._tslots:
+            if self._tslots is not None:
                 self._n_tslots = len(self._tslots)
             else:
                 raise ValueError(
