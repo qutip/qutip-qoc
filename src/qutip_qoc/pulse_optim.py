@@ -135,10 +135,6 @@ def optimize_pulses(
         Hd_lst.append(objective.H[0])
         Hc_lst.append([H[0] if isinstance(H, list) else H for H in objective.H[1:]])
 
-    # extract initial and target states/operators from the objective
-    init = objective.initial
-    targ = objective.target
-
     # extract guess and bounds for the control pulses
     x0, bounds = [], []
     for key in control_parameters.keys():
@@ -207,8 +203,8 @@ def optimize_pulses(
             params = {
                 "drift": Hd_lst[i],
                 "ctrls": Hc_lst[i],
-                "initial": init,
-                "target": targ,
+                "initial": objective.initial,
+                "target": objective.target,
                 "num_tslots": time_interval.n_tslots,
                 "evo_time": time_interval.evo_time,
                 "tau": None,  # implicitly derived from tslots
