@@ -23,7 +23,7 @@ In particular, following packages are necessary for running qutip-qoc:
 
 .. code-block:: bash
 
-    numpy scipy cython qutip qutip-jax qutip-qtrl
+    numpy scipy jax cython qutip qutip-jax qutip-qtrl
 
 The following to packages are used for plotting and testing:
 

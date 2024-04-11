@@ -88,6 +88,6 @@ repos:
           - qutip-qtrl
           - numpy
           - scipy
-          - jaxlib
+          - jax
           - diffrax
           - pytest

@@ -1,6 +1,7 @@
 cython>=1.0
 numpy>=1.16.6
 scipy>=1.10.1
+jax>=0.4.23
 qutip @ git+https://github.com/qutip/qutip.git@master
 qutip-qtrl @ git+https://github.com/flowerthrower/qutip-qtrl@patrick/parameterize_crab
 qutip-jax @ git+https://github.com/qutip/qutip-jax.git@master
