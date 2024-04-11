@@ -93,7 +93,7 @@ class _JOPT:
             self._solver = qt.SESolver(H=self._H, options=self._integrator_kwargs)
 
         self.infidelity = jax.jit(self._infid)
-        self.gradient = jax.jit(jax.grad(self._infidelity))
+        self.gradient = jax.jit(jax.grad(self._infid))
 
     def _prepare_generator(self):
         """
