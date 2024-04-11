@@ -306,9 +306,7 @@ cdef class PolynomialPulse(Pulse):
 cdef class FourierPulse(Pulse):
     """
     Fourier pulse with summands of shape:
-    A0 + A1 * cos(2 * pi / period * 1 * t) + B1 * sin(2 * pi / period * 1 * t)
-       + A2 * cos(2 * pi / period * 2 * t) + B2 * sin(2 * pi / period * 2 * t)
-       + ...
+    A0 + A1 * cos(2 * pi / period * 1 * t) + B1 * sin(2 * pi / period * 1 * t) + A2 * cos(2 * pi / period * 2 * t) + B2 * sin(2 * pi / period * 2 * t) + ...
     where the period is the first parameter.
     """
 

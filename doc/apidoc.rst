@@ -37,8 +37,6 @@ Internal interfaces to the optimal control features.
    :toctree: apidoc/
    :template: autosummary/module.rst
 
-   qutip_qtrl.pulseoptim
-
    qutip_qoc.optimizer
    qutip_qoc.goat
    qutip_qoc.jopt

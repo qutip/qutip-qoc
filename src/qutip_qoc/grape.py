@@ -1,14 +1,20 @@
 import qutip_qtrl.logging_utils as logging
 import copy
 
-__all__ = ["GRAPE"]
 
 logger = logging.get_logger()
 
 
-class GRAPE:
+class _GRAPE:
+    """
+    Class to interface with the CRAB optimization algorithm in qutip-qtrl.
+    It has an attribute `qtrl` that is a `qutip_qtrl.optimizer.Optimizer` object
+    for storing the control problem and calculating the fidelity error function
+    and its gradient wrt the control parameters, according to the GRAPE algorithm.
+    """
+
     def __init__(self, qtrl_optimizer):
-        self.qtrl = copy.deepcopy(qtrl_optimizer)
+        self._qtrl = copy.deepcopy(qtrl_optimizer)
 
     def infidelity(self, *args):
         """
@@ -24,28 +30,28 @@ class GRAPE:
         a flat array. Hence these are reshaped as [nTimeslots, n_ctrls]
         and then used to update the stored ctrl values (if they have changed)
         """
-        self.qtrl.num_fid_func_calls += 1
+        self._qtrl.num_fid_func_calls += 1
         # *** update stats ***
-        if self.qtrl.stats is not None:
-            self.qtrl.stats.num_fidelity_func_calls = self.qtrl.num_fid_func_calls
-            if self.qtrl.log_level <= logging.DEBUG:
+        if self._qtrl.stats is not None:
+            self._qtrl.stats.num_fidelity_func_calls = self._qtrl.num_fid_func_calls
+            if self._qtrl.log_level <= logging.DEBUG:
                 logger.debug(
                     "fidelity error call {}".format(
-                        self.qtrl.stats.num_fidelity_func_calls
+                        self._qtrl.stats.num_fidelity_func_calls
                     )
                 )
 
-        amps = self.qtrl._get_ctrl_amps(args[0].copy())
-        self.qtrl.dynamics.update_ctrl_amps(amps)
+        amps = self._qtrl._get_ctrl_amps(args[0].copy())
+        self._qtrl.dynamics.update_ctrl_amps(amps)
 
-        err = self.qtrl.dynamics.fid_computer.get_fid_err()
+        err = self._qtrl.dynamics.fid_computer.get_fid_err()
 
-        if self.qtrl.iter_summary:
-            self.qtrl.iter_summary.fid_func_call_num = self.qtrl.num_fid_func_calls
-            self.qtrl.iter_summary.fid_err = err
+        if self._qtrl.iter_summary:
+            self._qtrl.iter_summary.fid_func_call_num = self._qtrl.num_fid_func_calls
+            self._qtrl.iter_summary.fid_err = err
 
-        if self.qtrl.dump and self.qtrl.dump.dump_fid_err:
-            self.qtrl.dump.update_fid_err_log(err)
+        if self._qtrl.dump and self._qtrl.dump.dump_fid_err:
+            self._qtrl.dump.update_fid_err_log(err)
 
         return err
 
@@ -64,29 +70,29 @@ class GRAPE:
         and then used to update the stored ctrl values (if they have changed)
         """
         # *** update stats ***
-        self.qtrl.num_grad_func_calls += 1
-        if self.qtrl.stats is not None:
-            self.qtrl.stats.num_grad_func_calls = self.qtrl.num_grad_func_calls
-            if self.qtrl.log_level <= logging.DEBUG:
+        self._qtrl.num_grad_func_calls += 1
+        if self._qtrl.stats is not None:
+            self._qtrl.stats.num_grad_func_calls = self._qtrl.num_grad_func_calls
+            if self._qtrl.log_level <= logging.DEBUG:
                 logger.debug(
-                    "gradient call {}".format(self.qtrl.stats.num_grad_func_calls)
+                    "gradient call {}".format(self._qtrl.stats.num_grad_func_calls)
                 )
-        amps = self.qtrl._get_ctrl_amps(args[0].copy())
-        self.qtrl.dynamics.update_ctrl_amps(amps)
-        fid_comp = self.qtrl.dynamics.fid_computer
+        amps = self._qtrl._get_ctrl_amps(args[0].copy())
+        self._qtrl.dynamics.update_ctrl_amps(amps)
+        fid_comp = self._qtrl.dynamics.fid_computer
         # gradient_norm_func is a pointer to the function set in the config
         # that returns the normalised gradients
         grad = fid_comp.get_fid_err_gradient()
 
-        if self.qtrl.iter_summary:
-            self.qtrl.iter_summary.grad_func_call_num = self.qtrl.num_grad_func_calls
-            self.qtrl.iter_summary.grad_norm = fid_comp.grad_norm
+        if self._qtrl.iter_summary:
+            self._qtrl.iter_summary.grad_func_call_num = self._qtrl.num_grad_func_calls
+            self._qtrl.iter_summary.grad_norm = fid_comp.grad_norm
 
-        if self.qtrl.dump:
-            if self.qtrl.dump.dump_grad_norm:
-                self.qtrl.dump.update_grad_norm_log(fid_comp.grad_norm)
+        if self._qtrl.dump:
+            if self._qtrl.dump.dump_grad_norm:
+                self._qtrl.dump.update_grad_norm_log(fid_comp.grad_norm)
 
-            if self.qtrl.dump.dump_grad:
-                self.qtrl.dump.update_grad_log(grad)
+            if self._qtrl.dump.dump_grad:
+                self._qtrl.dump.update_grad_log(grad)
 
         return grad.flatten()

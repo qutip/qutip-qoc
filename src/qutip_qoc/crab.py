@@ -1,15 +1,19 @@
 import qutip_qtrl.logging_utils as logging
-import qutip_qtrl.optimizer as opt
 import copy
-
-__all__ = ["CRAB"]
 
 logger = logging.get_logger()
 
 
-class CRAB(opt.OptimizerCrab):
+class _CRAB:
+    """
+    Class to interface with the CRAB optimization algorithm in qutip-qtrl.
+    It has an attribute `qtrl` that is a `qutip_qtrl.optimizer.Optimizer` object
+    for storing the control problem and calculating the fidelity error function
+    and its gradient wrt the control parameters, according to the CRAB algorithm.
+    """
+
     def __init__(self, qtrl_optimizer):
-        self.qtrl = copy.deepcopy(qtrl_optimizer)
+        self._qtrl = copy.deepcopy(qtrl_optimizer)
         self.gradient = None
 
     def infidelity(self, *args):
@@ -26,27 +30,27 @@ class CRAB(opt.OptimizerCrab):
         a flat array. Hence these are reshaped as [nTimeslots, n_ctrls]
         and then used to update the stored ctrl values (if they have changed)
         """
-        self.qtrl.num_fid_func_calls += 1
+        self._qtrl.num_fid_func_calls += 1
         # *** update stats ***
-        if self.qtrl.stats is not None:
-            self.qtrl.stats.num_fidelity_func_calls = self.qtrl.num_fid_func_calls
-            if self.qtrl.log_level <= logging.DEBUG:
+        if self._qtrl.stats is not None:
+            self._qtrl.stats.num_fidelity_func_calls = self._qtrl.num_fid_func_calls
+            if self._qtrl.log_level <= logging.DEBUG:
                 logger.debug(
                     "fidelity error call {}".format(
-                        self.qtrl.stats.num_fidelity_func_calls
+                        self._qtrl.stats.num_fidelity_func_calls
                     )
                 )
 
-        amps = self.qtrl._get_ctrl_amps(args[0].copy())
-        self.qtrl.dynamics.update_ctrl_amps(amps)
+        amps = self._qtrl._get_ctrl_amps(args[0].copy())
+        self._qtrl.dynamics.update_ctrl_amps(amps)
 
-        err = self.qtrl.dynamics.fid_computer.get_fid_err()
+        err = self._qtrl.dynamics.fid_computer.get_fid_err()
 
-        if self.qtrl.iter_summary:
-            self.qtrl.iter_summary.fid_func_call_num = self.qtrl.num_fid_func_calls
-            self.qtrl.iter_summary.fid_err = err
+        if self._qtrl.iter_summary:
+            self._qtrl.iter_summary.fid_func_call_num = self._qtrl.num_fid_func_calls
+            self._qtrl.iter_summary.fid_err = err
 
-        if self.qtrl.dump and self.qtrl.dump.dump_fid_err:
-            self.qtrl.dump.update_fid_err_log(err)
+        if self._qtrl.dump and self._qtrl.dump.dump_fid_err:
+            self._qtrl.dump.update_fid_err_log(err)
 
         return err
