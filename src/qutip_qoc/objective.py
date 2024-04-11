@@ -40,6 +40,7 @@ class Objective:
         The target state or operator.
 
     weight : float
+        Only used in multi-objective scenarios.
         The weight of this objective in the optimization.
         All weights are normalized to sum to 1.
     """

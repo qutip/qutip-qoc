@@ -24,9 +24,12 @@ def optimize_pulses(
     ----------
     objectives : list of :class:`qutip_qoc.Objective`
         List of objectives to be optimized.
+        Each objective is weighted by its weight attribute.
 
     control_parameters : dict
         Dictionary of options for the control pulse optimization.
+        The keys of this dict must be a unique string identifier for each control Hamiltonian / function.
+        For the GOAT and JOPT algorithms, the dict may optionally also contain the key "__time__" to treat the pulse duration as optimization parameter.
         For each control function it must specify:
 
             control_id : dict
