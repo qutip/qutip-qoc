@@ -5,5 +5,5 @@ jax>=0.4.23
 jaxlib>=0.4.23
 qutip>=5.0.1
 qutip-qtrl @ git+https://github.com/flowerthrower/qutip-qtrl@patrick/parameterize_crab
-qutip-jax @ git+https://github.com/qutip/qutip-jax.git@master
+qutip-jax
 pre-commit
