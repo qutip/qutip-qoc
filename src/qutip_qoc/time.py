@@ -1,3 +1,7 @@
+"""
+This module contains the TimeInterval class for storing a time interval
+and deriving its attributes. It provides an easy way to specify the pulse duration.
+"""
 import numpy as np
 
 __all__ = ["TimeInterval"]
@@ -21,10 +25,9 @@ class TimeInterval:
 
     n_tslots : int, optional
         Number of time slots. Length of tslots is n_tslots.
-
     """
 
-    def __init__(self, tslots=None, evo_time=None, n_tslots=100):
+    def __init__(self, tslots=None, evo_time=None, n_tslots=None):
         self._tslots = tslots
         self._evo_time = evo_time
         self._n_tslots = n_tslots
@@ -50,7 +53,7 @@ class TimeInterval:
     @property
     def n_tslots(self):
         if self._n_tslots is None:
-            if self._tslots:
+            if self._tslots is not None:
                 self._n_tslots = len(self._tslots)
             else:
                 raise ValueError(

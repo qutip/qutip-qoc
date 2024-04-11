@@ -11,14 +11,13 @@ import collections
 
 from qutip_qoc.pulse_optim import optimize_pulses
 from qutip_qoc.objective import Objective
-from qutip_qoc.time import TimeInterval
 
 Case = collections.namedtuple(
     "Case",
     [
         "objectives",
         "control_parameters",
-        "time_interval",
+        "tlist",
         "algorithm_kwargs",
         "optimizer_kwargs",
     ],
@@ -65,7 +64,7 @@ state2state = Case(
         "p": {"guess": p_guess, "bounds": p_bounds},
         "q": {"guess": q_guess, "bounds": q_bounds},
     },
-    time_interval=TimeInterval(evo_time=1.0),
+    tlist=np.linspace(0, 1, 100),
     algorithm_kwargs={
         "alg": "GOAT",
         "fid_err_targ": 0.01,
@@ -84,7 +83,7 @@ unitary = Case(
         "p": {"guess": p_guess, "bounds": p_bounds},
         "q": {"guess": q_guess, "bounds": q_bounds},
     },
-    time_interval=TimeInterval(evo_time=1.0),
+    tlist=np.linspace(0, 1, 100),
     algorithm_kwargs={
         "alg": "GOAT",
         "fid_err_targ": 0.01,
@@ -104,7 +103,7 @@ time = Case(
             "bounds": (0, 10),
         },
     },
-    time_interval=TimeInterval(evo_time=1.0),
+    tlist=np.linspace(0, 1, 100),
     algorithm_kwargs={
         "alg": "GOAT",
         "fid_err_targ": 0.01,
@@ -131,7 +130,7 @@ mapping = Case(
         "p": {"guess": p_guess, "bounds": p_bounds},
         "q": {"guess": q_guess, "bounds": q_bounds},
     },
-    time_interval=TimeInterval(evo_time=1.0),
+    tlist=np.linspace(0, 1, 100),
     algorithm_kwargs={
         "alg": "GOAT",
         "fid_err_targ": 0.1,  # relaxed objective
@@ -209,7 +208,7 @@ def test_optimize_pulses(tst):
     result = optimize_pulses(
         tst.objectives,
         tst.control_parameters,
-        tst.time_interval,
+        tst.tlist,
         tst.algorithm_kwargs,
         tst.optimizer_kwargs,
     )

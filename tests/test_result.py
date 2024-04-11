@@ -1,5 +1,5 @@
 """
-Tests GOAT/JOPT and  algorithms to return a proper Result object.
+Test all algorithms to return a proper Result object.
 """
 
 import pytest
@@ -19,7 +19,7 @@ Case = collections.namedtuple(
     [
         "objectives",
         "control_parameters",
-        "time_interval",
+        "tlist",
         "algorithm_kwargs",
         "optimizer_kwargs",
     ],
@@ -68,7 +68,7 @@ state2state_goat = Case(
         "q": {"guess": q_guess, "bounds": q_bounds},
         "r": {"guess": r_guess, "bounds": r_bounds},
     },
-    time_interval=TimeInterval(evo_time=10),
+    tlist=np.linspace(0, 10, 100),
     algorithm_kwargs={
         "alg": "GOAT",
         "fid_err_targ": 0.01,
@@ -120,7 +120,7 @@ state2state_param_crab = state2state_goat._replace(
 # ------------------- discrete CRAB / GRAPE  control ------------------------
 
 n_tslots, evo_time = 100, 10
-disc_interval = TimeInterval(n_tslots=n_tslots, evo_time=evo_time)
+disc_interval = np.linspace(0, evo_time, n_tslots)
 
 p_disc = q_disc = r_disc = np.zeros(n_tslots)
 p_bound = q_bound = r_bound = (-1, 1)
@@ -137,7 +137,7 @@ state2state_grape = state2state_goat._replace(
         "q": {"guess": q_disc, "bounds": q_bound},
         "r": {"guess": r_disc, "bounds": r_bound},
     },
-    time_interval=disc_interval,
+    tlist=disc_interval,
     algorithm_kwargs={"alg": "GRAPE", "fid_err_targ": 0.01},
 )
 
@@ -148,7 +148,7 @@ state2state_crab = state2state_goat._replace(
         "q": {"guess": q_disc, "bounds": q_bound},
         "r": {"guess": r_disc, "bounds": r_bound},
     },
-    time_interval=disc_interval,
+    tlist=disc_interval,
     algorithm_kwargs={"alg": "CRAB", "fid_err_targ": 0.01, "fix_frequency": False},
 )
 
@@ -171,7 +171,7 @@ def test_optimize_pulses(tst):
     result = optimize_pulses(
         tst.objectives,
         tst.control_parameters,
-        tst.time_interval,
+        tst.tlist,
         tst.algorithm_kwargs,
         tst.optimizer_kwargs,
     )

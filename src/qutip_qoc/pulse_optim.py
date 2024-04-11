@@ -1,9 +1,15 @@
+"""
+This module is the entry point for the optimization of control pulses.
+It provides the function `optimize_pulses` which prepares and runs the
+GOAT, JOPT, GRAPE or CRAB optimization.
+"""
 import numpy as np
 
 import qutip_qtrl.logging_utils as logging
 import qutip_qtrl.pulseoptim as cpo
 
-from qutip_qoc.optimizer import global_local_optimization
+from qutip_qoc._optimizer import _global_local_optimization
+from qutip_qoc.time import TimeInterval
 
 __all__ = ["optimize_pulses"]
 
@@ -11,7 +17,7 @@ __all__ = ["optimize_pulses"]
 def optimize_pulses(
     objectives,
     control_parameters,
-    time_interval,
+    tlist,
     algorithm_kwargs=None,
     optimizer_kwargs=None,
     minimizer_kwargs=None,
@@ -24,9 +30,12 @@ def optimize_pulses(
     ----------
     objectives : list of :class:`qutip_qoc.Objective`
         List of objectives to be optimized.
+        Each objective is weighted by its weight attribute.
 
     control_parameters : dict
         Dictionary of options for the control pulse optimization.
+        The keys of this dict must be a unique string identifier for each control Hamiltonian / function.
+        For the GOAT and JOPT algorithms, the dict may optionally also contain the key "__time__".
         For each control function it must specify:
 
             control_id : dict
@@ -40,7 +49,7 @@ def optimize_pulses(
 
             __time__ : dict, optional
                 Only supported by GOAT and JOPT.
-                Dictionary of options for the time interval optimization.
+                If given the pulse duration is treated as optimization parameter.
                 It must specify both:
 
                     - guess: ndarray, shape (n,)
@@ -53,9 +62,8 @@ def optimize_pulses(
 
         GRAPE and CRAB bounds are only one pair of ``(min, max)`` limiting the amplitude of all tslots equally.
 
-    time_interval : :class:`qutip_qoc.TimeInterval`
-        Pulse duration time interval.
-        GRAPE and CRAB require n_tslots attribute for discretization.
+    tlist: List.
+        Time over which system evolves.
 
     algorithm_kwargs : dict, optional
         Dictionary of options for the optimization algorithm.
@@ -121,6 +129,9 @@ def optimize_pulses(
     if integrator_kwargs is None:
         integrator_kwargs = {}
 
+    # create time interval
+    time_interval = TimeInterval(tslots=tlist)
+
     time_options = control_parameters.pop("__time__", {})
     alg = algorithm_kwargs.get("alg", "GRAPE")  # works with most input types
 
@@ -131,10 +142,6 @@ def optimize_pulses(
         # extract drift and control Hamiltonians from the objective
         Hd_lst.append(objective.H[0])
         Hc_lst.append([H[0] if isinstance(H, list) else H for H in objective.H[1:]])
-
-    # extract initial and target states/operators from the objective
-    init = objective.initial
-    targ = objective.target
 
     # extract guess and bounds for the control pulses
     x0, bounds = [], []
@@ -204,8 +211,8 @@ def optimize_pulses(
             params = {
                 "drift": Hd_lst[i],
                 "ctrls": Hc_lst[i],
-                "initial": init,
-                "target": targ,
+                "initial": objective.initial,
+                "target": objective.target,
                 "num_tslots": time_interval.n_tslots,
                 "evo_time": time_interval.evo_time,
                 "tau": None,  # implicitly derived from tslots
@@ -334,7 +341,7 @@ def optimize_pulses(
 
             qtrl_optimizers.append(qtrl_optimizer)
 
-    return global_local_optimization(
+    return _global_local_optimization(
         objectives,
         control_parameters,
         time_interval,
