@@ -254,9 +254,6 @@ It requires some extra arguments to prepare the optimization.
   # boundaries for the parameters
   p_bounds = q_bounds = [(-1, 1), (-1, 1)]
 
-  # time interval for the evolution
-  t_interval = qoc.TimeInterval(evo_time=1.)
-
 
 Eventually, the optimization for a desired `fid_err_targ` can be started by calling the ``optimize`` function.
 
@@ -268,7 +265,7 @@ Eventually, the optimization for a desired `fid_err_targ` can be started by call
         "p": {"guess": p_guess, "bounds": p_bounds},
         "q": {"guess": q_guess, "bounds": q_bounds}
     },
-    time_interval=t_interval,
+    tlist=np.linspace(0, 1, 100),
     algorithm_kwargs={
         "alg": "GOAT",
         "fid_err_targ": 0.1,

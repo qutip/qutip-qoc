@@ -4,6 +4,7 @@ import qutip_qtrl.logging_utils as logging
 import qutip_qtrl.pulseoptim as cpo
 
 from qutip_qoc._optimizer import _global_local_optimization
+from qutip_qoc.time import TimeInterval
 
 __all__ = ["optimize_pulses"]
 
@@ -11,7 +12,7 @@ __all__ = ["optimize_pulses"]
 def optimize_pulses(
     objectives,
     control_parameters,
-    time_interval,
+    tlist,
     algorithm_kwargs=None,
     optimizer_kwargs=None,
     minimizer_kwargs=None,
@@ -29,7 +30,7 @@ def optimize_pulses(
     control_parameters : dict
         Dictionary of options for the control pulse optimization.
         The keys of this dict must be a unique string identifier for each control Hamiltonian / function.
-        For the GOAT and JOPT algorithms, the dict may optionally also contain the key "__time__" to treat the pulse duration as optimization parameter.
+        For the GOAT and JOPT algorithms, the dict may optionally also contain the key "__time__".
         For each control function it must specify:
 
             control_id : dict
@@ -43,7 +44,7 @@ def optimize_pulses(
 
             __time__ : dict, optional
                 Only supported by GOAT and JOPT.
-                Dictionary of options for the time interval optimization.
+                If given the pulse duration is treated as optimization parameter.
                 It must specify both:
 
                     - guess: ndarray, shape (n,)
@@ -56,9 +57,8 @@ def optimize_pulses(
 
         GRAPE and CRAB bounds are only one pair of ``(min, max)`` limiting the amplitude of all tslots equally.
 
-    time_interval : :class:`qutip_qoc.TimeInterval`
-        Pulse duration time interval.
-        GRAPE and CRAB require n_tslots attribute for discretization.
+    tlist: List.
+        Time over which system evolves.
 
     algorithm_kwargs : dict, optional
         Dictionary of options for the optimization algorithm.
@@ -123,6 +123,9 @@ def optimize_pulses(
         minimizer_kwargs = {}
     if integrator_kwargs is None:
         integrator_kwargs = {}
+
+    # create time interval
+    time_interval = TimeInterval(tslots=tlist)
 
     time_options = control_parameters.pop("__time__", {})
     alg = algorithm_kwargs.get("alg", "GRAPE")  # works with most input types
