@@ -1,5 +1,5 @@
 """
-Tests GOAT/JOPT and  algorithms to return a proper Result object.
+Test all algorithms to return a proper Result object.
 """
 
 import pytest

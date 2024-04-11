@@ -1,11 +1,7 @@
 """
-Test the infidelity calculation for the optimization results.
-The optmiization is performed for a simple system with two controls and no drift.
-The initial and target states are the same, so the infidelity should be zero.
-The controls are initialized with a zero guess, so the optimization should not
-change them. Depending on the chosen fidelity type, the infidelity will take a
-global phase into account or not.
+Tests for PSU, SU and TRACEDIFF fidelity types.
 """
+
 import pytest
 import qutip as qt
 import numpy as np
