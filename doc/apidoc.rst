@@ -37,8 +37,8 @@ Internal interfaces to the optimal control features.
    :toctree: apidoc/
    :template: autosummary/module.rst
 
-   qutip_qoc.optimizer
-   qutip_qoc.goat
-   qutip_qoc.jopt
-   qutip_qoc.grape
-   qutip_qoc.crab
+   qutip_qoc._optimizer
+   qutip_qoc._goat
+   qutip_qoc._jopt
+   qutip_qoc._grape
+   qutip_qoc._crab

@@ -92,9 +92,9 @@ class _GOAT:
         """
         inital state (t=0) for coupled system (X, dX):
         [[  X(0)], -> [[1],
-         [d1X(0)], ->  [0],
-         [d2X(0)], ->  [0],
-         [  ... ]] ->  [0]]
+        _[d1X(0)], ->  [0],
+        _[d2X(0)], ->  [0],
+        _[  ... ]] ->  [0]]
         """
         scale = qt.data.one_element_csr(
             position=(0, 0), shape=(1 + self._tot_n_para, 1)
@@ -107,9 +107,9 @@ class _GOAT:
         Combines the scaled and parameterized Hamiltonian elements on the diagonal
         of the coupled system (X, dX) Hamiltonian, with associated pulses:
         [[  H, 0, 0, ...], [[  X],
-         [d1H, H, 0, ...],  [d1X],
-         [d2H, 0, H, ...],  [d2X],
-         [...,         ]]   [...]]
+        _[d1H, H, 0, ...],  [d1X],
+        _[d2H, 0, H, ...],  [d2X],
+        _[...,         ]]   [...]]
         Additionlly, if the time is a parameter, the time-dependent
         parameterized Hamiltonian without scaling
         """
@@ -140,9 +140,9 @@ class _GOAT:
         Combines the scaled and parameterized Hamiltonian off-diagonal elements
         for the coupled system (X, dX) with associated pulses:
         [[  H, 0, 0, ...], [[  X],
-         [d1H, H, 0, ...],  [d1U],
-         [d2H, 0, H, ...],  [d2U],
-         [...,         ]]   [...]]
+        _[d1H, H, 0, ...],  [d1U],
+        _[d2H, 0, H, ...],  [d2U],
+        _[...,         ]]   [...]]
         The off-diagonal elements correspond to the derivative elements
         """
 

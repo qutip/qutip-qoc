@@ -1,10 +1,10 @@
 import numpy as np
 import qutip as qt
 
-from qutip_qoc.jopt import _JOPT
-from qutip_qoc.goat import _GOAT
-from qutip_qoc.crab import _CRAB
-from qutip_qoc.grape import _GRAPE
+from qutip_qoc._jopt import _JOPT
+from qutip_qoc._goat import _GOAT
+from qutip_qoc._crab import _CRAB
+from qutip_qoc._grape import _GRAPE
 
 __all__ = ["Objective"]
 
