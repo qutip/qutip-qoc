@@ -21,7 +21,6 @@ class TimeInterval:
 
     n_tslots : int, optional
         Number of time slots. Length of tslots is n_tslots.
-
     """
 
     def __init__(self, tslots=None, evo_time=None, n_tslots=100):
