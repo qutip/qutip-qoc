@@ -89,5 +89,6 @@ repos:
           - numpy
           - scipy
           - jax
+          - jaxlib
           - diffrax
           - pytest

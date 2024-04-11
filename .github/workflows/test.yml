@@ -65,7 +65,7 @@ jobs:
 
       - name: Install jax
         run: |
-          python -m pip install jax
+          python -m pip install jax jaxlib
 
       - name: Install qutip-jax from GitHub
         if: ${{ matrix.qutip-version == '@master'}}
