@@ -62,9 +62,11 @@ jobs:
         if: ${{ matrix.qutip-version == '@master'}}
         run: |
           python -m pip install 'git+https://github.com/qutip/qutip-qtrl.git'
+
       - name: Install jaxlib
         run: |
           python -m pip install jax jaxlib
+
       - name: Install qutip-jax from GitHub
         if: ${{ matrix.qutip-version == '@master'}}
         run: |
@@ -74,10 +76,12 @@ jobs:
         # Installing in-place so that coveralls can locate the source code.
         run: |
           pip install -e .[full]
+
       - name: Test with pytest and generate coverage report
         run: |
           pip install pytest-cov coveralls
           pytest tests --strict-markers --cov=qutip_qoc --cov-report= --color=yes
+
       - name: Upload to Coveralls
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
