@@ -1,5 +1,6 @@
 numpy>=1.16.6
 scipy>=1.10.1
+jax>=0.4.23
 qutip==4.7.0
 cython==0.29.33
 sphinx==6.1.3
