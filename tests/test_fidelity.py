@@ -74,6 +74,10 @@ PSU_state2state = Case(
     },
 )
 
+PSU_state2state_dual_annealing = PSU_state2state._replace(
+    optimizer_kwargs={"method": "dual_annealing", "niter": 5},
+)
+
 # SU (must depend on global phase) state to state transfer
 SU_state2state = PSU_state2state._replace(
     objectives=[Objective(initial, H, initial)],
@@ -174,6 +178,8 @@ TRCDIFF_map_jax = TRCDIFF_map._replace(
         pytest.param(PSU_unitary_jax, id="PSU unitary gate (JAX)"),
         pytest.param(SU_unitary_jax, id="SU unitary gate (JAX)"),
         pytest.param(TRCDIFF_map_jax, id="TRACEDIFF map synthesis (JAX)"),
+        # Options
+        pytest.param(PSU_state2state_dual_annealing, id="Dual annealing (GOAT)"),
     ]
 )
 def tst(request):

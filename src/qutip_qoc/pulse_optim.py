@@ -122,6 +122,10 @@ def optimize_pulses(
         integrator_kwargs = {}
 
     time_options = control_parameters.pop("__time__", {})
+    if time_options:  # convert to list of bounds if not already
+        if not isinstance(time_options["bounds"][0], (list, tuple)):
+            time_options["bounds"] = [time_options["bounds"]]
+
     alg = algorithm_kwargs.get("alg", "GRAPE")  # works with most input types
 
     Hd_lst, Hc_lst = [], []
@@ -313,13 +317,10 @@ def optimize_pulses(
 
                 else:
                     # Set the initial parameters
-                    pgen.set_optim_var_vals(np.array(x0[j]))
+                    pgen.init_pulse(init_param_vals=np.array(x0[j]))
                     init_amps[:, j] = pgen.gen_pulse()
 
             # Initialise the starting amplitudes
-            # NOTE: any initial CRAB guess pulse is only used
-            # to modulate or offset the initial amplitudes
-            # depending on init_pulse_params: pulse_action
             dyn.initialize_controls(init_amps)
             # And store the (random) initial parameters
             init_params = qtrl_optimizer._get_optim_var_vals()
