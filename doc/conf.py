@@ -75,7 +75,7 @@ napoleon_use_admonition_for_notes = True
 # apidoc folder. This is particularly useful for modules with lots of
 # functions/classes. However, pay attention that some api docs files are
 # adjusted manually for better illustration and should not be overwritten.
-autosummary_generate = True
+autosummary_generate = ["apidoc/*.rst"]
 autosummary_imported_members = True
 
 # -- Options for biblatex ---------------------------------------
@@ -86,5 +86,5 @@ bibtex_default_style = "unsrt"
 # -- Options for intersphinx ---------------------------------------
 
 intersphinx_mapping = {
-    "qutip": ("https://qutip.org/docs/latest/", None),
+    "qutip": ("https://qutip.readthedocs.io/en/latest/", None),
 }

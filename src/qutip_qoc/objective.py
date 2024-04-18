@@ -1,10 +1,16 @@
+"""
+This module contains the Objective class for storing information about an
+optimization objective, and the _MultiObjective class for optimizing multiple
+objectives simultaneously.
+"""
+
 import numpy as np
 import qutip as qt
 
-from qutip_qoc.jopt import JOPT
-from qutip_qoc.goat import GOAT
-from qutip_qoc.crab import CRAB
-from qutip_qoc.grape import GRAPE
+from qutip_qoc._jopt import _JOPT
+from qutip_qoc._goat import _GOAT
+from qutip_qoc._crab import _CRAB
+from qutip_qoc._grape import _GRAPE
 
 __all__ = ["Objective"]
 
@@ -40,6 +46,7 @@ class Objective:
         The target state or operator.
 
     weight : float
+        Only used in multi-objective scenarios.
         The weight of this objective in the optimization.
         All weights are normalized to sum to 1.
     """
@@ -59,9 +66,11 @@ class Objective:
         return (self.initial, only_H, self.target)
 
 
-class MultiObjective:
+class _MultiObjective:
     """
-    Composite class for multiple GOAT, CRAB, GRAP, JOPT instances to optimize multiple objectives simultaneously. Each instance is associated with one objective.
+    Composite class for multiple GOAT, CRAB, GRAP, JOPT instances
+    to optimize multiple objectives simultaneously. Each instance
+    is associated with one objective.
     """
 
     def __init__(
@@ -79,7 +88,7 @@ class MultiObjective:
 
         # normalized weights
         weights = [obj.weight for obj in objectives]
-        self.weights = np.array(weights) / np.sum(weights)
+        self._weights = np.array(weights) / np.sum(weights)
 
         if alg == "GOAT" or alg == "JOPT":
             kwargs = {
@@ -91,24 +100,24 @@ class MultiObjective:
                 **integrator_kwargs,
             }
             if alg == "GOAT":
-                self.alg_list = [GOAT(objective=obj, **kwargs) for obj in objectives]
+                self._alg_list = [_GOAT(objective=obj, **kwargs) for obj in objectives]
             elif alg == "JOPT":
                 with qt.CoreOptions(default_dtype="jax"):
-                    self.alg_list = [
-                        JOPT(objective=obj, **kwargs) for obj in objectives
+                    self._alg_list = [
+                        _JOPT(objective=obj, **kwargs) for obj in objectives
                     ]
         elif alg == "CRAB":
-            self.alg_list = [CRAB(optimizer) for optimizer in qtrl_optimizers]
+            self._alg_list = [_CRAB(optimizer) for optimizer in qtrl_optimizers]
         elif alg == "GRAPE":
-            self.alg_list = [GRAPE(optimizer) for optimizer in qtrl_optimizers]
+            self._alg_list = [_GRAPE(optimizer) for optimizer in qtrl_optimizers]
 
     def goal_fun(self, params):
         """
         Calculates the weighted infidelity over all objectives
         """
         infid = 0
-        for i, alg in enumerate(self.alg_list):
-            infid += self.weights[i] * alg.infidelity(params)
+        for i, alg in enumerate(self._alg_list):
+            infid += self._weights[i] * alg.infidelity(params)
         return infid
 
     def grad_fun(self, params):
@@ -116,6 +125,6 @@ class MultiObjective:
         Calculates the weighted sum of gradients over all objectives
         """
         grads = 0
-        for i, alg in enumerate(self.alg_list):
-            grads += self.weights[i] * alg.gradient(params)
+        for i, alg in enumerate(self._alg_list):
+            grads += self._weights[i] * alg.gradient(params)
         return grads

@@ -1,3 +1,6 @@
+"""
+Tests for Objective class.
+"""
 import numpy as np
 import qutip as qt
 from qutip_qoc.objective import Objective

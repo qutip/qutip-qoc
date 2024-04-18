@@ -1,3 +1,7 @@
+"""
+This module contains the Result class for storing and
+reporting the results of a full pulse control optimization run.
+"""
 import jaxlib
 import pickle
 import textwrap
@@ -11,16 +15,16 @@ from qutip_qoc.objective import Objective
 __all__ = ["Result"]
 
 
-class Stats:
+class _Stats:
     """
     Only for backward compatibility with qtrl.
     """
 
     def __init__(self, result):
-        self.result = result
+        self._result = result
 
     def report(self):
-        print(self.result)
+        print(self._result)
 
 
 class Result:
@@ -28,7 +32,7 @@ class Result:
     Class for storing the results of a pulse control optimization run.
 
     Attributes:
-    ----------
+    -----------
     objectives : list of :class:`qutip_qoc.Objective`
         List of objectives to be optimized.
 
@@ -118,7 +122,7 @@ class Result:
         self.qtrl_optimizers = qtrl_optimizers
 
         # qtrl result backward compatibility
-        self.stats = Stats(self)
+        self.stats = _Stats(self)
 
     def __str__(self):
         time_optim_summary = (

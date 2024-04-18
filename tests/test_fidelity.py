@@ -1,11 +1,7 @@
 """
-Test the infidelity calculation for the optimization results.
-The optmiization is performed for a simple system with two controls and no drift.
-The initial and target states are the same, so the infidelity should be zero.
-The controls are initialized with a zero guess, so the optimization should not
-change them. Depending on the chosen fidelity type, the infidelity will take a
-global phase into account or not.
+Tests for PSU, SU and TRACEDIFF fidelity types.
 """
+
 import pytest
 import qutip as qt
 import numpy as np
@@ -14,14 +10,13 @@ import collections
 
 from qutip_qoc.pulse_optim import optimize_pulses
 from qutip_qoc.objective import Objective
-from qutip_qoc.time import TimeInterval
 
 Case = collections.namedtuple(
     "Case",
     [
         "objectives",
         "control_parameters",
-        "time_interval",
+        "tlist",
         "algorithm_kwargs",
         "optimizer_kwargs",
     ],
@@ -67,7 +62,7 @@ PSU_state2state = Case(
         "p": {"guess": p_guess, "bounds": p_bounds},
         "q": {"guess": q_guess, "bounds": q_bounds},
     },
-    time_interval=TimeInterval(evo_time=5.0),
+    tlist=np.linspace(0, 1, 100),
     algorithm_kwargs={"alg": "GOAT", "fid_type": "PSU"},
     optimizer_kwargs={
         "seed": 0,
@@ -190,7 +185,7 @@ def test_optimize_pulses(tst):
     result = optimize_pulses(
         tst.objectives,
         tst.control_parameters,
-        tst.time_interval,
+        tst.tlist,
         tst.algorithm_kwargs,
         tst.optimizer_kwargs,
     )

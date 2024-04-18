@@ -1,7 +1,7 @@
 """
 This module contains the optimization routine
-for optimizing analytical control functions
-with GOAT and JOPT.
+to find the control parameters in a local and global search.
+It also contains the callback class to keep track of the optimization process.
 """
 import time
 import numpy as np
@@ -9,13 +9,13 @@ import scipy as sp
 
 from scipy.optimize import OptimizeResult
 from qutip_qoc.result import Result
-from qutip_qoc.objective import MultiObjective
+from qutip_qoc.objective import _MultiObjective
 
 
-__all__ = ["global_local_optimization"]
+__all__ = ["_global_local_optimization"]
 
 
-def get_init_and_bounds_from_options(lst, input):
+def _get_init_and_bounds_from_options(lst, input):
     """
     Extract initial and boundary values of any kind and shape
     from the control_parameters and time_options dictionary.
@@ -33,7 +33,7 @@ def get_init_and_bounds_from_options(lst, input):
     return lst
 
 
-class Callback:
+class _Callback:
     """
     Callback functions for the local and global optimization algorithm.
     Keeps track of time and saves intermediate results.
@@ -42,47 +42,47 @@ class Callback:
     """
 
     def __init__(self, result, fid_err_targ, max_wall_time, bounds, disp):
-        self.result = result
-        self.fid_err_targ = fid_err_targ
-        self.max_wall_time = max_wall_time
-        self.bounds = bounds
-        self.disp = disp
+        self._result = result
+        self._fid_err_targ = fid_err_targ
+        self._max_wall_time = max_wall_time
+        self._bounds = bounds
+        self._disp = disp
 
-        self.elapsed_time = 0
-        self.iter_seconds = []
-        self.start_time = self.iter_time = time.time()
+        self._elapsed_time = 0
+        self._iter_seconds = []
+        self._start_time = self._iter_time = time.time()
 
     def stop_clock(self):
         """
         Stops the clock and saves the start-,end- and iterations- time in result.
         """
-        self.end_time = time.time()
+        self._end_time = time.time()
 
-        self.result.start_local_time = time.strftime(
-            "%Y-%m-%d %H:%M:%S", time.localtime(self.start_time)
+        self._result.start_local_time = time.strftime(
+            "%Y-%m-%d %H:%M:%S", time.localtime(self._start_time)
         )
-        self.result.end_local_time = time.strftime(
-            "%Y-%m-%d %H:%M:%S", time.localtime(self.end_time)
+        self._result.end_local_time = time.strftime(
+            "%Y-%m-%d %H:%M:%S", time.localtime(self._end_time)
         )
 
-        self.result.iter_seconds = self.iter_seconds
+        self._result.iter_seconds = self._iter_seconds
 
-    def time_iter(self):
+    def _time_iter(self):
         """
         Calculates and stores the time for each iteration.
         """
         iter_time = time.time()
-        diff = round(iter_time - self.iter_time, 4)
-        self.iter_time = iter_time
-        self.iter_seconds.append(diff)
+        diff = round(iter_time - self._iter_time, 4)
+        self._iter_time = iter_time
+        self._iter_seconds.append(diff)
         return diff
 
-    def time_elapsed(self):
+    def _time_elapsed(self):
         """
         Calculates and stores the elapsed time since the start of the optimization.
         """
-        self.elapsed_time = round(time.time() - self.start_time, 4)
-        return self.elapsed_time
+        self._elapsed_time = round(time.time() - self._start_time, 4)
+        return self._elapsed_time
 
     def inside_bounds(self, x):
         """
@@ -90,10 +90,10 @@ class Callback:
         used for the global and local optimization callback.
         """
         idx = 0
-        for bound in self.bounds:
+        for bound in self._bounds:
             for b in bound:
                 if not (b[0] <= x[idx] <= b[1]):
-                    if self.disp:
+                    if self._disp:
                         print("parameter out of bounds, continuing optimization")
                     return False
                 idx += 1
@@ -107,24 +107,24 @@ class Callback:
         """
         terminate = False
 
-        if intermediate_result.fun <= self.fid_err_targ:
+        if intermediate_result.fun <= self._fid_err_targ:
             terminate = True
             reason = "fid_err_targ reached"
-        elif self.time_elapsed() >= self.max_wall_time:
+        elif self._time_elapsed() >= self._max_wall_time:
             terminate = True
             reason = "max_wall_time reached"
 
-        if self.disp:
+        if self._disp:
             message = "minimizer step, infidelity: %.5f" % intermediate_result.fun
             if terminate:
                 message += "\n" + reason + ", terminating minimization"
             print(message)
 
         if terminate:  # manually save the result and exit
-            if intermediate_result.fun < self.result.infidelity:
+            if intermediate_result.fun < self._result.infidelity:
                 if intermediate_result.fun > 0:
                     if self.inside_bounds(intermediate_result.x):
-                        self.result.update(
+                        self._result.update(
                             intermediate_result.fun, intermediate_result.x
                         )
             raise StopIteration
@@ -136,26 +136,26 @@ class Callback:
         the maximum wall time is exceeded.
         """
         terminate = False
-        global_step_seconds = self.time_iter()
+        global_step_seconds = self._time_iter()
 
-        if f <= self.fid_err_targ:
+        if f <= self._fid_err_targ:
             terminate = True
-            self.result.message = "fid_err_targ reached"
-        elif self.time_elapsed() >= self.max_wall_time:
+            self._result.message = "fid_err_targ reached"
+        elif self._time_elapsed() >= self._max_wall_time:
             terminate = True
-            self.result.message = "max_wall_time reached"
+            self._result.message = "max_wall_time reached"
 
-        if self.disp:
+        if self._disp:
             message = (
                 "optimizer step, infidelity: %.5f" % f
                 + ", took %.2f seconds" % global_step_seconds
             )
             if terminate:
-                message += "\n" + self.result.message + ", terminating optimization"
+                message += "\n" + self._result.message + ", terminating optimization"
             print(message)
 
         if terminate:  # manually save the result and exit
-            if f < self.result.infidelity:
+            if f < self._result.infidelity:
                 if f < 0:
                     print(
                         "WARNING: infidelity < 0 -> inaccurate integration, "
@@ -164,12 +164,12 @@ class Callback:
                     )
                     terminate = False
                 elif self.inside_bounds(x):
-                    self.result.update(f, x)
+                    self._result.update(f, x)
 
         return terminate
 
 
-def global_local_optimization(
+def _global_local_optimization(
     objectives,
     control_parameters,
     time_interval,
@@ -280,15 +280,15 @@ def global_local_optimization(
     # extract initial and boundary values for global and local optimizer
     x0, bounds = [], []
     for key in control_parameters.keys():
-        get_init_and_bounds_from_options(x0, control_parameters[key].get("guess"))
-        get_init_and_bounds_from_options(bounds, control_parameters[key].get("bounds"))
+        _get_init_and_bounds_from_options(x0, control_parameters[key].get("guess"))
+        _get_init_and_bounds_from_options(bounds, control_parameters[key].get("bounds"))
 
-    get_init_and_bounds_from_options(x0, time_options.get("guess", None))
-    get_init_and_bounds_from_options(bounds, time_options.get("bounds", None))
+    _get_init_and_bounds_from_options(x0, time_options.get("guess", None))
+    _get_init_and_bounds_from_options(bounds, time_options.get("bounds", None))
 
     optimizer_kwargs["x0"] = np.concatenate(x0)
 
-    multi_objective = MultiObjective(
+    multi_objective = _MultiObjective(
         objectives=objectives,
         qtrl_optimizers=qtrl_optimizers,
         time_interval=time_interval,
@@ -356,7 +356,7 @@ def global_local_optimization(
     fid_err_targ = algorithm_kwargs.get("fid_err_targ", 1e-10)
     disp = algorithm_kwargs.get("disp", False)
     # start the clock
-    cllbck = Callback(result, fid_err_targ, max_wall_time, bounds, disp)
+    cllbck = _Callback(result, fid_err_targ, max_wall_time, bounds, disp)
 
     # run the optimization
     min_res = optimizer(
