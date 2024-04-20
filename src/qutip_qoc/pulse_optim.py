@@ -338,7 +338,9 @@ def optimize_pulses(
                     control_parameters[key]["guess"] = init_params[
                         i * num_params : (i + 1) * num_params
                     ]  # amplitude bounds are taken care of by pulse generator
-                    control_parameters[key]["bounds"] = None
+                    control_parameters[key]["bounds"] = [
+                        (lbound, ubound) for _ in range(num_params)
+                    ]
 
             qtrl_optimizers.append(qtrl_optimizer)
 

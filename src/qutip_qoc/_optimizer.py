@@ -92,7 +92,7 @@ class _Callback:
         idx = 0
         for bound in self._bounds:
             for b in bound:
-                if not (b[0] <= x[idx] <= b[1]):
+                if (b[0] and b[1]) and not (b[0] <= x[idx] <= b[1]):
                     if self._disp:
                         print("parameter out of bounds, continuing optimization")
                     return False
