@@ -4,13 +4,13 @@ The qutip-qoc package builds up on the `qutip-qtrl` [package](https://github.com
 
 It enhances it by providing two additional algorithms to optimize analytically defined control functions.
 The first one is an extension of Gradient Optimization of Analytic conTrols [(GOAT)](https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.120.150401).
-The second leverages QuTiPs version 5 new diffrax abilities to directly calculate gradients of JAX defined contol functinos using automatic differentiation.
+The second one (JOPT) leverages QuTiPs version 5 new diffrax abilities to directly calculate gradients of JAX defined control functions using automatic differentiation.
 
-The procedure consists of a two-layer approach to find global optimal values for parameterized analytical control functions.
+Both algorithms consist of a two-layer approach to find global optimal values for parameterized analytical control functions.
 The global optimization layer provides `scipy.optimize.dual_annealing` and `scipy.optimize.basinhopping`, while the local minimization layer supports all
 gradient driven `scipy.optimize.minimize` methods.
 
-The package also aims for a more general way of defining control problems with QuTiP and makes switching between the four control algorithms very easy.
+The package also aims for a more general way of defining control problems with QuTiP and makes switching between the four control algorithms (GOAT, JOPT, and GRAPE and CRAB implemented in qutip-qtrl) very easy.
 
 As with qutip-qtrl, the qutip-qoc package aims at providing advanced tools for the optimal control of quantum devices.
 Compared to other libraries for quantum optimal control, qutip-qoc puts additional emphasis on the physics layer and the interaction with the QuTiP package.

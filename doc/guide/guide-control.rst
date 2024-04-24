@@ -8,7 +8,7 @@ Quantum Optimal Control
 Introduction
 ============
 
-In quantum control we look to prepare some specific state, effect some state-to-state transfer, or effect some transformation (or gate) on a quantum system. For a given quantum system there will always be factors that effect the dynamics that are outside of our control. As examples, the interactions between elements of the system or a magnetic field required to trap the system. However, there may be methods of affecting the dynamics in a controlled way, such as the time varying amplitude of the electric component of an interacting laser field. And so this leads to some questions; given a specific quantum system with known time-independent dynamics generator (referred to as the *drift* dynamics generators) and set of externally controllable fields for which the interaction can be described by *control* dynamics generators:
+In quantum control we look to prepare some specific state, effect some state-to-state transfer, or effect some transformation (or gate) on a quantum system. For a given quantum system there will always be factors that affect the dynamics that are outside of our control. As examples, the interactions between elements of the system or a magnetic field required to trap the system. However, there may be methods of affecting the dynamics in a controlled way, such as the time varying amplitude of the electric component of an interacting laser field. And so this leads to some questions; given a specific quantum system with a known time-independent dynamics generator (referred to as the *drift* dynamics generator) and a set of externally controllable fields for which the interaction can be described by *control* dynamics generators:
 
 1. What states or transformations can we achieve (if any)?
 
@@ -42,13 +42,13 @@ The dynamics of the system are governed by *Schrödingers equation*.
 
     \tfrac{d}{dt} \ket{\psi} = -i H(t)\ket{\psi}
 
-Note we use units where :math:`\hbar=1` throughout. The solutions to Schrödinger's equation are of the form:
+Note that we use units where :math:`\hbar=1` throughout. The solutions to Schrödinger's equation are of the form:
 
 .. math::
 
     \ket{\psi(t)} = U(t)\ket{\psi_0}
 
-where :math:`\psi_0` is the state of the system at :math:`t=0` and :math:`U(t)` is a unitary operator on the Hilbert space containing the states. :math:`U(t)` is a solution to the *Schrödinger operator equation*
+where :math:`\ket{\psi_0}` is the state of the system at :math:`t=0` and :math:`U(t)` is a unitary operator on the Hilbert space containing the states. :math:`U(t)` is a solution to the *Schrödinger operator equation*
 
 .. math::
 

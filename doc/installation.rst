@@ -19,13 +19,13 @@ Prerequisites
 =============
 This package is built upon QuTiP, of which the installation guide can be found at on `QuTiP Installation <http://qutip.org/docs/latest/installation.html>`_.
 
-In particular, following packages are necessary for running qutip-qoc:
+In particular, the following packages are necessary for running qutip-qoc:
 
 .. code-block:: bash
 
     numpy scipy jax jaxlib cython qutip qutip-jax qutip-qtrl
 
-The following to packages are used for plotting and testing:
+The following package is used for testing:
 
 .. code-block:: bash
 
