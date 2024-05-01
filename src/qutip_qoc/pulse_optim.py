@@ -182,9 +182,6 @@ def optimize_pulses(
     qtrl_optimizers = []
     if alg == "CRAB" or alg == "GRAPE":
         if alg == "GRAPE":  # algorithm specific kwargs
-            # only scalar bounds
-            lbound = lbound[0]
-            ubound = ubound[0]
             use_as_amps = True
             alg_params = algorithm_kwargs.get("alg_params", {})
 
@@ -209,6 +206,11 @@ def optimize_pulses(
                 "crab_pulse_params": algorithm_kwargs.get("crab_pulse_params"),
                 "fix_frequency": fix_frequency,
             }
+
+        if use_as_amps:
+            # same bounds for all controls
+            lbound = lbound[0]
+            ubound = ubound[0]
 
         # one optimizer for each objective
         for i, objective in enumerate(objectives):
