@@ -40,6 +40,8 @@ class Objective:
 
     H : callable, list
         A specification of the time-depedent quantum object.
+        Usually a list with drift Hamiltonian at zero-index
+        followed by the control Hamiltonians.
         See :class:`qutip.QobjEvo` for details and examples.
 
     target : :class:`qutip.Qobj`

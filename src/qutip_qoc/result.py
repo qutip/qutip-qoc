@@ -10,7 +10,6 @@ from inspect import signature
 import warnings
 
 import qutip as qt
-from qutip_qoc.objective import Objective
 
 __all__ = ["Result"]
 
@@ -66,8 +65,10 @@ class Result:
     optimized_controls : list of ndarray
         List of optimized control pulses.
 
-    optimized_objectives : list of :class:`qutip_qoc.Objective`
-        List of objectives with optimized control pulses.
+    optimized_H : list of :class:`qutip.QobjEvo`
+        A specification of the time-depedent quantum object
+        one for each objective (see :class:`qutip_qoc.Objective` H attribute).
+        with optimized control amplitudes.
 
     final_states : list of :class:`qutip.Qobj`
         List of final states after the optimization.
@@ -93,7 +94,7 @@ class Result:
         message=None,
         guess_controls=None,
         optimized_controls=None,
-        optimized_objectives=None,
+        optimized_H=None,
         final_states=None,
         guess_params=None,
         new_params=None,
@@ -112,7 +113,7 @@ class Result:
         self.message = message
         self._guess_controls = guess_controls
         self._optimized_controls = optimized_controls
-        self._optimized_objectives = optimized_objectives
+        self._optimized_H = optimized_H
         self.guess_params = guess_params
         self.new_params = new_params
         self._optimized_params = optimized_params
@@ -261,25 +262,42 @@ class Result:
         return self._guess_controls
 
     @property
-    def optimized_objectives(self):
-        if self._optimized_objectives is None:
-            opt_obj = []
+    def optimized_H(self):
+        if self._optimized_H is None:
+            opt_H = []
 
             for obj in self.objectives:
+                # Create the optimized Hamiltonian with optimized controls
                 if not self.qtrl_optimizers:  # GOAT, JOPT
-                    optimized_H = obj.H
+                    H = obj.H
                 else:
-                    optimized_H = [obj.H[0]]  # drift
+                    H = [obj.H[0]]  # drift
                     for Hc, cf in zip(obj.H[1:], self.optimized_controls):
                         if isinstance(Hc, qt.Qobj):  # parameterized CRAB
-                            optimized_H.append([Hc, cf])
+                            H.append([Hc, cf])
                         else:  # discrete control as in GRAPE, CRAB
-                            optimized_H.append([Hc[0], cf])
+                            H.append([Hc[0], cf])
 
-                opt_obj.append(Objective(obj.initial, optimized_H, obj.target))
+                # Create the corresponding QobjEvo object
+                para_keys = []
+                args_dict = {}
+                if not self.qtrl_optimizers:  # GOAT, JOPT
+                    # extract parameter names from control functions f(t, para_key)
+                    c_sigs = [signature(Hc[1]) for Hc in self.objectives[0].H[1:]]
+                    c_keys = [sig.parameters.keys() for sig in c_sigs]
+                    para_keys = [list(keys)[1] for keys in c_keys]
+                    for key, val in zip(para_keys, self.optimized_params):
+                        args_dict[key] = val
 
-            self._optimized_objectives = opt_obj
-        return self._optimized_objectives
+                H_evo = (
+                    qt.QobjEvo(H, args=args_dict)
+                    if args_dict  # GOAT, JOPT
+                    else qt.QobjEvo(H, tlist=self.time_interval.tslots)
+                )
+
+                opt_H.append(H_evo)
+            self._optimized_H = opt_H
+        return self._optimized_H
 
     @property
     def final_states(self):
@@ -291,35 +309,18 @@ class Result:
             else:
                 evo_time = self.time_interval.evo_time
 
-            para_keys = []
-            args_dict = {}
-            if not self.qtrl_optimizers:  # GOAT, JOPT
-                # extract parameter names from control functions f(t, para_key)
-                c_sigs = [signature(Hc[1]) for Hc in self.objectives[0].H[1:]]
-                c_keys = [sig.parameters.keys() for sig in c_sigs]
-                para_keys = [list(keys)[1] for keys in c_keys]
-                for key, val in zip(para_keys, self.optimized_params):
-                    args_dict[key] = val
-
             # choose solver method based on type of control function
             if isinstance(
-                self.optimized_objectives[0].H[1][1], jaxlib.xla_extension.PjitFunction
+                self.objectives[0].H[1][1], jaxlib.xla_extension.PjitFunction
             ):
                 method = "diffrax"  # for JAX defined contols
             else:
                 method = "adams"
 
-            for obj in self.optimized_objectives:
-                H = (
-                    qt.QobjEvo(obj.H, args=args_dict)
-                    if args_dict
-                    else qt.QobjEvo(obj.H, tlist=self.time_interval.tslots)
-                )
-                # solver = None
-
-                if obj.H[0].issuper:  # choose solver
+            for obj, opt_H in zip(self.objectives, self.optimized_H):
+                if opt_H.issuper:  # choose solver
                     solver = qt.MESolver(
-                        H,
+                        opt_H,
                         options={
                             "normalize_output": False,
                             "method": method,
@@ -327,7 +328,7 @@ class Result:
                     )
                 else:
                     solver = qt.SESolver(
-                        H,
+                        opt_H,
                         options={
                             "normalize_output": False,
                             "method": method,
