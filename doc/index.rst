@@ -44,11 +44,3 @@ qutip-qoc |version|: QuTiP - Quantum Optimal Control
     :caption: Bibliography
 
     bibliography.rst
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
