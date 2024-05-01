@@ -129,7 +129,7 @@ second-order differentials (the Hessian matrix) can be computationally
 expensive, and so there are a class of methods known as *quasi-Newton* that
 approximate the Hessian based on successive iterations. The most popular of
 these (in quantum optimal control) is the Broyden–Fletcher–Goldfarb–Shanno
-algorithm (BFGS). The default method in the QuTiP Qtrl GRAPE implementation is
+algorithm (BFGS). The default method in the QuTiP QOC GRAPE implementation is
 the L-BFGS-B method in Scipy, which is a wrapper to the implementation
 described in :cite:`Byrd95`. This limited memory and bounded method does not need to
 store the entire Hessian, which reduces the computer memory required, and

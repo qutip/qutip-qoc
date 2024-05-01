@@ -183,6 +183,7 @@ def optimize_pulses(
     if alg == "CRAB" or alg == "GRAPE":
         if alg == "GRAPE":  # algorithm specific kwargs
             use_as_amps = True
+            minimizer_kwargs.setdefault("method", "L-BFGS-B")  # gradient
             alg_params = algorithm_kwargs.get("alg_params", {})
 
         elif alg == "CRAB":
