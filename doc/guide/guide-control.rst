@@ -272,4 +272,5 @@ Eventually, the optimization for a desired `fid_err_targ` can be started by call
     },
   )
 
-Examples for Liouvillian dynamics and multi-objective optimization can be found in the examples folder.
+.. TODO: add examples
+Examples for Liouvillian dynamics and multi-objective optimization will follow soon.

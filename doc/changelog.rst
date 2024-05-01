@@ -3,16 +3,29 @@ Changelog
 *********
 
 
-Version 0.1.0 (April xx, 2024)
+Version 0.1.0 (May xx, 2024)
 +++++++++++++++++++++++++++++++++
 
-TODO: Add release notes
+This is the beta release of qutip-qoc, the extended quantum control package in QuTiP.
+
+It has undergone major refactoring and restructuring of the codebase.
+
+- Non-public facing functions have been renamed to start with an underscore.
+- As with other QuTiP functions, `optimize_pulses` now takes a `tlist` argument instead of `TimeInterval`.
+- The structure for the control guess and bounds has changed and now takes in an optional `__time__` keyword.
+- The `result` does no longer return `optimized_objectives` but instead `optimized_H`.
+
+Bug Fixes
+---------
+
+- basinhopping result does not contain minimizer message
+- boundary issues with CRAB
 
 
 Version 0.0.0 (December 26, 2023)
 +++++++++++++++++++++++++++++++++
 
-This is the first release of qutip-qoc, the extended quantum control package in QuTiP.
+This is the alpha release of qutip-qoc, the extended quantum control package in QuTiP.
 
 The qutip-qoc package builds up on the ``qutip-qtrl`` `package <https://github.com/qutip/qutip-qtrl>`_.
 It enhances it by providing two additional algorithms to optimize analytically defined control functions.
