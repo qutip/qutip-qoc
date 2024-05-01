@@ -1,5 +1,5 @@
 """
-This module contains classes for analytically defined pulse shapes.
+This module contains classes for analytically defined pulse shapes for use with GOAT and JOPT.
 It is intended to provide common pulse functions implemented in Cython.
 """
 
@@ -11,7 +11,7 @@ cimport cython
 @cython.wraparound(False)
 cdef class Pulse:
     """
-    Base class for analytically defined pulse shapes.
+    Base class for analytically defined pulse shapes for use with GOAT and JOPT.
 
     Attributes:
         n_sup (int):
