@@ -1,5 +1,5 @@
 """
-This module contains classes for analytically defined pulse shapes for use with GOAT and JOPT.
+This module contains classes for analytically defined pulse shapes for use with GOAT.
 It is intended to provide common pulse functions implemented in Cython.
 """
 
