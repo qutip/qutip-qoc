@@ -1,6 +1,6 @@
 # QuTiP - Quantum Optimal Control
 
-The qutip-qoc package builds up on the `qutip-qtrl` [package](https://github.com/qutip/qutip-qtrl).
+The `qutip-qoc` package builds up on the `qutip-qtrl` [package](https://github.com/qutip/qutip-qtrl).
 
 It enhances it by providing two additional algorithms to optimize analytically defined control functions.
 The first one is an extension of Gradient Optimization of Analytic conTrols [(GOAT)](https://journals.aps.org/prl/abstract/10.1103/PhysRevLett.120.150401).
@@ -12,8 +12,8 @@ gradient driven `scipy.optimize.minimize` methods.
 
 The package also aims for a more general way of defining control problems with QuTiP and makes switching between the four control algorithms (GOAT, JOPT, and GRAPE and CRAB implemented in qutip-qtrl) very easy.
 
-As with qutip-qtrl, the qutip-qoc package aims at providing advanced tools for the optimal control of quantum devices.
-Compared to other libraries for quantum optimal control, qutip-qoc puts additional emphasis on the physics layer and the interaction with the QuTiP package.
+As with `qutip-qtrl`, the `qutip-qoc` package aims at providing advanced tools for the optimal control of quantum devices.
+Compared to other libraries for quantum optimal control, `qutip-qoc` puts additional emphasis on the physics layer and the interaction with the QuTiP package.
 Along with the extended GOAT and JOPT algorithms the package offers support for both the CRAB and GRAPE methods defined in `qutip-qtrl`.
 
 If you would like to know the future development plan and ideas, have a look at the [qutip roadmap and ideas](https://qutip.readthedocs.io/en/latest/development/roadmap.html).

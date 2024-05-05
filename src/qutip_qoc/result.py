@@ -30,8 +30,8 @@ class Result:
     """
     Class for storing the results of a pulse control optimization run.
 
-    Attributes:
-    -----------
+    Attributes
+    ----------
     objectives : list of :class:`qutip_qoc.Objective`
         List of objectives to be optimized.
 
@@ -58,6 +58,9 @@ class Result:
 
     message : str
         Reason for termination.
+
+    optimized_params : list of ndarray
+        List of optimized parameters.
 
     guess_controls : list of ndarray
         List of guess control pulses used to initialize the optimization.
@@ -161,12 +164,18 @@ class Result:
 
     @property
     def total_seconds(self):
+        """
+        Total time in seconds the optimization took.
+        """
         if self._total_seconds is None:
             self._total_seconds = sum(self.iter_seconds)
         return self._total_seconds
 
     @property
     def optimized_params(self):
+        """
+        Parameter values after optimization.
+        """
         if self._optimized_params is None:
             # reshape (optimized) new_parameters array to match
             # shape and type of the guess_parameters list
@@ -196,6 +205,9 @@ class Result:
 
     @property
     def optimized_controls(self):
+        """
+        Control pulses after optimization.
+        """
         if self._optimized_controls is None:
             opt_ctrl = []
 
@@ -228,6 +240,9 @@ class Result:
 
     @property
     def guess_controls(self):
+        """
+        Control pulses before the optimization.
+        """
         if self._guess_controls is None:
             if self.qtrl_optimizers:
                 qtrl_res = self.qtrl_optimizers[0]._create_result()
@@ -263,6 +278,9 @@ class Result:
 
     @property
     def optimized_H(self):
+        """
+        Optimized Hamiltonians with optimized controls.
+        """
         if self._optimized_H is None:
             opt_H = []
 
@@ -301,6 +319,9 @@ class Result:
 
     @property
     def final_states(self):
+        """
+        Evolved system states after optimization.
+        """
         if self._final_states is None:
             states = []
 
@@ -342,17 +363,26 @@ class Result:
             self._final_states = states
         return self._final_states
 
-    def update(self, infidelity, parameters):
+    def _update(self, infidelity, parameters):
+        """
+        Used to update the result during optimization.
+        """
         self.infidelity = infidelity
         self.new_params = parameters
 
     def dump(self, filename):
+        """
+        Save the result to a file.
+        """
         with open(filename, "wb") as dump_fh:
             pickler = pickle.Pickler(dump_fh)
             pickler.dump(self)
 
     @classmethod
     def load(cls, filename, objectives=None):
+        """
+        Load a objective from a file.
+        """
         with open(filename, "rb") as dump_fh:
             result = pickle.load(dump_fh)
         result.objectives = objectives
@@ -360,6 +390,9 @@ class Result:
 
     @property
     def evo_full_final(self):
+        """
+        Deprecated, use final_states[0] instead.
+        """
         warnings.warn(
             "evo_full_final is deprecated, use final_states[0] instead",
             DeprecationWarning,
@@ -368,6 +401,9 @@ class Result:
 
     @property
     def fid_err(self):
+        """
+        Deprecated, use infidelity instead.
+        """
         warnings.warn(
             "fid_err is deprecated, use infidelity instead", DeprecationWarning
         )
@@ -375,6 +411,9 @@ class Result:
 
     @property
     def grad_norm_final(self):
+        """
+        Deprecated, not supported.
+        """
         warnings.warn(
             "grad_norm_final is deprecated, it is not supported", DeprecationWarning
         )
@@ -382,6 +421,9 @@ class Result:
 
     @property
     def termination_reason(self):
+        """
+        Deprecated, use message instead.
+        """
         warnings.warn(
             "termination_reason is deprecated, use message instead", DeprecationWarning
         )
@@ -389,11 +431,17 @@ class Result:
 
     @property
     def num_iter(self):
+        """
+        Deprecated, use n_iters instead.
+        """
         warnings.warn("num_iter is deprecated, use n_iters instead", DeprecationWarning)
         return self.n_iters
 
     @property
     def wall_time(self):
+        """
+        Deprecated, use total_seconds instead.
+        """
         warnings.warn(
             "wall_time is deprecated, use total_seconds instead", DeprecationWarning
         )

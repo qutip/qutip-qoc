@@ -124,7 +124,7 @@ class _Callback:
             if intermediate_result.fun < self._result.infidelity:
                 if intermediate_result.fun > 0:
                     if self.inside_bounds(intermediate_result.x):
-                        self._result.update(
+                        self._result._update(
                             intermediate_result.fun, intermediate_result.x
                         )
             raise StopIteration
@@ -164,7 +164,7 @@ class _Callback:
                     )
                     terminate = False
                 elif self.inside_bounds(x):
-                    self._result.update(f, x)
+                    self._result._update(f, x)
 
         return terminate
 

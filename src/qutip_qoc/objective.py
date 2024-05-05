@@ -19,19 +19,40 @@ class Objective:
     """
     A class for storing information about an optimization objective.
 
-    *Examples*
-    >>> initial = qt.basis(2, 0)
-    >>> target = qt.basis(2, 1)
+    Examples
+    --------
+    To specify an objective for GOAT, provide a gradient function::
 
-    >>> sin = lambda t, p: np.sin(p * t)
+        initial = qt.basis(2, 0)
+        target  = qt.basis(2, 1)
 
-    >>> def d_sin(t, p, idx):
-    >>>     if idx==0: return t * np.cos(t) # wrt p
-    >>>     if idx==1: return p * np.cos(t) # wrt t
+        sin = lambda t, p: np.sin(p * t)
 
-    >>> H = [qt.sigmax(), [qt.sigmay(), sin, {'grad': d_sin}]]
+        def d_sin(t, p, idx):
+            if idx==0: return t * np.cos(t) # w.r.t. p
+            if idx==1: return p * np.cos(t) # w.r.t. t
 
-    >>> obj = Objective(initial, H, target)
+        H = [qt.sigmax(), [qt.sigmay(), sin, {'grad': d_sin}]]
+
+        obj = Objective(initial, H, target)
+
+
+    To specify an objective for JOPT, no need for gradient function::
+
+        initial = qt.basis(2, 0)
+        target  = qt.basis(2, 1)
+
+        @jax.jit
+        def sin(t, p)
+            return jax.numpy.sin(p * t)
+
+        def d_sin(t, p, idx):
+            if idx==0: return t * np.cos(t) # w.r.t. p
+            if idx==1: return p * np.cos(t) # w.r.t. t
+
+        H = [qt.sigmax(), [qt.sigmay(), sin]]
+
+        obj = Objective(initial, H, target)
 
     Attributes
     ----------

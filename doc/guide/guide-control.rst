@@ -262,15 +262,16 @@ Eventually, the optimization for a desired `fid_err_targ` can be started by call
   result = qoc.optimize_pulses(
     objectives=[objective], # list of objectives
     control_parameters={
-        "p": {"guess": p_guess, "bounds": p_bounds},
-        "q": {"guess": q_guess, "bounds": q_bounds}
+      "p": {"guess": p_guess, "bounds": p_bounds},
+      "q": {"guess": q_guess, "bounds": q_bounds},
     },
     tlist=np.linspace(0, 1, 100),
     algorithm_kwargs={
-        "alg": "GOAT",
-        "fid_err_targ": 0.1,
+      "fid_err_targ": 0.1,
+      "alg": "GOAT",
     },
   )
 
 .. TODO: add examples
+
 Examples for Liouvillian dynamics and multi-objective optimization will follow soon.

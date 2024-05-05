@@ -2,29 +2,19 @@
 # Read the Docs configuration file
 # See https://docs.readthedocs.io/en/stable/config-file/v2.html for details
 
-# Required
 version: 2
 
-# Set the version of Python and other tools you might need
+formats:
+  - pdf
+
 build:
   os: ubuntu-22.04
   tools:
-    python: "3.10"
-  apt_packages:
-    - pandoc
-  #jobs:
-  #  pre_build:
-  #    # Each command is executed in a new shell process
-  #    - cd doc; python source/tutorials-website/create_tutorials_html.py
+    python: "mambaforge-4.10"
 
-# Build documentation in the docs/ directory with Sphinx
+conda:
+  environment: doc/rtd-environment.yml
+
 sphinx:
   configuration: doc/conf.py
-
-# We recommend specifying your dependencies to enable reproducible builds:
-# https://docs.readthedocs.io/en/stable/guides/reproducible-builds.html
-python:
-  install:
-    - requirements: doc/requirements.txt
-    - method: pip
-      path: .
+  fail_on_warning: false

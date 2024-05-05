@@ -30,6 +30,7 @@ src/qutip_qoc/version.py
 
 # Documentation
 doc/apidoc/*.rst
+doc/.DS_Store
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

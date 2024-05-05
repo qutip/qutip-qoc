@@ -37,14 +37,23 @@ class TimeInterval:
 
     @property
     def tslots(self):
+        """
+        If not provided, it is derived from evo_time and n_tslots.
+        """
         if self._tslots is None:
-            n_tslots = self.n_tslots
-            if self._evo_time:  # derive from evo_time
-                self._tslots = np.linspace(0.0, self._evo_time, n_tslots)
+            if self._evo_time and self._n_tslots:  # derive from evo_time
+                self._tslots = np.linspace(0.0, self._evo_time, self.n_tslots)
+            else:
+                raise ValueError(
+                    "Either tslots or evo_time + n_tslots must be specified."
+                )
         return self._tslots
 
     @property
     def evo_time(self):
+        """
+        If not provided, it is derived from the last element of `tslots`.
+        """
         if self._evo_time is None:
             tslots = self.tslots
             self._evo_time = tslots[-1]
@@ -52,6 +61,9 @@ class TimeInterval:
 
     @property
     def n_tslots(self):
+        """
+        If not provided, it is derived from the length of `tslots`.
+        """
         if self._n_tslots is None:
             if self._tslots is not None:
                 self._n_tslots = len(self._tslots)
