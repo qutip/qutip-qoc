@@ -94,6 +94,7 @@ def optimize_pulses(
 
             - max_iter : int, optional
                 Maximum number of iterations to perform.
+                Default is 0 (no global optimization).
 
         Full list of options can be found in
         :func:`scipy.optimize.basinhopping`

@@ -376,7 +376,7 @@ def _global_local_optimization(
     # when terminated through StopIteration (see min_callback)
     if min_res.fun < result.infidelity:
         if cllbck.inside_bounds(min_res.x):
-            result.update(min_res.fun, min_res.x)
+            result._update(min_res.fun, min_res.x)
 
     # save runtime information in result
     result.n_iters = min_res.nit
