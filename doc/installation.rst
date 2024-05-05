@@ -19,7 +19,7 @@ Prerequisites
 =============
 This package is built upon QuTiP, of which the installation guide can be found at on `QuTiP Installation <http://qutip.org/docs/latest/installation.html>`_.
 
-In particular, the following packages are necessary for running qutip-qoc:
+In particular, the following packages are necessary for running ``qutip-qoc``:
 
 .. code-block:: bash
 
@@ -39,8 +39,8 @@ In addition,
 
 are used to build and test the documentation.
 
-Install qutip-qoc from source code
-===================================
+Install ``qutip-qoc`` from source code
+======================================
 
 To install the package, download to source code from `GitHub website <https://github.com/flowerthrower/qutip-qoc.git>`_ and run
 
@@ -56,7 +56,7 @@ If you want to edit the code, use instead
 
     pip install -e .
 
-To test the installation from a download of the source code, run from the `qutip-qoc` directory
+To test the installation from a download of the source code, run from the ``qutip-qoc`` directory
 
 .. code-block:: bash
 
