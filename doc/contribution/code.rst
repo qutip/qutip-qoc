@@ -28,9 +28,23 @@ The docstring should follow
 Checking Code Style and Format
 ==============================
 
+The Python code is formatted and linted using a collection of `pre-commit hooks <https://pre-commit.com/>`_.
+This collection includes:
+
+- `ruff <https://docs.astral.sh/ruff/>`_ -- an extremely fast Python linter and formatter, written in Rust.
+- `mypy <http://mypy-lang.org/>`_ -- a static type checker for Python code
+
+
+You can install the hooks manually by running :code:`pre-commit install` in the project root directory.
+The hooks will then be executed automatically when committing changes.
+
+    .. code-block:: console
+
+        (venv) $ pre-commit run -a
+
 In order to check if your code in ``some_file.py`` follows `PEP8 <https://www.python.org/dev/peps/pep-0008/>`_
 style guidelines, `Black <https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html>`_
-has to be installed.
+can be installed.
 
 .. code-block::
 
