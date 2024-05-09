@@ -35,7 +35,7 @@ class Result:
     objectives : list of :class:`qutip_qoc.Objective`
         List of objectives to be optimized.
 
-    time_interval : :class:`qutip_qoc.TimeInterval`
+    time_interval : :class:`qutip_qoc._TimeInterval`
         Time interval for the optimization.
 
     start_local_time : struct_time

@@ -9,7 +9,7 @@ import qutip_qtrl.logging_utils as logging
 import qutip_qtrl.pulseoptim as cpo
 
 from qutip_qoc._optimizer import _global_local_optimization
-from qutip_qoc.time import TimeInterval
+from qutip_qoc._time import _TimeInterval
 
 __all__ = ["optimize_pulses"]
 
@@ -131,7 +131,7 @@ def optimize_pulses(
         integrator_kwargs = {}
 
     # create time interval
-    time_interval = TimeInterval(tslots=tlist)
+    time_interval = _TimeInterval(tslots=tlist)
 
     time_options = control_parameters.pop("__time__", {})
     if time_options:  # convert to list of bounds if not already

@@ -11,7 +11,7 @@ import collections
 
 from qutip_qoc.pulse_optim import optimize_pulses
 from qutip_qoc.objective import Objective
-from qutip_qoc.time import TimeInterval
+from qutip_qoc._time import _TimeInterval
 from qutip_qoc.result import Result
 
 Case = collections.namedtuple(
@@ -178,7 +178,7 @@ def test_optimize_pulses(tst):
     assert isinstance(result, Result)
     assert isinstance(result.objectives, list)
     assert isinstance(result.objectives[0], Objective)
-    assert isinstance(result.time_interval, TimeInterval)
+    assert isinstance(result.time_interval, _TimeInterval)
     assert isinstance(result.start_local_time, str)
     assert isinstance(result.end_local_time, str)
     assert isinstance(result.total_seconds, float)

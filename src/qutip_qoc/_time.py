@@ -4,10 +4,10 @@ and deriving its attributes. It provides an easy way to specify the pulse durati
 """
 import numpy as np
 
-__all__ = ["TimeInterval"]
+__all__ = ["_TimeInterval"]
 
 
-class TimeInterval:
+class _TimeInterval:
     """
     Class for storing a time interval and deriving its attributes.
 

@@ -11,7 +11,7 @@ This is the beta release of ``qutip-qoc``, the extended quantum control package 
 It has undergone major refactoring and restructuring of the codebase.
 
 - Non-public facing functions have been renamed to start with an underscore.
-- As with other QuTiP functions, ``optimize_pulses`` now takes a ``tlist`` argument instead of ``TimeInterval``.
+- As with other QuTiP functions, ``optimize_pulses`` now takes a ``tlist`` argument instead of ``_TimeInterval``.
 - The structure for the control guess and bounds has changed and now takes in an optional ``__time__`` keyword.
 - The ``result`` does no longer return ``optimized_objectives`` but instead ``optimized_H``.
 
