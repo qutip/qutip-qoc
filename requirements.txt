@@ -4,6 +4,6 @@ scipy>=1.10.1
 jax>=0.4.23
 jaxlib>=0.4.23
 qutip>=5.0.1
-qutip-qtrl @ git+https://github.com/flowerthrower/qutip-qtrl@patrick/parameterize_crab
+qutip-qtrl @ git+https://github.com/flowerthrower/qutip-qtrl@master
 qutip-jax
 pre-commit
