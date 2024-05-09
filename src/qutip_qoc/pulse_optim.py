@@ -328,7 +328,7 @@ def optimize_pulses(
 
                 else:
                     # Set the initial parameters
-                    pgen.init_pulse(init_param_vals=np.array(x0[j]))
+                    pgen.init_pulse(init_coeffs=np.array(x0[j]))
                     init_amps[:, j] = pgen.gen_pulse()
 
             # Initialise the starting amplitudes
