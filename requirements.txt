@@ -1,9 +1,9 @@
 cython>=1.0
 numpy>=1.16.6
 scipy>=1.10.1
-jax==0.4.23
-jaxlib==0.4.23
+jax>=0.4.23
+jaxlib>=0.4.23
 qutip>=5.0.1
 qutip-qtrl @ git+https://github.com/qutip/qutip-qtrl.git@master
-qutip-jax
+qutip-jax @ git+https://github.com/qutip/qutip-jax.git@master
 pre-commit

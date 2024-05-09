@@ -63,6 +63,11 @@ jobs:
         run: |
           python -m pip install 'git+https://github.com/qutip/qutip-qtrl.git'
 
+      - name: Install qutip-jax from GitHub
+        if: ${{ matrix.qutip-version == '@master'}}
+        run: |
+          python -m pip install 'git+https://github.com/qutip/qutip-jax.git'
+
       - name: Install qutip-qoc
         # Installing in-place so that coveralls can locate the source code.
         run: |

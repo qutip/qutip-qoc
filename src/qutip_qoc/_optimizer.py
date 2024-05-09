@@ -206,7 +206,7 @@ def _global_local_optimization(
                     Sequence of ``(min, max)`` pairs for each element in
                     `guess`. None is used to specify no bound.
 
-    time_interval : :class:`qutip_qoc.TimeInterval`
+    time_interval : :class:`qutip_qoc._TimeInterval`
         Time interval for the optimization.
 
     time_options : dict, optional
