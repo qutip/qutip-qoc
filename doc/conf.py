@@ -14,6 +14,7 @@ import pathlib
 import sys
 
 sys.path.insert(0, os.path.abspath("."))
+sys.path.insert(0, os.path.abspath("../src"))
 sys.path.insert(0, os.path.abspath("../src/qutip_qoc"))
 
 # -- Project information -----------------------------------------------------
@@ -76,7 +77,7 @@ napoleon_use_admonition_for_notes = True
 # apidoc folder. This is particularly useful for modules with lots of
 # functions/classes. However, pay attention that some api docs files are
 # adjusted manually for better illustration and should not be overwritten.
-autosummary_generate = ["apidoc/*.rst"]
+autosummary_generate = True
 autosummary_imported_members = True
 
 # -- Options for biblatex ---------------------------------------
