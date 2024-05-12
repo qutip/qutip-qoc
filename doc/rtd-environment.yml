@@ -15,7 +15,7 @@ dependencies:
   - wheel==0.38.4
   - pip
   - pip:
-      - jax==0.4.23
-      - jaxlib==0.4.23
+      - jax==0.4.28
+      - jaxlib==0.4.28
       - qutip>=5.0.1
       - ..[full]
