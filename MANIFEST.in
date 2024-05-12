@@ -2,5 +2,6 @@ include README.md
 include LICENSE
 include requirements.txt
 include pyproject.toml
+include src/qutip_qoc/pulse.pyx
 
 recursive-include tests *.py *.qasm pytest.ini
