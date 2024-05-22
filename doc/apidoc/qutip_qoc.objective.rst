@@ -1,6 +1,26 @@
 ﻿qutip\_qoc.objective
 ====================
 
-.. currentmodule:: qutip_qoc
+.. automodule:: qutip_qoc.objective
 
-.. automodule:: objective
+
+
+
+
+
+
+
+
+
+
+   .. rubric:: Classes
+
+   .. autosummary::
+
+      Objective
+
+
+
+
+
+

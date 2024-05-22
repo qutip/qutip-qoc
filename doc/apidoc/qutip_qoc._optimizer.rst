@@ -1,6 +1,27 @@
 ﻿qutip\_qoc.\_optimizer
 ======================
 
-.. currentmodule:: qutip_qoc
+.. automodule:: qutip_qoc._optimizer
 
-.. automodule:: _optimizer
+
+
+
+
+
+
+
+
+
+
+   .. rubric:: Classes
+
+   .. autosummary::
+
+      OptimizeResult
+      Result
+
+
+
+
+
+

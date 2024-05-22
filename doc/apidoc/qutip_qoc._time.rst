@@ -1,6 +1,20 @@
 ﻿qutip\_qoc.\_time
 =================
 
-.. currentmodule:: qutip_qoc
+.. automodule:: qutip_qoc._time
 
-.. automodule:: _time
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

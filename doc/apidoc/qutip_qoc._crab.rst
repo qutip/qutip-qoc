@@ -1,6 +1,20 @@
 ﻿qutip\_qoc.\_crab
 =================
 
-.. currentmodule:: qutip_qoc
+.. automodule:: qutip_qoc._crab
 
-.. automodule:: _crab
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

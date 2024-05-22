@@ -1,6 +1,20 @@
 ﻿qutip\_qoc.\_grape
 ==================
 
-.. currentmodule:: qutip_qoc
+.. automodule:: qutip_qoc._grape
 
-.. automodule:: _grape
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,6 +1,26 @@
 ﻿qutip\_qoc.pulse\_optim
 =======================
 
-.. currentmodule:: qutip_qoc
+.. automodule:: qutip_qoc.pulse_optim
 
-.. automodule:: pulse_optim
+
+
+
+
+
+
+   .. rubric:: Functions
+
+   .. autosummary::
+
+      optimize_pulses
+
+
+
+
+
+
+
+
+
+

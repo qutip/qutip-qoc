@@ -1,6 +1,30 @@
 ﻿qutip\_qoc.\_jopt
 =================
 
-.. currentmodule:: qutip_qoc
+.. automodule:: qutip_qoc._jopt
 
-.. automodule:: _jopt
+
+
+
+
+
+
+
+
+
+
+   .. rubric:: Classes
+
+   .. autosummary::
+
+      Dopri5
+      PIDController
+      Qobj
+      QobjEvo
+      custom_jvp
+
+
+
+
+
+

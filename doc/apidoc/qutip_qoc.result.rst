@@ -1,6 +1,32 @@
 ﻿qutip\_qoc.result
 =================
 
-.. currentmodule:: qutip_qoc
+.. automodule:: qutip_qoc.result
 
-.. automodule:: result
+
+
+
+
+
+
+   .. rubric:: Functions
+
+   .. autosummary::
+
+      signature
+
+
+
+
+
+   .. rubric:: Classes
+
+   .. autosummary::
+
+      Result
+
+
+
+
+
+

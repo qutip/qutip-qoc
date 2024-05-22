@@ -1,6 +1,27 @@
 ﻿qutip\_qoc.\_goat
 =================
 
-.. currentmodule:: qutip_qoc
+.. automodule:: qutip_qoc._goat
 
-.. automodule:: _goat
+
+
+
+
+
+
+
+
+
+
+   .. rubric:: Classes
+
+   .. autosummary::
+
+      Qobj
+      QobjEvo
+
+
+
+
+
+
