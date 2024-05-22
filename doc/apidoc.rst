@@ -42,3 +42,8 @@ Internal interfaces to the optimal control features.
    qutip_qoc._grape
    qutip_qoc._crab
    qutip_qoc._time
+
+.. toctree::
+   :maxdepth: 2
+
+   apidoc/modules
