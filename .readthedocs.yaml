@@ -4,13 +4,10 @@
 
 version: 2
 
-formats:
-  - pdf
-
 build:
   os: ubuntu-22.04
   tools:
-    python: "mambaforge-4.10"
+    python: "conda"
 
 conda:
   environment: doc/rtd-environment.yml
