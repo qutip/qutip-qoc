@@ -1,32 +1,8 @@
-﻿qutip\_qoc.result
-=================
+qutip\_qoc.result module
+========================
 
 .. automodule:: qutip_qoc.result
-
-
-
-
-
-
-
-   .. rubric:: Functions
-
-   .. autosummary::
-
-      signature
-
-
-
-
-
-   .. rubric:: Classes
-
-   .. autosummary::
-
-      Result
-
-
-
-
-
-
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :private-members:

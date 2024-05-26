@@ -1,26 +1,8 @@
-﻿qutip\_qoc.objective
-====================
+qutip\_qoc.objective module
+===========================
 
 .. automodule:: qutip_qoc.objective
-
-
-
-
-
-
-
-
-
-
-
-   .. rubric:: Classes
-
-   .. autosummary::
-
-      Objective
-
-
-
-
-
-
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :private-members:

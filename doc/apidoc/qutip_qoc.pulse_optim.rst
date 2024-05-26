@@ -1,26 +1,8 @@
-﻿qutip\_qoc.pulse\_optim
-=======================
+qutip\_qoc.pulse\_optim module
+==============================
 
 .. automodule:: qutip_qoc.pulse_optim
-
-
-
-
-
-
-
-   .. rubric:: Functions
-
-   .. autosummary::
-
-      optimize_pulses
-
-
-
-
-
-
-
-
-
-
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :private-members:

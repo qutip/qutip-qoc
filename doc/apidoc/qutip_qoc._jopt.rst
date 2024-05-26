@@ -1,30 +1,8 @@
-﻿qutip\_qoc.\_jopt
-=================
+qutip\_qoc.\_jopt module
+========================
 
 .. automodule:: qutip_qoc._jopt
-
-
-
-
-
-
-
-
-
-
-
-   .. rubric:: Classes
-
-   .. autosummary::
-
-      Dopri5
-      PIDController
-      Qobj
-      QobjEvo
-      custom_jvp
-
-
-
-
-
-
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :private-members:

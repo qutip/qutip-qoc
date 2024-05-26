@@ -1,27 +1,8 @@
-﻿qutip\_qoc.\_optimizer
-======================
+qutip\_qoc.\_optimizer module
+=============================
 
 .. automodule:: qutip_qoc._optimizer
-
-
-
-
-
-
-
-
-
-
-
-   .. rubric:: Classes
-
-   .. autosummary::
-
-      OptimizeResult
-      Result
-
-
-
-
-
-
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :private-members:

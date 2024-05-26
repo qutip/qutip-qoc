@@ -1,27 +1,8 @@
-﻿qutip\_qoc.\_goat
-=================
+qutip\_qoc.\_goat module
+========================
 
 .. automodule:: qutip_qoc._goat
-
-
-
-
-
-
-
-
-
-
-
-   .. rubric:: Classes
-
-   .. autosummary::
-
-      Qobj
-      QobjEvo
-
-
-
-
-
-
+   :members:
+   :undoc-members:
+   :show-inheritance:
+   :private-members:
