@@ -78,7 +78,6 @@ napoleon_use_admonition_for_notes = True
 # functions/classes. However, pay attention that some api docs files are
 # adjusted manually for better illustration and should not be overwritten.
 autosummary_generate = True
-autosummary_imported_members = True
 
 # -- Options for biblatex ---------------------------------------
 

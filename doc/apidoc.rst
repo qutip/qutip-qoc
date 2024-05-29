@@ -2,17 +2,13 @@ qutip\_qoc package
 ===================
 
 
-.. toctree::
-   :maxdepth: 1
-
-
 High-level interfaces
 ---------------------
 High-level interfaces to the optimal control features.
 
 .. autosummary::
    :toctree: apidoc/
-   :template: apidoc/module.rst
+   :template: module.rst
 
    qutip_qoc.pulse_optim
 
@@ -23,7 +19,7 @@ Optimal control utility functions.
 
 .. autosummary::
    :toctree: apidoc/
-   :template: apidoc/module.rst
+   :template: module.rst
 
    qutip_qoc.result
    qutip_qoc.objective
@@ -34,7 +30,7 @@ Internal interfaces to the optimal control features.
 
 .. autosummary::
    :toctree: apidoc/
-   :template: apidoc/module.rst
+   :template: module.rst
 
    qutip_qoc._optimizer
    qutip_qoc._goat
