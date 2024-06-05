@@ -29,7 +29,6 @@ MANIFEST
 src/qutip_qoc/version.py
 
 # Documentation
-doc/apidoc/*.rst
 doc/.DS_Store
 
 # PyInstaller
