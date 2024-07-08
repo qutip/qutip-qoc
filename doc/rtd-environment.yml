@@ -2,7 +2,7 @@ name: rtd-environment
 channels:
   - conda-forge
 dependencies:
-  - numpy>=1.16.6
+  - numpy>=1.16.6,<2.0
   - scipy>=1.10.1
   - cython>=0.29.33
   - sphinx==6.1.3
