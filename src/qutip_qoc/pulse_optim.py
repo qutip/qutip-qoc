@@ -10,6 +10,7 @@ import qutip_qtrl.pulseoptim as cpo
 
 from qutip_qoc._optimizer import _global_local_optimization
 from qutip_qoc._time import _TimeInterval
+from qutip_qoc._rl import _RL
 
 __all__ = ["optimize_pulses"]
 
@@ -347,6 +348,22 @@ def optimize_pulses(
                     ]
 
             qtrl_optimizers.append(qtrl_optimizer)
+
+    # TODO: we can deal with proper handling later
+    if alg == "RL":
+        rl_env = _RL(
+            objectives,
+            control_parameters,
+            time_interval,
+            time_options,
+            algorithm_kwargs,
+            optimizer_kwargs,
+            minimizer_kwargs,
+            integrator_kwargs,
+            qtrl_optimizers,
+        )
+        rl_env.train()
+        return rl_env.result()
 
     return _global_local_optimization(
         objectives,
