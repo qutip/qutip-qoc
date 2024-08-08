@@ -152,7 +152,7 @@ def optimize_pulses(
     # extract guess and bounds for the control pulses
     x0, bounds = [], []
     for key in control_parameters.keys():
-        x0.append(control_parameters[key].get("guess"))
+        x0.append(control_parameters[key].get("guess"))         # TODO: for now only consider bounds
         bounds.append(control_parameters[key].get("bounds"))
     try:  # GRAPE, CRAB format
         lbound = [b[0][0] for b in bounds]
