@@ -45,6 +45,13 @@ class _RL(gym.Env): # TODO: this should be similar to your GymQubitEnv(gym.Env) 
             self._Hd_lst.append(objective.H[0])
             self._Hc_lst.append([H[0] if isinstance(H, list) else H for H in objective.H[1:]])
 
+        # create the QobjEvo with Hd, Hc and controls(args)
+        self.args = {f"alpha{i+1}": (1) for i in range(len(self._Hc_lst[0]))}    # set the control parameters to 1 fo all the Hc
+        self._H_lst = [self._Hd_lst[0]]
+        for i, Hc in enumerate(self._Hc_lst[0]):
+            self._H_lst.append([Hc, lambda t, args: self.pulse(t, self.args, i+1)])
+        self._H = qt.QobjEvo(self._H_lst, self.args)
+
         self._control_parameters = control_parameters
         # extract bounds for _control_parameters
         bounds = []
@@ -80,9 +87,6 @@ class _RL(gym.Env): # TODO: this should be similar to your GymQubitEnv(gym.Env) 
         # inferred attributes
         self._norm_fac = 1 / self._target.norm()
 
-        # control function
-        self.pulse = self._pulse
-
         # contains the action of the last completed or truncated episode
         self.action = None
 
@@ -110,12 +114,15 @@ class _RL(gym.Env): # TODO: this should be similar to your GymQubitEnv(gym.Env) 
         self.total_timesteps = self.max_episodes * self.max_steps       # for learn() of gym
         
         # Define action and observation spaces (Gym)
-        self.action_space = spaces.Box(low=-1, high=1, shape=(1,), dtype=np.float32)  # Continuous action space from -1 to +1, as suggested from gym
+        #self.action_space = spaces.Box(low=-1, high=1, shape=(1,), dtype=np.float32)  # Continuous action space from -1 to +1, as suggested from gym
+        self.action_space = spaces.Box(low=-1, high=1, shape=(len(self._Hc_lst[0]),), dtype=np.float32)
         self.observation_space = spaces.Box(low=-1, high=1, shape=(4,), dtype=np.float32)  # Observation space, |v> have 2 real and 2 imaginary numbers -> 4
         # ----------------------------------------------------------------------------------------
     
-    def _pulse(self, t, p):
-        return p
+    #def _pulse(self, t, p):
+    #    return p
+    def pulse(self, t, args, idx):
+        return 1*args[f"alpha{idx}"]
 
     def _infid(self, params=None):
         """
@@ -145,12 +152,16 @@ class _RL(gym.Env): # TODO: this should be similar to your GymQubitEnv(gym.Env) 
     # TODO: don't hesitate to add the required methods for your rl environment
 
     def step(self, action):
-        action = action[0]
-        alpha = ((action + 1) / 2 * (self.ubound[0] - self.lbound[0])) + self.lbound[0]   # for example, scale action from [-1, 1] to [9, 13]
-        args = {"alpha" : alpha}
+        alphas = [((action[i] + 1) / 2 * (self.ubound[0] - self.lbound[0])) + self.lbound[0] for i in range(len(action))]   #TODO: use ubound[i] lbound[i] 
 
-        H = [self._Hd_lst[0], [self._Hc_lst[0][0], lambda t, args: self.pulse(t, args["alpha"])]]
-        step_result = qt.mesolve(H, self.state, [0, self.step_duration], args = args)
+        for i, value in enumerate(alphas):
+            self.args[f"alpha{i+1}"] = value
+        self._H = qt.QobjEvo(self._H_lst, self.args)
+
+        #H = [self._Hd_lst[0], [self._Hc_lst[0][0], lambda t, args: self.pulse(t, args["alpha"])]]
+        #step_result = qt.mesolve(H, self.state, [0, self.step_duration], args = args)
+        step_result = qt.mesolve(self._H, self.state, [0, self.step_duration])
+
         self.state =  step_result.states[-1]
 
         infidelity = self.infidelity()
@@ -164,7 +175,7 @@ class _RL(gym.Env): # TODO: this should be similar to your GymQubitEnv(gym.Env) 
             time_diff = time.mktime(time.localtime()) - time.mktime(self._result.start_local_time)
             self._result.iter_seconds.append(time_diff)
             self.current_step = 0                                           # Reset the step counter
-            self.action = alpha
+            self.action = alphas
 
         observation = self._get_obs()
         return observation, reward, bool(terminated), bool(truncated), {}
