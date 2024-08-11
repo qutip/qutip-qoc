@@ -46,7 +46,7 @@ class _RL(gym.Env): # TODO: this should be similar to your GymQubitEnv(gym.Env) 
             self._Hc_lst.append([H[0] if isinstance(H, list) else H for H in objective.H[1:]])
 
         # create the QobjEvo with Hd, Hc and controls(args)
-        self.args = {f"alpha{i+1}": (1) for i in range(len(self._Hc_lst[0]))}    # set the control parameters to 1 fo all the Hc
+        self.args = {f"alpha{i+1}": (1) for i in range(len(self._Hc_lst[0]))}    # set the control parameters to 1 for all the Hc
         self._H_lst = [self._Hd_lst[0]]
         for i, Hc in enumerate(self._Hc_lst[0]):
             self._H_lst.append([Hc, lambda t, args: self.pulse(t, self.args, i+1)])
@@ -61,6 +61,7 @@ class _RL(gym.Env): # TODO: this should be similar to your GymQubitEnv(gym.Env) 
         self.ubound = [b[0][1] for b in bounds]
 
         #self._H = self._prepare_generator()
+        self._alg_kwargs = alg_kwargs
 
         self._initial = objective.initial
         self._target = objective.target
@@ -87,23 +88,13 @@ class _RL(gym.Env): # TODO: this should be similar to your GymQubitEnv(gym.Env) 
         # inferred attributes
         self._norm_fac = 1 / self._target.norm()
 
-        # contains the action of the last completed or truncated episode
-        self.action = None
+        self.temp_actions = []                  # temporary list to save episode actions
+        self.actions = []                       # list of actions(lists) of the last episode
 
         # integrator options
         self._integrator_kwargs = integrator_kwargs
         self._rtol = self._integrator_kwargs.get("rtol", 1e-5)
         self._atol = self._integrator_kwargs.get("atol", 1e-5)
-
-        # choose solver and fidelity type according to problem
-        if self._Hd_lst[0].issuper:
-            self._fid_type = alg_kwargs.get("fid_type", "TRACEDIFF")
-            #self._solver = qt.MESolver(H=self._H, options=self._integrator_kwargs)
-        else:
-            self._fid_type = alg_kwargs.get("fid_type", "PSU")
-            #self._solver = qt.SESolver(H=self._H, options=self._integrator_kwargs)
-
-        self.infidelity = self._infid # TODO: should be used to calculate the reward
 
         # ----------------------------------------------------------------------------------------
         # TODO: set up your gym environment as you did correctly in post10
@@ -118,7 +109,18 @@ class _RL(gym.Env): # TODO: this should be similar to your GymQubitEnv(gym.Env) 
         self.action_space = spaces.Box(low=-1, high=1, shape=(len(self._Hc_lst[0]),), dtype=np.float32)
         self.observation_space = spaces.Box(low=-1, high=1, shape=(4,), dtype=np.float32)  # Observation space, |v> have 2 real and 2 imaginary numbers -> 4
         # ----------------------------------------------------------------------------------------
-    
+        
+    def update_solver(self): 
+        # choose solver and fidelity type according to problem
+        if self._Hd_lst[0].issuper:
+            self._fid_type = self._alg_kwargs.get("fid_type", "TRACEDIFF")
+            self._solver = qt.MESolver(H=self._H, options=self._integrator_kwargs)
+        else:
+            self._fid_type = self._alg_kwargs.get("fid_type", "PSU")
+            self._solver = qt.SESolver(H=self._H, options=self._integrator_kwargs)
+
+        self.infidelity = self._infid # TODO: should be used to calculate the reward
+
     #def _pulse(self, t, p):
     #    return p
     def pulse(self, t, args, idx):
@@ -128,10 +130,10 @@ class _RL(gym.Env): # TODO: this should be similar to your GymQubitEnv(gym.Env) 
         """
         Calculate infidelity to be minimized
         """
-        '''
         X = self._solver.run(
             self.state, [0.0, self.step_duration], args={"p": params}
         ).final_state
+        self.state = X
 
         if self._fid_type == "TRACEDIFF":
             diff = X - self._target
@@ -145,8 +147,7 @@ class _RL(gym.Env): # TODO: this should be similar to your GymQubitEnv(gym.Env) 
                 infid = 1 - np.abs(g)
             elif self._fid_type == "SU":  # f_SU (incl global phase)
                 infid = 1 - np.real(g)
-        '''
-        infid = 1 - qt.fidelity(self.state, self._target)
+        #infid = 1 - qt.fidelity(self.state, self._target)
         return infid
 
     # TODO: don't hesitate to add the required methods for your rl environment
@@ -158,13 +159,11 @@ class _RL(gym.Env): # TODO: this should be similar to your GymQubitEnv(gym.Env) 
             self.args[f"alpha{i+1}"] = value
         self._H = qt.QobjEvo(self._H_lst, self.args)
 
-        #H = [self._Hd_lst[0], [self._Hc_lst[0][0], lambda t, args: self.pulse(t, args["alpha"])]]
-        #step_result = qt.mesolve(H, self.state, [0, self.step_duration], args = args)
-        step_result = qt.mesolve(self._H, self.state, [0, self.step_duration])
-
-        self.state =  step_result.states[-1]
-
+        self.update_solver()                # _H has changed
         infidelity = self.infidelity()
+
+        self.current_step += 1
+        self.temp_actions.append(alphas)
         self._result.infidelity = infidelity
         reward = (1 - infidelity) - self._step_penalty
 
@@ -175,7 +174,7 @@ class _RL(gym.Env): # TODO: this should be similar to your GymQubitEnv(gym.Env) 
             time_diff = time.mktime(time.localtime()) - time.mktime(self._result.start_local_time)
             self._result.iter_seconds.append(time_diff)
             self.current_step = 0                                           # Reset the step counter
-            self.action = alphas
+            self.actions = self.temp_actions.copy()
 
         observation = self._get_obs()
         return observation, reward, bool(terminated), bool(truncated), {}
@@ -186,6 +185,7 @@ class _RL(gym.Env): # TODO: this should be similar to your GymQubitEnv(gym.Env) 
         return obs.astype(np.float32)                                       # Gymnasium expects the observation to be of type float32
     
     def reset(self, seed=None):
+        self.temp_actions = []
         self.state = self._initial
         return self._get_obs(), {}
     
@@ -194,12 +194,14 @@ class _RL(gym.Env): # TODO: this should be similar to your GymQubitEnv(gym.Env) 
         self._result.message = "Optimization finished!"
         self._result.end_local_time = time.localtime()
         self._result.n_iters = len(self._result.iter_seconds)  
-        self._result.optimized_params = np.array(self.action)
-        self._result._optimized_controls = np.array(self.action)    #TODO: is equal to optimized_params ?
+        self._result.optimized_params = self.actions.copy()
+        self._result._optimized_controls = self.actions.copy()
         self._result._final_states = (self._result._final_states if self._result._final_states is not None else []) + [self.state]
         self._result.start_local_time = time.strftime("%Y-%m-%d %H:%M:%S", self._result.start_local_time)       # Convert to a string
         self._result.end_local_time = time.strftime("%Y-%m-%d %H:%M:%S", self._result.end_local_time)           # Convert to a string
         self._result._guess_controls = []
+        self._result._optimized_H = [self._H]
+        self._result.guess_params = []
         return self._result
 
     def train(self):
