@@ -63,9 +63,10 @@ class _RL(gym.Env): # TODO: this should be similar to your GymQubitEnv(gym.Env) 
         #self._H = self._prepare_generator()
         self._alg_kwargs = alg_kwargs
 
-        self._initial = objective.initial
-        self._target = objective.target
+        self._initial = objectives[0].initial
+        self._target = objectives[0].target
         self.state = None
+        self.dim = self._initial.shape[0]
 
         self._result = Result(
             objectives = objectives,
@@ -105,9 +106,13 @@ class _RL(gym.Env): # TODO: this should be similar to your GymQubitEnv(gym.Env) 
         self.total_timesteps = self.max_episodes * self.max_steps       # for learn() of gym
         
         # Define action and observation spaces (Gym)
-        #self.action_space = spaces.Box(low=-1, high=1, shape=(1,), dtype=np.float32)  # Continuous action space from -1 to +1, as suggested from gym
-        self.action_space = spaces.Box(low=-1, high=1, shape=(len(self._Hc_lst[0]),), dtype=np.float32)
-        self.observation_space = spaces.Box(low=-1, high=1, shape=(4,), dtype=np.float32)  # Observation space, |v> have 2 real and 2 imaginary numbers -> 4
+        #self.action_space = spaces.Box(low=-1, high=1, shape=(1,), dtype=np.float32)  
+        if self._initial.isket:
+            obs_shape = (2 * self.dim,)
+        else:   # for unitary operators 
+            obs_shape = (2 * self.dim * self.dim,)
+        self.action_space = spaces.Box(low=-1, high=1, shape=(len(self._Hc_lst[0]),), dtype=np.float32)     # Continuous action space from -1 to +1, as suggested from gym
+        self.observation_space = spaces.Box(low=-1, high=1, shape=obs_shape, dtype=np.float32)              # Observation space
         # ----------------------------------------------------------------------------------------
         
     def update_solver(self): 

@@ -182,14 +182,14 @@ state2state_rl = Case(
     optimizer_kwargs={}
 )
 
-# TODO: no big difference for unitary evolution
+# no big difference for unitary evolution
 
-#initial = qt.qeye(2) # Identity
-#target  = qt.gates.hadamard_transform()
+initial = qt.qeye(2) # Identity
+target  = qt.gates.hadamard_transform()
 
-#unitary_rl = state2state_rl._replace(
-#    objectives=[Objective(initial, H, target)],
-#)
+unitary_rl = state2state_rl._replace(
+    objectives=[Objective(initial, H, target)],
+)
 
 
 @pytest.fixture(
@@ -199,8 +199,8 @@ state2state_rl = Case(
         #pytest.param(state2state_param_crab, id="State to state (param. CRAB)"),
         #pytest.param(state2state_goat, id="State to state (GOAT)"),
         #pytest.param(state2state_jax, id="State to state (JAX)"),
-        pytest.param(state2state_rl, id="State to state (RL)"),
-        #pytest.param(unitary_rl, id="Unitary (RL)"),
+        #pytest.param(state2state_rl, id="State to state (RL)"),
+        pytest.param(unitary_rl, id="Unitary (RL)"),
     ]
 )
 def tst(request):
