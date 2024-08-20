@@ -13,6 +13,7 @@ import gymnasium as gym
 from gymnasium import spaces
 from stable_baselines3 import PPO
 from stable_baselines3.common.env_checker import check_env
+from stable_baselines3.common.callbacks import BaseCallback
 
 import time
 
@@ -90,6 +91,10 @@ class _RL(gym.Env):
         # To check if it exceeds the maximum number of steps in an episode
         self.current_step = 0
 
+        self.terminated = False
+        self.truncated = False
+        self.episode_info = []                # to contain some information from the latest episode
+
         self._fid_err_targ = alg_kwargs["fid_err_targ"]
 
         # inferred attributes
@@ -108,6 +113,7 @@ class _RL(gym.Env):
         self.step_duration = time_interval.tslots[-1] / time_interval.n_tslots  # step duration for mesvole
         self.max_episodes = alg_kwargs["max_iter"]                      # maximum number of episodes for training
         self.total_timesteps = self.max_episodes * self.max_steps       # for learn() of gym
+        self.current_episode = 0                                        # To keep track of the current episode
         
         # Define action and observation spaces (Gym)
         if self._initial.isket:
@@ -137,6 +143,19 @@ class _RL(gym.Env):
         Returns the control pulse value at time t for a given index.
         """
         return 1*args[f"alpha{idx}"]
+    
+    def save_episode_info(self):
+        """
+        Save the information of the last episode before resetting the environment.
+        """
+        episode_data = {
+            "episode": self.current_episode,
+            "final_infidelity": self._result.infidelity,
+            "terminated": self.terminated,
+            "truncated": self.truncated,
+            "steps_used": self.current_step
+        }
+        self.episode_info.append(episode_data)
 
     def _infid(self, params=None):
         """
@@ -180,17 +199,11 @@ class _RL(gym.Env):
         self._result.infidelity = infidelity
         reward = (1 - infidelity) - self._step_penalty
 
-        terminated = infidelity <= self._fid_err_targ                       # the episode ended reaching the goal
-        truncated = self.current_step >= self.max_steps                     # if the episode ended without reaching the goal
-
-        if terminated or truncated:
-            time_diff = time.mktime(time.localtime()) - time.mktime(self._result.start_local_time)
-            self._result.iter_seconds.append(time_diff)
-            self.current_step = 0                                           # Reset the step counter
-            self.actions = self.temp_actions.copy()
+        self.terminated = infidelity <= self._fid_err_targ                       # the episode ended reaching the goal
+        self.truncated = self.current_step >= self.max_steps                     # if the episode ended without reaching the goal
 
         observation = self._get_obs()
-        return observation, reward, bool(terminated), bool(truncated), {}
+        return observation, reward, bool(self.terminated), bool(self.truncated), {}
 
     def _get_obs(self):
         """
@@ -205,6 +218,15 @@ class _RL(gym.Env):
         """
         Reset the environment to the initial state, preparing for a new episode.
         """
+        self.save_episode_info()
+
+        time_diff = time.mktime(time.localtime()) - time.mktime(self._result.start_local_time)
+        self._result.iter_seconds.append(time_diff)
+        self.current_step = 0                                           # Reset the step counter
+        self.current_episode += 1                                       # Increment episode counter
+        self.actions = self.temp_actions.copy()
+        self.terminated = False
+        self.truncated = False
         self.temp_actions = []
         self.state = self._initial
         return self._get_obs(), {}
@@ -214,7 +236,6 @@ class _RL(gym.Env):
         Retrieve the results of the optimization process, including the optimized 
         pulse sequences, final states, and performance metrics.
         """
-        self._result.message = "Optimization finished!"
         self._result.end_local_time = time.localtime()
         self._result.n_iters = len(self._result.iter_seconds)  
         self._result.optimized_params = self.actions.copy()
@@ -237,5 +258,56 @@ class _RL(gym.Env):
 
         # Create the model
         model = PPO('MlpPolicy', self, verbose=1)       # verbose = 1 to display training progress and statistics in the terminal
+        
+        stop_callback = EarlyStopTraining(verbose=1)
+        
         # Train the model
-        model.learn(total_timesteps = self.total_timesteps)
+        model.learn(total_timesteps = self.total_timesteps, callback=stop_callback)
+
+class EarlyStopTraining(BaseCallback):
+    """
+    A callback to stop training based on specific conditions (steps, infidelity, max iterations)
+    """
+    def __init__(self, verbose: int = 0):
+        super(EarlyStopTraining, self).__init__(verbose)
+        self.stop_train = False
+
+    def _on_step(self) -> bool:
+        """
+        This method is required by the BaseCallback class. We use it only to stop the training.
+        """
+        # Check if we need to stop training
+        if self.stop_train:
+            return False  # Stop training
+        return True  # Continue training
+
+    def _on_rollout_start(self) -> None:
+        """
+        This method is called before the rollout starts (before collecting new samples).
+        Checks:
+        - If all of the last 100 episodes have infidelity below the target and use the same number of steps, stop training.
+        - Stop training if the maximum number of episodes is reached.
+        """
+        env = self.training_env.envs[0].unwrapped
+        max_episodes = env.max_episodes
+        fid_err_targ = env._fid_err_targ
+
+        if len(env.episode_info) >= 100:
+            last_100_episodes = env.episode_info[-100:]
+
+            min_steps = min(info['steps_used'] for info in last_100_episodes)
+            steps_condition = all(ep['steps_used'] == min_steps for ep in last_100_episodes)
+            infid_condition = all(ep['final_infidelity'] <= fid_err_targ for ep in last_100_episodes)
+
+            if steps_condition and infid_condition:
+                env._result.message = "Training finished. No episode in the last 100 used fewer steps and infidelity was below target infid."
+                #print(f"Stopping training as no episode in the last 100 used fewer steps and infidelity was below target infid.")
+                self.stop_train = True  # Stop training
+                #print([ep['steps_used'] for ep in last_100_episodes])
+                #print([ep['final_infidelity'] for ep in last_100_episodes])
+
+        # Check max episodes condition
+        if env.current_episode >= max_episodes:
+            env._result.message = f"Reached {max_episodes} episodes, stopping training."
+            #print(f"Reached {max_episodes} episodes, stopping training.")
+            self.stop_train = True  # Stop training
