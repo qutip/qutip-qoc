@@ -204,14 +204,14 @@ control policies by interacting with the quantum environment.
 
 The RL algorithm consists of three main components:
 
-- **Agent**: The RL agent is responsible for making decisions regarding control
+**Agent**: The RL agent is responsible for making decisions regarding control
 parameters at each time step. The agent observes the current state of the quantum
 system and chooses an action (i.e., a set of control parameters) based on the current policy.
-- **Environment**: The environment represents the quantum system that evolves over time.
+**Environment**: The environment represents the quantum system that evolves over time.
 The environment is defined by the system's dynamics, which include drift and control Hamiltonians.
 Each action chosen by the agent induces a response in the environment, which manifests as an
 evolution of the system's state. From this, a reward can be derived.
-- **Reward**: The reward is a measure of how much the action chosen by the agent brings the
+**Reward**: The reward is a measure of how much the action chosen by the agent brings the
 quantum system closer to the desired objective. In this context, the objective could be the
 preparation of a specific state, state-to-state transfer, or the synthesis of a quantum gate.
 
@@ -223,14 +223,9 @@ accurately reflect the objective of the quantum control problem.
 The algorithm will aim to update its policy to maximize the reward obtained during the
 various episodes of training. This highlights the importance of ensuring that the control
 problem's objectives are well encoded in the reward function. For example, in a state-to-state
-transfer problem, the reward might be based on the fidelity between the final state obtained
-and the desired target state. A common choice is:
-.. math:: 
-  
-  R(s, a) = 1 - \text{infidelity}(s_{\text{final}}, s_{\text{target}}) - \text{step penalty}
-
-Here, the step penalty is a small negative value that encourages the agent to reach the objective
-in as few steps as possible.
+transfer problem, the reward could be based on the fidelity between the achieved final state
+and the desired target state and subtract a constant penalty term.
+The step penalty is a small value that encourages the agent to reach the objective in as few steps as possible.
 
 In QuTiP, the RL environment is modeled as a custom class derived from the gymnasium library.
 This class allows defining the quantum system's dynamics at each step, the actions the agent
