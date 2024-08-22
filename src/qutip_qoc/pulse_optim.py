@@ -25,7 +25,7 @@ def optimize_pulses(
     integrator_kwargs=None,
 ):
     """
-    Run GOAT, JOPT, GRAPE or CRAB optimization.
+    Run GOAT, JOPT, GRAPE, CRAB or RL optimization.
 
     Parameters
     ----------
@@ -37,6 +37,7 @@ def optimize_pulses(
         Dictionary of options for the control pulse optimization.
         The keys of this dict must be a unique string identifier for each control Hamiltonian / function.
         For the GOAT and JOPT algorithms, the dict may optionally also contain the key "__time__".
+        For RL you don't need to specify the guess.
         For each control function it must specify:
 
             control_id : dict
@@ -71,14 +72,15 @@ def optimize_pulses(
 
             - alg : str
                 Algorithm to use for the optimization.
-                Supported are: "GRAPE", "CRAB", "GOAT", "JOPT".
+                Supported are: "GRAPE", "CRAB", "GOAT", "JOPT" and "RL".
 
             - fid_err_targ : float, optional
                 Fidelity error target for the optimization.
 
             - max_iter : int, optional
                 Maximum number of iterations to perform.
-                Referes to local minimizer steps.
+                Referes to local minimizer steps or in the context of 
+                `alg: "RL"` to the max. number of episodes.
                 Global steps default to 0 (no global optimization).
                 Can be overridden by specifying in minimizer_kwargs.
 
