@@ -1,7 +1,7 @@
 """
 This module is the entry point for the optimization of control pulses.
 It provides the function `optimize_pulses` which prepares and runs the
-GOAT, JOPT, GRAPE or CRAB optimization.
+GOAT, JOPT, GRAPE, CRAB or RL optimization.
 """
 import numpy as np
 
