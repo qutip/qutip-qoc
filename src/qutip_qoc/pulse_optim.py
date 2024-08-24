@@ -37,7 +37,6 @@ def optimize_pulses(
         Dictionary of options for the control pulse optimization.
         The keys of this dict must be a unique string identifier for each control Hamiltonian / function.
         For the GOAT and JOPT algorithms, the dict may optionally also contain the key "__time__".
-        For RL you don't need to specify the guess.
         For each control function it must specify:
 
             control_id : dict
@@ -46,6 +45,7 @@ def optimize_pulses(
                     where ``n`` is the number of independent variables.
 
                 - bounds : sequence, optional
+                    For RL you don't need to specify the guess.
                     Sequence of ``(min, max)`` pairs for each element in
                     `guess`. None is used to specify no bound.
 
@@ -83,6 +83,11 @@ def optimize_pulses(
                 `alg: "RL"` to the max. number of episodes.
                 Global steps default to 0 (no global optimization).
                 Can be overridden by specifying in minimizer_kwargs.
+
+            - shorter_pulses : bool, optional
+                If set to True, allows the algorithm to search for shorter control 
+                pulses that can achieve the desired fidelity target using fewer steps. 
+                By default, it is set to False, only attempting to reach the target infidelity.
 
         Algorithm specific keywords for GRAPE,CRAB can be found in
         :func:`qutip_qtrl.pulseoptim.optimize_pulse`.
@@ -154,7 +159,7 @@ def optimize_pulses(
     # extract guess and bounds for the control pulses
     x0, bounds = [], []
     for key in control_parameters.keys():
-        x0.append(control_parameters[key].get("guess"))         # TODO: for now only consider bounds
+        x0.append(control_parameters[key].get("guess"))
         bounds.append(control_parameters[key].get("bounds"))
     try:  # GRAPE, CRAB format
         lbound = [b[0][0] for b in bounds]
@@ -351,8 +356,7 @@ def optimize_pulses(
 
             qtrl_optimizers.append(qtrl_optimizer)
 
-    # TODO: we can deal with proper handling later
-    if alg == "RL":
+    elif alg == "RL":
         rl_env = _RL(
             objectives,
             control_parameters,

@@ -47,8 +47,6 @@ class _RL(gym.Env):
         super(_RL,self).__init__()
         
         self._Hd_lst, self._Hc_lst = [], []
-        if not isinstance(objectives, list):
-            objectives = [objectives]
         for objective in objectives:
             # extract drift and control Hamiltonians from the objective
             self._Hd_lst.append(objective.H[0])
@@ -61,8 +59,7 @@ class _RL(gym.Env):
             self._H_lst.append([Hc, lambda t, args: self.pulse(t, self.args, i+1)])
         self._H = qt.QobjEvo(self._H_lst, self.args)
 
-        self._control_parameters = control_parameters
-        # extract bounds for _control_parameters
+        # extract bounds for control_parameters
         bounds = []
         for key in control_parameters.keys():
             bounds.append(control_parameters[key].get("bounds"))
@@ -70,6 +67,7 @@ class _RL(gym.Env):
         self.ubound = [b[0][1] for b in bounds]
 
         self._alg_kwargs = alg_kwargs
+        self.shorter_pulses = self._alg_kwargs.get("shorter_pulses", False)     # lengthen the training to look for pulses of shorter duration, therefore episodes with fewer steps
 
         self._initial = objectives[0].initial
         self._target = objectives[0].target
@@ -82,7 +80,7 @@ class _RL(gym.Env):
             start_local_time = time.localtime(),    # initial optimization time
             n_iters = 0,                            # Number of iterations(episodes) until convergence 
             iter_seconds = [],                      # list containing the time taken for each iteration(episode) of the optimization
-            var_time = False,                       # Whether the optimization was performed with variable time
+            var_time = True,                        # Whether the optimization was performed with variable time
         )
 
         #for the reward
@@ -123,20 +121,13 @@ class _RL(gym.Env):
         self.action_space = spaces.Box(low=-1, high=1, shape=(len(self._Hc_lst[0]),), dtype=np.float32)     # Continuous action space from -1 to +1, as suggested from gym
         self.observation_space = spaces.Box(low=-1, high=1, shape=obs_shape, dtype=np.float32)              # Observation space
         
-    def update_solver(self): 
-        """
-        Update the solver and fidelity type based on the problem setup.
-        Chooses the appropriate solver (Schrödinger or master equation) and 
-        prepares for infidelity calculation.
-        """
+        # create the solver
         if self._Hd_lst[0].issuper:
             self._fid_type = self._alg_kwargs.get("fid_type", "TRACEDIFF")
             self._solver = qt.MESolver(H=self._H, options=self._integrator_kwargs)
         else:
             self._fid_type = self._alg_kwargs.get("fid_type", "PSU")
             self._solver = qt.SESolver(H=self._H, options=self._integrator_kwargs)
-
-        self.infidelity = self._infid
 
     def pulse(self, t, args, idx):
         """
@@ -153,7 +144,8 @@ class _RL(gym.Env):
             "final_infidelity": self._result.infidelity,
             "terminated": self.terminated,
             "truncated": self.truncated,
-            "steps_used": self.current_step
+            "steps_used": self.current_step,
+            "elapsed_time": time.mktime(time.localtime())
         }
         self.episode_info.append(episode_data)
 
@@ -189,10 +181,8 @@ class _RL(gym.Env):
 
         for i, value in enumerate(alphas):
             self.args[f"alpha{i+1}"] = value
-        self._H = qt.QobjEvo(self._H_lst, self.args)
 
-        self.update_solver()                # _H has changed
-        infidelity = self.infidelity()
+        infidelity = self._infid()
 
         self.current_step += 1
         self.temp_actions.append(alphas)
@@ -220,7 +210,7 @@ class _RL(gym.Env):
         """
         self.save_episode_info()
 
-        time_diff = time.mktime(time.localtime()) - time.mktime(self._result.start_local_time)
+        time_diff = self.episode_info[-1]["elapsed_time"] - (self.episode_info[-2]["elapsed_time"] if len(self.episode_info) > 1 else time.mktime(self._result.start_local_time))
         self._result.iter_seconds.append(time_diff)
         self.current_step = 0                                           # Reset the step counter
         self.current_episode += 1                                       # Increment episode counter
@@ -238,7 +228,7 @@ class _RL(gym.Env):
         """
         self._result.end_local_time = time.localtime()
         self._result.n_iters = len(self._result.iter_seconds)  
-        self._result.optimized_params = self.actions.copy()
+        self._result.optimized_params = self.actions.copy() + [self._result.total_seconds]                    # If var_time is True, the last parameter is the evolution time
         self._result._optimized_controls = self.actions.copy()
         self._result._final_states = (self._result._final_states if self._result._final_states is not None else []) + [self.state]
         self._result.start_local_time = time.strftime("%Y-%m-%d %H:%M:%S", self._result.start_local_time)       # Convert to a string
@@ -274,10 +264,20 @@ class EarlyStopTraining(BaseCallback):
 
     def _on_step(self) -> bool:
         """
-        This method is required by the BaseCallback class. We use it only to stop the training.
+        This method is required by the BaseCallback class. We use it to stop the training.
+        - Stop training if the maximum number of episodes is reached.
+        - Stop training if it finds an episode with infidelity <= than target infidelity
         """
+        env = self.training_env.envs[0].unwrapped
+
         # Check if we need to stop training
         if self.stop_train:
+            return False  # Stop training
+        elif env.current_episode >= env.max_episodes:
+            env._result.message = f"Reached {env.max_episodes} episodes, stopping training."
+            return False    # Stop training
+        elif (env._result.infidelity <= env._fid_err_targ) and not(env.shorter_pulses):
+            env._result.message = f"Stop training because an episode with infidelity <= target infidelity was found"
             return False  # Stop training
         return True  # Continue training
 
@@ -286,28 +286,19 @@ class EarlyStopTraining(BaseCallback):
         This method is called before the rollout starts (before collecting new samples).
         Checks:
         - If all of the last 100 episodes have infidelity below the target and use the same number of steps, stop training.
-        - Stop training if the maximum number of episodes is reached.
         """
+        #could be moved to on_step
+        
         env = self.training_env.envs[0].unwrapped
-        max_episodes = env.max_episodes
-        fid_err_targ = env._fid_err_targ
+        #Only if specified in alg_kwargs, the algorithm will search for shorter pulses, resulting in episodes with fewer steps.
+        if env.shorter_pulses:
+            if len(env.episode_info) >= 100:
+                last_100_episodes = env.episode_info[-100:]
 
-        if len(env.episode_info) >= 100:
-            last_100_episodes = env.episode_info[-100:]
+                min_steps = min(info['steps_used'] for info in last_100_episodes)
+                steps_condition = all(ep['steps_used'] == min_steps for ep in last_100_episodes)
+                infid_condition = all(ep['final_infidelity'] <= env._fid_err_targ for ep in last_100_episodes)
 
-            min_steps = min(info['steps_used'] for info in last_100_episodes)
-            steps_condition = all(ep['steps_used'] == min_steps for ep in last_100_episodes)
-            infid_condition = all(ep['final_infidelity'] <= fid_err_targ for ep in last_100_episodes)
-
-            if steps_condition and infid_condition:
-                env._result.message = "Training finished. No episode in the last 100 used fewer steps and infidelity was below target infid."
-                #print(f"Stopping training as no episode in the last 100 used fewer steps and infidelity was below target infid.")
-                self.stop_train = True  # Stop training
-                #print([ep['steps_used'] for ep in last_100_episodes])
-                #print([ep['final_infidelity'] for ep in last_100_episodes])
-
-        # Check max episodes condition
-        if env.current_episode >= max_episodes:
-            env._result.message = f"Reached {max_episodes} episodes, stopping training."
-            #print(f"Reached {max_episodes} episodes, stopping training.")
-            self.stop_train = True  # Stop training
+                if steps_condition and infid_condition:
+                    env._result.message = "Training finished. No episode in the last 100 used fewer steps and infidelity was below target infid."
+                    self.stop_train = True  # Stop training

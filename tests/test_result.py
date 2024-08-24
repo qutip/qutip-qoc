@@ -153,8 +153,6 @@ state2state_crab = state2state_goat._replace(
 )
 
 # ----------------------- RL --------------------
-# TODO: this is the input for optimiz_pulses() function
-# you can use this routine to test your implementation
 
 # state to state transfer
 initial = qt.basis(2, 0)
@@ -169,7 +167,6 @@ H = [H_d] + H_c # total Hamiltonian
 
 state2state_rl = Case(
     objectives=[Objective(initial, H, target)],
-    #control_parameters={"bounds": [-13, 13]}, # TODO: for now only consider bounds
     control_parameters = {
         "p": {"bounds": [(-13, 13)],}
     },
@@ -177,30 +174,31 @@ state2state_rl = Case(
     algorithm_kwargs={
         "fid_err_targ": 0.01,
         "alg": "RL",
-        "max_iter": 70000,
+        "max_iter": 300,
+        "shorter_pulses": True,
     },
     optimizer_kwargs={}
 )
 
 # no big difference for unitary evolution
 
-#initial = qt.qeye(2) # Identity
-#target  = qt.gates.hadamard_transform()
+initial = qt.qeye(2) # Identity
+target  = qt.gates.hadamard_transform()
 
-#unitary_rl = state2state_rl._replace(
-#    objectives=[Objective(initial, H, target)],
-#)
+unitary_rl = state2state_rl._replace(
+    objectives=[Objective(initial, H, target)],
+)
 
 
 @pytest.fixture(
     params=[
-        #pytest.param(state2state_grape, id="State to state (GRAPE)"),
-        #pytest.param(state2state_crab, id="State to state (CRAB)"),
-        #pytest.param(state2state_param_crab, id="State to state (param. CRAB)"),
-        #pytest.param(state2state_goat, id="State to state (GOAT)"),
-        #pytest.param(state2state_jax, id="State to state (JAX)"),
+        pytest.param(state2state_grape, id="State to state (GRAPE)"),
+        pytest.param(state2state_crab, id="State to state (CRAB)"),
+        pytest.param(state2state_param_crab, id="State to state (param. CRAB)"),
+        pytest.param(state2state_goat, id="State to state (GOAT)"),
+        pytest.param(state2state_jax, id="State to state (JAX)"),
         pytest.param(state2state_rl, id="State to state (RL)"),
-        #pytest.param(unitary_rl, id="Unitary (RL)"),
+        pytest.param(unitary_rl, id="Unitary (RL)"),
     ]
 )
 def tst(request):
