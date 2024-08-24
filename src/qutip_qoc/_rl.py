@@ -218,6 +218,7 @@ class _RL(gym.Env):
         self.terminated = False
         self.truncated = False
         self.temp_actions = []
+        self._result._final_states = [self.state]
         self.state = self._initial
         return self._get_obs(), {}
     
@@ -230,7 +231,6 @@ class _RL(gym.Env):
         self._result.n_iters = len(self._result.iter_seconds)  
         self._result.optimized_params = self.actions.copy() + [self._result.total_seconds]                    # If var_time is True, the last parameter is the evolution time
         self._result._optimized_controls = self.actions.copy()
-        self._result._final_states = (self._result._final_states if self._result._final_states is not None else []) + [self.state]
         self._result.start_local_time = time.strftime("%Y-%m-%d %H:%M:%S", self._result.start_local_time)       # Convert to a string
         self._result.end_local_time = time.strftime("%Y-%m-%d %H:%M:%S", self._result.end_local_time)           # Convert to a string
         self._result._guess_controls = []
