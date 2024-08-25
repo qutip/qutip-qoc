@@ -216,21 +216,20 @@ quantum system closer to the desired objective. In this context, the objective c
 preparation of a specific state, state-to-state transfer, or the synthesis of a quantum gate.
 
 Each interaction between the agent and the environment defines a step.
-A sequence of steps forms an episode.The episode ends when certain conditions, such as reaching
+A sequence of steps forms an episode. The episode ends when certain conditions, such as reaching
 a specific fidelity, are met.
-The reward function is a crucial component of the RL algorithm. It must be designed to
-accurately reflect the objective of the quantum control problem.
-The algorithm will aim to update its policy to maximize the reward obtained during the
-various episodes of training. This highlights the importance of ensuring that the control
-problem's objectives are well encoded in the reward function. For example, in a state-to-state
-transfer problem, the reward could be based on the fidelity between the achieved final state
-and the desired target state and subtract a constant penalty term.
+The reward function is a crucial component of the RL algorithm, carefully designed to
+reflect the objective of the quantum control problem.
+It guides the algorithm in updating its policy to maximize the reward obtained during the various
+training episodes.
+For example, in a state-to-state transfer problem, the reward could be based on the fidelity
+between the achieved final state and the desired target state and subtract a constant penalty term.
 The step penalty is a small value that encourages the agent to reach the objective in as few steps as possible.
 
 In QuTiP, the RL environment is modeled as a custom class derived from the gymnasium library.
 This class allows defining the quantum system's dynamics at each step, the actions the agent
-can take, the observation space, and so on. The RL agent can be trained using pre-existing
-policies such as Proximal Policy Optimization (PPO) from the stable_baselines3 library.
+can take, the observation space, and so on. The RL agent is trained using the Proximal Policy Optimization
+(PPO) algorithm from the stable baselines3 library.
 
 
 Optimal Quantum Control in QuTiP
