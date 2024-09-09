@@ -222,9 +222,10 @@ The reward function is a crucial component of the RL algorithm, carefully design
 reflect the objective of the quantum control problem.
 It guides the algorithm in updating its policy to maximize the reward obtained during the various
 training episodes.
-For example, in a state-to-state transfer problem, the reward could be based on the fidelity
-between the achieved final state and the desired target state and subtract a constant penalty term.
-The step penalty is a small value that encourages the agent to reach the objective in as few steps as possible.
+For example, in a state-to-state transfer problem, the reward is based on the fidelity
+between the achieved final state and the desired target state.
+In addition, a constant penalty term is subtracted in order to encourages the agent to reach the
+objective in as few steps as possible.
 
 In QuTiP, the RL environment is modeled as a custom class derived from the gymnasium library.
 This class allows defining the quantum system's dynamics at each step, the actions the agent
