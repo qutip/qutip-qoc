@@ -41,16 +41,17 @@ def optimize_pulses(
 
             control_id : dict
                 - guess: ndarray, shape (n,)
+                    For RL you don't need to specify the guess.
                     Initial guess. Array of real elements of size (n,),
                     where ``n`` is the number of independent variables.
 
                 - bounds : sequence, optional
-                    For RL you don't need to specify the guess.
                     Sequence of ``(min, max)`` pairs for each element in
                     `guess`. None is used to specify no bound.
 
             __time__ : dict, optional
-                Only supported by GOAT and JOPT.
+                Only supported by GOAT, JOPT and RL.
+                For RL the values of guess and bounds are not relevant.
                 If given the pulse duration is treated as optimization parameter.
                 It must specify both:
 
@@ -83,11 +84,6 @@ def optimize_pulses(
                 `alg: "RL"` to the max. number of episodes.
                 Global steps default to 0 (no global optimization).
                 Can be overridden by specifying in minimizer_kwargs.
-
-            - shorter_pulses : bool, optional
-                If set to True, allows the algorithm to search for shorter control 
-                pulses that can achieve the desired fidelity target using fewer steps. 
-                By default, it is set to False, only attempting to reach the target infidelity.
 
         Algorithm specific keywords for GRAPE,CRAB can be found in
         :func:`qutip_qtrl.pulseoptim.optimize_pulse`.
