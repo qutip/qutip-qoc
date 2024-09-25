@@ -195,6 +195,44 @@ experimental systematic noise, ...) can be done all in one, using this
 algorithm.
 
 
+The RL Algorithm
+================
+Reinforcement Learning (RL) represents a different approach compared to traditional
+quantum control methods, such as GRAPE and CRAB. Instead of relying on gradients or
+prior knowledge of the system, RL uses an agent that autonomously learns to optimize
+control policies by interacting with the quantum environment.
+
+The RL algorithm consists of three main components:
+
+**Agent**: The RL agent is responsible for making decisions regarding control
+parameters at each time step. The agent observes the current state of the quantum
+system and chooses an action (i.e., a set of control parameters) based on the current policy.
+**Environment**: The environment represents the quantum system that evolves over time.
+The environment is defined by the system's dynamics, which include drift and control Hamiltonians.
+Each action chosen by the agent induces a response in the environment, which manifests as an
+evolution of the system's state. From this, a reward can be derived.
+**Reward**: The reward is a measure of how much the action chosen by the agent brings the
+quantum system closer to the desired objective. In this context, the objective could be the
+preparation of a specific state, state-to-state transfer, or the synthesis of a quantum gate.
+
+Each interaction between the agent and the environment defines a step.
+A sequence of steps forms an episode. The episode ends when certain conditions, such as reaching
+a specific fidelity, are met.
+The reward function is a crucial component of the RL algorithm, carefully designed to
+reflect the objective of the quantum control problem.
+It guides the algorithm in updating its policy to maximize the reward obtained during the various
+training episodes.
+For example, in a state-to-state transfer problem, the reward is based on the fidelity
+between the achieved final state and the desired target state.
+In addition, a constant penalty term is subtracted in order to encourages the agent to reach the
+objective in as few steps as possible.
+
+In QuTiP, the RL environment is modeled as a custom class derived from the gymnasium library.
+This class allows defining the quantum system's dynamics at each step, the actions the agent
+can take, the observation space, and so on. The RL agent is trained using the Proximal Policy Optimization
+(PPO) algorithm from the stable baselines3 library.
+
+
 Optimal Quantum Control in QuTiP
 ================================
 Defining a control problem with QuTiP is very easy.
