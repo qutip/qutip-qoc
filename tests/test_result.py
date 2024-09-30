@@ -190,6 +190,18 @@ target  = qt.gates.hadamard_transform()
 
 unitary_rl = state2state_rl._replace(
     objectives=[Objective(initial, H, target)],
+        control_parameters = {
+        "p": {"bounds": [(-13, 13)]},
+        "__time__": {
+            "guess": np.array([0.0]),  #dummy value
+            "bounds": [(0.0, 0.0)]    #dummy value
+        }
+    },
+    algorithm_kwargs={
+        "fid_err_targ": 0.01,
+        "alg": "RL",
+        "max_iter": 300,
+    },
 )
 
 
