@@ -65,7 +65,9 @@ class _GOAT:
         self._var_t = "guess" in time_options
 
         # num of params for each control function
-        self._para_counts = [len(v["guess"]) for v in control_parameters.values()]
+        self._para_counts = [
+            len(v["guess"]) for k, v in control_parameters.items() if k != "__time__"
+        ]
 
         # inferred attributes
         self._tot_n_para = sum(self._para_counts)  # excl. time
