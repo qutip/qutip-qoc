@@ -133,7 +133,7 @@ def optimize_pulses(
     # create time interval
     time_interval = _TimeInterval(tslots=tlist)
 
-    time_options = control_parameters.pop("__time__", {})
+    time_options = control_parameters.get("__time__", {})
     if time_options:  # convert to list of bounds if not already
         if not isinstance(time_options["bounds"][0], (list, tuple)):
             time_options["bounds"] = [time_options["bounds"]]
@@ -151,8 +151,9 @@ def optimize_pulses(
     # extract guess and bounds for the control pulses
     x0, bounds = [], []
     for key in control_parameters.keys():
-        x0.append(control_parameters[key].get("guess"))
-        bounds.append(control_parameters[key].get("bounds"))
+        if key != "__time__":
+            x0.append(control_parameters[key].get("guess"))
+            bounds.append(control_parameters[key].get("bounds"))
     try:  # GRAPE, CRAB format
         lbound = [b[0][0] for b in bounds]
         ubound = [b[0][1] for b in bounds]
