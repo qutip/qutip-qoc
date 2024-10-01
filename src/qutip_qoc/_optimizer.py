@@ -283,9 +283,6 @@ def _global_local_optimization(
         _get_init_and_bounds_from_options(x0, control_parameters[key].get("guess"))
         _get_init_and_bounds_from_options(bounds, control_parameters[key].get("bounds"))
 
-    _get_init_and_bounds_from_options(x0, time_options.get("guess", None))
-    _get_init_and_bounds_from_options(bounds, time_options.get("bounds", None))
-
     optimizer_kwargs["x0"] = np.concatenate(x0)
 
     multi_objective = _MultiObjective(
