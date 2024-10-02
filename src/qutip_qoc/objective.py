@@ -80,6 +80,12 @@ class Objective:
         self.target = target
         self.weight = weight
 
+        # Check if any Hamiltonian in H is a superoperator
+        if any(qt.issuper(H_i) for H_i in (H if isinstance(H, list) else [H])):
+            # Convert initial and target accordingly
+            self.initial = qt.to_super(self.initial)
+            self.target = qt.to_super(self.target)
+
     def __getstate__(self):
         """
         Extract picklable information from the objective.
