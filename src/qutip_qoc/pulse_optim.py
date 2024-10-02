@@ -79,7 +79,7 @@ def optimize_pulses(
 
             - max_iter : int, optional
                 Maximum number of iterations to perform.
-                Referes to local minimizer steps or in the context of 
+                Referes to local minimizer steps or in the context of
                 `alg: "RL"` to the max. number of episodes.
                 Global steps default to 0 (no global optimization).
                 Can be overridden by specifying in minimizer_kwargs.
