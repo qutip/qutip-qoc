@@ -50,8 +50,7 @@ def optimize_pulses(
                     `guess`. None is used to specify no bound.
 
             __time__ : dict, optional
-                Only supported by GOAT, JOPT and RL.
-                For RL the values of guess and bounds are not relevant.
+                Only supported by GOAT, JOPT (for RL use `algorithm_kwargs: 'shorter_pulses'`).
                 If given the pulse duration is treated as optimization parameter.
                 It must specify both:
 

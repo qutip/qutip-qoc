@@ -65,7 +65,7 @@ class _RL(gym.Env):
             self._H_lst.append([Hc, create_pulse_func(i)])
         self._H = qt.QobjEvo(self._H_lst, args=dummy_args)
 
-        self.shorter_pulses = False if time_options == {} else True                 # lengthen the training to look for pulses of shorter duration, therefore episodes with fewer steps           
+        self.shorter_pulses = alg_kwargs.get("shorter_pulses", False) # lengthen the training to look for pulses of shorter duration, therefore episodes with fewer steps           
 
         # extract bounds for control_parameters
         bounds = []

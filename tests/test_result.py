@@ -169,16 +169,13 @@ state2state_rl = Case(
     objectives=[Objective(initial, H, target)],
     control_parameters = {
         "p": {"bounds": [(-13, 13)]},
-        "__time__": {
-            "guess": np.array([0.0]),  #dummy value
-            "bounds": [(0.0, 0.0)]    #dummy value
-        }
     },
     tlist=np.linspace(0, 10, 100),
     algorithm_kwargs={
         "fid_err_targ": 0.01,
         "alg": "RL",
         "max_iter": 20000,
+        "shorter_pulses": True,
     },
     optimizer_kwargs={}
 )
@@ -192,15 +189,12 @@ unitary_rl = state2state_rl._replace(
     objectives=[Objective(initial, H, target)],
         control_parameters = {
         "p": {"bounds": [(-13, 13)]},
-        "__time__": {
-            "guess": np.array([0.0]),  #dummy value
-            "bounds": [(0.0, 0.0)]    #dummy value
-        }
     },
     algorithm_kwargs={
         "fid_err_targ": 0.01,
         "alg": "RL",
         "max_iter": 300,
+        "shorter_pulses": True,
     },
 )
 
