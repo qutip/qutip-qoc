@@ -3,6 +3,30 @@ Changelog
 *********
 
 
+Version 0.0.2 (Oct 04, 2024)
++++++++++++++++++++++++++++++++++
+
+This is an update to the beta release of ``qutip-qoc``.
+
+It mainly introduces the new reinforcement learning algorithm ``qutip_qoc._rl``.
+
+- Non-public facing functions have been renamed to start with an underscore.
+- As with other QuTiP functions, ``optimize_pulses`` now takes a ``tlist`` argument instead of ``_TimeInterval``.
+- The structure for the control guess and bounds has changed and now takes in an optional ``__time__`` keyword.
+- The ``result`` does no longer return ``optimized_objectives`` but instead ``optimized_H``.
+
+Features
+--------
+
+- New reinforcement learning algorithm, developed during GSOC24 (#19, #18, by LegionAtol)
+- Automatic transfromation of initial and target operator to superoperator (#23, by flowerthrower)
+
+Bug Fixes
+---------
+
+- Prevent loss of `__time__` keyword in optimize_pulses (#22, by flowerthrower)
+
+
 Version 0.0.1 (May xx, 2024)
 +++++++++++++++++++++++++++++++++
 
