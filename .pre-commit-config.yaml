@@ -92,3 +92,5 @@ repos:
           - jaxlib
           - diffrax
           - pytest
+          - gymnasium
+          - stable-baselines3

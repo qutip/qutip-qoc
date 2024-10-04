@@ -152,6 +152,52 @@ state2state_crab = state2state_goat._replace(
     algorithm_kwargs={"alg": "CRAB", "fid_err_targ": 0.01, "fix_frequency": False},
 )
 
+# ----------------------- RL --------------------
+
+# state to state transfer
+initial = qt.basis(2, 0)
+target = (qt.basis(2, 0) + qt.basis(2, 1)).unit()  # |+⟩
+
+H_c = [qt.sigmax(), qt.sigmay(), qt.sigmaz()]  # control Hamiltonians
+
+w, d, y = 0.1, 1.0, 0.1
+H_d = 1 / 2 * (w * qt.sigmaz() + d * qt.sigmax())  # drift Hamiltonian
+
+H = [H_d] + H_c  # total Hamiltonian
+
+state2state_rl = Case(
+    objectives=[Objective(initial, H, target)],
+    control_parameters={
+        "p": {"bounds": [(-13, 13)]},
+    },
+    tlist=np.linspace(0, 10, 100),
+    algorithm_kwargs={
+        "fid_err_targ": 0.01,
+        "alg": "RL",
+        "max_iter": 20000,
+        "shorter_pulses": True,
+    },
+    optimizer_kwargs={},
+)
+
+# no big difference for unitary evolution
+
+initial = qt.qeye(2)  # Identity
+target = qt.gates.hadamard_transform()
+
+unitary_rl = state2state_rl._replace(
+    objectives=[Objective(initial, H, target)],
+    control_parameters={
+        "p": {"bounds": [(-13, 13)]},
+    },
+    algorithm_kwargs={
+        "fid_err_targ": 0.01,
+        "alg": "RL",
+        "max_iter": 300,
+        "shorter_pulses": True,
+    },
+)
+
 
 @pytest.fixture(
     params=[
@@ -160,6 +206,8 @@ state2state_crab = state2state_goat._replace(
         pytest.param(state2state_param_crab, id="State to state (param. CRAB)"),
         pytest.param(state2state_goat, id="State to state (GOAT)"),
         pytest.param(state2state_jax, id="State to state (JAX)"),
+        pytest.param(state2state_rl, id="State to state (RL)"),
+        pytest.param(unitary_rl, id="Unitary (RL)"),
     ]
 )
 def tst(request):
