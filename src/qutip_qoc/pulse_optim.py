@@ -1,7 +1,7 @@
 """
 This module is the entry point for the optimization of control pulses.
 It provides the function `optimize_pulses` which prepares and runs the
-GOAT, JOPT, GRAPE or CRAB optimization.
+GOAT, JOPT, GRAPE, CRAB or RL optimization.
 """
 import numpy as np
 
@@ -10,6 +10,7 @@ import qutip_qtrl.pulseoptim as cpo
 
 from qutip_qoc._optimizer import _global_local_optimization
 from qutip_qoc._time import _TimeInterval
+from qutip_qoc._rl import _RL
 
 __all__ = ["optimize_pulses"]
 
@@ -24,7 +25,7 @@ def optimize_pulses(
     integrator_kwargs=None,
 ):
     """
-    Run GOAT, JOPT, GRAPE or CRAB optimization.
+    Run GOAT, JOPT, GRAPE, CRAB or RL optimization.
 
     Parameters
     ----------
@@ -40,6 +41,7 @@ def optimize_pulses(
 
             control_id : dict
                 - guess: ndarray, shape (n,)
+                    For RL you don't need to specify the guess.
                     Initial guess. Array of real elements of size (n,),
                     where ``n`` is the number of independent variables.
 
@@ -48,7 +50,7 @@ def optimize_pulses(
                     `guess`. None is used to specify no bound.
 
             __time__ : dict, optional
-                Only supported by GOAT and JOPT.
+                Only supported by GOAT, JOPT (for RL use `algorithm_kwargs: 'shorter_pulses'`).
                 If given the pulse duration is treated as optimization parameter.
                 It must specify both:
 
@@ -70,14 +72,15 @@ def optimize_pulses(
 
             - alg : str
                 Algorithm to use for the optimization.
-                Supported are: "GRAPE", "CRAB", "GOAT", "JOPT".
+                Supported are: "GRAPE", "CRAB", "GOAT", "JOPT" and "RL".
 
             - fid_err_targ : float, optional
                 Fidelity error target for the optimization.
 
             - max_iter : int, optional
                 Maximum number of iterations to perform.
-                Referes to local minimizer steps.
+                Referes to local minimizer steps or in the context of
+                `alg: "RL"` to the max. number of episodes.
                 Global steps default to 0 (no global optimization).
                 Can be overridden by specifying in minimizer_kwargs.
 
@@ -348,6 +351,21 @@ def optimize_pulses(
                     ]
 
             qtrl_optimizers.append(qtrl_optimizer)
+
+    elif alg == "RL":
+        rl_env = _RL(
+            objectives,
+            control_parameters,
+            time_interval,
+            time_options,
+            algorithm_kwargs,
+            optimizer_kwargs,
+            minimizer_kwargs,
+            integrator_kwargs,
+            qtrl_optimizers,
+        )
+        rl_env.train()
+        return rl_env.result()
 
     return _global_local_optimization(
         objectives,
