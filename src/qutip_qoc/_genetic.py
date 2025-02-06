@@ -3,6 +3,7 @@ from joblib import Parallel, delayed
 import scipy as sci
 import time
 from qutip_qoc.result import Result 
+import qutip as qt
 
 class _GENETIC():
     ### Template for a genetic algorithm optimizer
@@ -62,6 +63,89 @@ class _GENETIC():
             var_time=True,  # Whether the optimization was performed with variable time
             guess_params=[],
         )
+
+        self._Hd_lst, self._Hc_lst = [], []
+        for objective in objectives:
+            # extract drift and control Hamiltonians from the objective
+            self._Hd_lst.append(objective.H[0])
+            self._Hc_lst.append(
+                [H[0] if isinstance(H, list) else H for H in objective.H[1:]]
+            )
+
+        def create_pulse_func(idx):
+            """
+            Create a control pulse lambda function for a given index.
+            """
+            return lambda t, args: self._pulse(t, args, idx + 1)
+
+        # create the QobjEvo with Hd, Hc and controls(args)
+        self._H_lst = [self._Hd_lst[0]]
+        dummy_args = {f"alpha{i+1}": 1.0 for i in range(len(self._Hc_lst[0]))}
+        for i, Hc in enumerate(self._Hc_lst[0]):
+            self._H_lst.append([Hc, create_pulse_func(i)])
+        self._H = qt.QobjEvo(self._H_lst, args=dummy_args)
+
+        self.shorter_pulses = alg_kwargs.get(
+            "shorter_pulses", False
+        )  # lengthen the training to look for pulses of shorter duration, therefore episodes with fewer steps
+
+        # extract bounds for control_parameters
+        bounds = []
+        for key in control_parameters.keys():
+            bounds.append(control_parameters[key].get("bounds"))
+        self._lbound = [b[0][0] for b in bounds]
+        self._ubound = [b[0][1] for b in bounds]
+
+        self._alg_kwargs = alg_kwargs
+
+        self._initial = objectives[0].initial
+        self._target = objectives[0].target
+        self._state = None
+        self._dim = self._initial.shape[0]
+
+        self._result = Result(
+            objectives=objectives,
+            time_interval=time_interval,
+            start_local_time=time.time(),  # initial optimization time
+            n_iters=0,  # Number of iterations(episodes) until convergence
+            iter_seconds=[],  # list containing the time taken for each iteration(episode) of the optimization
+            var_time=True,  # Whether the optimization was performed with variable time
+            guess_params=[],
+        )
+
+        self._backup_result = Result(  # used as a backup in case the algorithm with shorter_pulses does not find an episode with infid<target_infid
+            objectives=objectives,
+            time_interval=time_interval,
+            start_local_time=time.time(),
+            n_iters=0,
+            iter_seconds=[],
+            var_time=True,
+            guess_params=[],
+        )
+
+    def _infid(self, params):
+        """
+        Calculate infidelity to be minimized
+        """
+        X = self._solver.run(
+            self._initial, [0.0, self._evo_time], args={"p": params}
+        ).final_state
+
+        if self._fid_type == "TRACEDIFF":
+            diff = X - self._target
+            # to prevent if/else in qobj.dag() and qobj.tr()
+            diff_dag = qt.Qobj(diff.data.adjoint(), dims=diff.dims)
+            g = 1 / 2 * (diff_dag * diff).data.trace()
+            infid = np.real(self._norm_fac * g)
+        else:
+            g = self._norm_fac * self._target.overlap(X)
+            if self._fid_type == "PSU":  # f_PSU (drop global phase)
+                infid = 1 - np.abs(g)
+            elif self._fid_type == "SU":  # f_SU (incl global phase)
+                infid = 1 - np.real(g)
+
+        return infid
+    
     "Initialize a first population"
     def initial_population(self):
         """Randomly generates an initial popuation to act as generation 0.
@@ -191,7 +275,7 @@ class _GENETIC():
         return mutated_population
     
 
-    def optimize(self, fitness_func, iterations = 1000):
+    def optimize(self, infidelity, iterations = 1000):
         """Implements entire procedure for continuous genetic algorithm optimizer. This is a higher order function
         which accepts a black box fitness function. The fitness function which will accept a single chromosome of
         N_var variables in the range [-1,1], scale and process them returning a figure of merit which describes how useful said parameter 
@@ -212,9 +296,10 @@ class _GENETIC():
         done = False # terminal flag
         count = 0 # iteration count
         maxfit_hist = [] # to record the maximum fitness at each gen during optimizing
+        
         while not done:
             if self.workers > 1:
-                fitness_ls = Parallel(n_jobs=self.workers)(delayed(fitness_func)(chromosome) for chromosome in population)
+                fitness_ls = Parallel(n_jobs=self.workers)(delayed(infidelity)(chromosome) for chromosome in population)
             else:
                 fitness_ls = []
                 for chromosome in population:
@@ -223,7 +308,14 @@ class _GENETIC():
                     # build a control pulse and simulate the dynamics) then return a figure of merit which tells us how good
                     # this set of parameters has performed (could be fidelity to a target state for example).
                     # essentially all of the problem under consideration happens inside fitness_func
-                    f = fitness_func(chromosome)
+                    alphas = [
+                        ((chromosome + 1) / 2 * (self._ubound[0] - self._lbound[0]))
+                        + self._lbound[0]
+                        for i in range(len(chromosome))
+                    ]
+                    args = {f"alpha{i+1}": value for i, value in enumerate(alphas)}
+                    infidelity = self._infid(args)
+                    f = infidelity(chromosome)
                     fitness_ls.append(f)
             fitness = np.array(fitness_ls)
             max_fit = np.max(fitness)
