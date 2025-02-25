@@ -102,7 +102,7 @@ class _GENETIC():
         self._target = objectives[0].target
         self._state = None
         self._dim = self._initial.shape[0]
-
+    
         self._result = Result(
             objectives=objectives,
             time_interval=time_interval,
@@ -122,7 +122,13 @@ class _GENETIC():
             var_time=True,
             guess_params=[],
         )
-
+    def _pulse(self, t, args, idx):
+        """
+        Returns the control pulse value at time t for a given index.
+        """
+        alpha = args[f"alpha{idx}"]
+        return alpha
+    
     def _infid(self, params):
         """
         Calculate infidelity to be minimized
