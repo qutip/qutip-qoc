@@ -11,6 +11,8 @@ import qutip_qtrl.pulseoptim as cpo
 from qutip_qoc._optimizer import _global_local_optimization
 from qutip_qoc._time import _TimeInterval
 
+import qutip as qt
+
 try:
     from qutip_qoc._rl import _RL
     _rl_available = True
@@ -191,6 +193,11 @@ def optimize_pulses(
     # prepare qtrl optimizers
     qtrl_optimizers = []
     if alg == "CRAB" or alg == "GRAPE":
+        dyn_type = "GEN_MAT"
+        for objective in objectives:
+            if any(qt.isoper(H_i) for H_i in (objective.H if isinstance(objective.H, list) else [objective.H])):
+                dyn_type = "UNIT"
+
         if alg == "GRAPE":  # algorithm specific kwargs
             use_as_amps = True
             minimizer_kwargs.setdefault("method", "L-BFGS-B")  # gradient
@@ -247,7 +254,7 @@ def optimize_pulses(
                 "accuracy_factor": None,  # deprecated
                 "alg_params": alg_params,
                 "optim_params": algorithm_kwargs.get("optim_params", None),
-                "dyn_type": algorithm_kwargs.get("dyn_type", "GEN_MAT"),
+                "dyn_type": algorithm_kwargs.get("dyn_type", dyn_type),
                 "dyn_params": algorithm_kwargs.get("dyn_params", None),
                 "prop_type": algorithm_kwargs.get(
                     "prop_type", "DEF"
