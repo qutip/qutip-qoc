@@ -37,6 +37,8 @@ class _GENETIC():
             integrator_kwargs: Arguments for the integrator.
             qtrl_optimizers: Quantum control optimizers.
         """
+        
+        super(_GENETIC, self).__init__()
         self.objectives = objectives
         self.control_parameters = control_parameters
         self.time_interval = time_interval
@@ -122,6 +124,14 @@ class _GENETIC():
             var_time=True,
             guess_params=[],
         )
+
+        if self._Hd_lst[0].issuper:
+            self._fid_type = self._alg_kwargs.get("fid_type", "TRACEDIFF")
+            self._solver = qt.MESolver(H=self._H, options=self._integrator_kwargs)
+        else:
+            self._fid_type = self._alg_kwargs.get("fid_type", "PSU")
+            self._solver = qt.SESolver(H=self._H, options=self._integrator_kwargs)
+
     def _pulse(self, t, args, idx):
         """
         Returns the control pulse value at time t for a given index.
