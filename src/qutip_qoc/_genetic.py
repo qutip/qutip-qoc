@@ -37,13 +37,16 @@ class _GENETIC():
             integrator_kwargs: Arguments for the integrator.
             qtrl_optimizers: Quantum control optimizers.
         """
-        
+
         super(_GENETIC, self).__init__()
         self.objectives = objectives
         self.control_parameters = control_parameters
         self.time_interval = time_interval
         self.time_options = time_options
         self.alg_kwargs = alg_kwargs
+        self._integrator_kwargs = integrator_kwargs
+        self._rtol = self._integrator_kwargs.get("rtol", 1e-5)
+        self._atol = self._integrator_kwargs.get("atol", 1e-5)
 
         # Initialize the genetic algorithm parameters
         self.N_pop = alg_kwargs.get('population_size', 50)
@@ -54,17 +57,6 @@ class _GENETIC():
         self.N_offspring = self.N_pop - self.N_survivors
         self.mutation_rate = alg_kwargs.get('mutation_rate', 0.1)
         self.workers = alg_kwargs.get('workers', 1)
-
-        # Initialize the Result object
-        self._result = Result(
-            objectives=objectives,
-            time_interval=time_interval,
-            start_local_time=time.time(),  # initial optimization time
-            n_iters=0,  # Number of iterations(episodes) until convergence
-            iter_seconds=[],  # list containing the time taken for each iteration(episode) of the optimization
-            var_time=True,  # Whether the optimization was performed with variable time
-            guess_params=[],
-        )
 
         self._Hd_lst, self._Hc_lst = [], []
         for objective in objectives:
@@ -99,12 +91,12 @@ class _GENETIC():
         self._ubound = [b[0][1] for b in bounds]
 
         self._alg_kwargs = alg_kwargs
-
+        
         self._initial = objectives[0].initial
         self._target = objectives[0].target
         self._state = None
         self._dim = self._initial.shape[0]
-    
+
         self._result = Result(
             objectives=objectives,
             time_interval=time_interval,
@@ -124,7 +116,32 @@ class _GENETIC():
             var_time=True,
             guess_params=[],
         )
+        self._use_backup_result = (
+            False  # if true, use self._backup_result as the final optimization result
+        )
 
+        # for the reward
+        self._step_penalty = 1
+
+        # To check if it exceeds the maximum number of steps in an episode
+        self._current_step = 0
+
+        self.terminated = False
+        self.truncated = False
+
+        self._fid_err_targ = alg_kwargs["fid_err_targ"]
+
+        # inferred attributes
+        self._norm_fac = 1 / self._target.norm()
+
+        # integrator options
+        self._integrator_kwargs = integrator_kwargs
+        self._rtol = self._integrator_kwargs.get("rtol", 1e-5)
+        self._atol = self._integrator_kwargs.get("atol", 1e-5)
+
+        self._step_duration = 1e7 #change
+        
+        # create the solver
         if self._Hd_lst[0].issuper:
             self._fid_type = self._alg_kwargs.get("fid_type", "TRACEDIFF")
             self._solver = qt.MESolver(H=self._H, options=self._integrator_kwargs)
@@ -138,14 +155,15 @@ class _GENETIC():
         """
         alpha = args[f"alpha{idx}"]
         return alpha
-    
-    def _infid(self, params):
+
+    def _infid(self, args):
         """
-        Calculate infidelity to be minimized
+        The agent performs a step, then calculate infidelity to be minimized of the current state against the target state.
         """
         X = self._solver.run(
-            self._initial, [0.0, self._evo_time], args={"p": params}
+            self._state, [0.0, self._step_duration], args=args
         ).final_state
+        self._state = X
 
         if self._fid_type == "TRACEDIFF":
             diff = X - self._target
@@ -159,7 +177,6 @@ class _GENETIC():
                 infid = 1 - np.abs(g)
             elif self._fid_type == "SU":  # f_SU (incl global phase)
                 infid = 1 - np.real(g)
-
         return infid
     
     "Initialize a first population"
