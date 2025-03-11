@@ -94,7 +94,7 @@ class _GENETIC():
         
         self._initial = objectives[0].initial
         self._target = objectives[0].target
-        self._state = None
+        self._state = qt.ket2dm(self._initial)
         self._dim = self._initial.shape[0]
 
         self._result = Result(
@@ -139,7 +139,7 @@ class _GENETIC():
         self._rtol = self._integrator_kwargs.get("rtol", 1e-5)
         self._atol = self._integrator_kwargs.get("atol", 1e-5)
 
-        self._step_duration = 1e7 #change
+        self._step_duration = 1e-7 #change
         
         # create the solver
         if self._Hd_lst[0].issuper:
@@ -160,8 +160,7 @@ class _GENETIC():
         """
         The agent performs a step, then calculate infidelity to be minimized of the current state against the target state.
         """
-        X = self._solver.run(
-            self._state, [0.0, self._step_duration], args=args
+        X = self._solver.run(self._state, [0.0, self._step_duration]
         ).final_state
         self._state = X
 
@@ -348,8 +347,8 @@ class _GENETIC():
                     ]
                     args = {f"alpha{i+1}": value for i, value in enumerate(alphas)}
                     infidelity = self._infid(args)
-                    f = infidelity(chromosome)
-                    fitness_ls.append(f)
+                    #f = infidelity(chromosome)
+                    fitness_ls.append(infidelity)
             fitness = np.array(fitness_ls)
             max_fit = np.max(fitness)
             if max_fit>bench:
