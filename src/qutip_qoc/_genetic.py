@@ -388,10 +388,9 @@ class _GENETIC():
 
         result_obj.end_local_time = time.time()
         result_obj.n_iters = len(self._result.iter_seconds)
-        result_obj.optimized_params = self._actions.copy() + [
+        result_obj.optimized_params = [
             self._result.total_seconds
         ]  # If var_time is True, the last parameter is the evolution time
-        result_obj._optimized_controls = self._actions.copy()
         result_obj._guess_controls = []
         result_obj._optimized_H = [self._H]
 
