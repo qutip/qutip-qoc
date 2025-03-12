@@ -30,6 +30,7 @@ def optimize_pulses(
     optimizer_kwargs=None,
     minimizer_kwargs=None,
     integrator_kwargs=None,
+    optimization_type=None,
 ):
     """
     Run GOAT, JOPT, GRAPE, CRAB or RL optimization.
@@ -126,6 +127,9 @@ def optimize_pulses(
         Options for the solver, see :obj:`MESolver.options` and
         `Integrator <./classes.html#classes-ode>`_ for a list of all options.
 
+    optimization_type : str, optional
+        Type of optimization: "state_transfer", "gate_synthesis", or None.
+
     Returns
     -------
     result : :class:`qutip_qoc.Result`
@@ -189,6 +193,31 @@ def optimize_pulses(
             "maxiter": algorithm_kwargs.get("max_iter", 1000),
             "gtol": algorithm_kwargs.get("min_grad", 0.0 if alg == "CRAB" else 1e-8),
         }
+    # Iterate over objectives and convert initial and target states based on the optimization type
+    for objective in objectives:
+        if any(qt.issuper(H_i) for H_i in (objective.H if isinstance(objective.H, list) else [objective.H])):
+            if optimization_type == "state_transfer":
+                if qt.isket(objective.initial):
+                    objective.initial = qt.operator_to_vector(qt.ket2dm(objective.initial))
+                elif qt.isoper(objective.initial):
+                    objective.initial = qt.operator_to_vector(objective.initial)
+                if qt.isket(objective.target):
+                    objective.target = qt.operator_to_vector(qt.ket2dm(objective.target))
+                elif qt.isoper(objective.target):
+                    objective.target = qt.operator_to_vector(objective.target)
+            elif optimization_type == "gate_synthesis":
+                objective.initial = qt.to_super(objective.initial)
+                objective.target = qt.to_super(objective.target)
+            elif optimization_type is None:
+                if qt.isoper(objective.initial) and qt.isoper(objective.target):
+                    if np.isclose(qt.tr(objective.initial), 1) and np.isclose(qt.tr(objective.target), 1):
+                        objective.initial = qt.operator_to_vector(objective.initial)
+                        objective.target = qt.operator_to_vector(objective.target)
+                    else:
+                        objective.initial = qt.to_super(objective.initial)
+                        objective.target = qt.to_super(objective.target)
+                if qt.isket(objective.initial):
+                    objective.initial = qt.operator_to_vector(qt.ket2dm(objective.initial))
 
     # prepare qtrl optimizers
     qtrl_optimizers = []
