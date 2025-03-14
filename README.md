@@ -31,7 +31,7 @@ They can be included by using the targets `qutip-qoc[jopt]` and `qutip-qoc[rl]`,
 
 ## Documentation and tutorials
 
-The documentation of `qutip-qoc` updated to the latest development version is hosted at [qutip-qoc.readthedocs.io](https://qutip-qoc.readthedocs.io/en/latest/).
+The documentation of `qutip-qoc` updated to the latest development version is hosted at [qutip-qoc.readthedocs.io](https://qutip-qoc.readthedocs.io/latest/).
 Tutorials related to using quantum optimal control in `qutip-qoc` can be found [_here_](https://qutip.org/qutip-tutorials/#optimal-control).
 
 ## Installation from source
@@ -43,7 +43,7 @@ pip install --upgrade pip
 pip install -e .
 ```
 
-which makes sure that you are up to date with the latest `pip` version. Contribution guidelines are available [_here_](https://qutip-qoc.readthedocs.io/en/latest/contribution-code.html).
+which makes sure that you are up to date with the latest `pip` version. Contribution guidelines are available [_here_](https://qutip-qoc.readthedocs.io/latest/contribution/code.html).
 
 To build and test the documentation, additional packages need to be installed:
 
