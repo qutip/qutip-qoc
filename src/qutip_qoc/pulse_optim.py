@@ -128,7 +128,9 @@ def optimize_pulses(
         `Integrator <./classes.html#classes-ode>`_ for a list of all options.
 
     optimization_type : str, optional
-        Type of optimization: "state_transfer", "gate_synthesis", or None.
+        Type of optimization. By default, QuTiP-QOC will try to automatically determine 
+        whether this is a *state transfer* or a *gate synthesis* problem. Set this 
+        flag to ``"state_transfer"`` or ``"gate_synthesis"`` to set the mode manually.
 
     Returns
     -------
@@ -195,8 +197,9 @@ def optimize_pulses(
         }
     # Iterate over objectives and convert initial and target states based on the optimization type
     for objective in objectives:
-        if any(qt.issuper(H_i) for H_i in (objective.H if isinstance(objective.H, list) else [objective.H])):
-            if optimization_type == "state_transfer":
+        H_list = objective.H if isinstance(objective.H, list) else [objective.H]
+        if any(qt.issuper(H_i) for H_i in H_list):
+            if isinstance(optimization_type, str) and optimization_type.lower() == "state_transfer":
                 if qt.isket(objective.initial):
                     objective.initial = qt.operator_to_vector(qt.ket2dm(objective.initial))
                 elif qt.isoper(objective.initial):
@@ -205,7 +208,7 @@ def optimize_pulses(
                     objective.target = qt.operator_to_vector(qt.ket2dm(objective.target))
                 elif qt.isoper(objective.target):
                     objective.target = qt.operator_to_vector(objective.target)
-            elif optimization_type == "gate_synthesis":
+            elif isinstance(optimization_type, str) and optimization_type.lower() == "gate_synthesis":
                 objective.initial = qt.to_super(objective.initial)
                 objective.target = qt.to_super(objective.target)
             elif optimization_type is None:
@@ -218,6 +221,8 @@ def optimize_pulses(
                         objective.target = qt.to_super(objective.target)
                 if qt.isket(objective.initial):
                     objective.initial = qt.operator_to_vector(qt.ket2dm(objective.initial))
+                if qt.isket(objective.target):
+                    objective.target = qt.operator_to_vector(qt.ket2dm(objective.target))
 
     # prepare qtrl optimizers
     qtrl_optimizers = []
