@@ -213,7 +213,7 @@ def optimize_pulses(
                 objective.target = qt.to_super(objective.target)
             elif optimization_type is None:
                 if qt.isoper(objective.initial) and qt.isoper(objective.target):
-                    if np.isclose(qt.tr(objective.initial), 1) and np.isclose(qt.tr(objective.target), 1):
+                    if np.isclose((objective.initial).tr(), 1) and np.isclose((objective.target).tr(), 1):
                         objective.initial = qt.operator_to_vector(objective.initial)
                         objective.target = qt.operator_to_vector(objective.target)
                     else:
