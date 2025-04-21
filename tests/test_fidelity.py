@@ -7,6 +7,8 @@ import qutip as qt
 import numpy as np
 import collections
 
+from qutip_qoc.fidcomp import FidelityComputer
+
 try:
     import jax.numpy as jnp
     _jax_available = True
