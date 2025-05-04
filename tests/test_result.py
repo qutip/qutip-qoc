@@ -267,5 +267,5 @@ def test_optimize_pulses(tst):
     assert isinstance(result.final_states[0], qt.Qobj)
     assert isinstance(result.guess_params, (list, np.ndarray))
     assert isinstance(result.optimized_params, (list, np.ndarray))
-    assert isinstance(result.infidelity, float)
+    assert isinstance(result.infidelity, (float, np.floating, jnp.ndarray))
     assert isinstance(result.var_time, bool)
