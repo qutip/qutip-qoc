@@ -5,9 +5,9 @@ jupyter:
       extension: .md
       format_name: markdown
       format_version: '1.3'
-      jupytext_version: 1.16.7
+      jupytext_version: 1.17.1
   kernelspec:
-    display_name: qutip-dev
+    display_name: Python 3 (ipykernel)
     language: python
     name: python3
 ---
@@ -90,7 +90,7 @@ res_jopt = optimize_pulses(
     },
     algorithm_kwargs={
         "alg": "JOPT",
-        "fid_err_targ": 0.5,
+        "fid_err_targ": 0.001,
     },
 )
 
@@ -225,7 +225,7 @@ plt.show()
 ```python
 fig, axes = plt.subplots(1, 3, figsize=(18, 4))  # 1 row, 3 columns
 
-titles = ["GOAT s_x pulses", "GOAT s_y pulses", "GOAT s_z pulses"]
+titles = ["JOPT s_x pulses", "JOPT s_y pulses", "JOPT s_z pulses"]
 
 for i in range(3):
     ax = axes[i]
