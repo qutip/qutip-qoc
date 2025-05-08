@@ -5,10 +5,12 @@ Taken, modified from https://github.com/SeldonIO/alibi/blob/master/testing/test_
 """
 
 import glob
+import nbclient.exceptions
 import pytest
 
 from pathlib import Path
 from jupytext.cli import jupytext
+import nbclient
 
 # Set of all example notebooks
 NOTEBOOK_DIR = 'tests/interactive'
@@ -19,4 +21,10 @@ ALL_NOTEBOOKS = {
 @pytest.mark.parametrize("notebook", ALL_NOTEBOOKS)
 def test_notebook(notebook):
     notebook = Path(NOTEBOOK_DIR, notebook)
-    jupytext(args=[str(notebook), "--execute"])
+    try:
+        jupytext(args=[str(notebook), "--execute"])
+    except nbclient.exceptions.CellExecutionError as e:
+        if e.ename == "Skipped":
+            pytest.skip(e.evalue)
+        else:
+            raise e

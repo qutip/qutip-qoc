@@ -5,9 +5,9 @@ jupyter:
       extension: .md
       format_name: markdown
       format_version: '1.3'
-      jupytext_version: 1.16.7
+      jupytext_version: 1.17.1
   kernelspec:
-    display_name: qutip-dev
+    display_name: Python 3 (ipykernel)
     language: python
     name: python3
 ---
@@ -17,7 +17,7 @@ jupyter:
 ```python
 import matplotlib.pyplot as plt
 import numpy as np
-from qutip import (about, fidelity, Qobj, basis)
+from qutip import (about, basis, Qobj)
 import qutip as qt
 from qutip_qoc import Objective, optimize_pulses
 ```
@@ -26,7 +26,7 @@ from qutip_qoc import Objective, optimize_pulses
 
 ```python
 # Energy levels
-E1, E2 = 1.0, 1.0  
+E1, E2 = 1.0, 2.0
 
 Hd = Qobj(np.diag([E1, E2]))
 Hc = Qobj(np.array([
@@ -38,7 +38,7 @@ H = [Hd, Hc]
 initial_state = basis(2, 0)  # |1>
 target_state = basis(2, 1)   # |2>
 
-times = np.linspace(0, 2 * np.pi, 100)
+times = np.linspace(0, 2 * np.pi, 250)
 ```
 
 ## Guess
@@ -47,16 +47,17 @@ times = np.linspace(0, 2 * np.pi, 100)
 goat_guess = [1, 0.5]
 guess_pulse = goat_guess[0] * np.sin(goat_guess[1] * times)
 
-Hresult_guess = [Hd, [Hc, guess_pulse]]
-evolution_guess = qt.sesolve(Hresult_guess, initial_state, times)
+H_guess = [Hd, [Hc, guess_pulse]]
+evolution_guess = qt.sesolve(H_guess, initial_state, times)
 
-print('Infidelity: ', qt.fidelity(evolution_guess.states[-1], target_state))
+print('Fidelity: ', qt.fidelity(evolution_guess.states[-1], target_state))
 
-plt.plot(times, [np.abs(state.overlap(initial_state))**2 for state in evolution_guess.states], label="Overlap with initial state")
-plt.plot(times, [np.abs(state.overlap(target_state))**2 for state in evolution_guess.states], label="Overlap with target state")
+plt.plot(times, [np.abs(state.overlap(initial_state)) for state in evolution_guess.states], label="Overlap with initial state")
+plt.plot(times, [np.abs(state.overlap(target_state)) for state in evolution_guess.states], label="Overlap with target state")
 plt.plot(times, [qt.fidelity(state, target_state) for state in evolution_guess.states], '--', label="Fidelity")
-plt.legend()
 plt.title("Guess performance")
+plt.xlabel('Time')
+plt.legend()
 plt.show()
 ```
 
@@ -66,7 +67,6 @@ plt.show()
 # control function
 def sin(t, c):
     return c[0] * np.sin(c[1] * t)
-
 
 # gradient
 def grad_sin(t, c, idx):
@@ -83,27 +83,27 @@ H = [Hd] + [[Hc, sin, {"grad": grad_sin}]]
 ### a) not optimized over time
 
 ```python
-ctrl_parameters = {
-    id: {"guess": goat_guess, "bounds": [(-1, 1), (0, 2 * np.pi)]}  # c0 and c1
+control_params = {
+    "ctrl_x": {"guess": goat_guess, "bounds": [(-1, 1), (0, 2 * np.pi)]}  # c0 and c1
 }
 
 # run the optimization
 res_goat = optimize_pulses(
-    objectives=Objective(initial_state, H, target_state),
-    control_parameters=ctrl_parameters,
-    tlist=times,
-    algorithm_kwargs={
+    objectives = Objective(initial_state, H, target_state),
+    control_parameters = control_params,
+    tlist = times,
+    algorithm_kwargs = {
         "alg": "GOAT",
-        "fid_err_targ": 0.001,
+        "fid_err_targ": 0.001
     },
 )
 
 print('Infidelity: ', res_goat.infidelity)
 
-plt.plot(times, sin(times, goat_guess), label='initial guess')
+plt.plot(times, guess_pulse, label='initial guess')
 plt.plot(times, res_goat.optimized_controls[0], label='optimized pulse')
 plt.title('GOAT pulses')
-plt.xlabel('time')
+plt.xlabel('Time')
 plt.ylabel('Pulse amplitude')
 plt.legend()
 plt.show()
@@ -118,42 +118,44 @@ plt.plot(times, [np.abs(state.overlap(target_state)) for state in evolution.stat
 plt.plot(times, [qt.fidelity(state, target_state) for state in evolution.states], '--', label="Fidelity")
 
 plt.title('GOAT performance')
-plt.xlabel('time')
+plt.xlabel('Time')
 plt.legend()
 plt.show()
-
 ```
+
+Here, GOAT is stuck in a local minimum and does not reach the desired fidelity.
+
 
 ### b) optimized over time
 
 ```python
 # treats time as optimization variable
-ctrl_parameters["__time__"] = {
+control_params["__time__"] = {
     "guess": times[len(times) // 2],
     "bounds": [times[0], times[-1]],
 }
 
 # run the optimization
 res_goat_time = optimize_pulses(
-    objectives=Objective(initial_state, H, target_state),
-    control_parameters=ctrl_parameters,
-    tlist=times,
-    algorithm_kwargs={
+    objectives = Objective(initial_state, H, target_state),
+    control_parameters = control_params,
+    tlist = times,
+    algorithm_kwargs = {
         "alg": "GOAT",
-        "fid_err_targ": 0.001,
+        "fid_err_targ": 0.001
     },
 )
 
-
 print('Infidelity: ', res_goat_time.infidelity)
-print('optimized time: ', res_goat_time.optimized_params[-1])
+print('Optimized time: ', res_goat_time.optimized_params[-1])
 
 time_range = times < res_goat_time.optimized_params[-1]
 
+plt.plot(times, guess_pulse, label='initial guess')
 plt.plot(times, res_goat.optimized_controls[0], label='optimized pulse')
 plt.plot(times[time_range], np.array(res_goat_time.optimized_controls[0])[time_range], label='optimized (over time) pulse')
-plt.title('GOAT pulses')
-plt.xlabel('time')
+plt.title('GOAT pulses (time optimization)')
+plt.xlabel('Time')
 plt.ylabel('Pulse amplitude')
 plt.legend()
 plt.show()
@@ -169,41 +171,44 @@ plt.plot(times, [qt.fidelity(state, target_state) for state in evolution_time.st
 plt.xlim(0, res_goat_time.optimized_params[-1][0])
 
 plt.title('GOAT (optimized over time) performance')
-plt.xlabel('time')
+plt.xlabel('Time')
 plt.legend()
 plt.show()
 ```
 
-### Global optimization 
+GOAT is still stuck in a local minimum, but the fidelity has improved.
+
+
+### c) global optimization 
 
 ```python
 res_goat_global = optimize_pulses(
-    objectives=Objective(initial_state, H, target_state),
-    control_parameters=ctrl_parameters,
-    tlist=times,
-    algorithm_kwargs={
+    objectives = Objective(initial_state, H, target_state),
+    control_parameters = control_params,
+    tlist = times,
+    algorithm_kwargs = {
         "alg": "GOAT",
-        "fid_err_targ": 0.001,
+        "fid_err_targ": 0.001
     },
     optimizer_kwargs={
        "method": "basinhopping",
-       "max_iter": 1000,
+       "max_iter": 1000
     }
 )
 
 print('Infidelity: ', res_goat_global.infidelity)
-print('optimized time: ', res_goat_global.optimized_params[-1])
+print('Optimized time: ', res_goat_global.optimized_params[-1])
 
 global_range = times < res_goat_global.optimized_params[-1]
 
+plt.plot(times, guess_pulse, label='initial guess')
 plt.plot(times, res_goat.optimized_controls[0], label='optimized pulse')
 plt.plot(times[global_range], np.array(res_goat_global.optimized_controls[0])[global_range], label='global optimized pulse')
 plt.title('GOAT pulses (global)')
-plt.xlabel('time')
+plt.xlabel('Time')
 plt.ylabel('Pulse amplitude')
 plt.legend()
 plt.show()
-
 ```
 
 ```python
@@ -216,7 +221,7 @@ plt.plot(times, [qt.fidelity(state, target_state) for state in evolution_global.
 plt.xlim(0, res_goat_global.optimized_params[-1][0])
 
 plt.title('GOAT (global) performance')
-plt.xlabel('time')
+plt.xlabel('Time')
 plt.legend()
 plt.show()
 ```
@@ -224,58 +229,56 @@ plt.show()
 ## Comparison
 
 ```python
-plt.plot(times, sin(times, goat_guess), label='initial guess')
-plt.plot(times, res_goat.optimized_controls[0], label='optimized pulse')
+plt.plot(times, guess_pulse, color='blue', label='initial guess')
+plt.plot(times, res_goat.optimized_controls[0], color='orange', label='optimized pulse')
 plt.plot(times[time_range], np.array(res_goat_time.optimized_controls[0])[time_range], 
-         label='optimized (over time) pulse')
+         color='green', label='optimized (over time) pulse')
 plt.plot(times[global_range], np.array(res_goat_global.optimized_controls[0])[global_range], 
-         label='global optimized pulse')
+         color='red', label='global optimized pulse')
+
 plt.title('GOAT pulses')
-plt.xlabel('time')
+plt.xlabel('Time')
 plt.ylabel('Pulse amplitude')
 plt.legend()
 plt.show()
 ```
 
 ```python
-print('Guess Infidelity: ', qt.fidelity(evolution_guess.states[-1], target_state))
-print('GOAT Infidelity: ', res_goat.infidelity)
-print('Time Infidelity: ', res_goat_time.infidelity)
-print('GLobal Infidelity: ', res_goat_global.infidelity)
+print('Guess Fidelity: ', qt.fidelity(evolution_guess.states[-1], target_state))
+print('GOAT Fidelity: ', 1 - res_goat.infidelity)
+print('Time Fidelity: ', 1 - res_goat_time.infidelity)
+print('GLobal Fidelity: ', 1 - res_goat_global.infidelity)
 
-
-plt.plot(times, [qt.fidelity(state, target_state) for state in evolution_guess.states], label="Guess")
-plt.plot(times, [qt.fidelity(state, target_state) for state in evolution.states], label="Goat")
+plt.plot(times, [qt.fidelity(state, target_state) for state in evolution_guess.states], color='blue', label="Guess")
+plt.plot(times, [qt.fidelity(state, target_state) for state in evolution.states], color='orange', label="GOAT")
 plt.plot(times[time_range], [qt.fidelity(state, target_state) for state in evolution_time.states[:len(times[time_range])]], 
-         label="Time")
+         color='green', label="Time")
 plt.plot(times[global_range], [qt.fidelity(state, target_state) for state in evolution_global.states[:len(times[global_range])]], 
-         label="Global")
-
-
-np.array(res_goat_global.optimized_controls[0])[global_range],
+         color='red', label="Global")
 
 plt.title('Fidelities')
-plt.xlabel('time')
+plt.xlabel('Time')
 plt.legend()
 plt.show()
-
 ```
 
 ## Validation
 
 ```python
-assert res_goat.infidelity < 0.02
-assert np.abs(evolution.states[-1].overlap(target_state)) > 1-0.02
-assert res_goat_time.infidelity < 0.001
-assert max([np.abs(state.overlap(target_state)) for state in evolution_time.states]) > 1-0.001
+guess_fidelity = qt.fidelity(evolution_guess.states[-1], target_state)
+
+# target fidelity not reached in part a), check that it is better than the guess
+assert 1 - res_goat.infidelity > guess_fidelity
+assert np.allclose(np.abs(evolution.states[-1].overlap(target_state)), 1 - res_goat.infidelity, atol=1e-3)
+
+# target fidelity not reached in part b), check that it is better than part a)
+assert res_goat_time.infidelity < res_goat.infidelity
+assert np.allclose(np.abs(evolution_time.states[len(times[time_range]) - 1].overlap(target_state)), 1 - res_goat_time.infidelity, atol=1e-3)
+
 assert res_goat_global.infidelity < 0.001
-assert max([np.abs(state.overlap(target_state)) for state in evolution_global.states]) > 1-0.001
+assert np.abs(evolution_global.states[len(times[global_range]) - 1].overlap(target_state)) > 1 - 0.001
 ```
 
 ```python
 qt.about()
-```
-
-```python
-
 ```
