@@ -30,16 +30,17 @@ hbar = 1
 omega = 0.1  # energy splitting
 delta = 1.0  # tunneling
 gamma = 0.1  # amplitude damping
-sx, sy, sz, sm = sigmax(), sigmay(), sigmaz(), sigmam()
+sx, sy, sz = sigmax(), sigmay(), sigmaz()
 
-Hc = sx
 Hd = 1 / 2 * hbar * omega * sz
-H = [Hd, Hc]
+Hc = [sx, sy, sz]
+H = [Hd, Hc[0], Hc[1], Hc[2]]
 
+# objective for optimization
 initial = qeye(2)
 target = Qobj(1 / np.sqrt(2) * np.array([[1, 1], [1, -1]]))
 
-times = np.linspace(0, 2*np.pi, 10)
+times = np.linspace(0, 2*np.pi, 100)
 ```
 
 ## Guess
@@ -56,10 +57,11 @@ guess_pulse = guess[0] * np.sin(guess[1] * times)
 def sin_x(t, c, **kwargs):
     return c[0] * numpy.sin(c[1] * t)
 
-H = [Hd] + [[Hc, sin_x]]
+H = [Hd] + [[hc, sin_x] for hc in Hc]
 
 ctrl_parameters = {
     id: {"guess": guess, "bounds": [(-1, 1), (0, 2 * np.pi)]}  # c0 and c1
+    for id in ['x', 'y', 'z']
 }
 
 ```
