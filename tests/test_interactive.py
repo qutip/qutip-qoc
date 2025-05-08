@@ -16,7 +16,6 @@ ALL_NOTEBOOKS = {
     Path(x).name for x in glob.glob(str(Path(NOTEBOOK_DIR).joinpath('*.md')))
 }
 
-@pytest.mark.timeout(600)
 @pytest.mark.parametrize("notebook", ALL_NOTEBOOKS)
 def test_notebook(notebook):
     notebook = Path(NOTEBOOK_DIR, notebook)
