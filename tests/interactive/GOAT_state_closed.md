@@ -17,7 +17,7 @@ jupyter:
 ```python
 import matplotlib.pyplot as plt
 import numpy as np
-from qutip import (about, basis, Qobj)
+from qutip import basis, Qobj
 import qutip as qt
 from qutip_qoc import Objective, optimize_pulses
 ```
@@ -110,8 +110,8 @@ plt.show()
 ```
 
 ```python
-Hresult = [Hd, [Hc, np.array(res_goat.optimized_controls[0])]]
-evolution = qt.sesolve(Hresult, initial_state, times)
+H_result = [Hd, [Hc, np.array(res_goat.optimized_controls[0])]]
+evolution = qt.sesolve(H_result, initial_state, times)
 
 plt.plot(times, [np.abs(state.overlap(initial_state)) for state in evolution.states], label="Overlap with initial state")
 plt.plot(times, [np.abs(state.overlap(target_state)) for state in evolution.states], label="Overlap with target state")
@@ -167,8 +167,8 @@ times2 = times[time_range]
 if opt_time not in times2:
     times2 = np.append(times2, opt_time)
 
-Hresult = qt.QobjEvo([Hd, [Hc, np.array(res_goat_time.optimized_controls[0])]], tlist=times)
-evolution_time = qt.sesolve(Hresult, initial_state, times2)
+H_result = qt.QobjEvo([Hd, [Hc, np.array(res_goat_time.optimized_controls[0])]], tlist=times)
+evolution_time = qt.sesolve(H_result, initial_state, times2)
 
 plt.plot(times2, [np.abs(state.overlap(initial_state)) for state in evolution_time.states], label="Overlap with initial state")
 plt.plot(times2, [np.abs(state.overlap(target_state)) for state in evolution_time.states], label="Overlap with target state")
@@ -221,8 +221,8 @@ times3 = times[global_range]
 if global_time not in times3:
     times3 = np.append(times3, global_time)
 
-Hresult = qt.QobjEvo([Hd, [Hc, np.array(res_goat_global.optimized_controls[0])]], tlist=times)
-evolution_global = qt.sesolve(Hresult, initial_state, times3)
+H_result = qt.QobjEvo([Hd, [Hc, np.array(res_goat_global.optimized_controls[0])]], tlist=times)
+evolution_global = qt.sesolve(H_result, initial_state, times3)
 
 plt.plot(times3, [np.abs(state.overlap(initial_state)) for state in evolution_global.states], label="Overlap with initial state")
 plt.plot(times3, [np.abs(state.overlap(target_state)) for state in evolution_global.states], label="Overlap with target state")

@@ -5,9 +5,9 @@ jupyter:
       extension: .md
       format_name: markdown
       format_version: '1.3'
-      jupytext_version: 1.16.7
+      jupytext_version: 1.17.1
   kernelspec:
-    display_name: qutip-dev
+    display_name: Python 3 (ipykernel)
     language: python
     name: python3
 ---
@@ -17,45 +17,51 @@ jupyter:
 ```python
 import matplotlib.pyplot as plt
 import numpy as np
-from qutip import (about, Qobj, gates, liouvillian, fidelity,basis, qeye, sigmam, sigmax, sigmay, sigmaz, tensor)
+from qutip import gates, qeye, sigmax, sigmay, sigmaz
 import qutip as qt
 from qutip_qoc import Objective, optimize_pulses
+
+def fidelity(gate, target_gate):
+    """
+    Fidelity used for unitary gates in qutip-qtrl and qutip-qoc
+    """
+    return np.abs(gate.overlap(target_gate) / target_gate.norm())
 ```
 
 ## Problem setup
 
 ```python
-hbar = 1
 omega = 0.1  # energy splitting
-delta = 1.0  # tunneling
-gamma = 0.1  # amplitude damping
 sx, sy, sz = sigmax(), sigmay(), sigmaz()
 
-Hd = 1 / 2 * hbar * omega * sz
+Hd = 1 / 2 * omega * sz
 Hc = [sx, sy, sz]
 H = [Hd, Hc[0], Hc[1], Hc[2]]
 
 # objective for optimization
 initial_gate = qeye(2)
-target_gate = Qobj(1 / np.sqrt(2) * np.array([[1, 1], [1, -1]]))
+target_gate = gates.hadamard_transform()
 
-times = np.linspace(0, np.pi / 2, 100)
+times = np.linspace(0, np.pi / 2, 250)
 ```
 
 ## Guess
 
 ```python
-guess = np.sin(times)
+guess_pulse_x = np.sin(times)
+guess_pulse_y = np.cos(times)
+guess_pulse_z = np.tanh(times)
 
-Hresult_guess = [Hd] + [[hc, guess] for hc in Hc]
-evolution_guess = qt.sesolve(Hresult_guess, initial_gate, times)
+H_guess = [Hd, [Hc[0], guess_pulse_x], [Hc[1], guess_pulse_y], [Hc[2], guess_pulse_z]]
+evolution_guess = qt.sesolve(H_guess, initial_gate, times)
 
-print('Fidelity: ', qt.fidelity(evolution_guess.states[-1], target_gate))
+print('Fidelity: ', fidelity(evolution_guess.states[-1], target_gate))
 
-plt.plot(times, [np.abs(state.overlap(initial_gate) / initial_gate.norm())**2 for state in evolution_guess.states], label="Overlap with initial state")
-plt.plot(times, [np.abs(state.overlap(target_gate) / target_gate.norm())**2 for state in evolution_guess.states], label="Overlap with target state")
-plt.legend()
+plt.plot(times, [fidelity(gate, initial_gate) for gate in evolution_guess.states], label="Overlap with initial gate")
+plt.plot(times, [fidelity(gate, target_gate) for gate in evolution_guess.states], label="Overlap with target gate")
 plt.title("Guess performance")
+plt.xlabel('Time')
+plt.legend()
 plt.show()
 ```
 
@@ -69,34 +75,40 @@ control_params = {
 }
 
 res_grape = optimize_pulses(
-    objectives=Objective(initial_gate, H, target_gate),
-    control_parameters=control_params,
-    tlist=times,
-    algorithm_kwargs={"alg": "GRAPE", "fid_err_targ": 0.001},
+    objectives = Objective(initial_gate, H, target_gate),
+    control_parameters = control_params,
+    tlist = times,
+    algorithm_kwargs = {
+        "alg": "GRAPE",
+        "fid_err_targ": 0.001
+    },
 )
 
 print('Infidelity: ', res_grape.infidelity)
 
-
-plt.plot(times, res_grape.optimized_controls[0], label='optimized pulse sx')
-plt.plot(times, res_grape.optimized_controls[1], label='optimized pulse sy')
-plt.plot(times, res_grape.optimized_controls[2], label='optimized pulse sz')
+plt.plot(times, guess_pulse_x, 'b--', label='guess pulse sx')
+plt.plot(times, res_grape.optimized_controls[0], 'b', label='optimized pulse sx')
+plt.plot(times, guess_pulse_y, 'g--', label='guess pulse sy')
+plt.plot(times, res_grape.optimized_controls[1], 'g', label='optimized pulse sy')
+plt.plot(times, guess_pulse_z, 'r--', label='guess pulse sz')
+plt.plot(times, res_grape.optimized_controls[2], 'r', label='optimized pulse sz')
 plt.title('GRAPE pulses')
-plt.xlabel('time')
+plt.xlabel('Time')
 plt.ylabel('Pulse amplitude')
 plt.legend()
 plt.show()
 ```
 
 ```python
-Hresult = [Hd, [Hc[0], res_grape.optimized_controls[0]], [Hc[1], res_grape.optimized_controls[1]], [Hc[2], res_grape.optimized_controls[2]]]
-evolution = qt.sesolve(Hresult, initial_gate, times)
+H_result = [Hd, [Hc[0], res_grape.optimized_controls[0]], [Hc[1], res_grape.optimized_controls[1]], [Hc[2], res_grape.optimized_controls[2]]]
+evolution = qt.sesolve(H_result, initial_gate, times)
 
+plt.plot(times, [fidelity(gate, initial_gate) for gate in evolution.states], label="Overlap with initial gate")
+plt.plot(times, [fidelity(gate, target_gate) for gate in evolution.states], label="Overlap with target gate")
 
-plt.plot(times, [np.abs(state.overlap(target_gate) / target_gate.norm())**2 for state in evolution.states], label="target overlap")
-plt.plot(times, [np.abs(state.overlap(initial_gate) / initial_gate.norm())**2 for state in evolution.states], label="initial overlap")
+plt.title('GRAPE performance')
+plt.xlabel('Time')
 plt.legend()
-plt.title("GRAPE performance")
 plt.show()
 ```
 
@@ -104,13 +116,9 @@ plt.show()
 
 ```python
 assert res_grape.infidelity < 0.001
-assert np.abs(evolution.states[-1].overlap(target_gate)) > 1-0.001
+assert fidelity(evolution.states[-1], target_gate) > 1-0.001
 ```
 
 ```python
 qt.about()
-```
-
-```python
-
 ```

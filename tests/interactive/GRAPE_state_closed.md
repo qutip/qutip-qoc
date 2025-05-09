@@ -17,7 +17,7 @@ jupyter:
 ```python
 import matplotlib.pyplot as plt
 import numpy as np
-from qutip import (about, basis, Qobj)
+from qutip import basis, Qobj
 import qutip as qt
 from qutip_qoc import Objective, optimize_pulses
 ```

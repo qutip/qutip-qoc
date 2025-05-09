@@ -17,48 +17,56 @@ jupyter:
 ```python
 import matplotlib.pyplot as plt
 import numpy as np
-from jax import jit, numpy
-from qutip import (about, Qobj, gates, qeye, sigmam, sigmax, sigmay, sigmaz, fidelity)
+from qutip import gates, qeye, sigmax, sigmay, sigmaz
 import qutip as qt
 from qutip_qoc import Objective, optimize_pulses
+
+try:
+    from jax import jit
+    from jax import numpy as jnp
+except ImportError:  # JAX not available, skip test
+    import pytest
+    pytest.skip("JAX not available")
+
+def fidelity(gate, target_gate):
+    """
+    Fidelity used for unitary gates in qutip-qtrl and qutip-qoc
+    """
+    return np.abs(gate.overlap(target_gate) / target_gate.norm())
 ```
 
 ## Problem setup
 
 ```python
-hbar = 1
 omega = 0.1  # energy splitting
-delta = 1.0  # tunneling
-gamma = 0.1  # amplitude damping
 sx, sy, sz = sigmax(), sigmay(), sigmaz()
 
-Hd = 1 / 2 * hbar * omega * sz
+Hd = 1 / 2 * omega * sz
 Hc = [sx, sy, sz]
-H = [Hd, Hc[0], Hc[1], Hc[2]]
 
 # objective for optimization
-initial = qeye(2)
-target = Qobj(1 / np.sqrt(2) * np.array([[1, 1], [1, -1]]))
+initial_gate = qeye(2)
+target_gate = gates.hadamard_transform()
 
-times = np.linspace(0, 2*np.pi, 100)
+times = np.linspace(0, np.pi / 2, 250)
 ```
 
 ## Guess
 
 ```python
-guess = [1, 1]
-guess_pulse = guess[0] * np.sin(guess[1] * times)
+jopt_guess = [1, 1]
+guess_pulse = jopt_guess[0] * np.sin(jopt_guess[1] * times)
 
-Hresult_guess = [Hd] + [[hc, guess_pulse] for hc in Hc]
-evolution_guess = qt.sesolve(Hresult_guess, initial, times)
+H_guess = [Hd] + [[hc, guess_pulse] for hc in Hc]
+evolution_guess = qt.sesolve(H_guess, initial_gate, times)
 
-print('Infidelity: ', qt.fidelity(evolution_guess.states[-1], target))
+print('Fidelity: ', fidelity(evolution_guess.states[-1], target_gate))
 
-plt.plot(times, [np.abs(state.overlap(initial) / initial.norm()) for state in evolution_guess.states], label="Initial Overlap")
-plt.plot(times, [np.abs(state.overlap(target) / target.norm()) for state in evolution_guess.states], label="Target Overlap")
-plt.plot(times, [qt.fidelity(state, target) for state in evolution_guess.states], '--', label="Fidelity")
-plt.legend()
+plt.plot(times, [fidelity(gate, initial_gate) for gate in evolution_guess.states], label="Overlap with initial gate")
+plt.plot(times, [fidelity(gate, target_gate) for gate in evolution_guess.states], label="Overlap with target gate")
 plt.title("Guess performance")
+plt.xlabel('Time')
+plt.legend()
 plt.show()
 ```
 
@@ -67,25 +75,24 @@ plt.show()
 ```python
 @jit
 def sin_x(t, c, **kwargs):
-    return c[0] * numpy.sin(c[1] * t)
+    return c[0] * jnp.sin(c[1] * t)
 
 H = [Hd] + [[hc, sin_x] for hc in Hc]
-
-ctrl_parameters = {
-    id: {"guess": guess, "bounds": [(-1, 1), (0, 2 * np.pi)]}  # c0 and c1
-    for id in ['x', 'y', 'z']
-}
-
 ```
 
 ### a) not optimized over time
 
 ```python
+control_params = {
+    id: {"guess": jopt_guess, "bounds": [(-1, 1), (0, 2 * np.pi)]}  # c0 and c1
+    for id in ['x', 'y', 'z']
+}
+
 res_jopt = optimize_pulses(
-    objectives=Objective(initial, H, target),
-    control_parameters=ctrl_parameters,
-    tlist=times,
-    minimizer_kwargs={
+    objectives = Objective(initial_gate, H, target_gate),
+    control_parameters = control_params,
+    tlist = times,
+    minimizer_kwargs = {
         "method": "Nelder-Mead",
     },
     algorithm_kwargs={
@@ -96,47 +103,49 @@ res_jopt = optimize_pulses(
 
 print('Infidelity: ', res_jopt.infidelity)
 
-plt.plot(times, res_jopt.optimized_controls[0], label='optimized pulse sx')
-plt.plot(times, res_jopt.optimized_controls[1], label='optimized pulse sy')
-plt.plot(times, res_jopt.optimized_controls[2], label='optimized pulse sz')
+plt.plot(times, guess_pulse, 'k--', label='guess pulse sx, sy, sz')
+plt.plot(times, res_jopt.optimized_controls[0], 'b', label='optimized pulse sx')
+plt.plot(times, res_jopt.optimized_controls[1], 'g', label='optimized pulse sy')
+plt.plot(times, res_jopt.optimized_controls[2], 'r', label='optimized pulse sz')
 plt.title('JOPT pulses')
-plt.xlabel('time')
+plt.xlabel('Time')
 plt.ylabel('Pulse amplitude')
 plt.legend()
 plt.show()
 ```
 
 ```python
-Hresult = [Hd, [Hc[0], np.array(res_jopt.optimized_controls[0])], [Hc[1], np.array(res_jopt.optimized_controls[1])], 
-           [Hc[2], np.array(res_jopt.optimized_controls[2])]]
-evolution = qt.sesolve(Hresult, initial, times)
+H_result = [Hd,
+            [Hc[0], np.array(res_jopt.optimized_controls[0])],
+            [Hc[1], np.array(res_jopt.optimized_controls[1])],
+            [Hc[2], np.array(res_jopt.optimized_controls[2])]]
+evolution = qt.sesolve(H_result, initial_gate, times)
 
-plt.plot(times, [np.abs(state.overlap(initial) / initial.norm()) for state in evolution.states], label="Overlap with intiial state")
-plt.plot(times, [np.abs(state.overlap(target) / target.norm()) for state in evolution.states], label="Overlap with target state")
+plt.plot(times, [fidelity(gate, initial_gate) for gate in evolution.states], label="Overlap with initial gate")
+plt.plot(times, [fidelity(gate, target_gate) for gate in evolution.states], label="Overlap with target gate")
+
 plt.title('JOPT performance')
-plt.xlabel('time')
+plt.xlabel('Time')
 plt.legend()
 plt.show()
-
 ```
 
 ### b) optimized over time
 
 ```python
 # treats time as optimization variable
-ctrl_parameters["__time__"] = {
+control_params["__time__"] = {
     "guess": times[len(times) // 2],
     "bounds": [times[0], times[-1]],
 }
 
 # run the optimization
 res_jopt_time = optimize_pulses(
-    objectives=Objective(initial, H, target),
-    control_parameters=ctrl_parameters,
-    tlist=times,
-    minimizer_kwargs={
+    objectives = Objective(initial_gate, H, target_gate),
+    control_parameters = control_params,
+    tlist = times,
+    minimizer_kwargs = {
         "method": "Nelder-Mead",
-
     },
     algorithm_kwargs={
         "alg": "JOPT",
@@ -144,31 +153,39 @@ res_jopt_time = optimize_pulses(
     },
 )
 
+opt_time = res_jopt_time.optimized_params[-1][0]
+time_range = times < opt_time
+
 print('Infidelity: ', res_jopt_time.infidelity)
-print('optimized time: ', res_jopt_time.optimized_params[-1])
+print('Optimized time: ', opt_time)
 
-time_range = times < res_jopt_time.optimized_params[-1]
-
-plt.plot(times, res_jopt_time.optimized_controls[0], label='optimized pulse sx')
-plt.plot(times, res_jopt_time.optimized_controls[1], label='optimized pulse sy')
-plt.plot(times, res_jopt_time.optimized_controls[2], label='optimized pulse sz')
-plt.title('JOPT pulses')
-plt.xlabel('time')
+plt.plot(times, guess_pulse, 'k--', label='guess pulse sx, sy, sz')
+plt.plot(times[time_range], np.array(res_jopt_time.optimized_controls[0])[time_range], 'b', label='optimized pulse sx')
+plt.plot(times[time_range], np.array(res_jopt_time.optimized_controls[1])[time_range], 'g', label='optimized pulse sy')
+plt.plot(times[time_range], np.array(res_jopt_time.optimized_controls[2])[time_range], 'r', label='optimized pulse sz')
+plt.title('JOPT pulses (time optimization)')
+plt.xlabel('Time')
 plt.ylabel('Pulse amplitude')
 plt.legend()
 plt.show()
 ```
 
 ```python
-Hresult = [Hd, [Hc[0], np.array(res_jopt_time.optimized_controls[0])], [Hc[1], np.array(res_jopt_time.optimized_controls[1])], 
-           [Hc[2], np.array(res_jopt_time.optimized_controls[2])]]
-evolution_time = qt.sesolve(Hresult, initial, times)
+times2 = times[time_range]
+if opt_time not in times2:
+    times2 = np.append(times2, opt_time)
 
-plt.plot(times, [np.abs(state.overlap(initial) / initial.norm()) for state in evolution_time.states], label="Overlap with initial state")
-plt.plot(times, [np.abs(state.overlap(target) / target.norm()) for state in evolution_time.states], label="Overlap with target state")
-plt.xlim(0, res_jopt_time.optimized_params[-1][0])
+H_result = qt.QobjEvo(
+    [Hd, [Hc[0], np.array(res_jopt_time.optimized_controls[0])],
+         [Hc[1], np.array(res_jopt_time.optimized_controls[1])], 
+         [Hc[2], np.array(res_jopt_time.optimized_controls[2])]], tlist=times)
+evolution_time = qt.sesolve(H_result, initial_gate, times2)
+
+plt.plot(times2, [fidelity(gate, initial_gate) for gate in evolution_time.states], label="Overlap with initial gate")
+plt.plot(times2, [fidelity(gate, target_gate) for gate in evolution_time.states], label="Overlap with target gate")
+
 plt.title('JOPT (optimized over time) performance')
-plt.xlabel('time')
+plt.xlabel('Time')
 plt.legend()
 plt.show()
 ```
@@ -177,45 +194,52 @@ plt.show()
 
 ```python
 res_jopt_global = optimize_pulses(
-    objectives=Objective(initial, H, target),
-    control_parameters=ctrl_parameters,
-    tlist=times,
-    algorithm_kwargs={
+    objectives = Objective(initial_gate, H, target_gate),
+    control_parameters = control_params,
+    tlist = times,
+    algorithm_kwargs = {
         "alg": "JOPT",
         "fid_err_targ": 0.001,
     },
-    optimizer_kwargs={
+    optimizer_kwargs = {
        "method": "basinhopping",
-       "max_iter": 1000,
+       "max_iter": 100,
     }
 )
 
+global_time = res_jopt_global.optimized_params[-1][0]
+global_range = times < global_time
+
 print('Infidelity: ', res_jopt_global.infidelity)
-print('optimized time: ', res_jopt_global.optimized_params[-1])
+print('Optimized time: ', global_time)
 
-global_range = times < res_jopt_global.optimized_params[-1]
-
-plt.plot(times, res_jopt_global.optimized_controls[0], label='optimized pulse sx')
-plt.plot(times, res_jopt_global.optimized_controls[1], label='optimized pulse sy')
-plt.plot(times, res_jopt_global.optimized_controls[2], label='optimized pulse sz')
-plt.title('JOPT pulses (global)')
-plt.xlabel('time')
+plt.plot(times, guess_pulse, 'k--', label='guess pulse sx, sy, sz')
+plt.plot(times[global_range], np.array(res_jopt_global.optimized_controls[0])[global_range], 'b', label='optimized pulse sx')
+plt.plot(times[global_range], np.array(res_jopt_global.optimized_controls[1])[global_range], 'g', label='optimized pulse sy')
+plt.plot(times[global_range], np.array(res_jopt_global.optimized_controls[2])[global_range], 'r', label='optimized pulse sz')
+plt.title('JOPT pulses (global optimization)')
+plt.xlabel('Time')
 plt.ylabel('Pulse amplitude')
 plt.legend()
 plt.show()
-
 ```
 
 ```python
-Hresult = [Hd, [Hc[0], np.array(res_jopt_global.optimized_controls[0])], [Hc[1], np.array(res_jopt_global.optimized_controls[1])], 
-           [Hc[2], np.array(res_jopt_global.optimized_controls[2])]]
-evolution_global = qt.sesolve(Hresult, initial, times)
+times3 = times[global_range]
+if global_time not in times3:
+    times3 = np.append(times3, global_time)
 
-plt.plot(times, [np.abs(state.overlap(initial) / initial.norm()) for state in evolution_global.states], label="Overlap with initial state")
-plt.plot(times, [np.abs(state.overlap(target) / target.norm()) for state in evolution_global.states], label="Overlap with target state")
-plt.xlim(0, res_jopt_global.optimized_params[-1][0])
-plt.title('JOPT (global) performance')
-plt.xlabel('time')
+H_result = qt.QobjEvo(
+    [Hd, [Hc[0], np.array(res_jopt_global.optimized_controls[0])],
+         [Hc[1], np.array(res_jopt_global.optimized_controls[1])], 
+         [Hc[2], np.array(res_jopt_global.optimized_controls[2])]], tlist=times)
+evolution_global = qt.sesolve(H_result, initial_gate, times)
+
+plt.plot(times3, [fidelity(gate, initial_gate) for gate in evolution_global.states], label="Overlap with initial gate")
+plt.plot(times3, [fidelity(gate, target_gate) for gate in evolution_global.states], label="Overlap with target gate")
+
+plt.title('JOPT (global optimization) performance')
+plt.xlabel('Time')
 plt.legend()
 plt.show()
 ```
@@ -225,12 +249,11 @@ plt.show()
 ```python
 fig, axes = plt.subplots(1, 3, figsize=(18, 4))  # 1 row, 3 columns
 
-titles = ["JOPT s_x pulses", "JOPT s_y pulses", "JOPT s_z pulses"]
+titles = ["JOPT sx pulses", "JOPT sy pulses", "JOPT sz pulses"]
 
-for i in range(3):
-    ax = axes[i]
-    ax.plot(times, sin_x(times, guess), label='initial guess')
-    ax.plot(times, res_jopt.optimized_controls[i], color='orange', label='optimized pulse')
+for i, ax in enumerate(axes):
+    ax.plot(times, guess_pulse, label='initial guess')
+    ax.plot(times, res_jopt.optimized_controls[i], label='optimized pulse')
     ax.plot(times[time_range], np.array(res_jopt_time.optimized_controls[i])[time_range], label='optimized (over time) pulse')
     ax.plot(times[global_range], np.array(res_jopt_global.optimized_controls[i])[global_range], label='global optimized pulse')
     ax.set_title(titles[i])
@@ -240,18 +263,19 @@ for i in range(3):
 
 plt.tight_layout()
 plt.show()
-
 ```
 
 ## Validation
 
 ```python
-assert res_jopt.infidelity < 0.02
-assert np.abs(evolution.states[-1].overlap(target)) > 1-0.02
+assert res_jopt.infidelity < 0.001
+assert fidelity(evolution.states[-1], target_gate) > 1-0.001
+
 assert res_jopt_time.infidelity < 0.001
-assert max([np.abs(state.overlap(target)) for state in evolution_time.states]) > 1-0.001
+assert fidelity(evolution_time.states[-1], target_gate) > 1-0.001
+
 assert res_jopt_global.infidelity < 0.001
-assert max([np.abs(state.overlap(target)) for state in evolution_global.states]) > 1-0.001
+assert fidelity(evolution_global.states[-1], target_gate) > 1-0.001
 ```
 
 ```python
