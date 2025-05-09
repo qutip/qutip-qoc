@@ -230,7 +230,7 @@ H_result = qt.QobjEvo(
     [Hd, [Hc[0], np.array(res_goat_global.optimized_controls[0])],
          [Hc[1], np.array(res_goat_global.optimized_controls[1])], 
          [Hc[2], np.array(res_goat_global.optimized_controls[2])]], tlist=times)
-evolution_global = qt.sesolve(H_result, initial_gate, times)
+evolution_global = qt.sesolve(H_result, initial_gate, times3)
 
 plt.plot(times3, [fidelity(gate, initial_gate) for gate in evolution_global.states], label="Overlap with initial gate")
 plt.plot(times3, [fidelity(gate, target_gate) for gate in evolution_global.states], label="Overlap with target gate")
