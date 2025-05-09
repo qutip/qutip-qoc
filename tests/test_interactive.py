@@ -15,7 +15,9 @@ import nbclient
 # Set of all example notebooks
 NOTEBOOK_DIR = 'tests/interactive'
 ALL_NOTEBOOKS = {
-    Path(x).name for x in glob.glob(str(Path(NOTEBOOK_DIR).joinpath('*.md')))
+    Path(x).name
+    for x in glob.glob(str(Path(NOTEBOOK_DIR).joinpath('*.md')))
+    if Path(x).name != 'about.md'
 }
 
 @pytest.mark.parametrize("notebook", ALL_NOTEBOOKS)
