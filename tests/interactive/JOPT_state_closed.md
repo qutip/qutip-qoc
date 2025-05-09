@@ -150,14 +150,15 @@ res_jopt_time = optimize_pulses(
     },
 )
 
-print('Infidelity: ', res_jopt_time.infidelity)
-print('Optimized time: ', res_jopt_time.optimized_params[-1])
+opt_time = res_jopt_time.optimized_params[-1][0]
+time_range = times < opt_time
 
-time_range = times < res_jopt_time.optimized_params[-1]
+print('Infidelity: ', res_jopt_time.infidelity)
+print('Optimized time: ', opt_time)
 
 plt.plot(times, guess_pulse, label='initial guess')
 plt.plot(times, res_jopt.optimized_controls[0], label='optimized pulse')
-plt.plot(times[time_range], np.array(res_jopt.optimized_controls[0])[time_range], label='optimized (over time) pulse')
+plt.plot(times[time_range], np.array(res_jopt_time.optimized_controls[0])[time_range], label='optimized (over time) pulse')
 plt.title('JOPT pulses (time optimization)')
 plt.xlabel('Time')
 plt.ylabel('Pulse amplitude')
@@ -166,13 +167,16 @@ plt.show()
 ```
 
 ```python
-Hresult = [Hd, [Hc, np.array(res_jopt_time.optimized_controls[0])]]
-evolution_time = qt.sesolve(Hresult, initial_state, times)
+times2 = times[time_range]
+if opt_time not in times2:
+    times2 = np.append(times2, opt_time)
 
-plt.plot(times, [np.abs(state.overlap(initial_state)) for state in evolution_time.states], label="Overlap with initial state")
-plt.plot(times, [np.abs(state.overlap(target_state)) for state in evolution_time.states], label="Overlap with target state")
-plt.plot(times, [qt.fidelity(state, target_state) for state in evolution_time.states], '--', label="Fidelity")
-plt.xlim(0, res_jopt_time.optimized_params[-1][0])
+Hresult = qt.QobjEvo([Hd, [Hc, np.array(res_jopt_time.optimized_controls[0])]], tlist=times)
+evolution_time = qt.sesolve(Hresult, initial_state, times2)
+
+plt.plot(times2, [np.abs(state.overlap(initial_state)) for state in evolution_time.states], label="Overlap with initial state")
+plt.plot(times2, [np.abs(state.overlap(target_state)) for state in evolution_time.states], label="Overlap with target state")
+plt.plot(times2, [qt.fidelity(state, target_state) for state in evolution_time.states], '--', label="Fidelity")
 
 plt.title('JOPT (optimized over time) performance')
 plt.xlabel('Time')
@@ -200,10 +204,11 @@ res_jopt_global = optimize_pulses(
     }
 )
 
-print('Infidelity: ', res_jopt_global.infidelity)
-print('Optimized time: ', res_jopt_global.optimized_params[-1])
+global_time = res_jopt_global.optimized_params[-1][0]
+global_range = times < global_time
 
-global_range = times < res_jopt_global.optimized_params[-1]
+print('Infidelity: ', res_jopt_global.infidelity)
+print('Optimized time: ', global_time)
 
 plt.plot(times, guess_pulse, label='initial guess')
 plt.plot(times, res_jopt.optimized_controls[0], label='optimized pulse')
@@ -216,13 +221,16 @@ plt.show()
 ```
 
 ```python
-Hresult = [Hd, [Hc, np.array(res_jopt_global.optimized_controls[0])]]
-evolution_global = qt.sesolve(Hresult, initial_state, times)
+times3 = times[global_range]
+if global_time not in times3:
+    times3 = np.append(times3, global_time)
 
-plt.plot(times, [np.abs(state.overlap(initial_state)) for state in evolution_global.states], label="Overlap with initial state")
-plt.plot(times, [np.abs(state.overlap(target_state)) for state in evolution_global.states], label="Overlap with target state")
-plt.plot(times, [qt.fidelity(state, target_state) for state in evolution_global.states], '--', label="Fidelity")
-plt.xlim(0, res_jopt_global.optimized_params[-1][0])
+Hresult = qt.QobjEvo([Hd, [Hc, np.array(res_jopt_global.optimized_controls[0])]], tlist=times)
+evolution_global = qt.sesolve(Hresult, initial_state, times3)
+
+plt.plot(times3, [np.abs(state.overlap(initial_state)) for state in evolution_global.states], label="Overlap with initial state")
+plt.plot(times3, [np.abs(state.overlap(target_state)) for state in evolution_global.states], label="Overlap with target state")
+plt.plot(times3, [qt.fidelity(state, target_state) for state in evolution_global.states], '--', label="Fidelity")
 
 plt.title('JOPT (global) performance')
 plt.xlabel('Time')
@@ -255,9 +263,9 @@ print('GLobal Fidelity: ', 1 - res_jopt_global.infidelity)
 
 plt.plot(times, [qt.fidelity(state, target_state) for state in evolution_guess.states], color='blue', label="Guess")
 plt.plot(times, [qt.fidelity(state, target_state) for state in evolution.states], color='orange', label="Goat")
-plt.plot(times[time_range], [qt.fidelity(state, target_state) for state in evolution_time.states[:len(times[time_range])]], 
+plt.plot(times2, [qt.fidelity(state, target_state) for state in evolution_time.states], 
          color='green', label="Time")
-plt.plot(times[global_range], [qt.fidelity(state, target_state) for state in evolution_global.states[:len(times[global_range])]], 
+plt.plot(times3, [qt.fidelity(state, target_state) for state in evolution_global.states], 
          color='red', label="Global")
 
 plt.title('Fidelities')
@@ -277,10 +285,10 @@ assert np.allclose(np.abs(evolution.states[-1].overlap(target_state)), 1 - res_j
 
 # target fidelity not reached in part b), check that it is better than part a)
 assert res_jopt_time.infidelity < res_jopt.infidelity
-assert np.allclose(np.abs(evolution_time.states[len(times[time_range]) - 1].overlap(target_state)), 1 - res_jopt_time.infidelity, atol=1e-3)
+assert np.allclose(np.abs(evolution_time.states[-1].overlap(target_state)), 1 - res_jopt_time.infidelity, atol=1e-3)
 
 assert res_jopt_global.infidelity < 0.001
-assert np.abs(evolution_global.states[len(times[global_range]) - 1].overlap(target_state)) > 1 - 0.001
+assert np.abs(evolution_global.states[-1].overlap(target_state)) > 1 - 0.001
 ```
 
 ```python
