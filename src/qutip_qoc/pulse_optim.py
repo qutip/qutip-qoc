@@ -4,13 +4,9 @@ It provides the function `optimize_pulses` which prepares and runs the
 GOAT, JOPT, GRAPE, CRAB or RL optimization.
 """
 import numpy as np
-
-import qutip_qtrl.logging_utils as logging
-import qutip_qtrl.pulseoptim as cpo
-
+from qutip_qoc.fidcomp import FidelityComputer  # Added import
 from qutip_qoc._optimizer import _global_local_optimization
 from qutip_qoc._time import _TimeInterval
-
 import qutip as qt
 
 try:
@@ -137,14 +133,13 @@ def optimize_pulses(
     result : :class:`qutip_qoc.Result`
         Optimization result.
     """
-    if algorithm_kwargs is None:
-        algorithm_kwargs = {}
-    if optimizer_kwargs is None:
-        optimizer_kwargs = {}
-    if minimizer_kwargs is None:
-        minimizer_kwargs = {}
-    if integrator_kwargs is None:
-        integrator_kwargs = {}
+    algorithm_kwargs = algorithm_kwargs or {}
+    optimizer_kwargs = optimizer_kwargs or {}
+    minimizer_kwargs = minimizer_kwargs or {}
+    integrator_kwargs = integrator_kwargs or {}
+
+    # Set default fidelity type if not specified
+    algorithm_kwargs.setdefault("fid_type", "PSU")
 
     # create time interval
     time_interval = _TimeInterval(tslots=tlist)
@@ -157,45 +152,11 @@ def optimize_pulses(
     alg = algorithm_kwargs.get("alg", "GRAPE")  # works with most input types
 
     Hd_lst, Hc_lst = [], []
+    # Prepare objectives and extract Hamiltonians
     if not isinstance(objectives, list):
         objectives = [objectives]
-    for objective in objectives:
-        # extract drift and control Hamiltonians from the objective
-        Hd_lst.append(objective.H[0])
-        Hc_lst.append([H[0] if isinstance(H, list) else H for H in objective.H[1:]])
-
-    # extract guess and bounds for the control pulses
-    x0, bounds = [], []
-    for key in control_parameters.keys():
-        if key != "__time__":
-            x0.append(control_parameters[key].get("guess"))
-            bounds.append(control_parameters[key].get("bounds"))
-    try:  # GRAPE, CRAB format
-        lbound = [b[0][0] for b in bounds]
-        ubound = [b[0][1] for b in bounds]
-    except Exception:
-        lbound = [b[0] for b in bounds]
-        ubound = [b[1] for b in bounds]
-
-    # default "log_level" if not specified
-    if algorithm_kwargs.get("disp", False):
-        log_level = logging.INFO
-    else:
-        log_level = logging.WARN
-
-    if "options" in minimizer_kwargs:
-        minimizer_kwargs["options"].setdefault(
-            "maxiter", algorithm_kwargs.get("max_iter", 1000)
-        )
-        minimizer_kwargs["options"].setdefault(
-            "gtol", algorithm_kwargs.get("min_grad", 0.0 if alg == "CRAB" else 1e-8)
-        )
-    else:
-        minimizer_kwargs["options"] = {
-            "maxiter": algorithm_kwargs.get("max_iter", 1000),
-            "gtol": algorithm_kwargs.get("min_grad", 0.0 if alg == "CRAB" else 1e-8),
-        }
-    # Iterate over objectives and convert initial and target states based on the optimization type
+    
+    # Convert states based on optimization type
     for objective in objectives:
         H_list = objective.H if isinstance(objective.H, list) else [objective.H]
         if any(qt.issuper(H_i) for H_i in H_list):
@@ -224,179 +185,202 @@ def optimize_pulses(
                 if qt.isket(objective.target):
                     objective.target = qt.operator_to_vector(qt.ket2dm(objective.target))
 
+    # extract guess and bounds for the control pulses
+        x0, bounds = [], []
+        for key in control_parameters.keys():
+            if key != "__time__":
+                x0.append(control_parameters[key].get("guess"))
+                bounds.append(control_parameters[key].get("bounds"))
+        try:  # GRAPE, CRAB format
+            lbound = [b[0][0] for b in bounds]
+            ubound = [b[0][1] for b in bounds]
+        except Exception:
+            lbound = [b[0] for b in bounds]
+            ubound = [b[1] for b in bounds]
+
+        # Set up minimizer options
+        minimizer_kwargs.setdefault("options", {})
+        minimizer_kwargs["options"].setdefault(
+            "maxiter", algorithm_kwargs.get("max_iter", 1000)
+        )
+        minimizer_kwargs["options"].setdefault(
+            "gtol", algorithm_kwargs.get("min_grad", 0.0 if alg == "CRAB" else 1e-8)
+        )
+
+
+        # Run the appropriate optimization algorithm
+        if alg.upper() == "RL" and _rl_available:
+            # Reinforcement learning optimization
+            rl_optimizer = _RL(
+                objectives=objectives,
+                control_parameters=control_parameters,
+                time_interval=time_interval,
+                time_options=time_options,
+                alg_kwargs=algorithm_kwargs,
+                optimizer_kwargs=optimizer_kwargs,
+                minimizer_kwargs=minimizer_kwargs,
+                integrator_kwargs=integrator_kwargs,
+                qtrl_optimizers=None,
+            )
+            rl_optimizer.train()
+            return rl_optimizer.result()
+        else:
+            # Standard optimization (GOAT, JOPT, GRAPE, CRAB)
+            return _global_local_optimization(
+                objectives=objectives,
+                control_parameters=control_parameters,
+                time_interval=time_interval,
+                time_options=time_options,
+                algorithm_kwargs=algorithm_kwargs,
+                optimizer_kwargs=optimizer_kwargs,
+                minimizer_kwargs=minimizer_kwargs,
+                integrator_kwargs=integrator_kwargs,
+                qtrl_optimizers=None,
+            )
     # prepare qtrl optimizers
-    qtrl_optimizers = []
+    # Initialize empty list for optimizers (we'll use our own framework)
+    def generate_pulse_from_params(params, n_tslots, num_coeffs=None, fix_frequency=False, 
+                             init_coeff_scaling=1.0, crab_pulse_params=None):
+        """
+        Generate a CRAB pulse from Fourier coefficients or other parameters.
+        
+        Parameters:
+        -----------
+        params : array_like
+            Array of control parameters (Fourier coefficients or other parameters)
+        n_tslots : int
+            Number of time slots in the pulse
+        num_coeffs : int, optional
+            Number of Fourier coefficients per control dimension
+        fix_frequency : bool, optional
+            Whether to use fixed frequencies
+        init_coeff_scaling : float, optional
+            Scaling factor for initial coefficients
+        crab_pulse_params : dict, optional
+            Additional parameters for CRAB pulse generation
+        
+        Returns:
+        --------
+        numpy.ndarray
+            Generated pulse amplitudes for each time slot
+        """
+        # Default CRAB parameters
+        if crab_pulse_params is None:
+            crab_pulse_params = {}
+        
+        # Determine the number of coefficients per dimension
+        if num_coeffs is None:
+            if fix_frequency:
+                num_coeffs = len(params) // 2  # amplitudes and phases
+            else:
+                num_coeffs = len(params) // 3  # amplitudes, phases, and frequencies
+        
+        # Reshape parameters based on CRAB type
+        if fix_frequency:
+            # Parameters are [A1, A2, ..., phi1, phi2, ...]
+            amplitudes = params[:num_coeffs] * init_coeff_scaling
+            phases = params[num_coeffs:2*num_coeffs]
+            # Use fixed frequencies from crab_pulse_params or default
+            frequencies = crab_pulse_params.get('frequencies', 
+                                            np.linspace(1, 10, num_coeffs))
+        else:
+            # Parameters are [A1, A2, ..., phi1, phi2, ..., w1, w2, ...]
+            amplitudes = params[:num_coeffs] * init_coeff_scaling
+            phases = params[num_coeffs:2*num_coeffs]
+            frequencies = params[2*num_coeffs:3*num_coeffs]
+        
+        # Time points
+        t = np.linspace(0, 1, n_tslots)
+        
+        # Generate pulse using Fourier components
+        pulse = np.zeros(n_tslots)
+        for A, phi, w in zip(amplitudes, phases, frequencies):
+            pulse += A * np.sin(w * t + phi)
+        
+        return pulse
+
+    # Initialize empty list for optimizers (we'll use our own framework)
+    optimizers = []
+
     if alg == "CRAB" or alg == "GRAPE":
+        # Determine dynamics type (unitary or general matrix)
         dyn_type = "GEN_MAT"
         for objective in objectives:
             if any(qt.isoper(H_i) for H_i in (objective.H if isinstance(objective.H, list) else [objective.H])):
                 dyn_type = "UNIT"
 
-        if alg == "GRAPE":  # algorithm specific kwargs
+        # Algorithm-specific configurations
+        if alg == "GRAPE":
             use_as_amps = True
-            minimizer_kwargs.setdefault("method", "L-BFGS-B")  # gradient
+            minimizer_kwargs.setdefault("method", "L-BFGS-B")  # gradient-based
             alg_params = algorithm_kwargs.get("alg_params", {})
-
+            
         elif alg == "CRAB":
-            minimizer_kwargs.setdefault("method", "Nelder-Mead")  # no gradient
-            # Check wether guess referes to amplitudes (or parameters for CRAB)
+            minimizer_kwargs.setdefault("method", "Nelder-Mead")  # gradient-free
             use_as_amps = len(x0[0]) == time_interval.n_tslots
             num_coeffs = algorithm_kwargs.get("num_coeffs", None)
             fix_frequency = algorithm_kwargs.get("fix_frequency", False)
 
             if num_coeffs is None:
                 if use_as_amps:
-                    num_coeffs = (
-                        2  # default only two sets of fourier expansion coefficients
-                    )
-                else:  # depending on the number of parameters given
+                    num_coeffs = 2  # default fourier coefficients
+                else:
                     num_coeffs = len(x0[0]) // 2 if fix_frequency else len(x0[0]) // 3
 
             alg_params = {
                 "num_coeffs": num_coeffs,
-                "init_coeff_scaling": algorithm_kwargs.get("init_coeff_scaling"),
-                "crab_pulse_params": algorithm_kwargs.get("crab_pulse_params"),
+                "init_coeff_scaling": algorithm_kwargs.get("init_coeff_scaling", 1.0),
+                "crab_pulse_params": algorithm_kwargs.get("crab_pulse_params", None),
                 "fix_frequency": fix_frequency,
             }
 
+        # Handle bounds
         if use_as_amps:
-            # same bounds for all controls
             lbound = lbound[0]
             ubound = ubound[0]
 
-        # one optimizer for each objective
+        # Prepare pulse parameters for each objective
         for i, objective in enumerate(objectives):
-            params = {
+            # Generate initial pulses for each control
+            init_amps = np.zeros((time_interval.n_tslots, len(Hc_lst[i])))
+            
+            for j in range(len(Hc_lst[i])):
+                if use_as_amps:
+                    # For amplitude-based optimization, use the initial guess directly
+                    init_amps[:, j] = x0[j]
+                else:
+                    # For parameterized pulses, generate from coefficients
+                    init_amps[:, j] = generate_pulse_from_params(
+                        x0[j], 
+                        n_tslots=time_interval.n_tslots,
+                        num_coeffs=alg_params.get("num_coeffs"),
+                        fix_frequency=alg_params.get("fix_frequency", False),
+                        init_coeff_scaling=alg_params.get("init_coeff_scaling", 1.0),
+                        crab_pulse_params=alg_params.get("crab_pulse_params")
+                    )
+
+            # Store the optimization problem configuration
+            optimizers.append({
                 "drift": Hd_lst[i],
                 "ctrls": Hc_lst[i],
                 "initial": objective.initial,
                 "target": objective.target,
-                "num_tslots": time_interval.n_tslots,
-                "evo_time": time_interval.evo_time,
-                "tau": None,  # implicitly derived from tslots
-                "amp_lbound": lbound,
-                "amp_ubound": ubound,
-                "fid_err_targ": algorithm_kwargs.get("fid_err_targ", 1e-10),
-                "min_grad": minimizer_kwargs["options"]["gtol"],
-                "max_iter": minimizer_kwargs["options"]["maxiter"],
-                "max_wall_time": algorithm_kwargs.get("max_wall_time", 180),
-                "alg": alg,
-                "optim_method": algorithm_kwargs.get("optim_method", None),
-                "method_params": minimizer_kwargs,
-                "optim_alg": None,  # deprecated
-                "max_metric_corr": None,  # deprecated
-                "accuracy_factor": None,  # deprecated
+                "init_amps": init_amps,
+                "bounds": (lbound, ubound),
                 "alg_params": alg_params,
-                "optim_params": algorithm_kwargs.get("optim_params", None),
-                "dyn_type": algorithm_kwargs.get("dyn_type", dyn_type),
-                "dyn_params": algorithm_kwargs.get("dyn_params", None),
-                "prop_type": algorithm_kwargs.get(
-                    "prop_type", "DEF"
-                ),  # check other defaults
-                "prop_params": algorithm_kwargs.get("prop_params", None),
-                "fid_type": algorithm_kwargs.get("fid_type", "DEF"),
-                "fid_params": algorithm_kwargs.get("fid_params", None),
-                "phase_option": None,  # deprecated
-                "fid_err_scale_factor": None,  # deprecated
-                "tslot_type": algorithm_kwargs.get("tslot_type", "DEF"),
-                "tslot_params": algorithm_kwargs.get("tslot_params", None),
-                "amp_update_mode": None,  # deprecated
-                "init_pulse_type": algorithm_kwargs.get("init_pulse_type", "DEF"),
-                "init_pulse_params": algorithm_kwargs.get(
-                    "init_pulse_params", None
-                ),  # wavelength, frequency, phase etc.
-                "pulse_scaling": algorithm_kwargs.get("pulse_scaling", 1.0),
-                "pulse_offset": algorithm_kwargs.get("pulse_offset", 0.0),
-                "ramping_pulse_type": algorithm_kwargs.get("ramping_pulse_type", None),
-                "ramping_pulse_params": algorithm_kwargs.get(
-                    "ramping_pulse_params", None
-                ),
-                "log_level": algorithm_kwargs.get("log_level", log_level),
-                "gen_stats": algorithm_kwargs.get("gen_stats", False),
-            }
+                "use_as_amps": use_as_amps,
+                "dyn_type": dyn_type,
+                "fid_type": algorithm_kwargs.get("fid_type", "PSU")  # Use our FidelityComputer
+            })
 
-            qtrl_optimizer = cpo.create_pulse_optimizer(
-                drift=params["drift"],
-                ctrls=params["ctrls"],
-                initial=params["initial"],
-                target=params["target"],
-                num_tslots=params["num_tslots"],
-                evo_time=params["evo_time"],
-                tau=params["tau"],
-                amp_lbound=params["amp_lbound"],
-                amp_ubound=params["amp_ubound"],
-                fid_err_targ=params["fid_err_targ"],
-                min_grad=params["min_grad"],
-                max_iter=params["max_iter"],
-                max_wall_time=params["max_wall_time"],
-                alg=params["alg"],
-                optim_method=params["optim_method"],
-                method_params=params["method_params"],
-                optim_alg=params["optim_alg"],
-                max_metric_corr=params["max_metric_corr"],
-                accuracy_factor=params["accuracy_factor"],
-                alg_params=params["alg_params"],
-                optim_params=params["optim_params"],
-                dyn_type=params["dyn_type"],
-                dyn_params=params["dyn_params"],
-                prop_type=params["prop_type"],
-                prop_params=params["prop_params"],
-                fid_type=params["fid_type"],
-                fid_params=params["fid_params"],
-                phase_option=params["phase_option"],
-                fid_err_scale_factor=params["fid_err_scale_factor"],
-                tslot_type=params["tslot_type"],
-                tslot_params=params["tslot_params"],
-                amp_update_mode=params["amp_update_mode"],
-                init_pulse_type=params["init_pulse_type"],
-                init_pulse_params=params["init_pulse_params"],
-                pulse_scaling=params["pulse_scaling"],
-                pulse_offset=params["pulse_offset"],
-                ramping_pulse_type=params["ramping_pulse_type"],
-                ramping_pulse_params=params["ramping_pulse_params"],
-                log_level=params["log_level"],
-                gen_stats=params["gen_stats"],
-            )
-            dyn = qtrl_optimizer.dynamics
-            dyn.init_timeslots()
-
-            # Generate initial pulses for each control through generator
-            init_amps = np.zeros([dyn.num_tslots, dyn.num_ctrls])
-
-            for j in range(dyn.num_ctrls):
-                if isinstance(qtrl_optimizer.pulse_generator, list):
-                    # pulse generator for each control
-                    pgen = qtrl_optimizer.pulse_generator[j]
-                else:
-                    pgen = qtrl_optimizer.pulse_generator
-
-                if use_as_amps:
-                    if alg == "CRAB":
-                        pgen.guess_pulse = x0[j]
-                        pgen.init_pulse()
-                    init_amps[:, j] = x0[j]
-
-                else:
-                    # Set the initial parameters
-                    pgen.init_pulse(init_coeffs=np.array(x0[j]))
-                    init_amps[:, j] = pgen.gen_pulse()
-
-            # Initialise the starting amplitudes
-            dyn.initialize_controls(init_amps)
-            # And store the (random) initial parameters
-            init_params = qtrl_optimizer._get_optim_var_vals()
-
-            if use_as_amps:  # For the global optimizer
-                num_params = len(init_params) // len(control_parameters)
-                for i, key in enumerate(control_parameters.keys()):
-                    control_parameters[key]["guess"] = init_params[
-                        i * num_params : (i + 1) * num_params
-                    ]  # amplitude bounds are taken care of by pulse generator
-                    control_parameters[key]["bounds"] = [
-                        (lbound, ubound) for _ in range(num_params)
-                    ]
-
-            qtrl_optimizers.append(qtrl_optimizer)
+            # Update control parameters if using parameterized pulses
+            if not use_as_amps:
+                num_params = len(x0[0])
+                for key in control_parameters.keys():
+                    if key != "__time__":
+                        control_parameters[key]["bounds"] = [
+                            (lbound, ubound) for _ in range(num_params)
+                        ]
 
     elif alg == "RL":
         if not _rl_available:
@@ -414,11 +398,12 @@ def optimize_pulses(
             optimizer_kwargs,
             minimizer_kwargs,
             integrator_kwargs,
-            qtrl_optimizers,
+            optimizers,  # Pass our optimizers list
         )
         rl_env.train()
         return rl_env.result()
 
+    # Run the optimization using our custom framework
     return _global_local_optimization(
         objectives,
         control_parameters,
@@ -428,5 +413,5 @@ def optimize_pulses(
         optimizer_kwargs,
         minimizer_kwargs,
         integrator_kwargs,
-        qtrl_optimizers,
+        optimizers,  # Pass our optimizers configuration
     )
