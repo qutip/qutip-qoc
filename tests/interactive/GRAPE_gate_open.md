@@ -1,18 +1,5 @@
----
-jupyter:
-  jupytext:
-    text_representation:
-      extension: .md
-      format_name: markdown
-      format_version: '1.3'
-      jupytext_version: 1.16.7
-  kernelspec:
-    display_name: qutip-dev
-    language: python
-    name: python3
----
-
 # GRAPE algorithm for 2 level system
+
 
 ```python
 import matplotlib.pyplot as plt
@@ -23,6 +10,7 @@ from qutip_qoc import Objective, optimize_pulses
 ```
 
 ## Problem setup
+
 
 ```python
 hbar = 1
@@ -48,11 +36,43 @@ times = np.linspace(0, np.pi / 2, 250)
 
 ## Guess
 
+
 ```python
 grape_guess = np.sin(times)
+
+H_result_guess = [Hd,
+            [Hc[0], grape_guess],
+            [Hc[1], grape_guess],
+            [Hc[2], grape_guess]]
+
+identity_op = qt.qeye(2)
+identity_super = qt.spre(identity_op)
+
+evolution_guess = qt.mesolve(H_result_guess, identity_super, times)
+
+target_super = qt.to_super(target_gate)
+initial_super = qt.to_super(initial_gate)
+
+initial_overlaps_guess = [np.abs((prop.dag() * initial_super).tr()) / (prop.norm() ) for prop in evolution_guess.states]
+target_overlaps_guess = [np.abs((prop.dag() * target_super).tr()) / (prop.norm() ) for prop in evolution_guess.states]
+
+plt.plot(times, initial_overlaps_guess, label="Overlap with initial gate")
+plt.plot(times, target_overlaps_guess, label="Overlap with target gate")
+plt.title("Guess performance")
+plt.xlabel("Time")
+plt.legend()
+plt.show()
+
 ```
 
+
+    
+![png](GRAPE_gate_open_files/GRAPE_gate_open_5_0.png)
+    
+
+
 ## Grape algorithm
+
 
 ```python
 control_params = {
@@ -60,7 +80,7 @@ control_params = {
     "ctrl_y": {"guess": np.cos(times), "bounds": [-1, 1]},
     "ctrl_z": {"guess": np.tanh(times), "bounds": [-1, 1]},
 }
-alg_args = {"alg": "GRAPE", "fid_err_targ": 0.001}
+alg_args = {"alg": "GRAPE", "fid_err_targ": 0.01}
 
 res_grape = optimize_pulses(
     objectives=Objective(initial_gate, H, target_gate),
@@ -68,7 +88,6 @@ res_grape = optimize_pulses(
     tlist=times,
     algorithm_kwargs=alg_args,
 )
-
 
 print('Infidelity: ', res_grape.infidelity)
 
@@ -81,6 +100,16 @@ plt.ylabel('Pulse amplitude')
 plt.legend()
 plt.show()
 ```
+
+    Infidelity:  0.006817967340126763
+    
+
+
+    
+![png](GRAPE_gate_open_files/GRAPE_gate_open_7_1.png)
+    
+
+
 
 ```python
 H_result = [Hd,
@@ -109,14 +138,56 @@ plt.show()
 
 ```
 
+
+    
+![png](GRAPE_gate_open_files/GRAPE_gate_open_8_0.png)
+    
+
+
 ## Validation
+
 
 ```python
 assert res_grape.infidelity < 0.01
 ```
 
+
 ```python
 qt.about()
 ```
+
+    
+    QuTiP: Quantum Toolbox in Python
+    ================================
+    Copyright (c) QuTiP team 2011 and later.
+    Current admin team: Alexander Pitchford, Nathan Shammah, Shahnawaz Ahmed, Neill Lambert, Eric Giguère, Boxi Li, Simon Cross, Asier Galicia, Paul Menczel, and Patrick Hopf.
+    Board members: Daniel Burgarth, Robert Johansson, Anton F. Kockum, Franco Nori and Will Zeng.
+    Original developers: R. J. Johansson & P. D. Nation.
+    Previous lead developers: Chris Granade & A. Grimsmo.
+    Currently developed through wide collaboration. See https://github.com/qutip for details.
+    
+    QuTiP Version:      5.1.1
+    Numpy Version:      1.26.4
+    Scipy Version:      1.15.2
+    Cython Version:     None
+    Matplotlib Version: 3.10.0
+    Python Version:     3.12.10
+    Number of CPUs:     8
+    BLAS Info:          Generic
+    INTEL MKL Ext:      None
+    Platform Info:      Windows (AMD64)
+    Installation path:  c:\Users\julia\miniforge3\envs\qutip-dev\Lib\site-packages\qutip
+    
+    Installed QuTiP family packages
+    -------------------------------
+    
+    qutip-jax: 0.1.0
+    qutip-qtrl: 0.1.5
+    
+    ================================================================================
+    Please cite QuTiP in your publication.
+    ================================================================================
+    For your convenience a bibtex reference can be easily generated using `qutip.cite()`
+    
 
 

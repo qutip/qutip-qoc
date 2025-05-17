@@ -1,18 +1,5 @@
----
-jupyter:
-  jupytext:
-    text_representation:
-      extension: .md
-      format_name: markdown
-      format_version: '1.3'
-      jupytext_version: 1.16.7
-  kernelspec:
-    display_name: qutip-dev
-    language: python
-    name: python3
----
-
 # JOPT algorithm
+
 
 ```python
 import matplotlib.pyplot as plt
@@ -24,6 +11,7 @@ from qutip_qoc import Objective, optimize_pulses
 ```
 
 ## Problem setup
+
 
 ```python
 hbar = 1
@@ -47,12 +35,41 @@ times = np.linspace(0, np.pi / 2, 250)
 
 ## Guess
 
+
 ```python
 jopt_guess = [1, 1]
 guess_pulse = jopt_guess[0] * np.sin(jopt_guess[1] * times)
 ```
 
+
+```python
+H_result_guess = [Hd,
+            [Hc[0], guess_pulse],
+            [Hc[1], guess_pulse],
+            [Hc[2], guess_pulse]]
+
+identity_op = qt.qeye(2)
+identity_super = qt.spre(identity_op)
+
+evolution_guess = qt.mesolve(H_result_guess, identity_super, times)
+
+target_super = qt.to_super(target_gate)
+initial_super = qt.to_super(initial_gate)
+
+initial_overlaps_guess = [np.abs((prop.dag() * initial_super).tr()) / (prop.norm() ) for prop in evolution_guess.states]
+target_overlaps_guess = [np.abs((prop.dag() * target_super).tr()) / (prop.norm() ) for prop in evolution_guess.states]
+
+plt.plot(times, initial_overlaps_guess, label="Overlap with initial gate")
+plt.plot(times, target_overlaps_guess, label="Overlap with target gate")
+plt.title("Guess performance")
+plt.xlabel("Time")
+plt.legend()
+plt.show()
+
+```
+
 ## JOPT algorithm
+
 
 ```python
 @jit
@@ -62,7 +79,21 @@ def sin_x(t, c, **kwargs):
 H = [Hd] + [[hc, sin_x, {"grad": sin_x}] for hc in Hc]
 ```
 
+
+    The Kernel crashed while executing code in the current cell or a previous cell. 
+    
+
+    Please review the code in the cell(s) to identify a possible cause of the failure. 
+    
+
+    Click <a href='https://aka.ms/vscodeJupyterKernelCrash'>here</a> for more info. 
+    
+
+    View Jupyter <a href='command:jupyter.viewOutput'>log</a> for further details.
+
+
 ### a) not optimized over time
+
 
 ```python
 ctrl_parameters = {
@@ -96,27 +127,27 @@ plt.legend()
 plt.show()
 ```
 
+
 ```python
 H_result = [Hd,
             [Hc[0], np.array(res_jopt.optimized_controls[0])],
             [Hc[1], np.array(res_jopt.optimized_controls[1])],
             [Hc[2], np.array(res_jopt.optimized_controls[2])]]
 
-
 identity_op = qt.qeye(2)
 identity_super = qt.spre(identity_op)
 
-evolution_time = qt.mesolve(H_result, identity_super, times)
+evolution = qt.mesolve(H_result, identity_super, times)
 
 target_super = qt.to_super(target_gate)
 initial_super = qt.to_super(initial_gate)
 
-initial_overlaps = [np.abs((prop.dag() * initial_super).tr()) / (prop.norm() ) for prop in evolution_time.states]
-target_overlaps = [np.abs((prop.dag() * target_super).tr()) / (prop.norm() ) for prop in evolution_time.states]
+initial_overlaps = [np.abs((prop.dag() * initial_super).tr()) / (prop.norm() ) for prop in evolution.states]
+target_overlaps = [np.abs((prop.dag() * target_super).tr()) / (prop.norm() ) for prop in evolution.states]
 
 plt.plot(times, initial_overlaps, label="Overlap with initial gate")
 plt.plot(times, target_overlaps, label="Overlap with target gate")
-plt.title("GOAT performance")
+plt.title("JOPT performance")
 plt.xlabel("Time")
 plt.legend()
 plt.show()
@@ -124,6 +155,7 @@ plt.show()
 ```
 
 ### b) optimized over time
+
 
 ```python
 # treats time as optimization variable
@@ -163,8 +195,9 @@ plt.legend()
 plt.show()
 ```
 
+
 ```python
-H_result = [Hd,
+H_result_time = [Hd,
             [Hc[0], np.array(res_jopt_time.optimized_controls[0])],
             [Hc[1], np.array(res_jopt_time.optimized_controls[1])],
             [Hc[2], np.array(res_jopt_time.optimized_controls[2])]]
@@ -173,17 +206,17 @@ H_result = [Hd,
 identity_op = qt.qeye(2)
 identity_super = qt.spre(identity_op)
 
-evolution_time = qt.mesolve(H_result, identity_super, times)
+evolution_time = qt.mesolve(H_result_time, identity_super, times)
 
 target_super = qt.to_super(target_gate)
 initial_super = qt.to_super(initial_gate)
 
-initial_overlaps = [np.abs((prop.dag() * initial_super).tr()) / (prop.norm() ) for prop in evolution_time.states]
-target_overlaps = [np.abs((prop.dag() * target_super).tr()) / (prop.norm() ) for prop in evolution_time.states]
+initial_overlaps_time = [np.abs((prop.dag() * initial_super).tr()) / (prop.norm() ) for prop in evolution_time.states]
+target_overlaps_time = [np.abs((prop.dag() * target_super).tr()) / (prop.norm() ) for prop in evolution_time.states]
 
-plt.plot(times, initial_overlaps, label="Overlap with initial gate")
-plt.plot(times, target_overlaps, label="Overlap with target gate")
-plt.title("GOAT performance")
+plt.plot(times, initial_overlaps_time, label="Overlap with initial gate")
+plt.plot(times, target_overlaps_time, label="Overlap with target gate")
+plt.title("JOPT performance (optimized over time)")
 plt.xlabel("Time")
 plt.legend()
 plt.show()
@@ -191,6 +224,7 @@ plt.show()
 ```
 
 ## Global optimization
+
 
 ```python
 alg_args = {
@@ -218,7 +252,7 @@ global_range = times < res_jopt_global.optimized_params[-1]
 plt.plot(times[global_range], np.array(res_jopt_global.optimized_controls[0])[global_range], label='Global optimized pulse sx')
 plt.plot(times[global_range], np.array(res_jopt_global.optimized_controls[1])[global_range], label='Global optimized pulse sy')
 plt.plot(times[global_range], np.array(res_jopt_global.optimized_controls[2])[global_range], label='Global optimized pulse sz')
-plt.title('JOPT pulses (global)')
+plt.title('JOPT pulses')
 plt.xlabel('Time')
 plt.ylabel('Pulse amplitude')
 plt.legend()
@@ -226,8 +260,9 @@ plt.show()
 
 ```
 
+
 ```python
-H_result = [Hd,
+H_result_global = [Hd,
             [Hc[0], np.array(res_jopt_time.optimized_controls[0])],
             [Hc[1], np.array(res_jopt_time.optimized_controls[1])],
             [Hc[2], np.array(res_jopt_time.optimized_controls[2])]]
@@ -236,17 +271,17 @@ H_result = [Hd,
 identity_op = qt.qeye(2)
 identity_super = qt.spre(identity_op)
 
-evolution_time = qt.mesolve(H_result, identity_super, times)
+evolution_global = qt.mesolve(H_result, identity_super, times)
 
 target_super = qt.to_super(target_gate)
 initial_super = qt.to_super(initial_gate)
 
-initial_overlaps = [np.abs((prop.dag() * initial_super).tr()) / (prop.norm() ) for prop in evolution_time.states]
-target_overlaps = [np.abs((prop.dag() * target_super).tr()) / (prop.norm() ) for prop in evolution_time.states]
+initial_overlaps_global = [np.abs((prop.dag() * initial_super).tr()) / (prop.norm() ) for prop in evolution_global.states]
+target_overlaps_global = [np.abs((prop.dag() * target_super).tr()) / (prop.norm() ) for prop in evolution_global.states]
 
-plt.plot(times, initial_overlaps, label="Overlap with initial gate")
-plt.plot(times, target_overlaps, label="Overlap with target gate")
-plt.title("GOAT performance")
+plt.plot(times, initial_overlaps_global, label="Overlap with initial gate")
+plt.plot(times, target_overlaps_global, label="Overlap with target gate")
+plt.title("JOPT performance (global)")
 plt.xlabel("Time")
 plt.legend()
 plt.show()
@@ -254,6 +289,7 @@ plt.show()
 ```
 
 ## Comparison
+
 
 ```python
 fig, axes = plt.subplots(1, 3, figsize=(18, 4))  # 1 row, 3 columns
@@ -278,11 +314,27 @@ plt.show()
 
 ## Validation
 
+
 ```python
 assert res_jopt.infidelity < 0.001
 assert res_jopt_time.infidelity < 0.001
 assert res_jopt_global.infidelity < 0.001
 ```
+
+
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    Cell In[1], line 1
+    ----> 1 assert res_jopt.infidelity < 0.001
+          2 assert res_jopt_time.infidelity < 0.001
+          3 assert res_jopt_global.infidelity < 0.001
+    
+
+    NameError: name 'res_jopt' is not defined
+
+
 
 ```python
 qt.about()

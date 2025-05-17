@@ -1,29 +1,16 @@
----
-jupyter:
-  jupytext:
-    text_representation:
-      extension: .md
-      format_name: markdown
-      format_version: '1.3'
-      jupytext_version: 1.16.7
-  kernelspec:
-    display_name: qutip-dev
-    language: python
-    name: python3
----
-
 # GOAT algorithm
+
 
 ```python
 import matplotlib.pyplot as plt
 import numpy as np
-from jax import jit, numpy
-from qutip import (about, Qobj, gates, liouvillian, qeye, sigmam, sigmax, sigmay, sigmaz, tensor)
+from qutip import (Qobj, liouvillian, qeye, sigmam, sigmax, sigmay, sigmaz)
 import qutip as qt
 from qutip_qoc import Objective, optimize_pulses
 ```
 
 ## Problem setup
+
 
 ```python
 hbar = 1
@@ -47,13 +34,45 @@ times = np.linspace(0, np.pi / 2, 250)
 
 ## Guess
 
+
 ```python
 goat_guess = [1, 1]
 guess_pulse = goat_guess[0] * np.sin(goat_guess[1] * times)
+
+H_result_guess = [Hd,
+            [Hc[0], guess_pulse],
+            [Hc[1], guess_pulse],
+            [Hc[2], guess_pulse]]
+
+identity_op = qt.qeye(2)
+identity_super = qt.spre(identity_op)
+
+evolution_guess = qt.mesolve(H_result_guess, identity_super, times)
+
+target_super = qt.to_super(target_gate)
+initial_super = qt.to_super(initial_gate)
+
+initial_overlaps_guess = [np.abs((prop.dag() * initial_super).tr()) / (prop.norm() ) for prop in evolution_guess.states]
+target_overlaps_guess = [np.abs((prop.dag() * target_super).tr()) / (prop.norm() ) for prop in evolution_guess.states]
+
+plt.plot(times, initial_overlaps_guess, label="Overlap with initial gate")
+plt.plot(times, target_overlaps_guess, label="Overlap with target gate")
+plt.title("Guess performance")
+plt.xlabel("Time")
+plt.legend()
+plt.show()
+
 ```
+
+
+    
+![png](GOAT_gate_open_files/GOAT_gate_open_5_0.png)
+    
+
 
 ## Goat algorithm
 ### a) not optimized over time
+
 
 ```python
 # control function
@@ -73,6 +92,7 @@ def grad_sin(t, c, idx):
 H = [Hd] + [[hc, sin, {"grad": grad_sin}] for hc in Hc]
 
 ```
+
 
 ```python
 ctrl_params = {
@@ -104,12 +124,21 @@ plt.legend()
 plt.show()
 ```
 
+    Infidelity:  0.005501824802474568
+    
+
+
+    
+![png](GOAT_gate_open_files/GOAT_gate_open_8_1.png)
+    
+
+
+
 ```python
 H_result = [Hd,
             [Hc[0], np.array(res_goat.optimized_controls[0])],
             [Hc[1], np.array(res_goat.optimized_controls[1])],
             [Hc[2], np.array(res_goat.optimized_controls[2])]]
-
 
 identity_op = qt.qeye(2)
 identity_super = qt.spre(identity_op)
@@ -125,13 +154,20 @@ target_overlaps = [np.abs((prop.dag() * target_super).tr()) / (prop.norm() ) for
 plt.plot(times, initial_overlaps, label="Overlap with initial gate")
 plt.plot(times, target_overlaps, label="Overlap with target gate")
 plt.title("GOAT performance")
-plt.xlabel("global")
+plt.xlabel("Time")
 plt.legend()
 plt.show()
 
 ```
 
-### b) optimized over global
+
+    
+![png](GOAT_gate_open_files/GOAT_gate_open_9_0.png)
+    
+
+
+### b) optimized over time
+
 
 ```python
 # treats time as optimization variable
@@ -156,7 +192,6 @@ time_time = res_goat_time.optimized_params[-1]
 time_range = times < time_time
 
 print('Infidelity: ', res_goat_time.infidelity)
-print("Time: ", times[-1])
 print('Optimized time: ', res_goat_time.optimized_params[-1][0])
 
 plt.plot(times[time_range], np.array(res_goat_time.optimized_controls[0])[time_range], label='optimized (over time) pulse sx')
@@ -169,8 +204,19 @@ plt.legend()
 plt.show()
 ```
 
+    Infidelity:  0.005093554605043814
+    Optimized time:  1.4867367205567528
+    
+
+
+    
+![png](GOAT_gate_open_files/GOAT_gate_open_11_1.png)
+    
+
+
+
 ```python
-H_result = [Hd,
+H_result_time = [Hd,
             [Hc[0], np.array(res_goat_time.optimized_controls[0])],
             [Hc[1], np.array(res_goat_time.optimized_controls[1])],
             [Hc[2], np.array(res_goat_time.optimized_controls[2])]]
@@ -179,13 +225,13 @@ H_result = [Hd,
 identity_op = qt.qeye(2)
 identity_super = qt.spre(identity_op)
 
-evolution_time = qt.mesolve(H_result, identity_super, times)
+evolution_time = qt.mesolve(H_result_time, identity_super, times)
 
 target_super = qt.to_super(target_gate)
 initial_super = qt.to_super(initial_gate)
 
-initial_overlaps = [np.abs((prop.dag() * initial_super).tr()) / (prop.norm() ) for prop in evolution_time.states]
-target_overlaps = [np.abs((prop.dag() * target_super).tr()) / (prop.norm() ) for prop in evolution_time.states]
+initial_overlaps_time = [np.abs((prop.dag() * initial_super).tr()) / (prop.norm() ) for prop in evolution_time.states]
+target_overlaps_time = [np.abs((prop.dag() * target_super).tr()) / (prop.norm() ) for prop in evolution_time.states]
 
 plt.plot(times, initial_overlaps, label="Overlap with initial gate")
 plt.plot(times, target_overlaps, label="Overlap with target gate")
@@ -196,12 +242,19 @@ plt.show()
 
 ```
 
+
+    
+![png](GOAT_gate_open_files/GOAT_gate_open_12_0.png)
+    
+
+
 ## Global optimization
+
 
 ```python
 alg_args = {
     "alg": "GOAT",
-    "fid_err_targ": 0.1,
+    "fid_err_targ": 0.01,
 }
 opt_args = {
     "method": "basinhopping",
@@ -225,41 +278,58 @@ print('optimized time: ', res_goat_global.optimized_params[-1])
 plt.plot(times[global_range], np.array(res_goat_global.optimized_controls[0])[global_range], label='global optimized pulse sx')
 plt.plot(times[global_range], np.array(res_goat_global.optimized_controls[1])[global_range], label='global optimized pulse sy')
 plt.plot(times[global_range], np.array(res_goat_global.optimized_controls[2])[global_range], label='global optimized pulse sz')
-plt.title('GOAT pulses (global)')
+plt.title('GOAT pulses')
 plt.xlabel('time')
 plt.ylabel('Pulse amplitude')
 plt.legend()
 plt.show()
 ```
 
+    Infidelity:  0.0065077273552405545
+    optimized time:  [1.5707963267948966]
+    
+
+
+    
+![png](GOAT_gate_open_files/GOAT_gate_open_14_1.png)
+    
+
+
+
 ```python
-H_result = [Hd,
+H_result_global = [Hd,
             [Hc[0], np.array(res_goat_global.optimized_controls[0])],
             [Hc[1], np.array(res_goat_global.optimized_controls[1])],
             [Hc[2], np.array(res_goat_global.optimized_controls[2])]]
 
-
 identity_op = qt.qeye(2)
 identity_super = qt.spre(identity_op)
 
-evolution_global = qt.mesolve(H_result, identity_super, times)
+evolution_global = qt.mesolve(H_result_global, identity_super, times)
 
 target_super = qt.to_super(target_gate)
 initial_super = qt.to_super(initial_gate)
 
-initial_overlaps = [np.abs((prop.dag() * initial_super).tr()) / (prop.norm() ) for prop in evolution_global.states]
-target_overlaps = [np.abs((prop.dag() * target_super).tr()) / (prop.norm() ) for prop in evolution_global.states]
+initial_overlaps_global = [np.abs((prop.dag() * initial_super).tr()) / (prop.norm() ) for prop in evolution_global.states]
+target_overlaps_global = [np.abs((prop.dag() * target_super).tr()) / (prop.norm() ) for prop in evolution_global.states]
 
-plt.plot(times, initial_overlaps, label="Overlap with initial gate")
-plt.plot(times, target_overlaps, label="Overlap with target gate")
-plt.title("GOAT (global) performance")
+plt.plot(times, initial_overlaps_global, label="Overlap with initial gate")
+plt.plot(times, target_overlaps_global, label="Overlap with target gate")
+plt.title("GOAT performance (global)")
 plt.xlabel("Time")
 plt.legend()
 plt.show()
 
 ```
 
+
+    
+![png](GOAT_gate_open_files/GOAT_gate_open_15_0.png)
+    
+
+
 ## Comparison
+
 
 ```python
 fig, axes = plt.subplots(1, 3, figsize=(18, 4))  # 1 row, 3 columns
@@ -282,16 +352,58 @@ plt.show()
 
 ```
 
+
+    
+![png](GOAT_gate_open_files/GOAT_gate_open_17_0.png)
+    
+
+
 ## Validation
 
+
 ```python
-assert res_goat.infidelity < 0.1
-assert res_goat_time.infidelity < 0.1
+assert res_goat.infidelity < 0.01
+assert res_goat_time.infidelity < 0.01
 assert res_goat_global.infidelity < 0.01
 ```
+
 
 ```python
 qt.about()
 ```
+
+    
+    QuTiP: Quantum Toolbox in Python
+    ================================
+    Copyright (c) QuTiP team 2011 and later.
+    Current admin team: Alexander Pitchford, Nathan Shammah, Shahnawaz Ahmed, Neill Lambert, Eric Giguère, Boxi Li, Simon Cross, Asier Galicia, Paul Menczel, and Patrick Hopf.
+    Board members: Daniel Burgarth, Robert Johansson, Anton F. Kockum, Franco Nori and Will Zeng.
+    Original developers: R. J. Johansson & P. D. Nation.
+    Previous lead developers: Chris Granade & A. Grimsmo.
+    Currently developed through wide collaboration. See https://github.com/qutip for details.
+    
+    QuTiP Version:      5.1.1
+    Numpy Version:      1.26.4
+    Scipy Version:      1.15.2
+    Cython Version:     None
+    Matplotlib Version: 3.10.0
+    Python Version:     3.12.10
+    Number of CPUs:     8
+    BLAS Info:          Generic
+    INTEL MKL Ext:      None
+    Platform Info:      Windows (AMD64)
+    Installation path:  c:\Users\julia\miniforge3\envs\qutip-dev\Lib\site-packages\qutip
+    
+    Installed QuTiP family packages
+    -------------------------------
+    
+    qutip-jax: 0.1.0
+    qutip-qtrl: 0.1.5
+    
+    ================================================================================
+    Please cite QuTiP in your publication.
+    ================================================================================
+    For your convenience a bibtex reference can be easily generated using `qutip.cite()`
+    
 
 

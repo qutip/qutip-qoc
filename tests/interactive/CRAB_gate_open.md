@@ -1,28 +1,16 @@
----
-jupyter:
-  jupytext:
-    text_representation:
-      extension: .md
-      format_name: markdown
-      format_version: '1.3'
-      jupytext_version: 1.16.7
-  kernelspec:
-    display_name: qutip-dev
-    language: python
-    name: python3
----
-
 # CRAB algorithm
+
 
 ```python
 import matplotlib.pyplot as plt
 import numpy as np
-from qutip import (about, Qobj, gates, liouvillian, qeye, sigmam, sigmax, sigmay, sigmaz, tensor)
+from qutip import (about, Qobj, liouvillian, qeye, sigmam, sigmax, sigmay, sigmaz, tensor)
 import qutip as qt
 from qutip_qoc import Objective, optimize_pulses
 ```
 
 ## Problem setup
+
 
 ```python
 hbar = 1
@@ -44,6 +32,7 @@ times = np.linspace(0, np.pi / 2, 250)
 ```
 
 ## Crab algorithm
+
 
 ```python
 n_params = 6 # adjust in steps of 3
@@ -83,12 +72,27 @@ plt.legend()
 plt.show()
 ```
 
+    c:\Users\julia\miniforge3\envs\qutip-dev\Lib\site-packages\scipy\optimize\_basinhopping.py:294: RuntimeWarning: Method Nelder-Mead does not use gradient information (jac).
+      return self.minimizer(self.func, x0, **self.kwargs)
+    c:\Users\julia\miniforge3\envs\qutip-dev\Lib\site-packages\scipy\optimize\_basinhopping.py:294: OptimizeWarning: Unknown solver options: gtol
+      return self.minimizer(self.func, x0, **self.kwargs)
+    
+
+    Infidelity:  0.007575498222395387
+    
+
+
+    
+![png](CRAB_gate_open_files/CRAB_gate_open_5_2.png)
+    
+
+
+
 ```python
 H_result = [Hd,
             [Hc[0], res_crab.optimized_controls[0]],
             [Hc[1], res_crab.optimized_controls[1]],
             [Hc[2], res_crab.optimized_controls[2]]]
-
 
 identity_op = qt.qeye(2)
 identity_super = qt.spre(identity_op)
@@ -110,14 +114,56 @@ plt.show()
 
 ```
 
+
+    
+![png](CRAB_gate_open_files/CRAB_gate_open_6_0.png)
+    
+
+
 ## Validation
 
+
 ```python
-assert res_crab.infidelity < 0.1
+assert res_crab.infidelity < 0.01
 ```
+
 
 ```python
 qt.about()
 ```
+
+    
+    QuTiP: Quantum Toolbox in Python
+    ================================
+    Copyright (c) QuTiP team 2011 and later.
+    Current admin team: Alexander Pitchford, Nathan Shammah, Shahnawaz Ahmed, Neill Lambert, Eric Giguère, Boxi Li, Simon Cross, Asier Galicia, Paul Menczel, and Patrick Hopf.
+    Board members: Daniel Burgarth, Robert Johansson, Anton F. Kockum, Franco Nori and Will Zeng.
+    Original developers: R. J. Johansson & P. D. Nation.
+    Previous lead developers: Chris Granade & A. Grimsmo.
+    Currently developed through wide collaboration. See https://github.com/qutip for details.
+    
+    QuTiP Version:      5.1.1
+    Numpy Version:      1.26.4
+    Scipy Version:      1.15.2
+    Cython Version:     None
+    Matplotlib Version: 3.10.0
+    Python Version:     3.12.10
+    Number of CPUs:     8
+    BLAS Info:          Generic
+    INTEL MKL Ext:      None
+    Platform Info:      Windows (AMD64)
+    Installation path:  c:\Users\julia\miniforge3\envs\qutip-dev\Lib\site-packages\qutip
+    
+    Installed QuTiP family packages
+    -------------------------------
+    
+    qutip-jax: 0.1.0
+    qutip-qtrl: 0.1.5
+    
+    ================================================================================
+    Please cite QuTiP in your publication.
+    ================================================================================
+    For your convenience a bibtex reference can be easily generated using `qutip.cite()`
+    
 
 
