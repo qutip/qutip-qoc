@@ -62,6 +62,10 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 
 html_theme = "sphinx_rtd_theme"
 html_static_path = []
+html_js_files = [
+    'https://code.jquery.com/jquery-3.6.0.min.js',
+]
+
 
 # -- Options for numpydoc ---------------------------------------
 
