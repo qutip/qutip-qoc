@@ -10,6 +10,7 @@ import scipy as sp
 from scipy.optimize import OptimizeResult
 from qutip_qoc.result import Result
 from qutip_qoc.objective import _MultiObjective
+from qutip_qoc.fidcomp import FidelityComputer  # Added import
 
 
 __all__ = ["_global_local_optimization"]
@@ -41,12 +42,13 @@ class _Callback:
     Class initialization starts the clock.
     """
 
-    def __init__(self, result, fid_err_targ, max_wall_time, bounds, disp):
+    def __init__(self, result, fid_err_targ, max_wall_time, bounds, disp, fid_type="PSU"):
         self._result = result
         self._fid_err_targ = fid_err_targ
         self._max_wall_time = max_wall_time
         self._bounds = bounds
         self._disp = disp
+        self._fidcomp = FidelityComputer(fid_type)  # Initialize FidelityComputer
 
         self._elapsed_time = 0
         self._iter_seconds = []
@@ -99,15 +101,33 @@ class _Callback:
                 idx += 1
         return True
 
+    # Added helper method for fidelity computation
+    def compute_infidelity(self, initial, target, evolved):
+        """
+        Compute infidelity using the FidelityComputer
+        """
+        return self._fidcomp.compute_infidelity(initial, target, evolved)
+    
     def min_callback(self, intermediate_result: OptimizeResult):
         """
         Callback function for the local minimizer,
         terminates if the infidelity target is reached or
         the maximum wall time is exceeded.
+        Uses FidelityComputer for consistency in fidelity calculations.
         """
         terminate = False
 
-        if intermediate_result.fun <= self._fid_err_targ:
+        # Calculate infidelity using FidelityComputer if needed
+        if hasattr(intermediate_result, 'evolved_state'):
+            current_fidelity = self.compute_infidelity(
+                self._result.initial_state,
+                self._result.target_state,
+                intermediate_result.evolved_state
+            )
+        else:
+            current_fidelity = intermediate_result.fun
+
+        if current_fidelity <= self._fid_err_targ:
             terminate = True
             reason = "fid_err_targ reached"
         elif self._time_elapsed() >= self._max_wall_time:
@@ -115,17 +135,17 @@ class _Callback:
             reason = "max_wall_time reached"
 
         if self._disp:
-            message = "minimizer step, infidelity: %.5f" % intermediate_result.fun
+            message = "minimizer step, infidelity: %.5f" % current_fidelity
             if terminate:
                 message += "\n" + reason + ", terminating minimization"
             print(message)
 
         if terminate:  # manually save the result and exit
-            if intermediate_result.fun < self._result.infidelity:
-                if intermediate_result.fun > 0:
+            if current_fidelity < self._result.infidelity:
+                if current_fidelity > 0:
                     if self.inside_bounds(intermediate_result.x):
                         self._result._update(
-                            intermediate_result.fun, intermediate_result.x
+                            current_fidelity, intermediate_result.x
                         )
             raise StopIteration
 
@@ -134,11 +154,22 @@ class _Callback:
         Callback function for the global optimizer,
         terminates if the infidelity target is reached or
         the maximum wall time is exceeded.
+        Uses FidelityComputer for consistency in fidelity calculations.
         """
         terminate = False
         global_step_seconds = self._time_iter()
 
-        if f <= self._fid_err_targ:
+        # Calculate infidelity using FidelityComputer if needed
+        if hasattr(self._result, 'current_evolved_state'):
+            current_fidelity = self.compute_infidelity(
+                self._result.initial_state,
+                self._result.target_state,
+                self._result.current_evolved_state
+            )
+        else:
+            current_fidelity = f
+
+        if current_fidelity <= self._fid_err_targ:
             terminate = True
             self._result.message = "fid_err_targ reached"
         elif self._time_elapsed() >= self._max_wall_time:
@@ -147,7 +178,7 @@ class _Callback:
 
         if self._disp:
             message = (
-                "optimizer step, infidelity: %.5f" % f
+                "optimizer step, infidelity: %.5f" % current_fidelity
                 + ", took %.2f seconds" % global_step_seconds
             )
             if terminate:
@@ -155,8 +186,8 @@ class _Callback:
             print(message)
 
         if terminate:  # manually save the result and exit
-            if f < self._result.infidelity:
-                if f < 0:
+            if current_fidelity < self._result.infidelity:
+                if current_fidelity < 0:
                     print(
                         "WARNING: infidelity < 0 -> inaccurate integration, "
                         "try reducing integrator tolerance (atol, rtol), "
@@ -164,10 +195,9 @@ class _Callback:
                     )
                     terminate = False
                 elif self.inside_bounds(x):
-                    self._result._update(f, x)
+                    self._result._update(current_fidelity, x)
 
         return terminate
-
 
 def _global_local_optimization(
     objectives,
@@ -274,6 +304,7 @@ def _global_local_optimization(
         Optimization result.
     """
     # integrator must not normalize output
+ 
     integrator_kwargs["normalize_output"] = False
     integrator_kwargs.setdefault("progress_bar", False)
 
@@ -284,6 +315,9 @@ def _global_local_optimization(
         _get_init_and_bounds_from_options(bounds, control_parameters[key].get("bounds"))
 
     optimizer_kwargs["x0"] = np.concatenate(x0)
+
+    # Get fidelity type from algorithm kwargs (default to PSU)
+    fid_type = algorithm_kwargs.get("fid_type", "PSU")
 
     multi_objective = _MultiObjective(
         objectives=objectives,
@@ -352,8 +386,16 @@ def _global_local_optimization(
     max_wall_time = algorithm_kwargs.get("max_wall_time", 1e10)
     fid_err_targ = algorithm_kwargs.get("fid_err_targ", 1e-10)
     disp = algorithm_kwargs.get("disp", False)
-    # start the clock
-    cllbck = _Callback(result, fid_err_targ, max_wall_time, bounds, disp)
+    
+    # Initialize callback with fidelity type
+    cllbck = _Callback(
+        result=result,
+        fid_err_targ=fid_err_targ,
+        max_wall_time=max_wall_time,
+        bounds=bounds,
+        disp=disp,
+        fid_type=fid_type  # Pass fidelity type to callback
+    )
 
     # run the optimization
     min_res = optimizer(

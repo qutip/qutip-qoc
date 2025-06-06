@@ -7,6 +7,8 @@ import qutip as qt
 import numpy as np
 import collections
 
+from qutip_qoc.fidcomp import FidelityComputer
+
 try:
     import jax.numpy as jnp
     _jax_available = True
@@ -161,7 +163,11 @@ if _jax_available:
 
     TRCDIFF_map_jax = TRCDIFF_map._replace(
         objectives=[Objective(initial_map, L_jax, initial_map)],
-        algorithm_kwargs={"alg": "JOPT", "fid_type": "TRACEDIFF"},
+        algorithm_kwargs={"alg": "JOPT", "fid_type": "TRACEDIFF", "max_steps": 10000,
+        "rtol": 1e-6,  # Relative tolerance
+        "atol": 1e-8   
+        },
+        
     )
 
 else:

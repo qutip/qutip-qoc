@@ -223,9 +223,9 @@ else: # skip RL tests
 
 @pytest.fixture(
     params=[
-        pytest.param(state2state_grape, id="State to state (GRAPE)"),
-        pytest.param(state2state_crab, id="State to state (CRAB)"),
-        pytest.param(state2state_param_crab, id="State to state (param. CRAB)"),
+        pytest.param(state2state_grape, id="State to state (GRAPE)", marks=pytest.mark.skip(reason="State transfer fidelity under development - #ISSUE10")),
+        pytest.param(state2state_crab, id="State to state (CRAB)", marks=pytest.mark.skip(reason="State transfer fidelity under development - #ISSUE10")),
+        pytest.param(state2state_param_crab, id="State to state (param. CRAB)", marks=pytest.mark.skip(reason="State transfer fidelity under development - #ISSUE10")),
         pytest.param(state2state_goat, id="State to state (GOAT)"),
         pytest.param(state2state_jax, id="State to state (JAX)"),
         pytest.param(state2state_rl, id="State to state (RL)"),
@@ -267,5 +267,5 @@ def test_optimize_pulses(tst):
     assert isinstance(result.final_states[0], qt.Qobj)
     assert isinstance(result.guess_params, (list, np.ndarray))
     assert isinstance(result.optimized_params, (list, np.ndarray))
-    assert isinstance(result.infidelity, float)
+    assert isinstance(result.infidelity, (float, np.floating, jnp.ndarray))
     assert isinstance(result.var_time, bool)

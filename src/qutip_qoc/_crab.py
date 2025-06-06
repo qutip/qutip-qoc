@@ -1,65 +1,168 @@
 """
-This module provides an interface to the CRAB optimization algorithm in qutip-qtrl.
-It defines the _CRAB class, which uses a qutip_qtrl.optimizer.Optimizer object
-to store the control problem and calculate the fidelity error function and its gradient
-with respect to the control parameters, according to the CRAB algorithm.
+This module provides an implementation of the CRAB optimization algorithm.
+It defines the _CRAB class which calculates the fidelity error function
+using the FidelityComputer class.
 """
 
-import qutip_qtrl.logging_utils as logging
-import copy
-
-logger = logging.get_logger()
-
+import numpy as np
+import qutip as qt
+from qutip_qoc.fidcomp import FidelityComputer
 
 class _CRAB:
     """
-    Class to interface with the CRAB optimization algorithm in qutip-qtrl.
-    It has an attribute `qtrl` that is a `qutip_qtrl.optimizer.Optimizer` object
-    for storing the control problem and calculating the fidelity error function
-    and its gradient wrt the control parameters, according to the CRAB algorithm.
-    The class does only provide the infidelity method, as the CRAB algorithm is
-    not a gradient-based optimization.
+    Class implementing the CRAB optimization algorithm.
+    Uses FidelityComputer for fidelity calculations and manages its own optimization state.
     """
 
-    def __init__(self, qtrl_optimizer):
-        self._qtrl = copy.deepcopy(qtrl_optimizer)
-        self.gradient = None
-
-    def infidelity(self, *args):
+    def __init__(self, objective, time_interval, time_options, 
+                control_parameters, alg_kwargs, guess_params, **integrator_kwargs):
         """
-        This method is adapted from the original
-        `qutip_qtrl.optimizer.Optimizer.fid_err_func_wrapper`
-
-        Get the fidelity error achieved using the ctrl amplitudes passed
-        in as the first argument.
-
-        This is called by generic optimisation algorithm as the
-        func to the minimised. The argument is the current
-        variable values, i.e. control amplitudes, passed as
-        a flat array. Hence these are reshaped as [nTimeslots, n_ctrls]
-        and then used to update the stored ctrl values (if they have changed)
+        Initialize CRAB optimizer.
+        
+        Parameters:
+        -----------
+        objective : Objective
+            The control objective containing initial/target states and Hamiltonians
+        time_interval : _TimeInterval
+            Time discretization for the optimization
+        time_options : dict
+            Options for time evolution
+        control_parameters : dict
+            Control parameters with bounds and initial guesses
+        alg_kwargs : dict
+            Algorithm-specific parameters including:
+            - fid_type: Fidelity type ('PSU', 'SU', 'TRACEDIFF')
+            - num_coeffs: Number of CRAB coefficients
+            - fix_frequency: Whether frequencies are fixed
+        guess_params : array
+            Initial guess parameters
+        integrator_kwargs : dict
+            Options for the ODE integrator
         """
-        self._qtrl.num_fid_func_calls += 1
-        # *** update stats ***
-        if self._qtrl.stats is not None:
-            self._qtrl.stats.num_fidelity_func_calls = self._qtrl.num_fid_func_calls
-            if self._qtrl.log_level <= logging.DEBUG:
-                logger.debug(
-                    "fidelity error call {}".format(
-                        self._qtrl.stats.num_fidelity_func_calls
-                    )
-                )
+        self.objective = objective
+        self.time_interval = time_interval
+        self.control_parameters = control_parameters
+        self.alg_kwargs = alg_kwargs
+        self.guess_params = guess_params
+        self.integrator_kwargs = integrator_kwargs
 
-        amps = self._qtrl._get_ctrl_amps(args[0].copy())
-        self._qtrl.dynamics.update_ctrl_amps(amps)
+        # Initialize fidelity computer
+        self.fidcomp = FidelityComputer(alg_kwargs.get("fid_type", "PSU"))
 
-        err = self._qtrl.dynamics.fid_computer.get_fid_err()
+        # CRAB-specific parameters
+        self.num_coeffs = alg_kwargs.get("num_coeffs", 2)
+        self.fix_frequency = alg_kwargs.get("fix_frequency", False)
+        self.init_coeff_scaling = alg_kwargs.get("init_coeff_scaling", 1.0)
+        
+        # Extract control bounds
+        self.bounds = []
+        for key, params in control_parameters.items():
+            if key != "__time__":
+                self.bounds.append(params.get("bounds"))
 
-        if self._qtrl.iter_summary:
-            self._qtrl.iter_summary.fid_func_call_num = self._qtrl.num_fid_func_calls
-            self._qtrl.iter_summary.fid_err = err
+        # Statistics tracking
+        self.num_fid_func_calls = 0
+        self.stats = None
+        self.iter_summary = None
+        self.dump = None
 
-        if self._qtrl.dump and self._qtrl.dump.dump_fid_err:
-            self._qtrl.dump.update_fid_err_log(err)
+    def _generate_crab_pulse(self, params, n_tslots):
+        """
+        Generate a CRAB pulse from Fourier coefficients.
+        
+        Parameters:
+        -----------
+        params : array
+            CRAB parameters (amplitudes, phases, frequencies)
+        n_tslots : int
+            Number of time slots
+            
+        Returns:
+        --------
+        array
+            Pulse amplitudes for each time slot
+        """
+        t = np.linspace(0, 1, n_tslots)
+        pulse = np.zeros(n_tslots)
+        
+        if self.fix_frequency:
+            # Parameters are [A1, A2, ..., phi1, phi2, ...]
+            num_components = len(params) // 2
+            amplitudes = params[:num_components] * self.init_coeff_scaling
+            phases = params[num_components:2*num_components]
+            # Use linearly spaced frequencies if fixed
+            frequencies = np.linspace(1, 10, num_components)
+        else:
+            # Parameters are [A1, A2, ..., phi1, phi2, ..., w1, w2, ...]
+            num_components = len(params) // 3
+            amplitudes = params[:num_components] * self.init_coeff_scaling
+            phases = params[num_components:2*num_components]
+            frequencies = params[2*num_components:3*num_components]
+        
+        for A, phi, w in zip(amplitudes, phases, frequencies):
+            pulse += A * np.sin(w * t + phi)
+            
+        return pulse
 
-        return err
+    def _get_hamiltonian(self, pulses):
+        """
+        Construct the time-dependent Hamiltonian from control pulses.
+        
+        Parameters:
+        -----------
+        pulses : list of arrays
+            Control pulses for each control Hamiltonian
+            
+        Returns:
+        --------
+        QobjEvo
+            Time-dependent Hamiltonian
+        """
+        H = [self.objective.H[0]]  # Drift Hamiltonian
+        
+        for i, Hc in enumerate(self.objective.H[1:]):
+            # Create time-dependent control term
+            H.append([Hc[0] if isinstance(Hc, list) else Hc, 
+                     lambda t, args, i=i: args['pulses'][i][int(t/self.time_interval.evo_time * len(args['pulses'][i]))]])
+        
+        return qt.QobjEvo(H, args={'pulses': pulses})
+
+    def infidelity(self, params):
+        """
+        Calculate the infidelity for given CRAB parameters.
+        
+        Parameters:
+        -----------
+        params : array
+            CRAB optimization parameters
+            
+        Returns:
+        --------
+        float
+            Infidelity value
+        """
+        self.num_fid_func_calls += 1
+        
+        # Generate pulses for each control from CRAB parameters
+        pulses = []
+        num_ctrls = len(self.objective.H) - 1
+        params_per_ctrl = len(params) // num_ctrls
+        
+        for i in range(num_ctrls):
+            ctrl_params = params[i*params_per_ctrl:(i+1)*params_per_ctrl]
+            pulses.append(self._generate_crab_pulse(ctrl_params, self.time_interval.n_tslots))
+        
+        # Create Hamiltonian with generated pulses
+        H = self._get_hamiltonian(pulses)
+        
+        # Evolve the system
+        result = qt.mesolve(
+            H,
+            self.objective.initial,
+            self.time_interval.tslots,
+            options=qt.Options(**self.integrator_kwargs)
+        )
+        
+        # Calculate infidelity
+        evolved = result.states[-1]
+        return self.fidcomp.compute_infidelity(self.objective.initial, self.objective.target, evolved)
