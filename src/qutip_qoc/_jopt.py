@@ -137,32 +137,27 @@ class _JOPT:
         return H.to("jax")
 
     def _infid(self, params):
-        """Calculate infidelity to be minimized"""
-        evo_time = self._evo_time if not self._var_t else params[-1]
-        
-        X = self._solver.run(self._initial, [0.0, evo_time], args={"p": params}).final_state
+        """
+        calculate infidelity to be minimized
+        """
+        # adjust integration time-interval, if time is parameter
+        evo_time = self._evo_time if self._var_t is False else params[-1]
+
+        X = self._solver.run(
+            self._initial, [0.0, evo_time], args={"p": params}
+        ).final_state
 
         if self._fid_type == "TRACEDIFF":
             diff = X - self._target
-            
-            # Handle all cases (state vectors, density matrices, superoperators)
-            if hasattr(diff.data, '_jxa'):  # JAX array case
-                diff_data = diff.data._jxa
-            else:  # Regular array case
-                diff_data = jnp.array(diff.full())
-                
-            # Universal dimension handling
-            if diff.issuper or diff.isoper:
-                # For density matrices and superoperators
-                diff_dag_data = jnp.conj(jnp.swapaxes(diff_data, -1, -2))
-                g = 0.5 * jnp.trace(diff_dag_data @ diff_data)
-            else:
-                # For state vectors
-                g = 0.5 * jnp.sum(jnp.abs(diff_data)**2)
-                
+            # to prevent if/else in qobj.dag() and qobj.tr()
+            diff_dag = diff.dag() # direct access to JAX array, no fallback!
+            g = 0.5 * jnp.trace(diff_dag.data._jxa @ diff.data._jxa)
             infid = jnp.real(self._norm_fac * g)
         else:
             g = self._norm_fac * self._target.overlap(X)
-            infid = 1 - _abs(g) if self._fid_type == "PSU" else 1 - jnp.real(g)
-        
-        return infid
+            if self._fid_type == "PSU":  # f_PSU (drop global phase)
+                infid = 1 - _abs(g)  # custom_jvp for abs
+            elif self._fid_type == "SU":  # f_SU (incl global phase)
+                infid = 1 - jnp.real(g)
+
+        return infid    
