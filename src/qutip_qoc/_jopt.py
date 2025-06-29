@@ -151,7 +151,7 @@ class _JOPT:
             diff = X - self._target
             # to prevent if/else in qobj.dag() and qobj.tr()
             diff_dag = diff.dag() # direct access to JAX array, no fallback!
-            g = 0.5 * jnp.trace(diff_dag.data._jxa @ diff.data._jxa)
+            g = 1 / 2 * jnp.trace(diff_dag.data._jxa @ diff.data._jxa)
             infid = jnp.real(self._norm_fac * g)
         else:
             g = self._norm_fac * self._target.overlap(X)

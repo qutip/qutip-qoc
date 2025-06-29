@@ -4,3 +4,5 @@ scipy>=1.10.1
 qutip>=5.0.1
 qutip-qtrl
 pre-commit
+jax==0.4.28
+jaxlib==0.4.28
