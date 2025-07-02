@@ -7,7 +7,6 @@ import textwrap
 import numpy as np
 from inspect import signature
 import warnings
-import jax.interpreters.pxla as pxla
 
 import qutip as qt
 

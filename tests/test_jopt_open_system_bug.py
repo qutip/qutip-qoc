@@ -36,7 +36,4 @@ def test_open_system_jopt_runs_without_error():
         },
     )
 
-    # print("Optimization finished!")
-    # print("Final infidelity:", res_jopt.infidelity)
-
-    # assert res_jopt.infidelity < 0.25, f"Fidelity error too high: {res_jopt.infidelity}"
+    assert res_jopt.infidelity < 0.25, f"Fidelity error too high: {res_jopt.infidelity}"
