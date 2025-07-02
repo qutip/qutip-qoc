@@ -14,7 +14,6 @@ try:
     import jax
     import jaxlib
     _jitfun_type = type(jax.jit(lambda x: x))
-    # _jitfun_type = jaxlib.xla_extension.PjitFunction
 except ImportError:
     _jitfun_type = None
 
