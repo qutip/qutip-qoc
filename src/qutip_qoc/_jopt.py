@@ -160,4 +160,4 @@ class _JOPT:
             elif self._fid_type == "SU":  # f_SU (incl global phase)
                 infid = 1 - jnp.real(g)
 
-        return infid    
+        return infid
