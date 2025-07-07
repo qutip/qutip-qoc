@@ -171,43 +171,6 @@ class _GENETIC():
         ).final_state
         self._state = X
         
-        # Ensure density matrix
-        # if not initial.issuper and not initial.isoper:
-        #     initial = qt.ket2dm(initial)
-
-        # try:
-        #     self._solver._H.args = args
-        #     result = self._solver.run(initial, tlist, args=args)
-        #     final_state = result.final_state
-        # except Exception as e:
-        #     print(f"[WARNING] Solver failed: {e}")
-        #     return 1.0  # max infidelity
-
-        # # Fidelity computation
-        # if self._fid_type == "TRACEDIFF":
-        #     diff = final_state - target
-        #     diff_dag = qt.Qobj(diff.data.adjoint(), dims=diff.dims)
-        #     g = 0.5 * (diff_dag * diff).data.trace()
-        #     infid = np.real(self._norm_fac * g)
-        # else:
-        #     g = self._norm_fac * target.overlap(final_state)
-        #     if self._fid_type == "PSU":
-        #         infid = 1 - np.abs(g)
-        #     elif self._fid_type == "SU":
-        #         infid = 1 - np.real(g)
-        #     else:
-        #         raise ValueError(f"Unknown fidelity type: {self._fid_type}")
-
-        # infid = 1 - qt.metrics.fidelity(X, self._target)
-        # print(infid)
-        # print(X.data)
-        print(f"Control args: {args}")
-        
-        # Store initial state for comparison
-        
-        # Your evolution code here...
-        X = self._solver.run(self._state, [0.0, self._step_duration], args=args).final_state
-        self._state = X
         target_dm = qt.ket2dm(self._target)        
         if self._fid_type == "TRACEDIFF":
             diff = X - target_dm
