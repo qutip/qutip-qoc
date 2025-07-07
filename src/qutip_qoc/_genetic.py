@@ -139,8 +139,7 @@ class _GENETIC():
         self._rtol = self._integrator_kwargs.get("rtol", 1e-5)
         self._atol = self._integrator_kwargs.get("atol", 1e-5)
 
-        self._step_duration = 1e-7 #change
-        
+        self._step_duration = 10
         # create the solver
         if self._Hd_lst[0].issuper:
             self._fid_type = self._alg_kwargs.get("fid_type", "TRACEDIFF")
@@ -156,16 +155,62 @@ class _GENETIC():
         alpha = args[f"alpha{idx}"]
         return alpha
 
+
     def _infid(self, args):
         """
-        The agent performs a step, then calculate infidelity to be minimized of the current state against the target state.
+        Compute infidelity of the final state/unitary using provided control args.
+
+        Parameters:
+            args (dict): Dictionary of control amplitudes {"alpha1": val1, ...}
+
+        Returns:
+            float: Infidelity value ∈ [0, 1]
         """
-        X = self._solver.run(self._state, [0.0, self._step_duration]
+        X = self._solver.run(
+            self._state, [0.0, self._step_duration], args=args
         ).final_state
         self._state = X
+        
+        # Ensure density matrix
+        # if not initial.issuper and not initial.isoper:
+        #     initial = qt.ket2dm(initial)
 
+        # try:
+        #     self._solver._H.args = args
+        #     result = self._solver.run(initial, tlist, args=args)
+        #     final_state = result.final_state
+        # except Exception as e:
+        #     print(f"[WARNING] Solver failed: {e}")
+        #     return 1.0  # max infidelity
+
+        # # Fidelity computation
+        # if self._fid_type == "TRACEDIFF":
+        #     diff = final_state - target
+        #     diff_dag = qt.Qobj(diff.data.adjoint(), dims=diff.dims)
+        #     g = 0.5 * (diff_dag * diff).data.trace()
+        #     infid = np.real(self._norm_fac * g)
+        # else:
+        #     g = self._norm_fac * target.overlap(final_state)
+        #     if self._fid_type == "PSU":
+        #         infid = 1 - np.abs(g)
+        #     elif self._fid_type == "SU":
+        #         infid = 1 - np.real(g)
+        #     else:
+        #         raise ValueError(f"Unknown fidelity type: {self._fid_type}")
+
+        # infid = 1 - qt.metrics.fidelity(X, self._target)
+        # print(infid)
+        # print(X.data)
+        print(f"Control args: {args}")
+        
+        # Store initial state for comparison
+        
+        # Your evolution code here...
+        X = self._solver.run(self._state, [0.0, self._step_duration], args=args).final_state
+        self._state = X
+        target_dm = qt.ket2dm(self._target)        
         if self._fid_type == "TRACEDIFF":
-            diff = X - self._target
+            diff = X - target_dm
             # to prevent if/else in qobj.dag() and qobj.tr()
             diff_dag = qt.Qobj(diff.data.adjoint(), dims=diff.dims)
             g = 1 / 2 * (diff_dag * diff).data.trace()
@@ -177,6 +222,7 @@ class _GENETIC():
             elif self._fid_type == "SU":  # f_SU (incl global phase)
                 infid = 1 - np.real(g)
         return infid
+
     
     "Initialize a first population"
     def initial_population(self):
@@ -307,72 +353,45 @@ class _GENETIC():
         return mutated_population
     
 
-    def optimize(self, infidelity, iterations = 1000):
-        """Implements entire procedure for continuous genetic algorithm optimizer. This is a higher order function
-        which accepts a black box fitness function. The fitness function which will accept a single chromosome of
-        N_var variables in the range [-1,1], scale and process them returning a figure of merit which describes how useful said parameter 
-        values were at acheiving the general task. This figure of merit will act as the fitness of the input chromosome.
-        
-        Args:
-            fitness_func (Function): Black box fitness function to evaluate a chromosome fitness.
-            iterations (Int): The number of generations for which to optimize.
+    def optimize(self, iterations=1000):
+        population = self.initial_population()
+        best_fitness = -np.inf
+        best_chromosome = None
+        fitness_history = []
 
-        Returns:
-            Float: The maximum acheived fitness value from every generation of the optimization.
-            Vector: The chromosome that acheived the highest fitness.
-            Vector: The history of maximum fitness improvement for the entire optimization.
-            
-        """
-        population = self.initial_population() # initialise a random seroth generation
-        bench = -1e10 # the initial benchmark fitness - we assume fitness >= 0
-        done = False # terminal flag
-        count = 0 # iteration count
-        maxfit_hist = [] # to record the maximum fitness at each gen during optimizing
-        
-        while not done:
-            if self.workers > 1:
-                fitness_ls = Parallel(n_jobs=self.workers)(delayed(infidelity)(chromosome) for chromosome in population)
-            else:
-                fitness_ls = []
-                for chromosome in population:
-                    # The fitness function should be able to take a raw chromosome (whose constituent values will be \in [-1, 1]) 
-                    # scale the values to get the true parameter values, then use those parameters to do "stuff" (in our case
-                    # build a control pulse and simulate the dynamics) then return a figure of merit which tells us how good
-                    # this set of parameters has performed (could be fidelity to a target state for example).
-                    # essentially all of the problem under consideration happens inside fitness_func
-                    alphas = [
-                        ((chromosome + 1) / 2 * (self._ubound[0] - self._lbound[0]))
-                        + self._lbound[0]
-                        for i in range(len(chromosome))
-                    ]
-                    args = {f"alpha{i+1}": value for i, value in enumerate(alphas)}
-                    infidelity = self._infid(args)
-                    #f = infidelity(chromosome)
-                    fitness_ls.append(infidelity)
+        for count in range(iterations):
+            print(f"Generation {count + 1}/{iterations}")
+
+            fitness_ls = []
+            for chromosome in population:
+                alphas = [
+                    ((chromosome[i] + 1) / 2 * (self._ubound[i] - self._lbound[i]) + self._lbound[i])
+                    for i in range(len(chromosome))
+                ]
+                args = {f"alpha{i+1}": float(val) for i, val in enumerate(alphas)}  # force float
+                infid_val = self._infid(args)
+                fitness_ls.append(infid_val)
+
             fitness = np.array(fitness_ls)
-            max_fit = np.max(fitness)
-            if max_fit>bench:
-                print(" EPISODE: {}, average cost: {}, Best Cost: {}".format(count, np.round(np.average(fitness), decimals=4), 
-                                                                                                    np.max(fitness)))
-                # update benchmark and add max fitness to history
-                bench = max_fit
-                maxfit_hist.append(max_fit)
-                best_index = np.argmax(fitness) # get best index
-                best_chromosome = population[best_index,:] # so that we can get the best chromosome
+            max_fit = np.min(fitness)
+            fitness_history.append(max_fit)
 
-                # May want to checkpoint here
-            if count == iterations: # if max iterations reached
-                done=True
-                
-            survivors, survivor_fitness = self.darwin(population,fitness)
+            if max_fit > best_fitness:
+                best_fitness = max_fit
+                best_index = np.argmax(fitness)
+                best_chromosome = population[best_index, :]
+
+            print(f"  Best infidelity: {-max_fit:.6f}, Avg fitness: {np.mean(fitness):.6f}")
+
+            survivors, survivor_fitness = self.darwin(population, fitness)
             mothers, fathers = self.pairing(survivors, survivor_fitness)
             offspring = self.mating_procedure(ma=mothers, da=fathers)
-            unmutated_next_gen = self.build_next_gen(survivors,offspring)
+            unmutated_next_gen = self.build_next_gen(survivors, offspring)
             mutated_next_gen = self.mutate(unmutated_next_gen)
             population = mutated_next_gen
-            count+=1
-            
-        return max_fit, best_chromosome, maxfit_hist
+
+        return best_fitness, best_chromosome, fitness_history
+
     
     def _save_result(self):
         """
