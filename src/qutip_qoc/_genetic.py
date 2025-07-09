@@ -41,8 +41,6 @@ class _GENETIC():
         super(_GENETIC, self).__init__()
         self.objectives = objectives
         self.control_parameters = control_parameters
-        self.time_interval = time_interval
-        self.time_options = time_options
         self.alg_kwargs = alg_kwargs
         self._integrator_kwargs = integrator_kwargs
         self._rtol = self._integrator_kwargs.get("rtol", 1e-5)
@@ -55,7 +53,7 @@ class _GENETIC():
         self.N_parents = int(np.floor(self.N_pop * self.parent_rate))
         self.N_survivors = max(1, int(self.N_parents * alg_kwargs.get('survival_rate', 1.0)))
         self.N_offspring = self.N_pop - self.N_survivors
-        self.mutation_rate = alg_kwargs.get('mutation_rate', 0.1)
+        self.mutation_rate = alg_kwargs.get('mutation_rate', 0.2)
         self.workers = alg_kwargs.get('workers', 1)
 
         self._Hd_lst, self._Hc_lst = [], []
@@ -138,8 +136,10 @@ class _GENETIC():
         self._integrator_kwargs = integrator_kwargs
         self._rtol = self._integrator_kwargs.get("rtol", 1e-5)
         self._atol = self._integrator_kwargs.get("atol", 1e-5)
-
-        self._step_duration = 10
+        #self.max_episode_time = time_interval.evo_time  # maximum time for an episode
+        #self.max_steps = time_interval.n_tslots  # maximum number of steps in an episode
+        self._step_duration = 2
+        
         # create the solver
         if self._Hd_lst[0].issuper:
             self._fid_type = self._alg_kwargs.get("fid_type", "TRACEDIFF")
@@ -169,25 +169,26 @@ class _GENETIC():
         X = self._solver.run(
             self._state, [0.0, self._step_duration], args=args
         ).final_state
-        self._state = X
+        #self._state = X
         
-        target_dm = qt.ket2dm(self._target)        
-        if self._fid_type == "TRACEDIFF":
-            diff = X - target_dm
-            # to prevent if/else in qobj.dag() and qobj.tr()
-            diff_dag = qt.Qobj(diff.data.adjoint(), dims=diff.dims)
-            g = 1 / 2 * (diff_dag * diff).data.trace()
-            infid = np.real(self._norm_fac * g)
+        # target_dm = qt.ket2dm(self._target)        
+        # if self._fid_type == "TRACEDIFF":
+        #     diff = X - target_dm
+        #     # to prevent if/else in qobj.dag() and qobj.tr()
+        #     diff_dag = qt.Qobj(diff.data.adjoint(), dims=diff.dims)
+        #     g = 1 / 2 * (diff_dag * diff).data.trace()
+        #     infid = np.real(self._norm_fac * g)
+        # else:
+        #     g = self._norm_fac * self._target.overlap(X)
+        #     if self._fid_type == "PSU":  # f_PSU (drop global phase)
+        #         infid = 1 - np.abs(g)
+        #     elif self._fid_type == "SU":  # f_SU (incl global phase)
+        #         infid = 1 - np.real(g)
+        if self._target.isket:
+            return 1-qt.fidelity(self._target, X)
         else:
-            g = self._norm_fac * self._target.overlap(X)
-            if self._fid_type == "PSU":  # f_PSU (drop global phase)
-                infid = 1 - np.abs(g)
-            elif self._fid_type == "SU":  # f_SU (incl global phase)
-                infid = 1 - np.real(g)
-        return infid
+            return 1-qt.fidelity(qt.ket2dm(self._target), X)
 
-    
-    "Initialize a first population"
     def initial_population(self):
         """Randomly generates an initial popuation to act as generation 0.
 
@@ -312,50 +313,58 @@ class _GENETIC():
         mutated_population = np.copy(population)
         # for some reason clipped normal noise works better.
         # mutated_population[row_indices, col_indices] = np.random.uniform(-1,1,size=number_of_mutations) # for uniform random mutation
-        mutated_population[row_indices, col_indices] = np.clip(population[row_indices, col_indices] + np.random.normal(loc=0, scale=0.2, size=number_of_mutations), a_min=-1, a_max=1) # for normal mutation
+        mutated_population[row_indices, col_indices] = np.clip(
+            population[row_indices, col_indices] + np.random.normal(loc=0, scale=0.2, size=number_of_mutations), a_min=-1, a_max=1)
         return mutated_population
     
 
     def optimize(self, iterations=1000):
-        population = self.initial_population()
-        best_fitness = -np.inf
-        best_chromosome = None
-        fitness_history = []
-
-        for count in range(iterations):
-            print(f"Generation {count + 1}/{iterations}")
-
+        population = self.initial_population() # initialise a random seroth generation
+        bench = -1e10 # the initial benchmark fitness - we assume fitness >= 0
+        done = False # terminal flag
+        count = 0 # iteration count
+        maxfit_hist = [] # to record the maximum fitness at each gen during optimizing
+        while not done:
             fitness_ls = []
             for chromosome in population:
+                    # The fitness function should be able to take a raw chromosome (whose constituent values will be \in [-1, 1]) 
+                    # scale the values to get the true parameter values, then use those parameters to do "stuff" (in our case
+                    # build a control pulse and simulate the dynamics) then return a figure of merit which tells us how good
+                    # this set of parameters has performed (could be fidelity to a target state for example).
+                    # essentially all of the problem under consideration happens inside fitness_func
                 alphas = [
                     ((chromosome[i] + 1) / 2 * (self._ubound[i] - self._lbound[i]) + self._lbound[i])
                     for i in range(len(chromosome))
                 ]
-                args = {f"alpha{i+1}": float(val) for i, val in enumerate(alphas)}  # force float
-                infid_val = self._infid(args)
-                fitness_ls.append(infid_val)
-
+                args = {f"alpha{i+1}": float(val) for i, val in enumerate(alphas)}
+                f = 1-self._infid(args)
+                fitness_ls.append(f)
             fitness = np.array(fitness_ls)
-            max_fit = np.min(fitness)
-            fitness_history.append(max_fit)
+            max_fit = np.max(fitness)
+            if max_fit>bench:
+                print(" EPISODE: {}, average cost: {}, Best Cost: {}".format(count, np.round(np.average(fitness), decimals=4), 
+                                                                                                    np.max(fitness)))
+                # update benchmark and add max fitness to history
+                bench = max_fit
+                maxfit_hist.append(max_fit)
+                best_index = np.argmax(fitness) # get best index
+                best_chromosome = population[best_index,:] # so that we can get the best chromosome
 
-            if max_fit > best_fitness:
-                best_fitness = max_fit
-                best_index = np.argmax(fitness)
-                best_chromosome = population[best_index, :]
-
-            print(f"  Best infidelity: {-max_fit:.6f}, Avg fitness: {np.mean(fitness):.6f}")
-
-            survivors, survivor_fitness = self.darwin(population, fitness)
+                # May want to checkpoint here
+            if count == iterations: # if max iterations reached
+                done=True
+                
+            survivors, survivor_fitness = self.darwin(population,fitness)
             mothers, fathers = self.pairing(survivors, survivor_fitness)
             offspring = self.mating_procedure(ma=mothers, da=fathers)
-            unmutated_next_gen = self.build_next_gen(survivors, offspring)
+            unmutated_next_gen = self.build_next_gen(survivors,offspring)
             mutated_next_gen = self.mutate(unmutated_next_gen)
             population = mutated_next_gen
+            count+=1
+            
+        return max_fit, best_chromosome, maxfit_hist
 
-        return best_fitness, best_chromosome, fitness_history
 
-    
     def _save_result(self):
         """
         Save the results of the optimization process, including the optimized
