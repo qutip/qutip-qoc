@@ -216,7 +216,9 @@ H = [H_d] + H_c # total Hamiltonian
 
 state2state_genetic = Case(
     objectives=[Objective(initial, H, target)],
-    control_parameters={"bounds": [-13, 13]}, # TODO: for now only consider bounds
+    control_parameters={
+        "p": {"bounds": [(-13, 13)]},
+    },
     tlist=np.linspace(0, 10, 100), # TODO: derive single step duration and max evo time / max num steps from this
     algorithm_kwargs={
         "fid_err_targ": 0.01,
@@ -245,6 +247,7 @@ unitary_genetic = state2state_genetic._replace(
         pytest.param(state2state_goat, id="State to state (GOAT)"),
         pytest.param(state2state_jax, id="State to state (JAX)"),
         pytest.param(state2state_rl, id="State to state (RL)"),
+        pytest.param(state2state_genetic, id="State to state (Genetic)"),
         pytest.param(unitary_genetic, id="Unitary (Genetic)"),
         pytest.param(unitary_rl, id="Unitary (RL)"),
     ]
