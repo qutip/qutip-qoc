@@ -190,37 +190,3 @@ class _GENETIC:
             "%Y-%m-%d %H:%M:%S", time.localtime(self._result.end_local_time)
         )
         return self._result
-
-
-
-from qutip_qoc import Objective, _TimeInterval
-
-initial = qt.basis(2, 0)
-target = (qt.basis(2, 0) + qt.basis(2, 1)).unit()
-H_d = qt.sigmaz()
-H_c = [qt.sigmax()]
-
-objective = Objective(H=[H_d] + H_c, initial=initial, target=target)
-time_interval = _TimeInterval(evo_time=1.0, n_tslots=20)
-
-control_parameters = {"guess": [0.0] * 20}
-alg_kwargs = {
-    "population_size": 50,
-    "generations": 100,
-    "mutation_rate": 0.3,
-    "fid_err_targ": 1e-3
-}
-integrator_kwargs = {"rtol": 1e-5, "atol": 1e-6}
-
-ga = _GENETIC(objectives=[objective],
-              control_parameters=control_parameters,
-              time_interval=time_interval,
-              time_options=None,
-              alg_kwargs=alg_kwargs,
-              optimizer_kwargs=None,
-              minimizer_kwargs=None,
-              integrator_kwargs=integrator_kwargs,
-              qtrl_optimizers=None)
-
-result = ga.optimize()
-print("Best fidelity:", 1 - result.infidelity)
