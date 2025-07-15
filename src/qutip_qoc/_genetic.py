@@ -4,6 +4,14 @@ import time
 from qutip_qoc.result import Result
 
 class _GENETIC:
+    """
+    Genetic Algorithm-based optimizer for quantum control problems.
+
+    This class implements a global optimization routine using a Genetic Algorithm
+    to optimize control pulses that drive a quantum system from an initial state 
+    to a target state (or unitary). 
+    """
+
     def __init__(
         self,
         objectives,
