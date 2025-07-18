@@ -406,6 +406,11 @@ Defining a control problem in QuTiP using the Genetic Algorithm follows the same
     print("Final infidelity:", result.infidelity)
     print("Best control parameters:", result.optimized_params)
 
+References
+==========
+
+.. [Brown2023] J. Brown, M. Paternostro, and A. Ferraro, "Optimal quantum control via genetic algorithms for quantum state engineering in driven‑resonator mediated networks," *Quantum Sci. Technol.*, vol. 8, no. 2, p. 025004, 2023. https://doi.org/10.1088/2058-9565/acb2f2
+
 .. TODO: add examples
 
 Examples for Liouvillian dynamics and multi-objective optimization will follow soon.
