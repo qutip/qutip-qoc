@@ -5,11 +5,11 @@ to store the control problem and calculate the fidelity error function and its g
 with respect to the control parameters, according to the CRAB algorithm.
 """
 
-import qutip_qtrl.logging_utils as logging
+
 import copy
 
 
-logger = logging.get_logger()
+
 
 
 class _GRAPE:
@@ -42,12 +42,7 @@ class _GRAPE:
         # *** update stats ***
         if self._qtrl.stats is not None:
             self._qtrl.stats.num_fidelity_func_calls = self._qtrl.num_fid_func_calls
-            if self._qtrl.log_level <= logging.DEBUG:
-                logger.debug(
-                    "fidelity error call {}".format(
-                        self._qtrl.stats.num_fidelity_func_calls
-                    )
-                )
+
 
         amps = self._qtrl._get_ctrl_amps(args[0].copy())
         self._qtrl.dynamics.update_ctrl_amps(amps)
@@ -81,10 +76,7 @@ class _GRAPE:
         self._qtrl.num_grad_func_calls += 1
         if self._qtrl.stats is not None:
             self._qtrl.stats.num_grad_func_calls = self._qtrl.num_grad_func_calls
-            if self._qtrl.log_level <= logging.DEBUG:
-                logger.debug(
-                    "gradient call {}".format(self._qtrl.stats.num_grad_func_calls)
-                )
+
         amps = self._qtrl._get_ctrl_amps(args[0].copy())
         self._qtrl.dynamics.update_ctrl_amps(amps)
         fid_comp = self._qtrl.dynamics.fid_computer

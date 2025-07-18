@@ -5,8 +5,8 @@ GOAT, JOPT, GRAPE, CRAB or RL optimization.
 """
 import numpy as np
 
-import qutip_qtrl.logging_utils as logging
-import qutip_qtrl.pulseoptim as cpo
+import logging
+from qutip_qoc.q2 import pulseoptim as cpo
 
 from qutip_qoc._optimizer import _global_local_optimization
 from qutip_qoc._time import _TimeInterval
