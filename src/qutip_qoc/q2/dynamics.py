@@ -36,9 +36,9 @@ from qutip.settings import settings
 
 # QuTiP control modules
 import qutip_qtrl.errors as errors
-import qutip_qtrl.tslotcomp as tslotcomp
+from . import tslotcomp
 import qutip_qtrl.fidcomp as fidcomp
-import qutip_qtrl.propcomp as propcomp
+from . import propcomp
 import qutip_qtrl.symplectic as sympl
 import qutip_qtrl.dump as qtrldump
 
