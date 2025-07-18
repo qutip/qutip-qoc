@@ -351,8 +351,8 @@ have passed without improvement (stagnation criterion).
 Each generation represents a full evaluation of the population, making the method inherently parallelizable 
 and effective in high-dimensional control landscapes.
 
-In QuTiP, the GA optimization is implemented via the ``_GENETIC`` class, and can be invoked using the 
-standard ``optimize_pulses`` interface by setting the algorithm to ``"GENETIC"``.
+In QuTiP, the GA optimization is implemented via the ``_Genetic`` class, and can be invoked using the 
+standard ``optimize_pulses`` interface by setting the algorithm to ``"Genetic"``.
 
 Optimal Quantum Control in QuTiP (Genetic Algorithm)
 ====================================================
@@ -388,7 +388,7 @@ Defining a control problem in QuTiP using the Genetic Algorithm follows the same
 
     # set genetic algorithm hyperparameters
     algorithm_kwargs = {
-        "alg": "GENETIC",
+        "alg": "Genetic",
         "population_size": 50,
         "generations": 100,
         "mutation_rate": 0.2,

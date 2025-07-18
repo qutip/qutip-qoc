@@ -3,13 +3,16 @@ import qutip as qt
 import time
 from qutip_qoc.result import Result
 
-class _GENETIC:
+
+class _Genetic:
     """
     Genetic Algorithm-based optimizer for quantum control problems.
 
     This class implements a global optimization routine using a Genetic Algorithm
-    to optimize control pulses that drive a quantum system from an initial state 
-    to a target state (or unitary). 
+    to optimize control pulses that drive a quantum system from an initial state
+    to a target state (or unitary).
+
+    Based on the code from Jonathan Brown
     """
 
     def __init__(
@@ -26,7 +29,9 @@ class _GENETIC:
     ):
         self._objective = objectives[0]
         self._Hd = self._objective.H[0]
-        self._Hc_lst = [H[0] if isinstance(H, list) else H for H in self._objective.H[1:]]
+        self._Hc_lst = [
+            H[0] if isinstance(H, list) else H for H in self._objective.H[1:]
+        ]
         self._initial = self._objective.initial
         self._target = self._objective.target
         self._norm_fac = 1 / self._target.norm()
@@ -41,14 +46,17 @@ class _GENETIC:
         self.generations = alg_kwargs.get("generations", 100)
         self.mutation_rate = alg_kwargs.get("mutation_rate", 0.3)
         self.fid_err_targ = alg_kwargs.get("fid_err_targ", 1e-4)
-        self._stagnation_patience = 20  # Internally fixed
+        self._stagnation_patience = 50  # Internally fixed
 
         self._integrator_kwargs = integrator_kwargs
         self._fid_type = alg_kwargs.get("fid_type", "PSU")
 
         self._generator = self._prepare_generator()
-        self._solver = qt.MESolver(H=self._generator, options=self._integrator_kwargs) \
-            if self._Hd.issuper else qt.SESolver(H=self._generator, options=self._integrator_kwargs)
+        self._solver = (
+            qt.MESolver(H=self._generator, options=self._integrator_kwargs)
+            if self._Hd.issuper
+            else qt.SESolver(H=self._generator, options=self._integrator_kwargs)
+        )
 
         self._result = Result(
             objectives=[self._objective],
@@ -64,10 +72,18 @@ class _GENETIC:
         self._result._final_states = []
 
     def _prepare_generator(self):
-        args = {f"p{i+1}_{j}": 0.0 for i in range(self.N_controls) for j in range(self.N_steps)}
+        args = {
+            f"p{i+1}_{j}": 0.0
+            for i in range(self.N_controls)
+            for j in range(self.N_steps)
+        }
 
         def make_coeff(i, j):
-            return lambda t, args: args[f"p{i+1}_{j}"] if int(t / (self._evo_time / self.N_steps)) == j else 0
+            return lambda t, args: (
+                args[f"p{i+1}_{j}"]
+                if int(t / (self._evo_time / self.N_steps)) == j
+                else 0
+            )
 
         H_qev = [self._Hd]
         for i, Hc in enumerate(self._Hc_lst):
@@ -77,7 +93,11 @@ class _GENETIC:
         return qt.QobjEvo(H_qev, args=args)
 
     def _infid(self, params):
-        args = {f"p{i+1}_{j}": params[i * self.N_steps + j] for i in range(self.N_controls) for j in range(self.N_steps)}
+        args = {
+            f"p{i+1}_{j}": params[i * self.N_steps + j]
+            for i in range(self.N_controls)
+            for j in range(self.N_steps)
+        }
         result = self._solver.run(self._initial, [0.0, self._evo_time], args=args)
         final_state = result.final_state
         self._result._final_states.append(final_state)
@@ -87,7 +107,9 @@ class _GENETIC:
             fid = 0.5 * np.real((diff.dag() * diff).tr())
         else:
             overlap = self._norm_fac * self._target.overlap(final_state)
-            fid = 1 - np.abs(overlap) if self._fid_type == "PSU" else 1 - np.real(overlap)
+            fid = (
+                1 - np.abs(overlap) if self._fid_type == "PSU" else 1 - np.real(overlap)
+            )
 
         return fid
 
@@ -101,7 +123,7 @@ class _GENETIC:
         return np.random.uniform(-1, 1, (self.N_pop, self.N_var))
 
     def darwin(self, population, fitness):
-        indices = np.argsort(-fitness)[:self.N_pop // 2]
+        indices = np.argsort(-fitness)[: self.N_pop // 2]
         return population[indices], fitness[indices]
 
     def pairing(self, survivors, survivor_fitness):
@@ -130,7 +152,9 @@ class _GENETIC:
         return np.vstack((survivors, offspring))
 
     def mutate(self, population):
-        n_mut = int((population.shape[0] - 1) * population.shape[1] * self.mutation_rate)
+        n_mut = int(
+            (population.shape[0] - 1) * population.shape[1] * self.mutation_rate
+        )
         row = np.random.randint(1, population.shape[0], size=n_mut)
         col = np.random.randint(0, population.shape[1], size=n_mut)
         population[row, col] += np.random.normal(0, 0.3, size=n_mut)
@@ -183,13 +207,15 @@ class _GENETIC:
 
         self._result.message = (
             f"Stopped early: reached infidelity target {self.fid_err_targ}"
-            if -best_fit <= self.fid_err_targ else
-            f"Stopped due to stagnation after {self._stagnation_patience} generations"
-            if no_improvement_counter >= self._stagnation_patience else
-            "Optimization completed successfully"
+            if -best_fit <= self.fid_err_targ
+            else (
+                f"Stopped due to stagnation after {self._stagnation_patience} generations"
+                if no_improvement_counter >= self._stagnation_patience
+                else "Optimization completed successfully"
+            )
         )
         return self._result
-    
+
     def result(self):
         self._result.start_local_time = time.strftime(
             "%Y-%m-%d %H:%M:%S", time.localtime(self._result.start_local_time)

@@ -200,8 +200,6 @@ unitary_rl = state2state_rl._replace(
 
 # --------------------------- Genetic ---------------------------
 
-# TODO: this is the input for optimiz_pulses() function
-# you can use this routine to test your implementation
 
 # state to state transfer
 init = qt.basis(2, 0)
@@ -219,16 +217,15 @@ state2state_genetic = Case(
     control_parameters={
         "p": {"bounds": [(-13, 13)]},
     },
-    tlist=np.linspace(0, 10, 100), # TODO: derive single step duration and max evo time / max num steps from this
+    tlist=np.linspace(0, 10, 100), 
     algorithm_kwargs={
         "fid_err_targ": 0.01,
-        "alg": "GENETIC",
+        "alg": "Genetic",
         "max_iter": 100,
     },
     optimizer_kwargs={},
 )
 
-# TODO: no big difference for unitary evolution
 
 initial = qt.qeye(2) # Identity
 target  = qt.gates.hadamard_transform()
@@ -236,8 +233,6 @@ target  = qt.gates.hadamard_transform()
 unitary_genetic = state2state_genetic._replace(
     objectives=[Objective(initial, H, target)],
 )
-
-
 
 @pytest.fixture(
     params=[
