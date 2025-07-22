@@ -331,42 +331,39 @@ class Result:
         if self._final_states is None:
             states = []
 
-            if self.var_time:  # last parameter is optimized time
-                evo_time = self.optimized_params[-1][0]
+            if self.qtrl_optimizers:
+                # Use internal final state from QTRL optimizer
+                for qtrl_opt in self.qtrl_optimizers:
+                    qtrl_result = qtrl_opt._create_result()
+                    states.append(qtrl_result.evo_full_final)
             else:
-                evo_time = self.time_interval.evo_time
-
-            # choose solver method based on type of control function
-            # if jax is installed, _jitfun_type is set to
-            # jaxlib.xla_extension.PjitFunction, otherwise it is None
-            if _jitfun_type is not None and isinstance(
-                self.objectives[0].H[1][1], _jitfun_type
-            ):
-                method = "diffrax"  # for JAX defined contols
-            else:
-                method = "adams"
-
-            for obj, opt_H in zip(self.objectives, self.optimized_H):
-                if opt_H.issuper:  # choose solver
-                    solver = qt.MESolver(
-                        opt_H,
-                        options={
-                            "normalize_output": False,
-                            "method": method,
-                        },
-                    )
+                if self.var_time:  # last parameter is optimized time
+                    evo_time = self.optimized_params[-1][0]
                 else:
-                    solver = qt.SESolver(
-                        opt_H,
-                        options={
-                            "normalize_output": False,
-                            "method": method,
-                        },
-                    )
+                    evo_time = self.time_interval.evo_time
 
-                states.append(  # compute evolution
-                    solver.run(obj.initial, tlist=[0.0, evo_time]).final_state
-                )
+                if _jitfun_type is not None and isinstance(
+                    self.objectives[0].H[1][1], _jitfun_type
+                ):
+                    method = "diffrax"
+                else:
+                    method = "adams"
+
+                for obj, opt_H in zip(self.objectives, self.optimized_H):
+                    if opt_H.issuper:
+                        solver = qt.MESolver(
+                            opt_H,
+                            options={"normalize_output": False, "method": method},
+                        )
+                    else:
+                        solver = qt.SESolver(
+                            opt_H,
+                            options={"normalize_output": False, "method": method},
+                        )
+
+                    states.append(
+                        solver.run(obj.initial, tlist=[0.0, evo_time]).final_state
+                    )
 
             self._final_states = states
         return self._final_states
