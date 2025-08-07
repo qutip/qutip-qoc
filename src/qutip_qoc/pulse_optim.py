@@ -195,53 +195,55 @@ def optimize_pulses(
             "maxiter": algorithm_kwargs.get("max_iter", 1000),
             "gtol": algorithm_kwargs.get("min_grad", 0.0 if alg == "CRAB" else 1e-8),
         }
+
     # Iterate over objectives and convert initial and target states based on the optimization type
-    H_list = objective.H if isinstance(objective.H, list) else [objective.H]
-    if any(qt.issuper(H_i) for H_i in H_list):
-        if isinstance(optimization_type, str) and optimization_type.lower() == "state_transfer":
-            if qt.isket(objective.initial):
-                dim = objective.initial.shape[0]
-                objective.initial = qt.operator_to_vector(qt.ket2dm(objective.initial))
-            elif qt.isoper(objective.initial):
-                dim = objective.initial.shape[0]
-                objective.initial = qt.operator_to_vector(objective.initial)
-
-            if qt.isket(objective.target):
-                objective.target = qt.operator_to_vector(qt.ket2dm(objective.target))
-            elif qt.isoper(objective.target):
-                objective.target = qt.operator_to_vector(objective.target)
-
-            algorithm_kwargs.setdefault("fid_params", {})
-            algorithm_kwargs["fid_params"].setdefault("scale_factor", 1.0 / dim)
-
-        elif isinstance(optimization_type, str) and optimization_type.lower() == "gate_synthesis":
-            objective.initial = qt.to_super(objective.initial)
-            objective.target = qt.to_super(objective.target)
-
-        elif optimization_type is None:
-            is_state_transfer = False
-            if qt.isoper(objective.initial) and qt.isoper(objective.target):
-                if np.isclose(objective.initial.tr(), 1) and np.isclose(objective.target.tr(), 1):
+    for objective in objectives:
+        H_list = objective.H if isinstance(objective.H, list) else [objective.H]
+        if any(qt.issuper(H_i) for H_i in H_list):
+            if isinstance(optimization_type, str) and optimization_type.lower() == "state_transfer":
+                if qt.isket(objective.initial):
+                    dim = objective.initial.shape[0]
+                    objective.initial = qt.operator_to_vector(qt.ket2dm(objective.initial))
+                elif qt.isoper(objective.initial):
                     dim = objective.initial.shape[0]
                     objective.initial = qt.operator_to_vector(objective.initial)
+
+                if qt.isket(objective.target):
+                    objective.target = qt.operator_to_vector(qt.ket2dm(objective.target))
+                elif qt.isoper(objective.target):
                     objective.target = qt.operator_to_vector(objective.target)
-                    is_state_transfer = True
-                else:
-                    objective.initial = qt.to_super(objective.initial)
-                    objective.target = qt.to_super(objective.target)
 
-            if qt.isket(objective.initial):
-                dim = objective.initial.shape[0]
-                objective.initial = qt.operator_to_vector(qt.ket2dm(objective.initial))
-                is_state_transfer = True
-
-            if qt.isket(objective.target):
-                objective.target = qt.operator_to_vector(qt.ket2dm(objective.target))
-                is_state_transfer = True
-
-            if is_state_transfer:
                 algorithm_kwargs.setdefault("fid_params", {})
                 algorithm_kwargs["fid_params"].setdefault("scale_factor", 1.0 / dim)
+
+            elif isinstance(optimization_type, str) and optimization_type.lower() == "gate_synthesis":
+                objective.initial = qt.to_super(objective.initial)
+                objective.target = qt.to_super(objective.target)
+
+            elif optimization_type is None:
+                is_state_transfer = False
+                if qt.isoper(objective.initial) and qt.isoper(objective.target):
+                    if np.isclose(objective.initial.tr(), 1) and np.isclose(objective.target.tr(), 1):
+                        dim = objective.initial.shape[0]
+                        objective.initial = qt.operator_to_vector(objective.initial)
+                        objective.target = qt.operator_to_vector(objective.target)
+                        is_state_transfer = True
+                    else:
+                        objective.initial = qt.to_super(objective.initial)
+                        objective.target = qt.to_super(objective.target)
+
+                if qt.isket(objective.initial):
+                    dim = objective.initial.shape[0]
+                    objective.initial = qt.operator_to_vector(qt.ket2dm(objective.initial))
+                    is_state_transfer = True
+
+                if qt.isket(objective.target):
+                    objective.target = qt.operator_to_vector(qt.ket2dm(objective.target))
+                    is_state_transfer = True
+
+                if is_state_transfer:
+                    algorithm_kwargs.setdefault("fid_params", {})
+                    algorithm_kwargs["fid_params"].setdefault("scale_factor", 1.0 / dim)
 
     # prepare qtrl optimizers
     qtrl_optimizers = []
