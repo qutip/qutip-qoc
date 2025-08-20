@@ -13,7 +13,7 @@ import qutip as qt
 try:
     import jax
     import jaxlib
-    _jitfun_type = jaxlib.xla_extension.PjitFunction
+    _jitfun_type = type(jax.jit(lambda x: x))
 except ImportError:
     _jitfun_type = None
 
