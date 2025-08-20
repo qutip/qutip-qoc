@@ -1,3 +1,17 @@
+---
+jupyter:
+  jupytext:
+    text_representation:
+      extension: .md
+      format_name: markdown
+      format_version: '1.3'
+      jupytext_version: 1.17.2
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
+---
+
 # GRAPE algorithm for 2 level system
 
 
@@ -62,15 +76,7 @@ plt.title("Guess performance")
 plt.xlabel("Time")
 plt.legend()
 plt.show()
-
 ```
-
-
-    
-![png](GRAPE_gate_open_files/GRAPE_gate_open_5_0.png)
-    
-
-
 ## Grape algorithm
 
 
@@ -101,16 +107,6 @@ plt.legend()
 plt.show()
 ```
 
-    Infidelity:  0.006817967340126763
-    
-
-
-    
-![png](GRAPE_gate_open_files/GRAPE_gate_open_7_1.png)
-    
-
-
-
 ```python
 H_result = [Hd,
             [Hc[0], res_grape.optimized_controls[0]],
@@ -135,15 +131,7 @@ plt.title("GRAPE performance")
 plt.xlabel("Time")
 plt.legend()
 plt.show()
-
 ```
-
-
-    
-![png](GRAPE_gate_open_files/GRAPE_gate_open_8_0.png)
-    
-
-
 ## Validation
 
 
@@ -155,39 +143,4 @@ assert res_grape.infidelity < 0.01
 ```python
 qt.about()
 ```
-
-    
-    QuTiP: Quantum Toolbox in Python
-    ================================
-    Copyright (c) QuTiP team 2011 and later.
-    Current admin team: Alexander Pitchford, Nathan Shammah, Shahnawaz Ahmed, Neill Lambert, Eric Giguère, Boxi Li, Simon Cross, Asier Galicia, Paul Menczel, and Patrick Hopf.
-    Board members: Daniel Burgarth, Robert Johansson, Anton F. Kockum, Franco Nori and Will Zeng.
-    Original developers: R. J. Johansson & P. D. Nation.
-    Previous lead developers: Chris Granade & A. Grimsmo.
-    Currently developed through wide collaboration. See https://github.com/qutip for details.
-    
-    QuTiP Version:      5.1.1
-    Numpy Version:      1.26.4
-    Scipy Version:      1.15.2
-    Cython Version:     None
-    Matplotlib Version: 3.10.0
-    Python Version:     3.12.10
-    Number of CPUs:     8
-    BLAS Info:          Generic
-    INTEL MKL Ext:      None
-    Platform Info:      Windows (AMD64)
-    Installation path:  c:\Users\julia\miniforge3\envs\qutip-dev\Lib\site-packages\qutip
-    
-    Installed QuTiP family packages
-    -------------------------------
-    
-    qutip-jax: 0.1.0
-    qutip-qtrl: 0.1.5
-    
-    ================================================================================
-    Please cite QuTiP in your publication.
-    ================================================================================
-    For your convenience a bibtex reference can be easily generated using `qutip.cite()`
-    
-
 

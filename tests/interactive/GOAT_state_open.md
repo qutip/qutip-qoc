@@ -1,3 +1,17 @@
+---
+jupyter:
+  jupytext:
+    text_representation:
+      extension: .md
+      format_name: markdown
+      format_version: '1.3'
+      jupytext_version: 1.17.2
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
+---
+
 # GOAT algorithm for a 2 level system
 
 
@@ -58,15 +72,6 @@ plt.xlabel("Time")
 plt.show()
 ```
 
-    Fidelity:  0.8176293626457246
-    
-
-
-    
-![png](GOAT_state_open_files/GOAT_state_open_5_1.png)
-    
-
-
 ## GOAT algorithm
 
 
@@ -119,16 +124,6 @@ plt.legend()
 plt.show()
 ```
 
-    Infidelity:  0.07178736737494786
-    
-
-
-    
-![png](GOAT_state_open_files/GOAT_state_open_9_1.png)
-    
-
-
-
 ```python
 H_result = [Hd] + [[Hc, np.array(res_goat.optimized_controls[0])]]
 evolution = qt.mesolve(H_result, initial_state, times, c_ops)
@@ -142,13 +137,6 @@ plt.ylim(0, 1)
 plt.legend()
 plt.show()
 ```
-
-
-    
-![png](GOAT_state_open_files/GOAT_state_open_10_0.png)
-    
-
-
 ### b) optimized over time
 
 
@@ -182,17 +170,6 @@ plt.legend()
 plt.show() 
 ```
 
-    Infidelity:  0.009074574820662817
-    optimized time:  [0.37202273025971855]
-    
-
-
-    
-![png](GOAT_state_open_files/GOAT_state_open_12_1.png)
-    
-
-
-
 ```python
 times2 = times[time_range]
 if opt_time not in times2:
@@ -210,13 +187,6 @@ plt.xlim(0, res_goat_time.optimized_params[-1][0])
 plt.legend()
 plt.show()
 ```
-
-
-    
-![png](GOAT_state_open_files/GOAT_state_open_13_0.png)
-    
-
-
 ### Global optimization 
 
 
@@ -251,19 +221,7 @@ plt.xlabel('Time')
 plt.ylabel('Pulse amplitude')
 plt.legend()
 plt.show()
-
 ```
-
-    Infidelity:  0.007905283658334122
-    optimized time:  [1.5444538341679324]
-    
-
-
-    
-![png](GOAT_state_open_files/GOAT_state_open_15_1.png)
-    
-
-
 
 ```python
 times3 = times[global_range]
@@ -283,13 +241,6 @@ plt.xlabel('Time')
 plt.legend()
 plt.show()
 ```
-
-
-    
-![png](GOAT_state_open_files/GOAT_state_open_16_0.png)
-    
-
-
 ## Comparison
 
 
@@ -304,14 +255,6 @@ plt.ylabel('Pulse amplitude')
 plt.legend()
 plt.show()
 ```
-
-
-    
-![png](GOAT_state_open_files/GOAT_state_open_18_0.png)
-    
-
-
-
 ```python
 print('Guess Fidelity: ', qt.fidelity(evolution_guess.states[-1], target_state))
 print('GOAT Infidelity: ', res_goat.infidelity)
@@ -327,20 +270,7 @@ plt.title('Fidelities')
 plt.xlabel('Time')
 plt.legend()
 plt.show()
-
 ```
-
-    Guess Fidelity:  0.8176293626457246
-    GOAT Infidelity:  0.07178736737494786
-    Time Infidelity:  0.009074574820662817
-    GLobal Infidelity:  0.007905283658334122
-    
-
-
-    
-![png](GOAT_state_open_files/GOAT_state_open_19_1.png)
-    
-
 
 ## Validation
 
@@ -356,41 +286,3 @@ assert res_goat_global.infidelity < 0.01
 qt.about()
 ```
 
-    
-    QuTiP: Quantum Toolbox in Python
-    ================================
-    Copyright (c) QuTiP team 2011 and later.
-    Current admin team: Alexander Pitchford, Nathan Shammah, Shahnawaz Ahmed, Neill Lambert, Eric Giguère, Boxi Li, Simon Cross, Asier Galicia, Paul Menczel, and Patrick Hopf.
-    Board members: Daniel Burgarth, Robert Johansson, Anton F. Kockum, Franco Nori and Will Zeng.
-    Original developers: R. J. Johansson & P. D. Nation.
-    Previous lead developers: Chris Granade & A. Grimsmo.
-    Currently developed through wide collaboration. See https://github.com/qutip for details.
-    
-    QuTiP Version:      5.1.1
-    Numpy Version:      1.26.4
-    Scipy Version:      1.15.2
-    Cython Version:     None
-    Matplotlib Version: 3.10.0
-    Python Version:     3.12.10
-    Number of CPUs:     8
-    BLAS Info:          Generic
-    INTEL MKL Ext:      None
-    Platform Info:      Windows (AMD64)
-    Installation path:  c:\Users\julia\miniforge3\envs\qutip-dev\Lib\site-packages\qutip
-    
-    Installed QuTiP family packages
-    -------------------------------
-    
-    qutip-jax: 0.1.0
-    qutip-qtrl: 0.1.5
-    
-    ================================================================================
-    Please cite QuTiP in your publication.
-    ================================================================================
-    For your convenience a bibtex reference can be easily generated using `qutip.cite()`
-    
-
-
-```python
-
-```

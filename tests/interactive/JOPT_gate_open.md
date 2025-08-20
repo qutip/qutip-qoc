@@ -1,13 +1,32 @@
+---
+jupyter:
+  jupytext:
+    text_representation:
+      extension: .md
+      format_name: markdown
+      format_version: '1.3'
+      jupytext_version: 1.17.2
+  kernelspec:
+    display_name: Python 3 (ipykernel)
+    language: python
+    name: python3
+---
+
 # JOPT algorithm
 
 
 ```python
 import matplotlib.pyplot as plt
 import numpy as np
-from jax import jit, numpy
 from qutip import (about, Qobj, gates, liouvillian, qeye, sigmam, sigmax, sigmay, sigmaz, fidelity)
 import qutip as qt
 from qutip_qoc import Objective, optimize_pulses
+
+try:
+    from jax import jit, numpy
+except ImportError:  # JAX not available, skip test
+    import pytest
+    pytest.skip("JAX not available")
 ```
 
 ## Problem setup
@@ -65,7 +84,6 @@ plt.title("Guess performance")
 plt.xlabel("Time")
 plt.legend()
 plt.show()
-
 ```
 
 ## JOPT algorithm
@@ -78,18 +96,6 @@ def sin_x(t, c, **kwargs):
 
 H = [Hd] + [[hc, sin_x, {"grad": sin_x}] for hc in Hc]
 ```
-
-
-    The Kernel crashed while executing code in the current cell or a previous cell. 
-    
-
-    Please review the code in the cell(s) to identify a possible cause of the failure. 
-    
-
-    Click <a href='https://aka.ms/vscodeJupyterKernelCrash'>here</a> for more info. 
-    
-
-    View Jupyter <a href='command:jupyter.viewOutput'>log</a> for further details.
 
 
 ### a) not optimized over time
@@ -151,7 +157,6 @@ plt.title("JOPT performance")
 plt.xlabel("Time")
 plt.legend()
 plt.show()
-
 ```
 
 ### b) optimized over time
@@ -220,7 +225,6 @@ plt.title("JOPT performance (optimized over time)")
 plt.xlabel("Time")
 plt.legend()
 plt.show()
-
 ```
 
 ## Global optimization
@@ -257,7 +261,6 @@ plt.xlabel('Time')
 plt.ylabel('Pulse amplitude')
 plt.legend()
 plt.show()
-
 ```
 
 
@@ -285,7 +288,6 @@ plt.title("JOPT performance (global)")
 plt.xlabel("Time")
 plt.legend()
 plt.show()
-
 ```
 
 ## Comparison
@@ -309,7 +311,6 @@ for i in range(3):
 
 plt.tight_layout()
 plt.show()
-
 ```
 
 ## Validation
@@ -320,20 +321,6 @@ assert res_jopt.infidelity < 0.001
 assert res_jopt_time.infidelity < 0.001
 assert res_jopt_global.infidelity < 0.001
 ```
-
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    Cell In[1], line 1
-    ----> 1 assert res_jopt.infidelity < 0.001
-          2 assert res_jopt_time.infidelity < 0.001
-          3 assert res_jopt_global.infidelity < 0.001
-    
-
-    NameError: name 'res_jopt' is not defined
-
 
 
 ```python
