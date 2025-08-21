@@ -5,14 +5,14 @@ jupyter:
       extension: .md
       format_name: markdown
       format_version: '1.3'
-      jupytext_version: 1.17.1
+      jupytext_version: 1.17.2
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
     name: python3
 ---
 
-# GRAPE algorithm for a closed system
+# GRAPE algorithm for a closed system (gate synthesis)
 
 ```python
 import matplotlib.pyplot as plt
@@ -69,9 +69,9 @@ plt.show()
 
 ```python
 control_params = {
-    "ctrl_x": {"guess": np.sin(times), "bounds": [-1, 1]},
-    "ctrl_y": {"guess": np.cos(times), "bounds": [-1, 1]},
-    "ctrl_z": {"guess": np.tanh(times), "bounds": [-1, 1]},
+    "ctrl_x": {"guess": guess_pulse_x, "bounds": [-1, 1]},
+    "ctrl_y": {"guess": guess_pulse_y, "bounds": [-1, 1]},
+    "ctrl_z": {"guess": guess_pulse_z, "bounds": [-1, 1]},
 }
 
 res_grape = optimize_pulses(
@@ -100,7 +100,10 @@ plt.show()
 ```
 
 ```python
-H_result = [Hd, [Hc[0], res_grape.optimized_controls[0]], [Hc[1], res_grape.optimized_controls[1]], [Hc[2], res_grape.optimized_controls[2]]]
+H_result = [Hd,
+            [Hc[0], np.array(res_grape.optimized_controls[0])],
+            [Hc[1], np.array(res_grape.optimized_controls[1])],
+            [Hc[2], np.array(res_grape.optimized_controls[2])]]
 evolution = qt.sesolve(H_result, initial_gate, times)
 
 plt.plot(times, [fidelity(gate, initial_gate) for gate in evolution.states], label="Overlap with initial gate")
@@ -116,7 +119,7 @@ plt.show()
 
 ```python
 assert res_grape.infidelity < 0.001
-assert fidelity(evolution.states[-1], target_gate) > 1-0.001
+assert np.allclose(fidelity(evolution.states[-1], target_gate), 1 - res_grape.infidelity, atol=1e-3)
 ```
 
 ```python

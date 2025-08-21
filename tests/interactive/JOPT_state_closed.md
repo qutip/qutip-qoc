@@ -5,15 +5,14 @@ jupyter:
       extension: .md
       format_name: markdown
       format_version: '1.3'
-      jupytext_version: 1.17.1
+      jupytext_version: 1.17.2
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
     name: python3
 ---
 
-# JOPT algorithm for a 2 level system
-
+# JOPT algorithm for a closed system (state transfer)
 
 ```python
 import matplotlib.pyplot as plt
@@ -288,7 +287,7 @@ assert res_jopt_time.infidelity < res_jopt.infidelity
 assert np.allclose(np.abs(evolution_time.states[-1].overlap(target_state)), 1 - res_jopt_time.infidelity, atol=1e-3)
 
 assert res_jopt_global.infidelity < 0.001
-assert np.abs(evolution_global.states[-1].overlap(target_state)) > 1 - 0.001
+assert np.allclose(np.abs(evolution_global.states[-1].overlap(target_state)), 1 - res_jopt_global.infidelity, atol=1e-3)
 ```
 
 ```python

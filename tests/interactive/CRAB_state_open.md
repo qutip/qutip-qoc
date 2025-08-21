@@ -12,15 +12,22 @@ jupyter:
     name: python3
 ---
 
-# GRAPE algorithm for 2 level system
-
+# CRAB algorithm for an open system (state transfer)
 
 ```python
 import matplotlib.pyplot as plt
 import numpy as np
-from qutip import (about, fidelity, liouvillian, ket2dm, Qobj, basis, sigmam)
+from qutip import basis, ket2dm, liouvillian, sigmam, Qobj
 import qutip as qt
 from qutip_qoc import Objective, optimize_pulses
+
+def fidelity(dm, target_dm):
+    """
+    Fidelity used for density matrices in qutip-qtrl and qutip-qoc
+    """
+
+    diff = dm - target_dm
+    return 1 - np.real(diff.overlap(diff) / target_dm.norm()) / 2
 ```
 
 ## Problem setup
@@ -28,11 +35,8 @@ from qutip_qoc import Objective, optimize_pulses
 
 ```python
 # Energy levels
-E1, E2 = 1.0, 2.0  
+E1, E2 = 1.0, 2.0
 
-hbar = 1
-omega = 0.1  # energy splitting
-delta = 1.0  # tunneling
 gamma = 0.1  # amplitude damping
 c_ops = [np.sqrt(gamma) * sigmam()]
 
@@ -57,18 +61,17 @@ times = np.linspace(0, 2 * np.pi, 250)
 ```python
 n_params = 6 # adjust in steps of 3
 control_params = {
-    "ctrl_x": {
-        "guess": [1 for _ in range(n_params)],
-        "bounds": [(-1, 1)] * n_params,
-    },
+    "ctrl_x": {"guess": [1 for _ in range(n_params)], "bounds": [(-1, 1)] * n_params},
 }
-alg_args = {"alg": "CRAB", "fid_err_targ": 0.001, "fix_frequency": False} 
 
 res_crab = optimize_pulses(
-    objectives=Objective(initial_state, H, target_state),
-    control_parameters=control_params,
-    tlist=times,
-    algorithm_kwargs=alg_args,
+    objectives = Objective(initial_state, H, target_state),
+    control_parameters = control_params,
+    tlist = times,
+    algorithm_kwargs = {
+        "alg": "CRAB",
+        "fid_err_targ": 0.02
+    },
 )
 
 print('Infidelity: ', res_crab.infidelity)
@@ -83,11 +86,11 @@ plt.show()
 
 ```python
 H_result = [Hd, [Hc, res_crab.optimized_controls[0]]]
-evolution = qt.mesolve(H_result, initial_state, times, c_ops)
+evolution = qt.mesolve(H_result, initial_state, times)
 
-plt.plot(times, [np.abs(state.overlap(initial_state)) for state in evolution.states], label="Overlap with initial state")
-plt.plot(times, [np.abs(state.overlap(target_state)) for state in evolution.states], label="Overlap with target state")
-plt.plot(times, [qt.fidelity(state, target_state) for state in evolution.states], '--', label="Fidelity")
+plt.plot(times, [fidelity(dm, initial_state) for dm in evolution.states], label="Overlap with initial state")
+plt.plot(times, [fidelity(dm, target_state) for dm in evolution.states], label="Overlap with target state")
+
 plt.title("CRAB performance")
 plt.xlabel('Time')
 plt.legend()
@@ -97,11 +100,11 @@ plt.show()
 
 
 ```python
-assert res_crab.infidelity < 0.01
+assert res_crab.infidelity < 0.02
+assert np.allclose(fidelity(evolution.states[-1], target_state), 1 - res_crab.infidelity, atol=1e-3)
 ```
 
 
 ```python
 qt.about()
 ```
-

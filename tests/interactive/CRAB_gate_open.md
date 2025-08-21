@@ -12,35 +12,39 @@ jupyter:
     name: python3
 ---
 
-# CRAB algorithm
-
+# CRAB algorithm for an open system (gate synthesis)
 
 ```python
 import matplotlib.pyplot as plt
 import numpy as np
-from qutip import (about, Qobj, liouvillian, qeye, sigmam, sigmax, sigmay, sigmaz, tensor)
+from qutip import gates, qeye, liouvillian, sigmam, sigmax, sigmay, sigmaz
 import qutip as qt
 from qutip_qoc import Objective, optimize_pulses
+
+def fidelity(gate_super, target_super):
+    gate_oper = qt.Qobj(gate_super.data)
+    target_oper = qt.Qobj(target_super.data)
+    
+    return np.abs(gate_oper.overlap(target_oper) / target_oper.norm())
 ```
 
 ## Problem setup
 
 
 ```python
-hbar = 1
 omega = 0.1  # energy splitting
-delta = 1.0  # tunneling
 gamma = 0.1  # amplitude damping
 sx, sy, sz = sigmax(), sigmay(), sigmaz()
 c_ops = [np.sqrt(gamma) * sigmam()]
 
-Hd = 1 / 2 * hbar * omega * sz
+Hd = 1 / 2 * omega * sz
 Hd = liouvillian(H=Hd, c_ops=c_ops)
 Hc = [liouvillian(sx), liouvillian(sy), liouvillian(sz)]
 H = [Hd, Hc[0], Hc[1], Hc[2]]
 
+# objective for optimization
 initial_gate = qeye(2)
-target_gate = Qobj(1 / np.sqrt(2) * np.array([[1, 1], [1, -1]]))
+target_gate = gates.hadamard_transform()
 
 times = np.linspace(0, np.pi / 2, 250)
 ```
@@ -51,35 +55,28 @@ times = np.linspace(0, np.pi / 2, 250)
 ```python
 n_params = 6 # adjust in steps of 3
 control_params = {
-    "ctrl_x": {
-        "guess": [1 for _ in range(n_params)],
-        "bounds": [(-1, 1)] * n_params,
-    },
-    "ctrl_y": {
-        "guess": [1 for _ in range(n_params)],
-        "bounds": [(-1, 1)] * n_params,
-    },
-    "ctrl_z": {
-        "guess": [1 for _ in range(n_params)],
-        "bounds": [(-1, 1)] * n_params,
-    },
+    "ctrl_x": {"guess": [1 for _ in range(n_params)], "bounds": [(-1, 1)] * n_params},
+    "ctrl_y": {"guess": [1 for _ in range(n_params)], "bounds": [(-1, 1)] * n_params},
+    "ctrl_z": {"guess": [1 for _ in range(n_params)], "bounds": [(-1, 1)] * n_params},
 }
 alg_args = {"alg": "CRAB", "fid_err_targ": 0.01}
 
-
 res_crab = optimize_pulses(
-    objectives=Objective(initial_gate, H, target_gate),
-    control_parameters=control_params,
-    tlist=times,
-    algorithm_kwargs=alg_args,
+    objectives = Objective(initial_gate, H, target_gate),
+    control_parameters = control_params,
+    tlist = times,
+    algorithm_kwargs = {
+        "alg": "CRAB",
+        "fid_err_targ": 0.01
+    },
 )
 
 print('Infidelity: ', res_crab.infidelity)
 
-plt.plot(times, res_crab.optimized_controls[0], label='optimized pulse sx')
-plt.plot(times, res_crab.optimized_controls[1], label='optimized pulse sy')
-plt.plot(times, res_crab.optimized_controls[2], label='optimized pulse sz')
-plt.title('CRAB pulse')
+plt.plot(times, res_crab.optimized_controls[0], 'b', label='optimized pulse sx')
+plt.plot(times, res_crab.optimized_controls[1], 'g', label='optimized pulse sy')
+plt.plot(times, res_crab.optimized_controls[2], 'r', label='optimized pulse sz')
+plt.title('CRAB pulses')
 plt.xlabel('Time')
 plt.ylabel('Pulse amplitude')
 plt.legend()
@@ -87,24 +84,18 @@ plt.show()
 ```
 
 ```python
-H_result = [Hd,
-            [Hc[0], res_crab.optimized_controls[0]],
-            [Hc[1], res_crab.optimized_controls[1]],
-            [Hc[2], res_crab.optimized_controls[2]]]
-
-identity_op = qt.qeye(2)
-identity_super = qt.spre(identity_op)
-
-evolution = qt.mesolve(H_result, identity_super, times)
-
-target_super = qt.to_super(target_gate)
 initial_super = qt.to_super(initial_gate)
+target_super = qt.to_super(target_gate)
 
-initial_overlaps = [np.abs((prop.dag() * initial_super).tr()) / (prop.norm() ) for prop in evolution.states]
-target_overlaps = [np.abs((prop.dag() * target_super).tr()) / (prop.norm() ) for prop in evolution.states]
+H_result = [Hd,
+            [Hc[0], np.array(res_crab.optimized_controls[0])],
+            [Hc[1], np.array(res_crab.optimized_controls[1])],
+            [Hc[2], np.array(res_crab.optimized_controls[2])]]
+evolution = qt.mesolve(H_result, initial_super, times)
 
-plt.plot(times, initial_overlaps, label="Overlap with initial gate")
-plt.plot(times, target_overlaps, label="Overlap with target gate")
+plt.plot(times, [fidelity(gate, initial_super) for gate in evolution.states], label="Overlap with initial gate")
+plt.plot(times, [fidelity(gate, target_super) for gate in evolution.states], label="Overlap with target gate")
+
 plt.title("CRAB performance")
 plt.xlabel("Time")
 plt.legend()
@@ -115,10 +106,10 @@ plt.show()
 
 ```python
 assert res_crab.infidelity < 0.01
+assert np.allclose(fidelity(evolution.states[-1], target_super), 1 - res_crab.infidelity, atol=1e-3)
 ```
 
 
 ```python
 qt.about()
 ```
-

@@ -5,14 +5,14 @@ jupyter:
       extension: .md
       format_name: markdown
       format_version: '1.3'
-      jupytext_version: 1.17.1
+      jupytext_version: 1.17.2
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
     name: python3
 ---
 
-# CRAB algorithm for a closed system
+# CRAB algorithm for a closed system (gate synthesis)
 
 ```python
 import matplotlib.pyplot as plt
@@ -94,7 +94,7 @@ plt.show()
 
 ```python
 assert res_crab.infidelity < 0.001
-assert fidelity(evolution.states[-1], target_gate) > 1-0.001
+assert np.allclose(fidelity(evolution.states[-1], target_gate), 1 - res_crab.infidelity, atol=1e-3)
 ```
 
 ```python

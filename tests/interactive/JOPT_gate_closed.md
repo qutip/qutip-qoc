@@ -5,14 +5,14 @@ jupyter:
       extension: .md
       format_name: markdown
       format_version: '1.3'
-      jupytext_version: 1.17.1
+      jupytext_version: 1.17.2
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
     name: python3
 ---
 
-# JOPT algorithm for a closed system
+# JOPT algorithm for a closed system (gate synthesis)
 
 ```python
 import matplotlib.pyplot as plt
@@ -190,7 +190,7 @@ plt.legend()
 plt.show()
 ```
 
-## Global optimization
+### c) global optimization 
 
 ```python
 res_jopt_global = optimize_pulses(
@@ -269,13 +269,13 @@ plt.show()
 
 ```python
 assert res_jopt.infidelity < 0.001
-assert fidelity(evolution.states[-1], target_gate) > 1-0.001
+assert np.allclose(fidelity(evolution.states[-1], target_gate), 1 - res_jopt.infidelity, atol=1e-3)
 
 assert res_jopt_time.infidelity < 0.001
-assert fidelity(evolution_time.states[-1], target_gate) > 1-0.001
+assert np.allclose(fidelity(evolution_time.states[-1], target_gate), 1 - res_jopt_time.infidelity, atol=1e-3)
 
 assert res_jopt_global.infidelity < 0.001
-assert fidelity(evolution_global.states[-1], target_gate) > 1-0.001
+assert np.allclose(fidelity(evolution_global.states[-1], target_gate), 1 - res_jopt_global.infidelity, atol=1e-3)
 ```
 
 ```python
