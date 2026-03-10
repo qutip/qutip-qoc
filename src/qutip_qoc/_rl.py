@@ -89,7 +89,7 @@ class _RL(gym.Env):
         self._result = Result(
             objectives=objectives,
             time_interval=time_interval,
-            start_local_time=time.localtime(),  # initial optimization time
+            start_local_time=time.time(),  # initial optimization time
             n_iters=0,  # Number of iterations(episodes) until convergence
             iter_seconds=[],  # list containing the time taken for each iteration(episode) of the optimization
             var_time=True,  # Whether the optimization was performed with variable time
@@ -99,7 +99,7 @@ class _RL(gym.Env):
         self._backup_result = Result(  # used as a backup in case the algorithm with shorter_pulses does not find an episode with infid<target_infid
             objectives=objectives,
             time_interval=time_interval,
-            start_local_time=time.localtime(),
+            start_local_time=time.time(),
             n_iters=0,
             iter_seconds=[],
             var_time=True,
@@ -180,7 +180,7 @@ class _RL(gym.Env):
             "terminated": self.terminated,
             "truncated": self.truncated,
             "steps_used": self._current_step,
-            "elapsed_time": time.mktime(time.localtime()),
+            "elapsed_time": time.time(),
         }
         self._episode_info.append(episode_data)
 
@@ -256,7 +256,7 @@ class _RL(gym.Env):
         time_diff = self._episode_info[-1]["elapsed_time"] - (
             self._episode_info[-2]["elapsed_time"]
             if len(self._episode_info) > 1
-            else time.mktime(self._result.start_local_time)
+            else self._result.start_local_time
         )
         self._result.iter_seconds.append(time_diff)
         self._current_step = 0  # Reset the step counter
@@ -281,7 +281,7 @@ class _RL(gym.Env):
             self._backup_result._final_states = self._result._final_states.copy()
             self._backup_result.infidelity = self._result.infidelity
 
-        result_obj.end_local_time = time.localtime()
+        result_obj.end_local_time = time.time()
         result_obj.n_iters = len(self._result.iter_seconds)
         result_obj.optimized_params = self._actions.copy() + [
             self._result.total_seconds
@@ -296,20 +296,20 @@ class _RL(gym.Env):
         """
         if self._use_backup_result:
             self._backup_result.start_local_time = time.strftime(
-                "%Y-%m-%d %H:%M:%S", self._backup_result.start_local_time
-            )  # Convert to a string
+                "%Y-%m-%d %H:%M:%S", time.localtime(self._backup_result.start_local_time)
+            )
             self._backup_result.end_local_time = time.strftime(
-                "%Y-%m-%d %H:%M:%S", self._backup_result.end_local_time
-            )  # Convert to a string
+                "%Y-%m-%d %H:%M:%S", time.localtime(self._backup_result.end_local_time)
+            )
             return self._backup_result
         else:
             self._save_result()
             self._result.start_local_time = time.strftime(
-                "%Y-%m-%d %H:%M:%S", self._result.start_local_time
-            )  # Convert to a string
+                "%Y-%m-%d %H:%M:%S", time.localtime(self._result.start_local_time)
+            )
             self._result.end_local_time = time.strftime(
-                "%Y-%m-%d %H:%M:%S", self._result.end_local_time
-            )  # Convert to a string
+                "%Y-%m-%d %H:%M:%S", time.localtime(self._result.end_local_time)
+            )
             return self._result
 
     def train(self):

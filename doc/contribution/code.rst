@@ -7,7 +7,7 @@ Contributing to the source code
 Build up an development environment
 ===================================
 
-Please follow the instruction on the `QuTiP contribution guide <https://qutip.org/docs/latest/development/contributing.html#building>`_ to
+Please follow the instruction on the `QuTiP contribution guide <https://qutip.readthedocs.io/en/latest/development/contributing.html>`_ to
 build a conda environment.
 
 You don't need to build ``qutip`` in the editable mode unless you also want to contribute to `qutip`.

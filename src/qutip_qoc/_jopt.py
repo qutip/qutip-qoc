@@ -5,38 +5,47 @@ calculate optimal parameters for analytical control pulse sequences.
 import qutip as qt
 from qutip import Qobj, QobjEvo
 
-from diffrax import Dopri5, PIDController
+try:
+    import jax
+    from jax import custom_jvp
+    import jax.numpy as jnp
+    import qutip_jax  # noqa: F401
 
-import jax
-from jax import custom_jvp
-import jax.numpy as jnp
-import qutip_jax  # noqa: F401
+    import jaxlib  # noqa: F401
 
+    from diffrax import Dopri5, PIDController
 
-@custom_jvp
-def _abs(x):
-    return jnp.abs(x)
-
-
-def _abs_jvp(primals, tangents):
-    """
-    Custom jvp for absolute value of complex functions
-    """
-    (x,) = primals
-    (t,) = tangents
-
-    abs_x = _abs(x)
-    res = jnp.where(
-        abs_x == 0,
-        0.0,  # prevent division by zero
-        jnp.real(jnp.multiply(jnp.conj(x), t)) / abs_x,
-    )
-
-    return abs_x, res
+    _jax_available = True
+except ImportError:
+    _jax_available = False
 
 
-# register custom jvp for absolut value of complex functions
-_abs.defjvp(_abs_jvp)
+if _jax_available:
+
+    @custom_jvp
+    def _abs(x):
+        return jnp.abs(x)
+
+
+    def _abs_jvp(primals, tangents):
+        """
+        Custom jvp for absolute value of complex functions
+        """
+        (x,) = primals
+        (t,) = tangents
+
+        abs_x = _abs(x)
+        res = jnp.where(
+            abs_x == 0,
+            0.0,  # prevent division by zero
+            jnp.real(jnp.multiply(jnp.conj(x), t)) / abs_x,
+        )
+
+        return abs_x, res
+
+
+    # register custom jvp for absolut value of complex functions
+    _abs.defjvp(_abs_jvp)
 
 
 class _JOPT:
@@ -55,6 +64,10 @@ class _JOPT:
         guess_params,
         **integrator_kwargs,
     ):
+        if not _jax_available:
+            raise ImportError("The JOPT algorithm requires the modules jax, "
+                              "jaxlib, and qutip_jax to be installed.")
+
         self._Hd = objective.H[0]
         self._Hc_lst = objective.H[1:]
 
@@ -137,8 +150,8 @@ class _JOPT:
         if self._fid_type == "TRACEDIFF":
             diff = X - self._target
             # to prevent if/else in qobj.dag() and qobj.tr()
-            diff_dag = Qobj(diff.data.adjoint(), dims=diff.dims)
-            g = 1 / 2 * (diff_dag * diff).data.trace()
+            diff_dag = diff.dag() # direct access to JAX array, no fallback!
+            g = 1 / 2 * jnp.trace(diff_dag.data._jxa @ diff.data._jxa)
             infid = jnp.real(self._norm_fac * g)
         else:
             g = self._norm_fac * self._target.overlap(X)
