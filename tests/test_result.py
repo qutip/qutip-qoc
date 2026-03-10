@@ -220,7 +220,6 @@ else: # skip RL tests
     state2state_rl = None
     unitary_rl = None
 
-
 @pytest.fixture(
     params=[
         pytest.param(state2state_grape, id="State to state (GRAPE)"),
