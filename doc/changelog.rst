@@ -3,7 +3,53 @@ Changelog
 *********
 
 
-Version 0.0.2 (Oct 04, 2024)
+Version 0.2.0 (Mar 17, 2026)
++++++++++++++++++++++++++++++++++
+
+Bug Fixes
+___________
+
+Reinforcement learning module (`src/qutip_qoc/_rl.py`):
+- #31
+
+JOPT
+- #49
+
+GRAPE
+- #51 (fixes #46)
+
+GitHub Workflows
+- #35
+
+Pulse optimisation and objective modules
+- #36 (fixes #34)
+
+Documentation
+______________
+
+- Fixing broken links in README (#39)
+- #42
+
+Miscellaneous
+_________________
+- #43
+- #53
+- #56
+
+Dependencies management
+_________________________
+
+- #32
+
+Dependabot dependencies upgrades
+- #25
+- #26
+- #27
+- #28
+- #45
+
+
+Version 0.1.1 (Oct 04, 2024)
 +++++++++++++++++++++++++++++++++
 
 This is an update to the beta release of ``qutip-qoc``.
@@ -27,7 +73,7 @@ Bug Fixes
 - Prevent loss of `__time__` keyword in optimize_pulses (#22, by flowerthrower)
 
 
-Version 0.0.1 (May xx, 2024)
+Version 0.1.0b1 (July, 2024)
 +++++++++++++++++++++++++++++++++
 
 This is the beta release of ``qutip-qoc``, the extended quantum control package in QuTiP.
