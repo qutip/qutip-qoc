@@ -1,15 +1,13 @@
-*********
 Changelog
-*********
-
+=========
 
 Version 0.2.0 (Mar 17, 2026)
-+++++++++++++++++++++++++++++++++
+----------------------------
 
 Bug Fixes
-___________
+^^^^^^^^^
 
-Reinforcement learning module (`src/qutip_qoc/_rl.py`):
+Reinforcement learning module (``src/qutip_qoc/_rl.py``):
 - #31
 
 JOPT
@@ -25,23 +23,26 @@ Pulse optimisation and objective modules
 - #36 (fixes #34)
 
 Documentation
-______________
+^^^^^^^^^^^^^
 
 - Fixing broken links in README (#39)
 - #42
 
 Miscellaneous
-_________________
+^^^^^^^^^^^^^
+
 - #43
 - #53
 - #56
 
 Dependencies management
-_________________________
+^^^^^^^^^^^^^^^^^^^^^^^
 
 - #32
 
 Dependabot dependencies upgrades
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 - #25
 - #26
 - #27
@@ -50,7 +51,7 @@ Dependabot dependencies upgrades
 
 
 Version 0.1.1 (Oct 04, 2024)
-+++++++++++++++++++++++++++++++++
+----------------------------
 
 This is an update to the beta release of ``qutip-qoc``.
 
@@ -62,19 +63,19 @@ It mainly introduces the new reinforcement learning algorithm ``qutip_qoc._rl``.
 - The ``result`` does no longer return ``optimized_objectives`` but instead ``optimized_H``.
 
 Features
---------
+^^^^^^^^
 
 - New reinforcement learning algorithm, developed during GSOC24 (#19, #18, by LegionAtol)
 - Automatic transfromation of initial and target operator to superoperator (#23, by flowerthrower)
 
 Bug Fixes
----------
+^^^^^^^^^
 
-- Prevent loss of `__time__` keyword in optimize_pulses (#22, by flowerthrower)
+- Prevent loss of ``__time__`` keyword in ``optimize_pulses`` (#22, by flowerthrower)
 
 
 Version 0.1.0b1 (July, 2024)
-+++++++++++++++++++++++++++++++++
+----------------------------
 
 This is the beta release of ``qutip-qoc``, the extended quantum control package in QuTiP.
 
@@ -86,14 +87,14 @@ It has undergone major refactoring and restructuring of the codebase.
 - The ``result`` does no longer return ``optimized_objectives`` but instead ``optimized_H``.
 
 Bug Fixes
----------
+^^^^^^^^^
 
 - basinhopping result does not contain minimizer message
 - boundary issues with CRAB
 
 
 Version 0.0.0 (December 26, 2023)
-+++++++++++++++++++++++++++++++++
+---------------------------------
 
 This is the alpha version of ``qutip-qoc``, the extended quantum control package in QuTiP.
 
@@ -102,16 +103,15 @@ It enhances it by providing two additional algorithms to optimize analytically d
 The package also aims for a more general way of defining control problems with QuTiP and makes switching between the four control algorithms very easy.
 
 Features
---------
+^^^^^^^^
 
 - ``qutip_qoc.GOAT`` is an extension to the Gradient Optimization of Analytic conTrols (GOAT) :cite:`GOAT` algorithm.
-    It encoporates an additional time parameterization to allow for optimization over the total evolution time.
+  It encoporates an additional time parameterization to allow for optimization over the total evolution time.
 - ``qutip_qoc.JOPT`` is an JAX automatic differentiation Optimization of Analytic conTrols (JOPT) algorithm.
 - Both algorithms can be addressed by the ``qutip_qoc.optimize_pulses`` function, which consists of a two-layer approach to find global optimal values for parameterized analytical control functions.
-    The global optimization layer provides ``scipy.optimize.dual_annealing`` and ``scipy.optimize.basinhopping``, while the local minimization layer supports all gradient driven ``scipy.optimize.minimize`` methods.
-
+  The global optimization layer provides ``scipy.optimize.dual_annealing`` and ``scipy.optimize.basinhopping``, while the local minimization layer supports all gradient driven ``scipy.optimize.minimize`` methods.
 
 Bug Fixes
----------
+^^^^^^^^^
 
 - None
