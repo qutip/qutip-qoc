@@ -8,15 +8,19 @@ Bug Fixes
 ^^^^^^^^^
 
 Reinforcement learning module (``src/qutip_qoc/_rl.py``):
+
 - #31
 
 JOPT
+
 - #49
 
 GRAPE
+
 - #51 (fixes #46)
 
 GitHub Workflows
+
 - #35
 
 Pulse optimisation and objective modules
