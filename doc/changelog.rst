@@ -12,6 +12,7 @@ Reinforcement learning module (``src/qutip_qoc/_rl.py``):
 - Corrections in algorithm execution time (#31)
 
 JOPT
+
 - Fix: Enable JOPT to support open-system optimization with TRACEDIFF fidelity #49
         - This PR resolves an issue where JOPT failed to optimize open quantum systems using TRACEDIFF fidelity due to incompatibilities between JAX autodiff and Qobj data structures.
 
@@ -24,9 +25,9 @@ GitHub Workflows
 
 - Update versions of action tools #35
 
-
 Pulse optimisation and objective modules
-Fix state transfer not working for GRAPE and CRAB #36 (fixes #34)
+
+- Fix state transfer not working for GRAPE and CRAB #36 (fixes #34)
 
 Documentation
 ^^^^^^^^^^^^^
@@ -55,35 +56,6 @@ Dependabot dependencies upgrades
 - #28
 - #45
 
-Documentation
-^^^^^^^^^^^^^
-
-- Fixing broken links in README (#39)
-- #42
-
-Miscellaneous
-^^^^^^^^^^^^^
-
-- #43
-- #53
-- #56
-
-Dependencies management
-^^^^^^^^^^^^^^^^^^^^^^^
-
-- #32
-
-Dependabot dependencies upgrades
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-- #25
-- #26
-- #27
-- #28
-- #45
-
-
->>>>>>> qutip-qoc-0.2.X
 Version 0.1.1 (Oct 04, 2024)
 ----------------------------
 
