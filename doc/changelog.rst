@@ -9,40 +9,42 @@ Bug Fixes
 
 Reinforcement learning module (``src/qutip_qoc/_rl.py``):
 
-- #31
+- Corrections in algorithm execution time (#31)
 
 JOPT
-
-- #49
+- Fix: Enable JOPT to support open-system optimization with TRACEDIFF fidelity #49
+        - This PR resolves an issue where JOPT failed to optimize open quantum systems using TRACEDIFF fidelity due to incompatibilities between JAX autodiff and Qobj data structures.
 
 GRAPE
 
-- #51 (fixes #46)
+- Match grape infidelity with manually computed one #51 (fixes #46):
+        - With this PR the GRAPE-reported infidelity matches the manually computed one by evolving the system using the optimized control pulses.
 
 GitHub Workflows
 
-- #35
+- Update versions of action tools #35
+
 
 Pulse optimisation and objective modules
-- #36 (fixes #34)
+Fix state transfer not working for GRAPE and CRAB #36 (fixes #34)
 
 Documentation
 ^^^^^^^^^^^^^
 
-- Fixing broken links in README (#39)
-- #42
+- Fixing broken links in README #39
+- Fix: Load jQuery explicitly to resolve broken search panel on deployed docs #42
 
 Miscellaneous
 ^^^^^^^^^^^^^
 
-- #43
-- #53
-- #56
+- Add interactive test notebooks for closed systems #43
+- Added requirements for interactive tests to setup.cfg #53
+- Make it possible to display qutip-qoc as a family package #56
 
 Dependencies management
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-- #32
+- Make all JAX and machine learning related dependencies optional #32
 
 Dependabot dependencies upgrades
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
