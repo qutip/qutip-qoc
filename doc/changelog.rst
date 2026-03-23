@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Version 0.2.0 (Mar 17, 2026)
+Version 0.2.0 (Mar 23, 2026)
 ----------------------------
 
 Bug Fixes
