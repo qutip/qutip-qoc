@@ -9,7 +9,7 @@ Bug Fixes
 
 Reinforcement learning module (``src/qutip_qoc/_rl.py``):
 
-- Corrections in algorithm execution time (#31)
+- Corrections in algorithm execution time #31
 
 JOPT
 
@@ -48,7 +48,6 @@ Dependencies management
 - Make all JAX and machine learning related dependencies optional #32
 
 Dependabot dependencies upgrades
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 - #25
 - #26
