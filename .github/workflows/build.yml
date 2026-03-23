@@ -35,7 +35,7 @@ jobs:
       - name: Store the distribution packages
         uses: actions/upload-artifact@v4
         with:
-          name: python-package-distributions-${{ matrix.runs-on }}
+          name: python-package-distributions-${{ matrix.os }}
           path: dist/
 
   publish-to-pypi:
