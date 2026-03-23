@@ -55,7 +55,35 @@ Dependabot dependencies upgrades
 - #28
 - #45
 
+Documentation
+^^^^^^^^^^^^^
 
+- Fixing broken links in README (#39)
+- #42
+
+Miscellaneous
+^^^^^^^^^^^^^
+
+- #43
+- #53
+- #56
+
+Dependencies management
+^^^^^^^^^^^^^^^^^^^^^^^
+
+- #32
+
+Dependabot dependencies upgrades
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- #25
+- #26
+- #27
+- #28
+- #45
+
+
+>>>>>>> qutip-qoc-0.2.X
 Version 0.1.1 (Oct 04, 2024)
 ----------------------------
 
