@@ -1,7 +1,7 @@
 Changelog
 =========
 
-Version 0.2.0 (Mar 23, 2026)
+Version 0.2.0 (Mar 24, 2026)
 ----------------------------
 
 Bug Fixes
@@ -24,6 +24,7 @@ GRAPE
 GitHub Workflows
 
 - Update versions of action tools #35
+- Make upload and download artifacts functionality compatible with the API of artifacts@v4 #64
 
 Pulse optimisation and objective modules
 
@@ -54,6 +55,7 @@ Dependabot dependencies upgrades
 - #27
 - #28
 - #45
+- #61
 
 Version 0.1.1 (Oct 04, 2024)
 ----------------------------
