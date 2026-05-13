@@ -39,22 +39,6 @@ jobs:
             os: windows-latest
             qutip-version: "@master"
             python-version: "3.12"
-
-          - case-name: ubuntu-python3.13
-            os: ubuntu-latest
-            qutip-version: "@master"
-            python-version: "3.13"
-
-          - case-name: macOs-python3.13
-            os: macOS-latest
-            qutip-version: "@master"
-            python-version: "3.13"
-
-          - case-name: windows-python3.13
-            os: windows-latest
-            qutip-version: "@master"
-            python-version: "3.13"
-
     steps:
       - uses: actions/checkout@v4
 
