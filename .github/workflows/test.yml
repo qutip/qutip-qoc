@@ -39,17 +39,14 @@ jobs:
             os: windows-latest
             qutip-version: "@master"
             python-version: "3.12"
+
     steps:
       - uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
-
-      - name: Upgrade pip
-        run: |
-          python -m pip install --upgrade pip
 
       - name: Install QuTiP from GitHub
         if: ${{ matrix.qutip-version == '@master' }}
@@ -71,25 +68,19 @@ jobs:
           python -m pip install 'git+https://github.com/qutip/qutip-jax.git'
 
       - name: Install qutip-qoc
-        # Installing in-place so that coveralls can locate the source code.
         run: |
-          pip install -e .[full]
+          python -m pip install -e .[full]
 
       - name: Test with pytest and generate coverage report
         run: |
-          pip install pytest-cov coveralls
-          pytest tests \
-            --strict-markers \
-            --cov=qutip_qoc \
-            --cov-report= \
-            --color=yes
+          python -m pip install pytest-cov coveralls
+          pytest tests --strict-markers --cov=qutip_qoc --cov-report= --color=yes
 
       - name: Upload to Coveralls
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
           COVERALLS_PARALLEL: true
-        run: |
-          coveralls --service=github
+        run: coveralls --service=github
 
   doctest:
     runs-on: ubuntu-latest
@@ -98,18 +89,15 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Upgrade pip
-        run: |
-          python -m pip install --upgrade pip
-
       - name: Install dependencies
         run: |
+          python -m pip install --upgrade pip
           python -m pip install -r doc/requirements.txt
-          pip install .
+          python -m pip install .
 
       - name: Test code snippets in the documentation
         run: |
@@ -127,6 +115,7 @@ jobs:
       - name: Finalise coverage reporting
         env:
           GITHUB_TOKEN: ${{ secrets.github_token }}
+
         run: |
           python -m pip install coveralls
           coveralls --service=github --finish
