@@ -8,6 +8,8 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     strategy:
+      fail-fast: false
+
       matrix:
         include:
           - case-name: ubuntu-python3.11
@@ -40,6 +42,21 @@ jobs:
             qutip-version: "@master"
             python-version: "3.12"
 
+          - case-name: ubuntu-python3.13
+            os: ubuntu-latest
+            qutip-version: "@master"
+            python-version: "3.13"
+
+          - case-name: macOs-python3.13
+            os: macOS-latest
+            qutip-version: "@master"
+            python-version: "3.13"
+
+          - case-name: windows-python3.13
+            os: windows-latest
+            qutip-version: "@master"
+            python-version: "3.13"
+
     steps:
       - uses: actions/checkout@v6
 
@@ -47,6 +64,10 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
+
+      - name: Upgrade packaging tooling
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
 
       - name: Install QuTiP from GitHub
         if: ${{ matrix.qutip-version == '@master' }}
@@ -58,9 +79,9 @@ jobs:
         run: |
           python -m pip install 'git+https://github.com/qutip/qutip-qtrl.git'
 
-      - name: Install fixed version jax and jaxlib
+      - name: Install JAX and jaxlib
         run: |
-          python -m pip install 'jax==0.4.28' 'jaxlib==0.4.28'
+          python -m pip install jax jaxlib
 
       - name: Install qutip-jax from GitHub
         if: ${{ matrix.qutip-version == '@master' }}
@@ -91,11 +112,14 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v6
         with:
-          python-version: "3.11"
+          python-version: "3.13"
+
+      - name: Upgrade packaging tooling
+        run: |
+          python -m pip install --upgrade pip setuptools wheel
 
       - name: Install dependencies
         run: |
-          python -m pip install --upgrade pip
           python -m pip install -r doc/requirements.txt
           python -m pip install .
 
@@ -109,7 +133,7 @@ jobs:
     needs: [cases]
     runs-on: ubuntu-latest
 
-    container: python:3-slim
+    container: python:3.13-slim
 
     steps:
       - name: Finalise coverage reporting
