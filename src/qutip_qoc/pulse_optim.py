@@ -12,6 +12,7 @@ from qutip_qoc._optimizer import _global_local_optimization
 from qutip_qoc._time import _TimeInterval
 
 import qutip as qt
+from qutip_qoc._genetic import _Genetic
 
 try:
     from qutip_qoc._rl import _RL
@@ -439,6 +440,21 @@ def optimize_pulses(
         )
         rl_env.train()
         return rl_env.result()
+    
+    elif alg == "Genetic":
+        gen_env = _Genetic(
+            objectives,
+            control_parameters,
+            time_interval,
+            time_options,
+            algorithm_kwargs,
+            optimizer_kwargs,
+            minimizer_kwargs,
+            integrator_kwargs,
+            qtrl_optimizers,
+        )
+        gen_env.optimize()
+        return gen_env.result()
 
     return _global_local_optimization(
         objectives,
