@@ -12,30 +12,35 @@ jupyter:
     name: python3
 ---
 
-# GOAT algorithm for a closed system (gate synthesis)|
+# GOAT algorithm for an open system (gate synthesis)
 
 ```python
 import matplotlib.pyplot as plt
 import numpy as np
-from qutip import gates, qeye, sigmax, sigmay, sigmaz
+from qutip import gates, qeye, liouvillian, sigmam, sigmax, sigmay, sigmaz
 import qutip as qt
 from qutip_qoc import Objective, optimize_pulses
 
-def fidelity(gate, target_gate):
-    """
-    Fidelity used for unitary gates in qutip-qtrl and qutip-qoc
-    """
-    return np.abs(gate.overlap(target_gate) / target_gate.norm())
+def fidelity(gate_super, target_super):
+    gate_oper = qt.Qobj(gate_super.data)
+    target_oper = qt.Qobj(target_super.data)
+    
+    return np.abs(gate_oper.overlap(target_oper) / target_oper.norm())
 ```
 
 ## Problem setup
 
+
 ```python
 omega = 0.1  # energy splitting
+gamma = 0.1  # amplitude damping
 sx, sy, sz = sigmax(), sigmay(), sigmaz()
+c_ops = [np.sqrt(gamma) * sigmam()]
 
 Hd = 1 / 2 * omega * sz
-Hc = [sx, sy, sz]
+Hd = liouvillian(H=Hd, c_ops=c_ops)
+Hc = [liouvillian(sx), liouvillian(sy), liouvillian(sz)]
+H = [Hd, Hc[0], Hc[1], Hc[2]]
 
 # objective for optimization
 initial_gate = qeye(2)
@@ -46,24 +51,26 @@ times = np.linspace(0, np.pi / 2, 250)
 
 ## Guess
 
+
 ```python
 goat_guess = [1, 1]
 guess_pulse = goat_guess[0] * np.sin(goat_guess[1] * times)
 
+initial_super = qt.to_super(initial_gate)
+target_super = qt.to_super(target_gate)
+
 H_guess = [Hd] + [[hc, guess_pulse] for hc in Hc]
-evolution_guess = qt.sesolve(H_guess, initial_gate, times)
+evolution_guess = qt.mesolve(H_guess, initial_super, times)
 
-print('Fidelity: ', fidelity(evolution_guess.states[-1], target_gate))
-
-plt.plot(times, [fidelity(gate, initial_gate) for gate in evolution_guess.states], label="Overlap with initial gate")
-plt.plot(times, [fidelity(gate, target_gate) for gate in evolution_guess.states], label="Overlap with target gate")
+plt.plot(times, [fidelity(gate, initial_super) for gate in evolution_guess.states], label="Overlap with initial gate")
+plt.plot(times, [fidelity(gate, target_super) for gate in evolution_guess.states], label="Overlap with target gate")
 plt.title("Guess performance")
 plt.xlabel('Time')
 plt.legend()
 plt.show()
 ```
-
 ## GOAT algorithm
+### a) not optimized over time
 
 ```python
 # control function
@@ -82,7 +89,6 @@ def grad_sin(t, c, idx):
 H = [Hd] + [[hc, sin, {"grad": grad_sin}] for hc in Hc]
 ```
 
-### a) not optimized over time
 
 ```python
 control_params = {
@@ -103,7 +109,6 @@ res_goat = optimize_pulses(
 
 print('Infidelity: ', res_goat.infidelity)
 
-plt.plot(times, guess_pulse, 'k--', label='guess pulse sx, sy, sz')
 plt.plot(times, res_goat.optimized_controls[0], 'b', label='optimized pulse sx')
 plt.plot(times, res_goat.optimized_controls[1], 'g', label='optimized pulse sy')
 plt.plot(times, res_goat.optimized_controls[2], 'r', label='optimized pulse sz')
@@ -119,18 +124,18 @@ H_result = [Hd,
             [Hc[0], np.array(res_goat.optimized_controls[0])],
             [Hc[1], np.array(res_goat.optimized_controls[1])],
             [Hc[2], np.array(res_goat.optimized_controls[2])]]
-evolution = qt.sesolve(H_result, initial_gate, times)
+evolution = qt.mesolve(H_result, initial_super, times)
 
-plt.plot(times, [fidelity(gate, initial_gate) for gate in evolution.states], label="Overlap with initial gate")
-plt.plot(times, [fidelity(gate, target_gate) for gate in evolution.states], label="Overlap with target gate")
+plt.plot(times, [fidelity(gate, initial_super) for gate in evolution.states], label="Overlap with initial gate")
+plt.plot(times, [fidelity(gate, target_super) for gate in evolution.states], label="Overlap with target gate")
 
-plt.title('GOAT performance')
-plt.xlabel('Time')
+plt.title("GOAT performance")
+plt.xlabel("Time")
 plt.legend()
 plt.show()
 ```
-
 ### b) optimized over time
+
 
 ```python
 # treats time as optimization variable
@@ -174,19 +179,18 @@ if opt_time not in times2:
 
 H_result = qt.QobjEvo(
     [Hd, [Hc[0], np.array(res_goat_time.optimized_controls[0])],
-         [Hc[1], np.array(res_goat_time.optimized_controls[1])], 
+         [Hc[1], np.array(res_goat_time.optimized_controls[1])],
          [Hc[2], np.array(res_goat_time.optimized_controls[2])]], tlist=times)
-evolution_time = qt.sesolve(H_result, initial_gate, times2)
+evolution_time = qt.mesolve(H_result, initial_super, times2)
 
-plt.plot(times2, [fidelity(gate, initial_gate) for gate in evolution_time.states], label="Overlap with initial gate")
-plt.plot(times2, [fidelity(gate, target_gate) for gate in evolution_time.states], label="Overlap with target gate")
+plt.plot(times2, [fidelity(gate, initial_super) for gate in evolution_time.states], label="Overlap with initial gate")
+plt.plot(times2, [fidelity(gate, target_super) for gate in evolution_time.states], label="Overlap with target gate")
 
 plt.title('GOAT (optimized over time) performance')
-plt.xlabel('Time')
+plt.xlabel("Time")
 plt.legend()
 plt.show()
 ```
-
 ### c) global optimization 
 
 ```python
@@ -230,18 +234,18 @@ H_result = qt.QobjEvo(
     [Hd, [Hc[0], np.array(res_goat_global.optimized_controls[0])],
          [Hc[1], np.array(res_goat_global.optimized_controls[1])], 
          [Hc[2], np.array(res_goat_global.optimized_controls[2])]], tlist=times)
-evolution_global = qt.sesolve(H_result, initial_gate, times3)
+evolution_global = qt.mesolve(H_result, initial_super, times3)
 
-plt.plot(times3, [fidelity(gate, initial_gate) for gate in evolution_global.states], label="Overlap with initial gate")
-plt.plot(times3, [fidelity(gate, target_gate) for gate in evolution_global.states], label="Overlap with target gate")
+plt.plot(times3, [fidelity(gate, initial_super) for gate in evolution_global.states], label="Overlap with initial gate")
+plt.plot(times3, [fidelity(gate, target_super) for gate in evolution_global.states], label="Overlap with target gate")
 
 plt.title('GOAT (global optimization) performance')
 plt.xlabel('Time')
 plt.legend()
 plt.show()
 ```
-
 ## Comparison
+
 
 ```python
 fig, axes = plt.subplots(1, 3, figsize=(18, 4))  # 1 row, 3 columns
@@ -261,19 +265,24 @@ for i, ax in enumerate(axes):
 plt.tight_layout()
 plt.show()
 ```
-
 ## Validation
 
+
 ```python
-assert res_goat.infidelity < 0.001
-assert np.allclose(fidelity(evolution.states[-1], target_gate), 1 - res_goat.infidelity, atol=1e-3)
+guess_fidelity = fidelity(evolution_guess.states[-1], target_super)
 
-assert res_goat_time.infidelity < 0.001
-assert np.allclose(fidelity(evolution_time.states[-1], target_gate), 1 - res_goat_time.infidelity, atol=1e-3)
+# target fidelity not reached in part a), check that it is better than the guess
+assert 1 - res_goat.infidelity >= guess_fidelity
+assert np.allclose(fidelity(evolution.states[-1], target_super), 1 - res_goat.infidelity, atol=1e-3)
 
-assert res_goat_global.infidelity < 0.001
-assert np.allclose(fidelity(evolution_global.states[-1], target_gate), 1 - res_goat_global.infidelity, atol=1e-3)
+# target fidelity not reached in part b), check that it is better than part a)
+assert res_goat_time.infidelity <= res_goat.infidelity
+assert np.allclose(fidelity(evolution_time.states[-1], target_super), 1 - res_goat_time.infidelity, atol=1e-3)
+
+assert res_goat_global.infidelity <= res_goat_time.infidelity
+assert np.allclose(fidelity(evolution_global.states[-1], target_super), 1 - res_goat_global.infidelity, atol=1e-3)
 ```
+
 
 ```python
 qt.about()
