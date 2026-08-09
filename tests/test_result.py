@@ -220,6 +220,41 @@ else: # skip RL tests
     state2state_rl = None
     unitary_rl = None
 
+# --------------------------- Genetic ---------------------------
+
+
+# state to state transfer
+init = qt.basis(2, 0)
+target = qt.basis(2, 1)
+
+H_c = [qt.sigmax(), qt.sigmay(), qt.sigmaz()] # control Hamiltonians
+
+w, d, y = 0.1, 1.0, 0.1
+H_d = 1 / 2 * (w * qt.sigmaz() + d * qt.sigmax()) # drift Hamiltonian
+
+H = [H_d] + H_c # total Hamiltonian
+
+state2state_genetic = Case(
+    objectives=[Objective(initial, H, target)],
+    control_parameters={
+        "p": {"bounds": [(-13, 13)]},
+    },
+    tlist=np.linspace(0, 10, 100), 
+    algorithm_kwargs={
+        "fid_err_targ": 0.01,
+        "alg": "Genetic",
+        "max_iter": 100,
+    },
+    optimizer_kwargs={},
+)
+
+
+initial = qt.qeye(2) # Identity
+target  = qt.gates.hadamard_transform()
+
+unitary_genetic = state2state_genetic._replace(
+    objectives=[Objective(initial, H, target)],
+)
 
 @pytest.fixture(
     params=[
@@ -229,6 +264,8 @@ else: # skip RL tests
         pytest.param(state2state_goat, id="State to state (GOAT)"),
         pytest.param(state2state_jax, id="State to state (JAX)"),
         pytest.param(state2state_rl, id="State to state (RL)"),
+        pytest.param(state2state_genetic, id="State to state (Genetic)"),
+        pytest.param(unitary_genetic, id="Unitary (Genetic)"),
         pytest.param(unitary_rl, id="Unitary (RL)"),
     ]
 )
