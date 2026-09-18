@@ -19,6 +19,30 @@ except ImportError:
 
 __all__ = ["Result"]
 
+def _make_step(amps, dt, n_tslots):
+    """Return a zero-order-hold coefficient for piecewise-constant controls."""
+    amps = np.asarray(amps)
+
+    def step(t, **kwargs):
+        k = int(t / dt)
+        if k < 0:
+            k = 0
+        elif k >= n_tslots:
+            k = n_tslots - 1
+        return amps[k]
+
+    return step
+
+
+def _stepify(H, time_interval):
+    """Convert discrete control arrays to step coefficients (GRAPE/CRAB)."""
+    n_tslots = time_interval.n_tslots
+    dt = time_interval.evo_time / n_tslots
+    out = [H[0]]  # drift Hamiltonian, unchanged
+    for Hc, cf in H[1:]:
+        out.append([Hc, _make_step(cf, dt, n_tslots)])
+    return out
+
 
 class _Stats:
     """
@@ -316,7 +340,7 @@ class Result:
                 H_evo = (
                     qt.QobjEvo(H, args=args_dict)
                     if args_dict  # GOAT, JOPT
-                    else qt.QobjEvo(H, tlist=self.time_interval.tslots)
+                    else qt.QobjEvo(_stepify(H, self.time_interval))
                 )
 
                 opt_H.append(H_evo)
