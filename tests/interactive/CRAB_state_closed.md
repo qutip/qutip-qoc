@@ -5,14 +5,14 @@ jupyter:
       extension: .md
       format_name: markdown
       format_version: '1.3'
-      jupytext_version: 1.17.1
+      jupytext_version: 1.17.2
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
     name: python3
 ---
 
-# CRAB algorithm for 2 level system
+# CRAB algorithm for a closed system (state transfer)
 
 ```python
 import matplotlib.pyplot as plt
@@ -87,7 +87,7 @@ plt.show()
 
 ```python
 assert res_crab.infidelity < 0.001
-assert np.abs(evolution.states[-1].overlap(target_state)) > 1-0.001
+assert np.allclose(np.abs(evolution.states[-1].overlap(target_state)), 1 - res_crab.infidelity, atol=1e-3)
 ```
 
 ```python

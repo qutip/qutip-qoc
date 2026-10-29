@@ -5,14 +5,14 @@ jupyter:
       extension: .md
       format_name: markdown
       format_version: '1.3'
-      jupytext_version: 1.17.1
+      jupytext_version: 1.17.2
   kernelspec:
     display_name: Python 3 (ipykernel)
     language: python
     name: python3
 ---
 
-# GOAT algorithm for a closed system
+# GOAT algorithm for a closed system (gate synthesis)|
 
 ```python
 import matplotlib.pyplot as plt
@@ -187,7 +187,7 @@ plt.legend()
 plt.show()
 ```
 
-## Global optimization
+### c) global optimization 
 
 ```python
 res_goat_global = optimize_pulses(
@@ -266,13 +266,13 @@ plt.show()
 
 ```python
 assert res_goat.infidelity < 0.001
-assert fidelity(evolution.states[-1], target_gate) > 1-0.001
+assert np.allclose(fidelity(evolution.states[-1], target_gate), 1 - res_goat.infidelity, atol=1e-3)
 
 assert res_goat_time.infidelity < 0.001
-assert fidelity(evolution_time.states[-1], target_gate) > 1-0.001
+assert np.allclose(fidelity(evolution_time.states[-1], target_gate), 1 - res_goat_time.infidelity, atol=1e-3)
 
 assert res_goat_global.infidelity < 0.001
-assert fidelity(evolution_global.states[-1], target_gate) > 1-0.001
+assert np.allclose(fidelity(evolution_global.states[-1], target_gate), 1 - res_goat_global.infidelity, atol=1e-3)
 ```
 
 ```python
