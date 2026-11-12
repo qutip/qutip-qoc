@@ -10,20 +10,25 @@ jobs:
     strategy:
       matrix:
         include:
-          - case-name: ubuntu-python3.11
+          - case-name: ubuntu-python3.11-released
             os: ubuntu-latest
-            qutip-version: "@master"
+            qutip-version: "released"
             python-version: "3.11"
 
-          - case-name: macOs-python3.11
+          - case-name: macOs-python3.11-released
             os: macOS-latest
-            qutip-version: "@master"
+            qutip-version: "released"
             python-version: "3.11"
 
-          - case-name: windows-python3.11
+          - case-name: windows-python3.11-released
             os: windows-latest
-            qutip-version: "@master"
+            qutip-version: "released"
             python-version: "3.11"
+
+          - case-name: ubuntu-python3.12-released
+            os: ubuntu-latest
+            qutip-version: "released"
+            python-version: "3.12"
 
           - case-name: ubuntu-python3.12
             os: ubuntu-latest
