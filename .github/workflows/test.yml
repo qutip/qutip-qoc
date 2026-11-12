@@ -25,6 +25,11 @@ jobs:
             qutip-version: "released"
             python-version: "3.11"
 
+          - case-name: ubuntu-python3.12-released
+            os: ubuntu-latest
+            qutip-version: "released"
+            python-version: "3.12"
+
           - case-name: ubuntu-python3.12
             os: ubuntu-latest
             qutip-version: "@master"
