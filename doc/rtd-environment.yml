@@ -2,6 +2,7 @@ name: rtd-environment
 channels:
   - conda-forge
 dependencies:
+  - python=3.12
   - numpy>=1.16.6,<2.0
   - scipy>=1.10.1
   - cython>=0.29.33
@@ -15,7 +16,7 @@ dependencies:
   - wheel==0.38.4
   - pip
   - pip:
-      - jax==0.4.28
-      - jaxlib==0.4.28
+      - jax
+      - jaxlib
       - qutip>=5.0.1
       - ..[full]

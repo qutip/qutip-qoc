@@ -22,7 +22,7 @@ jobs:
 
     env:
       # Build wheels for supported CPython versions.
-      CIBW_BUILD: "cp3{11,12,13,14}-*"
+      CIBW_BUILD: "cp3{12,13,14}-*"
 
       # NumPy and SciPy do not supply wheels for these targets.
       CIBW_SKIP: "*-musllinux* *-manylinux_i686 *-win32"
@@ -36,7 +36,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v7
         with:
-          python-version: "3.11"
+          python-version: "3.12"
 
       - name: Install cibuildwheel
         run: |
