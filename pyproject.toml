@@ -40,8 +40,6 @@ dependencies = [
     "qutip-qtrl",
     "numpy>=2.0.0",
 ]
-# The version is read from the VERSION file and set in setup.py, so that the
-# local version label (git hash) can be added to development builds.
 dynamic = ["version"]
 
 [project.optional-dependencies]
