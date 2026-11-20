@@ -8,6 +8,7 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     strategy:
+      fail-fast: false
       matrix:
         include:
           - case-name: ubuntu-python3.12
@@ -54,6 +55,21 @@ jobs:
             os: windows-latest
             qutip-version: "@master"
             python-version: "3.14"
+
+          - case-name: ubuntu-python3.15
+            os: ubuntu-latest
+            qutip-version: "@master"
+            python-version: "3.15"
+
+          - case-name: macOs-python3.15
+            os: macOS-latest
+            qutip-version: "@master"
+            python-version: "3.15"
+
+          - case-name: windows-python3.15
+            os: windows-latest
+            qutip-version: "@master"
+            python-version: "3.15"
 
     steps:
       - uses: actions/checkout@v7
