@@ -1,8 +1,71 @@
 [build-system]
 requires = [
-    "setuptools>=42",
+    "setuptools>=77",
     "packaging",
-    "wheel",
     "cython>=0.29.20",
 ]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "qutip-qoc"
+description = "The QuTiP quantum optimal control package"
+readme = "README.md"
+keywords = ["quantum", "physics", "dynamics"]
+license = "BSD-3-Clause"
+authors = [
+    {name = "Patrick Hopf"},
+    {name = "Paul Menczel"},
+    {name = "Alexander Pitchford"},
+    {name = "Neill Lambert"},
+    {email = "qutip-admin@googlegroups.com"},
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+    "Programming Language :: Python :: 3.15",
+    "Topic :: Scientific/Engineering",
+    "Operating System :: MacOS",
+    "Operating System :: POSIX",
+    "Operating System :: Unix",
+    "Operating System :: Microsoft :: Windows",
+]
+requires-python = ">=3.12"
+dependencies = [
+    "qutip",
+    "qutip-qtrl",
+    "numpy>=2.0.0",
+]
+dynamic = ["version"]
+
+[project.optional-dependencies]
+jopt = [
+    "qutip-jax",
+]
+rl = [
+    "gymnasium>=0.29.1",
+    "stable-baselines3>=2.3.2",
+]
+tests = [
+    "pytest>=6.0",
+    "matplotlib",
+    "jupytext",
+    "nbconvert",
+    "ipykernel",
+]
+full = [
+    "qutip-qoc[jopt,rl,tests]",
+]
+
+[project.urls]
+Homepage = "https://github.com/qutip/qutip-qoc"
+
+[project.entry-points."qutip.family"]
+qutip_qoc = "qutip_qoc.family"
+
+[tool.setuptools.packages.find]
+where = ["src"]

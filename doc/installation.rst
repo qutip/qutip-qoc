@@ -60,7 +60,7 @@ To install the package, download to source code from `GitHub website <https://gi
 
     pip install .
 
-under the directory containing the ``setup.cfg`` file.
+under the directory containing the ``pyproject.toml`` file.
 
 If you want to edit the code, use instead
 

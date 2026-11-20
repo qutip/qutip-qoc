@@ -8,23 +8,9 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     strategy:
+      fail-fast: false
       matrix:
         include:
-          - case-name: ubuntu-python3.11
-            os: ubuntu-latest
-            qutip-version: "@master"
-            python-version: "3.11"
-
-          - case-name: macOs-python3.11
-            os: macOS-latest
-            qutip-version: "@master"
-            python-version: "3.11"
-
-          - case-name: windows-python3.11
-            os: windows-latest
-            qutip-version: "@master"
-            python-version: "3.11"
-
           - case-name: ubuntu-python3.12
             os: ubuntu-latest
             qutip-version: "@master"
@@ -39,6 +25,51 @@ jobs:
             os: windows-latest
             qutip-version: "@master"
             python-version: "3.12"
+
+          - case-name: ubuntu-python3.13
+            os: ubuntu-latest
+            qutip-version: "@master"
+            python-version: "3.13"
+
+          - case-name: macOs-python3.13
+            os: macOS-latest
+            qutip-version: "@master"
+            python-version: "3.13"
+
+          - case-name: windows-python3.13
+            os: windows-latest
+            qutip-version: "@master"
+            python-version: "3.13"
+
+          - case-name: ubuntu-python3.14
+            os: ubuntu-latest
+            qutip-version: "@master"
+            python-version: "3.14"
+
+          - case-name: macOs-python3.14
+            os: macOS-latest
+            qutip-version: "@master"
+            python-version: "3.14"
+
+          - case-name: windows-python3.14
+            os: windows-latest
+            qutip-version: "@master"
+            python-version: "3.14"
+
+          - case-name: ubuntu-python3.15
+            os: ubuntu-latest
+            qutip-version: "@master"
+            python-version: "3.15"
+
+          - case-name: macOs-python3.15
+            os: macOS-latest
+            qutip-version: "@master"
+            python-version: "3.15"
+
+          - case-name: windows-python3.15
+            os: windows-latest
+            qutip-version: "@master"
+            python-version: "3.15"
 
     steps:
       - uses: actions/checkout@v7
@@ -57,10 +88,6 @@ jobs:
         if: ${{ matrix.qutip-version == '@master' }}
         run: |
           python -m pip install 'git+https://github.com/qutip/qutip-qtrl.git'
-
-      - name: Install fixed version jax and jaxlib
-        run: |
-          python -m pip install 'jax==0.4.28' 'jaxlib==0.4.28'
 
       - name: Install qutip-jax from GitHub
         if: ${{ matrix.qutip-version == '@master' }}
@@ -91,7 +118,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v7
         with:
-          python-version: "3.11"
+          python-version: "3.12"
 
       - name: Install dependencies
         run: |
