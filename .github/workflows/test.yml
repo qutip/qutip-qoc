@@ -8,6 +8,7 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     strategy:
+      fail-fast: false
       matrix:
         include:
           - case-name: ubuntu-python3.11
