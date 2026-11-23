@@ -258,6 +258,7 @@ to construct the objective (similar to initializing ``QobjEvo``).
 
 .. code-block:: bash
 
+  import numpy as np
   import qutip_qoc as qoc
 
   drift = qt.sigmaz()
@@ -267,10 +268,17 @@ to construct the objective (similar to initializing ``QobjEvo``).
              [qt.sigmay(), np.ones(100)]]
 
   # continuous control
-  control = [[qt.sigmax(), lambda t, p: p[0] * t + p[1]],
-             [qt.sigmay(), lambda t, q: p[0] * t + p[1]]]
+  def linear(t, p):
+      return p[0] * t + p[1]
 
-  H = [drift, control]
+  # GOAT needs the derivative of each control function with respect to its parameters
+  def grad_linear(t, p, idx):
+      return t if idx == 0 else 1
+
+  control = [[qt.sigmax(), lambda t, p: linear(t, p), {"grad": grad_linear}],
+             [qt.sigmay(), lambda t, q: linear(t, q), {"grad": grad_linear}]]
+
+  H = [drift] + control
 
   objective = qoc.Objective(initial, H, target)
 
@@ -287,7 +295,8 @@ It requires some extra arguments to prepare the optimization.
 .. code-block:: bash
 
   # initial parameters to be optimized
-  p_guess = q_guess = [0., 0.]
+  # (not all zero: with the controls off, the gradient is zero and the optimizer cannot move)
+  p_guess = q_guess = [0.5, 0.5]
 
   # boundaries for the parameters
   p_bounds = q_bounds = [(-1, 1), (-1, 1)]
